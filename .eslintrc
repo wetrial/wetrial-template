@@ -1,0 +1,41 @@
+{
+  "extends": "eslint-config-umi",
+  "rules": {
+    "no-debugger":"warn",
+    "unicode-bom":"off",
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          "tsx"
+        ]
+      }
+    ],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": [
+          "^@/",
+          "umi"
+        ]
+      }
+    ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2,
+        "maxEOF": 1
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      2,
+      {
+        "optionalDependencies": true,
+        "devDependencies": true
+      }
+    ]
+  }
+}

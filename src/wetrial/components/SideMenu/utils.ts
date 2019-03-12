@@ -1,7 +1,7 @@
 import memoizeOne from 'memoize-one';
 import pathToRegexp from 'path-to-regexp';
 import { isEqual, omit } from 'lodash';
-import { isUrl, includes } from '../../utils';
+import { isUrl, includes } from '../../utils/utils';
 
 /**
  * 单项菜单的属性

@@ -43,5 +43,6 @@ export const page = extend(base, {
 
 export default {
   base,
-  page
+  page,
+  extend
 }

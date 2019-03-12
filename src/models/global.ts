@@ -1,12 +1,10 @@
-import modelExtend from 'dva-model-extend';
 import { getNotifys, getProjectMenus, getCurrentUser, login } from '@/services/common/global';
-import { model } from 'wetrial';
 import { utils } from '@/wetrial';
 
-const {base}=model;
+const {base,extend}=utils.model;
 const {setPermissions, setToken}=utils.store;
 
-export default modelExtend(base, {
+export default extend(base, {
   namespace: 'global',
   state: {
     notify: {

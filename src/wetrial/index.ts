@@ -6,4 +6,4 @@ export {default as SideMenu} from './components/SideMenu';
 
 export {default as PageLoading} from './components/PageLoading';
 
-export {default as utils} from './utils';
+export {utils,model,request,store,validation} from './utils';

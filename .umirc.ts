@@ -1,12 +1,14 @@
 // https://umijs.org/config/
 import { resolve } from 'path';
 import slash from 'slash2';
+import pageRoutes from './config/router.config'
 
 // ref: https://umijs.org/config/
 export default {
   history: 'hash',
   // hash: true,
   targets: { ie: 11 },
+  treeShaking: true,
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     [
@@ -29,35 +31,12 @@ export default {
           exclude:['wetrial']
         },
         hardSource: process.platform === 'darwin' /* isMac */,
-        routes: {
-          exclude: [
-            /model\.(j|t)sx?$/,
-            /locales\//,
-            /utils\//,
-            /models\//,
-            /components\//,
-            /services\//,
-            /constants\//,
-            /bases\//,
-            /scripts\//,
-          ],
-          // update: routes => {
-          //   const newRoutes = []
-          //   for (const item of routes[0].routes) {
-          //     if (item.path) {
-          //       newRoutes.push(
-          //         Object.assign({}, item, {
-          //           path:`/:lang(${['en-US','zh-CN'].map(item => item).join('|')})` + item.path,
-          //         })
-          //       )
-          //     }else{
-          //       newRoutes.push(item);
-          //     }
-          //   }
-          //   routes[0].routes = newRoutes
-          //   return routes
-          // }
+        pwa: {
+          manifestOptions: {
+            srcPath: 'manifest.json'
+          },
         },
+        routes: pageRoutes,
       },
     ],
   ],
@@ -72,7 +51,7 @@ export default {
   //   },
   // },
   alias: {
-    themes: resolve(__dirname, './src/themes'),
+    themes: resolve(__dirname, './src/themes')
   },
   ignoreMomentLocale: true,
   lessLoaderOptions: {

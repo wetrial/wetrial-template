@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import { Menu, Icon } from 'antd';
 import Link from 'umi/link';
-import { isUrl } from '../../utils';
+import { isUrl } from '../../utils/utils';
 import { getMenuMatches, urlToList } from './utils';
 import styles from './BaseMenu.less';
 

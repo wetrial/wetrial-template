@@ -36,7 +36,7 @@ export const getStrFullLength = (str: string = ''): number =>
     return pre + 2;
   }, 0);
 
-export const cutStrByFullLength = (str: string = '', maxLength: number): string => {
+export const getEllips = (str: string = '', maxLength: number): string => {
   let showLength = 0;
   return str.split('').reduce((pre, cur) => {
     const charCode = cur.charCodeAt(0);
@@ -69,11 +69,12 @@ const EllipsisText = ({ text, length, tooltip, fullWidthRecognition, ...other })
     return <span {...other}>{text}</span>;
   }
   const tail = '...';
-  const displayText = length - tail.length <= 0 ?
-    ''
-    : (fullWidthRecognition ?
-      cutStrByFullLength(text, length) :
-      text.slice(0, length))
+  const displayText =
+    length - tail.length <= 0
+      ? ''
+      : fullWidthRecognition
+      ? getEllips(text, length)
+      : text.slice(0, length);
 
   const spanAttrs = tooltip ? {} : { ...other };
   return getTooltip({

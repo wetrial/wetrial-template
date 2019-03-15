@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import { Button } from 'antd';
 import config from './typeConfig';
@@ -17,7 +17,7 @@ interface IExceptionProps {
   redirect?: string;
 }
 
-class Exception extends React.PureComponent<IExceptionProps,any> {
+class Exception extends Component<IExceptionProps, any> {
   static defaultProps = {
     backText: 'back to home',
     redirect: '/',
@@ -55,11 +55,11 @@ class Exception extends React.PureComponent<IExceptionProps,any> {
           <h1>{title || config[pageType].title}</h1>
           <div className={styles.desc}>{desc || config[pageType].desc}</div>
           <div className={styles.actions}>
-            {actions ||
+            {actions || (
               <a href={redirect}>
                 <Button type="primary">{backText}</Button>
               </a>
-            }
+            )}
           </div>
         </div>
       </div>

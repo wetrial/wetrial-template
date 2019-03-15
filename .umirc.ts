@@ -24,6 +24,7 @@ export default {
         dynamicImport: {
           webpackChunkName: true,
           loadingComponent: './components/PageLoading',
+          level: 3,
         },
         title: 'wetrial-template',
         dll: {
@@ -51,7 +52,7 @@ export default {
   //   },
   // },
   alias: {
-    themes: resolve(__dirname, './src/themes')
+    styles: resolve(__dirname, './src/styles')
   },
   ignoreMomentLocale: true,
   lessLoaderOptions: {
@@ -64,8 +65,8 @@ export default {
       if (
         context.resourcePath.includes('node_modules') ||
         context.resourcePath.includes('global.less') ||
-        context.resourcePath.includes('themes\\default.less') ||
-        context.resourcePath.includes('themes\\mixin.less')
+        context.resourcePath.includes('styles\\theme.less') ||
+        context.resourcePath.includes('styles\\mixin.less')
       ) {
         return localName;
       }

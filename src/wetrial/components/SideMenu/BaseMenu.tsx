@@ -1,18 +1,19 @@
-import React, { PureComponent } from 'react';
-import classNames from 'classnames';
+import React from 'react';
+import H from 'history';
+import MemoizeOne from 'memoize-one';
+import isEqual from 'lodash/isEqual';
 import { Menu, Icon } from 'antd';
-import Link from 'umi/link';
-import { isUrl } from '../../utils/utils';
-import { getMenuMatches, urlToList } from './utils';
-import styles from './BaseMenu.less';
+import { Link } from 'react-router-dom';
+import { MenuMode } from 'antd/es/menu';
+import { CollapseType } from 'antd/es/layout/Sider';
+import { isUrl } from '@/utils/regexp';
+import { urlToList } from '@/utils/pathTools';
+import { MenuTheme } from '@/types/settings';
+import { getMenuMatches } from './utils';
+import styles from './index.less';
 
-const { SubMenu } = Menu;
-
-// Allow menu.js config icon as string or ReactNode
-//   icon: 'setting',
-//   icon: 'http://demo.com/icon.png',
-//   icon: <Icon type="setting" />,
-const getIcon = icon => {
+// 获取Icon图标
+function getIcon(icon) {
   if (typeof icon === 'string' && isUrl(icon)) {
     return <img src={icon} alt="icon" className={styles.icon} />;
   }
@@ -20,35 +21,45 @@ const getIcon = icon => {
     return <Icon type={icon} />;
   }
   return icon;
-};
+}
 
-export default class BaseMenu extends PureComponent<any> {
-  /**
-   * 获得菜单子节点
-   * @memberof SiderMenu
-   */
-  getNavMenuItems = menusData => {
-    if (!menusData) {
-      return [];
-    }
+const { SubMenu } = Menu;
+
+export interface BaseMenuProps {
+  openKeys?: string[];
+  theme?: MenuTheme;
+  mode?: MenuMode;
+  flatMenuKeys?: any[];
+  location: H.Location;
+  style?: React.CSSProperties;
+  menuData: any[];
+  isMobile: boolean;
+  onCollapse: (collapsed: boolean, type?: CollapseType) => void;
+  onOpenChange?: (openKeys: string[]) => void;
+}
+
+class BaseMenu extends React.PureComponent<BaseMenuProps, any> {
+  constructor(props) {
+    super(props);
+    this.getSelectedMenuKeys = MemoizeOne(this.getSelectedMenuKeys, isEqual);
+  }
+
+  // 获取菜单子节点
+  getNavMenuItems = (menusData) => {
+    if (!menusData) return [];
     return menusData
-      .filter(item => item.name && !item.hideInMenu)
-      .map(item => this.getSubMenuOrItem(item))
-      .filter(item => item);
+      .filter((item) => item.name && !item.hideInMenu)
+      .map((item) => this.getSubMenuOrItem(item))
+      .filter((item) => item);
   };
 
-  // Get the currently selected menu
-  getSelectedMenuKeys = pathname => {
-    const { flatMenuKeys } = this.props;
-    return urlToList(pathname).map(itemPath => getMenuMatches(flatMenuKeys, itemPath).pop());
-  };
-
-  /**
-   * get SubMenu or Item
-   */
-  getSubMenuOrItem = item => {
-    // doc: add hideChildrenInMenu
-    if (item.children && !item.hideChildrenInMenu && item.children.some(child => child.name)) {
+  //
+  getSubMenuOrItem = (item) => {
+    if (
+      item.children &&
+      !item.hideChildrenInMenu &&
+      item.children.some((child) => child.name)
+    ) {
       const { name } = item;
       return (
         <SubMenu
@@ -71,12 +82,7 @@ export default class BaseMenu extends PureComponent<any> {
     return <Menu.Item key={item.path}>{this.getMenuItemPath(item)}</Menu.Item>;
   };
 
-  /**
-   * 判断是否是http链接.返回 Link 或 a
-   * Judge whether it is http link.return a or Link
-   * @memberof SiderMenu
-   */
-  getMenuItemPath = item => {
+  getMenuItemPath = (item) => {
     const { name } = item;
     const itemPath = this.conversionPath(item.path);
     const icon = getIcon(item.icon);
@@ -110,11 +116,18 @@ export default class BaseMenu extends PureComponent<any> {
     );
   };
 
-  conversionPath = path => {
+  conversionPath = (path) => {
     if (path && path.indexOf('http') === 0) {
       return path;
     }
     return `/${path || ''}`.replace(/\/+/g, '/');
+  };
+
+  getSelectedMenuKeys = (pathname) => {
+    const { flatMenuKeys } = this.props;
+    return urlToList(pathname).map((itemPath) =>
+      getMenuMatches(flatMenuKeys, itemPath).pop()
+    );
   };
 
   render() {
@@ -123,34 +136,30 @@ export default class BaseMenu extends PureComponent<any> {
       theme,
       mode,
       location: { pathname },
-      className,
-      collapsed,
+      onOpenChange,
+      style,
+      menuData
     } = this.props;
-    // if pathname can't match, use the nearest parent's key
     let selectedKeys = this.getSelectedMenuKeys(pathname);
     if (!selectedKeys.length && openKeys) {
       selectedKeys = [openKeys[openKeys.length - 1]];
     }
     let props = {};
-    if (openKeys && !collapsed) {
+    if (openKeys) {
       props = {
-        openKeys: openKeys.length === 0 ? [...selectedKeys] : openKeys,
+        openKeys
       };
     }
-    const { handleOpenChange, style, menuData } = this.props;
-    const cls = classNames(className, {
-      'top-nav-menu': mode === 'horizontal',
-    });
 
     return (
       <Menu
         key="Menu"
         mode={mode}
         theme={theme}
-        onOpenChange={handleOpenChange}
+        onOpenChange={onOpenChange}
         selectedKeys={selectedKeys}
         style={style}
-        className={cls}
+        className={mode === 'horizontal' ? 'top-nav-menu' : ''}
         {...props}
       >
         {this.getNavMenuItems(menuData)}
@@ -158,3 +167,5 @@ export default class BaseMenu extends PureComponent<any> {
     );
   }
 }
+
+export default BaseMenu;

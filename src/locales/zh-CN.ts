@@ -1,14 +1,18 @@
+import globalHeader from './zh-CN/globalHeader';
+import exception from './zh-CN/exception';
 import menu from './zh-CN/menu';
-import validation from './zh-CN/validation';
-import component from './zh-CN/component';
+import login from './zh-CN/login';
+import settings from './zh-CN/settings';
+
 
 export default {
-  'lang': '语言',
-  'lang.simplified-chinese': '简体中文',
-  'lang.traditional-chinese': '繁体中文',
-  'lang.english': '英语',
-  'lang.chines': '中文',
+  'navBar.lang': '语言',
+  'layout.user.link.help': '帮助',
+  'layout.user.link.privacy': '隐私',
+  'layout.user.link.terms': '条款',
   ...menu,
-  ...validation,
-  ...component,
+  ...login,
+  ...settings,
+  ...exception,
+  ...globalHeader
 };

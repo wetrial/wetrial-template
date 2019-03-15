@@ -2,8 +2,7 @@
 const path = require('path');
 const lessToJs = require('less-vars-to-js');
 
-module.exports = () => {
-  const themePath = path.resolve(__dirname, '../src/themes/default.less')
-  const theme=lessToJs(fs.readFileSync(themePath, 'utf8'));
-  return theme;
-}
+const themePath = path.resolve(__dirname, '../src/styles/theme.less')
+const theme = lessToJs(fs.readFileSync(themePath, 'utf8'));
+
+export default theme;

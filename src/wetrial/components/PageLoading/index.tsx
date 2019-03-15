@@ -3,13 +3,13 @@ import classNames from 'classnames';
 import { formatMessage } from 'umi/locale';
 import styles from './index.less';
 
-interface ILoaderProps{
-  spinning?:boolean;
-  fullScreen?:boolean;
+interface ILoaderProps {
+  spinning?: boolean;
+  fullScreen?: boolean;
 }
 
-const Loader = (props:ILoaderProps) => {
-  const{spinning,fullScreen}=props;
+const Loader = (props: ILoaderProps) => {
+  const { spinning, fullScreen } = props;
   return (
     <div
       className={classNames(styles.loader, {
@@ -19,15 +19,15 @@ const Loader = (props:ILoaderProps) => {
     >
       <div className={styles.warpper}>
         <div className={styles.inner} />
-        <div className={styles.text}>{formatMessage({id:'component.pageloading.loading'})}</div>
+        <div className={styles.text}>{formatMessage({ id: 'component.pageloading.loading' })}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-Loader.defaultProps={
-  spinning:true,
-  fullScreen:false
-}
+Loader.defaultProps = {
+  spinning: true,
+  fullScreen: false,
+};
 
-export default Loader
+export default Loader;

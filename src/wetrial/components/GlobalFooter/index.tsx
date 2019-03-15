@@ -11,11 +11,11 @@ export interface IGlobalFooterProps {
   }>;
   copyright?: React.ReactNode;
   style?: React.CSSProperties;
-  className?:any
+  className?: any;
 }
 
-const GlobalFooter = (props:IGlobalFooterProps) => {
-    const {className,links,copyright}=props;
+const GlobalFooter = (props: IGlobalFooterProps) => {
+  const { className, links, copyright } = props;
   const clsString = classNames(styles.globalFooter, className);
   return (
     <footer className={clsString}>

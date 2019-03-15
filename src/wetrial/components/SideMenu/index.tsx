@@ -1,54 +1,33 @@
-import React, { PureComponent } from 'react';
-import { Layout } from 'antd';
-import { Link } from 'umi';
-import { getFlatMenuKeys, IMenuItemProps } from './utils';
-import BaseMenu from './BaseMenu';
-import styles from './index.less';
+import React from 'react';
+import { Drawer } from 'antd';
+import SideMenu, { SideMenuProps } from './SideMenu';
+import { getFlatMenuKeys } from './utils';
 
-const { Sider } = Layout;
-
-interface ISideMenuProps {
-  menuData: IMenuItemProps[];
-  collapsed?: boolean;
-  onCollapse: () => void;
-}
-
-class SiderMenuWrapper extends PureComponent<ISideMenuProps> {
-  handleOpenChange = () => {
-    return;
-  };
-
+class SideMenuWrapper extends React.PureComponent<SideMenuProps, any> {
   render() {
-    const { menuData, collapsed, onCollapse } = this.props;
-    const openKeys = [];
-    const defaultProps = collapsed ? {} : { openKeys };
+    const { menuData, isMobile, collapsed, onCollapse } = this.props;
     const flatMenuKeys = getFlatMenuKeys(menuData);
-    return (
-      <Sider
-        trigger={null}
-        collapsible={true}
-        collapsed={collapsed}
-        breakpoint="lg"
-        onCollapse={onCollapse}
+
+    return isMobile ? (
+      <Drawer
+        visible={!collapsed}
+        placement="left"
+        onClose={() => onCollapse(true)}
+        style={{
+          padding: 0,
+          height: '100vh'
+        }}
       >
-        <div className={styles.logo}>
-          <Link to="/">
-            <img src="" alt="logo" />
-            <h1>Ant Design Pro</h1>
-          </Link>
-        </div>
-        <BaseMenu
+        <SideMenu
           {...this.props}
-          data={flatMenuKeys}
-          mode="inline"
-          handleOpenChange={this.handleOpenChange}
-          onOpenChange={this.handleOpenChange}
-          style={{ padding: '16px 0', width: '100%' }}
-          {...defaultProps}
+          flatMenuKeys={flatMenuKeys}
+          collapsed={isMobile ? false : collapsed}
         />
-      </Sider>
+      </Drawer>
+    ) : (
+      <SideMenu {...this.props} flatMenuKeys={flatMenuKeys} />
     );
   }
 }
 
-export default SiderMenuWrapper;
+export default SideMenuWrapper;

@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* 基本选项 */
     "target": "esnext", // 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
-    "module": "esnext", // 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015'
+    "module": "system", // 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015'
     // "lib":[],  // 指定要包含在编译中的库文件
     "allowJs": true, // 允许编译 javascript 文件
     "checkJs": true, // 报告 javascript 文件中的错误
@@ -15,7 +15,7 @@
     "removeComments": false, // 删除编译后的所有的注释
     "noEmit": true, // 不生成输出文件
     "importHelpers": true, // 从 tslib 导入辅助工具函数
-    "isolatedModules": true, // 将每个文件做为单独的模块 （与 'ts.transpileModule' 类似）.
+    // "isolatedModules": true, // 将每个文件做为单独的模块 （与 'ts.transpileModule' 类似）.
     /* 严格的类型检查选项 */
     // "strict": true,                        // 启用所有严格类型检查选项
     // "noImplicitAny": false,                 // 在表达式和声明上有隐含的 any类型时报错

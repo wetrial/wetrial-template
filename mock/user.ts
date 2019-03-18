@@ -56,7 +56,7 @@ function logout(req, res) {
 }
 
 export default {
-  'GET /user/current': getCurrentUser,
-  'POST /user/login': login,
-  'GET /user/logout': logout
+  'GET /api/user/getCurrent': getCurrentUser,
+  'POST /api/user/login': login,
+  'GET /api/user/logout': logout
 };

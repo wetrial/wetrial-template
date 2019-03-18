@@ -1,8 +1,8 @@
 import React from 'react';
 import PromiseRender from './PromiseRender';
 import { CURRENT } from './renderAuthorize';
-import { TReactComponent, TAuthority } from './IProps';
-import { isPromise } from '../utils';
+import { TReactComponent, TAuthority } from './type';
+import { isPromise } from '../../utils';
 
 /**
  * 通用权限检查方法

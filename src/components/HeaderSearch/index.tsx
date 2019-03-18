@@ -1,8 +1,7 @@
 import React from 'react';
 import { Input, Icon, AutoComplete } from 'antd';
 import ClassNames from 'classnames';
-import Debounce from 'lodash-decorators/debounce';
-import Bind from 'lodash-decorators/bind';
+import {Debounce,Bind} from 'lodash-decorators';
 import styles from './index.less';
 
 export interface HeaderSearchProps {
@@ -29,18 +28,17 @@ interface State {
 }
 
 class HeaderSearch extends React.PureComponent<HeaderSearchProps, State> {
-  private input: any;
-  private timeout: NodeJS.Timer;
-
   static defaultProps: DefaultProps = {
     defaultOpen: false,
     open: false
   };
-
   readonly state: State = {
     searchMode: this.props.defaultOpen,
     value: ''
-  };
+  };  private input: any;
+
+  private timeout: any;
+
 
   componentWillUnmount() {
     clearTimeout(this.timeout);

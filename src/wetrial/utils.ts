@@ -21,7 +21,6 @@ export function isPromise(obj: any): boolean {
     );
 }
 
-
 /**
  * 判断给定的字符串是否是个url地址
  * @param path 地址

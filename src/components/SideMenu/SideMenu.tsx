@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import ClassNames from 'classnames';
 import BaseMenu, { BaseMenuProps } from './BaseMenu';
-import PageLoading from '../PageLoading';
+import {PageLoading} from '@/wetrial';
 import { getDefaultCollapsedSubMenus } from './utils';
 import styles from './index.less';
 

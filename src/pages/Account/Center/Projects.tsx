@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Component } from '@/components/BaseComponent';
+import { Component } from '@/wetrial';
 
 @connect(({}) => ({}))
 class Projects extends Component {

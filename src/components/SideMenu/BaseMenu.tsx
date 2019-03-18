@@ -1,14 +1,14 @@
 import React from 'react';
 import H from 'history';
 import MemoizeOne from 'memoize-one';
-import isEqual from 'lodash/isEqual';
+import {isEqual} from 'lodash';
 import { Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
-import { MenuMode } from 'antd/es/menu';
+import { MenuMode,MenuTheme } from 'antd/es/menu';
 import { CollapseType } from 'antd/es/layout/Sider';
+import {PureComponent} from '@/wetrial'
 import { isUrl } from '@/utils/regexp';
-import { urlToList } from '@/utils/pathTools';
-import { MenuTheme } from '@/types/settings';
+import { urlToList } from '@/utils';
 import { getMenuMatches } from './utils';
 import styles from './index.less';
 
@@ -38,7 +38,7 @@ export interface BaseMenuProps {
   onOpenChange?: (openKeys: string[]) => void;
 }
 
-class BaseMenu extends React.PureComponent<BaseMenuProps, any> {
+class BaseMenu extends PureComponent<BaseMenuProps, any> {
   constructor(props) {
     super(props);
     this.getSelectedMenuKeys = MemoizeOne(this.getSelectedMenuKeys, isEqual);
@@ -46,7 +46,9 @@ class BaseMenu extends React.PureComponent<BaseMenuProps, any> {
 
   // 获取菜单子节点
   getNavMenuItems = (menusData) => {
-    if (!menusData) return [];
+    if (!menusData) {
+      return []
+    };
     return menusData
       .filter((item) => item.name && !item.hideInMenu)
       .map((item) => this.getSubMenuOrItem(item))

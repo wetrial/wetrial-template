@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { RouteProps } from 'react-router';
 import Authorized from './Authorized';
-import { TAuthority } from './IProps';
+import { TAuthority } from './type';
 
 interface IAuthorizedRouteProps extends RouteProps {
   authority: TAuthority;

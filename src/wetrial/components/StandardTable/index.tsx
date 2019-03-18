@@ -26,9 +26,9 @@ class StandardTable<T> extends React.PureComponent<StandardTableProps<T>, any> {
     }
   };
 
-  handleTableChange = (pagination, filters, sorter) => {
+  handleTableChange = (pagination, filters, sorter,extra) => {
     const { onChange } = this.props;
-    onChange && onChange(pagination, filters, sorter);
+    onChange && onChange(pagination, filters, sorter,extra);
   };
 
   render() {

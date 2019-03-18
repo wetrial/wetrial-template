@@ -1,6 +1,6 @@
 import React from 'react';
 import CheckPermissions from './CheckPermissions';
-import { TAuthority } from './IProps';
+import { TAuthority } from './type';
 
 export interface IAuthorizedProps {
   authority: TAuthority;

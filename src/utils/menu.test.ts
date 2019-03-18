@@ -1,7 +1,8 @@
-import { formatter } from '../authority';
+import { formatter } from './menu';
 
-describe('utils >> authority', () => {
+describe('utils >> menu', () => {
   describe('formatter', () => {
+    
     it('formatter([]) => []', () => {
       expect(formatter([])).toEqual([]);
     });

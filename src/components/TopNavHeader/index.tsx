@@ -1,14 +1,30 @@
 import React, { PureComponent } from 'react';
+
+import H from 'history';
+import { MenuMode,MenuTheme } from 'antd/es/menu';
+import { CollapseType } from 'antd/es/layout/Sider';
+
 import Link from 'umi/link';
 import RightContent from '../GlobalHeader/RightContent';
-import BaseMenu from '../SiderMenu/BaseMenu';
-import { getFlatMenuKeys } from '../SiderMenu/SiderMenuUtils';
+import BaseMenu from '../SideMenu/BaseMenu';
+import { getFlatMenuKeys } from '../SideMenu/utils';
+import defaultSettings from '@/defaultSettings';
 import styles from './index.less';
-import { title } from '../../defaultSettings';
 
 interface ITopNavHeaderProps {
-  theme: string;
-  contentWidth: string;
+  openKeys?: string[];
+  theme?: MenuTheme;
+  mode?: MenuMode;
+  flatMenuKeys?: any[];
+  location: H.Location;
+  style?: React.CSSProperties;
+  menuData: any[];
+  isMobile: boolean;
+  onCollapse: (collapsed: boolean, type?: CollapseType) => void;
+  onOpenChange?: (openKeys: string[]) => void;
+
+  logo:any;
+  contentWidth?:string;
 }
 
 interface IState {
@@ -26,24 +42,20 @@ export default class TopNavHeader extends PureComponent<ITopNavHeaderProps,IStat
     maxWidth: undefined,
   };
 
-
   render() {
-    const { theme, contentWidth, menuData, logo } = this.props;
+    const { theme, contentWidth, menuData, logo,location,isMobile,openKeys,mode } = this.props;
     const { maxWidth } = this.state;
     const flatMenuKeys = getFlatMenuKeys(menuData);
     return (
       <div className={`${styles.head} ${theme === 'light' ? styles.light : ''}`}>
-        <div
-          ref={ref => {
-            this.maim = ref;
-          }}
+        <div 
           className={`${styles.main} ${contentWidth === 'Fixed' ? styles.wide : ''}`}
         >
           <div className={styles.left}>
             <div className={styles.logo} key="logo" id="logo">
               <Link to="/">
                 <img src={logo} alt="logo" />
-                <h1>{title}</h1>
+                <h1>{defaultSettings.title}</h1>
               </Link>
             </div>
             <div
@@ -51,7 +63,17 @@ export default class TopNavHeader extends PureComponent<ITopNavHeaderProps,IStat
                 maxWidth,
               }}
             >
-              <BaseMenu {...this.props} flatMenuKeys={flatMenuKeys} className={styles.menu} />
+              <BaseMenu
+                openKeys={openKeys} 
+                theme={theme} 
+                mode={mode}
+                flatMenuKeys={flatMenuKeys} 
+                location={location}
+                menuData={menuData}
+                isMobile={isMobile}
+                onCollapse={()=>{return ;}}
+                className={styles.menu} 
+              />
             </div>
           </div>
           <RightContent {...this.props} />

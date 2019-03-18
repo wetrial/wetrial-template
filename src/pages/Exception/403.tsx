@@ -1,7 +1,7 @@
 import React from 'react';
 import { formatMessage } from 'umi/locale';
 import Link from 'umi/link';
-import Exception from '@/components/Exception';
+import {Exception} from '@/wetrial';
 
 const Exception403 = () => (
   <Exception

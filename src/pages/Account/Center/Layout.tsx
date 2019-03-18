@@ -3,21 +3,21 @@ import { connect } from 'dva';
 import { Row, Col, Card, Divider, Tag, Input, Icon, Spin, Avatar } from 'antd';
 import Link from 'umi/link';
 import router from 'umi/router';
-import { currentUserType, tagType } from '@/types/user';
-import { PureComponent } from '@/components/BaseComponent';
-import GridContent from '@/components/PageHeaderWrapper/GridContent';
+import { ICurrentUser, TTags } from '@/types/user';
+import { PureComponent } from '@/wetrial';
+import GridContent from '@/b-components/GridContent';
 import styles from './Layout.less';
 
 export interface CenterLayoutProps {
   currentUserLoading: boolean;
-  currentUser: currentUserType;
+  currentUser: ICurrentUser;
   listLoading: boolean;
   projectLoading: boolean;
   notice: any;
 }
 
 interface State {
-  readonly newTags: tagType[];
+  readonly newTags: TTags[];
   readonly inputVisible: boolean;
   readonly inputValue: string;
 }
@@ -30,12 +30,12 @@ interface State {
   projectLoading: loading.effects['project/fetchGetNotice']
 }))
 class CenterLayout extends PureComponent<CenterLayoutProps, State> {
-  private input: any;
   readonly state: State = {
     newTags: [],
     inputVisible: false,
     inputValue: ''
   };
+  private input: any;
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -83,9 +83,8 @@ class CenterLayout extends PureComponent<CenterLayoutProps, State> {
   };
 
   handleInputConfirm = () => {
-    const { state } = this;
-    const { inputValue } = state;
-    let { newTags } = state;
+    const { inputValue } = this.state;
+    let { newTags } = this.state;
     if (
       inputValue &&
       newTags.filter((tag) => tag.label === inputValue).length === 0

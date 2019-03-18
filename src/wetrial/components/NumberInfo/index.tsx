@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'antd';
 import ClassNames from 'classnames';
-import capitalize from 'lodash/capitalize';
+import {capitalize} from 'lodash';
 import styles from './index.less';
 
 export interface NumberInfoProps {

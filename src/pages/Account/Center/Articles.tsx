@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Icon, Tag } from 'antd';
 import { connect } from 'dva';
-import { Component } from '@/components/BaseComponent';
+import { Component } from '@/wetrial';
 import ArticleListContent from '../components/ArticleListContent';
 import styles from './Articles.less';
 
@@ -41,9 +41,9 @@ class Articles extends Component<ArticlesProps, any> {
           <List.Item
             key={item.id}
             actions={[
-              <IconText type="star-o" text={item.star} />,
-              <IconText type="like-o" text={item.like} />,
-              <IconText type="message" text={item.message} />
+              <IconText key="star-o" type="star-o" text={item.star} />,
+              <IconText key="like-o" type="like-o" text={item.like} />,
+              <IconText key="message" type="message" text={item.message} />
             ]}
           >
             <List.Item.Meta

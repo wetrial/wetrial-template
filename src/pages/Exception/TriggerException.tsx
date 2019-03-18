@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Spin, Card } from 'antd';
 import { connect } from 'dva';
-import { Component } from '@/components/BaseComponent';
+import { Component } from '@/wetrial';
 import styles from './style.less';
 
 @connect(({ error }) => ({

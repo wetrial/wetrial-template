@@ -1,4 +1,4 @@
-export const Permissions = {
+const Permissions = {
   app:'',
   project: {
     base: ``, // 项目菜单权限

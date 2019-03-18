@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import { formatMessage } from 'umi/locale';
 import styles from './index.less';
 
 interface ILoaderProps {
@@ -19,7 +18,7 @@ const Loader = (props: ILoaderProps) => {
     >
       <div className={styles.warpper}>
         <div className={styles.inner} />
-        <div className={styles.text}>{formatMessage({ id: 'component.pageloading.loading' })}</div>
+        <div className={styles.text}>...</div>
       </div>
     </div>
   );

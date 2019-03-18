@@ -21,5 +21,5 @@ function getList(req, res) {
 }
 
 export default {
-  'GET /application/list': getList
+  'GET /api/application/list': getList
 };

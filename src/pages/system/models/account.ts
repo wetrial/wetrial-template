@@ -1,4 +1,4 @@
-import { fetchPage } from '../services/account';
+import { fetchPage } from '@/services/user';
 
 export default {
   namespace: 'systemAccount',
@@ -17,6 +17,10 @@ export default {
     *fetchPage({ payload }, { call, put }) {
       const response = yield call(fetchPage, payload);
       if (response && response.code === 200) {
+        yield put({
+          type:'',
+          
+        })
       }
     }
   },

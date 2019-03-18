@@ -27,5 +27,5 @@ function getList(req, res) {
 
 export default {
   // 获取文章列表
-  'GET /article/list': getList
+  'GET /api/article/list': getList
 };

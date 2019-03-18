@@ -1,5 +1,5 @@
 import React from 'react';
-import { TAuthority, TReactComponent } from './IProps';
+import { TAuthority, TReactComponent } from './type';
 import Exception from '../Exception';
 import CheckPermissions from './CheckPermissions';
 

@@ -1,4 +1,4 @@
-import Permissions from '../src/constants/permissions';
+// import Permissions from '../src/constants/permissions';
 
 export default [
     // user
@@ -14,7 +14,7 @@ export default [
     {
       path: '/',
       component: '../layouts/BasicLayout',
-      authority:Permissions.app,
+      // authority:Permissions.app,
       routes: [
         // dashboard
         { path: '/', redirect: '/dashboard/analysis' },

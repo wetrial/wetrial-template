@@ -4,8 +4,8 @@ import { Location } from 'history';
 import { MenuMode } from 'antd/es/menu';
 import router from 'umi/router';
 import { FormattedMessage } from 'umi/locale';
-import { Component } from '@/components/BaseComponent';
-import GridContent from '@/components/PageHeaderWrapper/GridContent';
+import { Component } from '@/wetrial';
+import GridContent from '@/b-components/GridContent';
 import styles from './Layout.less';
 
 export interface SettingsLayoutProps {
@@ -47,8 +47,6 @@ const menuMap = {
 };
 
 class SettingsLayout extends Component<SettingsLayoutProps, State> {
-  private main: React.ReactNode;
-
   readonly state: State = {
     mode: 'inline',
     selectKey: 'base'
@@ -93,9 +91,6 @@ class SettingsLayout extends Component<SettingsLayoutProps, State> {
       <GridContent>
         <div
           className={styles.main}
-          ref={(ref) => {
-            this.main = ref;
-          }}
         >
           <div className={styles.leftMenu}>
             <Menu

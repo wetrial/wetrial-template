@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 import H from 'history';
 
-export interface ProviderStore {
+export type TProviderStore={
   location: H.Location;
   breadcrumbNameMap: any[];
 }
 
-export default createContext({} as ProviderStore);
+export default createContext({} as TProviderStore);

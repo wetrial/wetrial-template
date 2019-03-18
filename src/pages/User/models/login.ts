@@ -1,7 +1,6 @@
 import { routerRedux } from 'dva/router';
-import { fetchLogin } from '@/services/user.service';
-import { parseQuery } from '@/utils/url';
-import { setCookie } from '@/utils/cookie';
+import { fetchCurrentUser } from '@/services/user';
+import {setToken} from '@/wetrial/store'
 
 export default {
   namespace: 'login',
@@ -10,16 +9,15 @@ export default {
 
   effects: {
     *fetchLogin({ payload }, { call, put }) {
-      const response = yield call(fetchLogin, payload);
+      const response = yield call(fetchCurrentUser, payload);
       // login success
       if (response && response.code === 200) {
         const { token } = response.data;
         if (token) {
-          setCookie('', token);
+          setToken(token);
         }
         const urlParams = new URL(window.location.href);
-        const params = parseQuery();
-        let { redirect } = params;
+        let redirect='';
         // 处理登录重定向
         if (redirect) {
           const redirectUrlParams = new URL(redirect);

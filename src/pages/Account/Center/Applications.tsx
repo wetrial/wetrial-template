@@ -1,8 +1,7 @@
 import React from 'react';
 import { List, Card, Icon, Dropdown, Menu, Avatar, Tooltip } from 'antd';
-import Numeral from 'numeral';
 import { connect } from 'dva';
-import { PureComponent } from '@/components/BaseComponent';
+import { PureComponent } from '@/wetrial';
 
 export interface ApplicationsProps {
   list: any[];
@@ -65,19 +64,19 @@ class Applications extends PureComponent<ApplicationsProps, any> {
         renderItem={(item) => (
           <List.Item key={item.id}>
             <Card
-              hoverable
+              hoverable={true}
               bodyStyle={{ paddingBottom: 20 }}
               actions={[
-                <Tooltip title="下载">
+                <Tooltip key="download" title="下载">
                   <Icon type="download" />
                 </Tooltip>,
-                <Tooltip title="编辑">
+                <Tooltip key="edit" title="编辑">
                   <Icon type="edit" />
                 </Tooltip>,
-                <Tooltip title="分享">
+                <Tooltip key="share-alt" title="分享">
                   <Icon type="share-alt" />
                 </Tooltip>,
-                <Dropdown overlay={itemMenu}>
+                <Dropdown key="dropdown" overlay={itemMenu}>
                   <Icon type="ellipsis" />
                 </Dropdown>
               ]}
@@ -90,7 +89,7 @@ class Applications extends PureComponent<ApplicationsProps, any> {
               <div>
                 <CardInfo
                   activeUser={item.activeUser}
-                  newUser={Numeral(item.newUser).format('0,0')}
+                  newUser={item.newUser}
                 />
               </div>
             </Card>

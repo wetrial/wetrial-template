@@ -1,9 +1,10 @@
-export type TagType = {
-  key: string;
-  label: string;
-};
 
-export interface ICurrentUserType {
+export type TTags={
+  label:string;
+  key:string
+}
+
+export interface ICurrentUser {
   name: string;
   realName: string;
   unreadCount: number;
@@ -13,5 +14,5 @@ export interface ICurrentUserType {
   signature: string;
   title: string;
   group: string;
-  tags: TagType[];
+  tags:TTags[]
 }

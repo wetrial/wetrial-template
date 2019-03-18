@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import { BaseButtonProps } from 'antd/es/button/button';
-import { isPromise } from '@/utils/base';
+import { isPromise } from '../../utils';
 
 export interface SendCodeProps extends BaseButtonProps {
   second?: number;
@@ -29,7 +29,6 @@ interface State {
 
 // 发送验证码倒计时组件
 class SendCode extends React.Component<SendCodeProps, State> {
-  private timer: NodeJS.Timer;
   static defaultProps: DefaultProps = {
     second: 60,
     initText: '获取短信验证码',
@@ -44,6 +43,9 @@ class SendCode extends React.Component<SendCodeProps, State> {
     start: false
   };
 
+  private timer: number;
+ 
+
   componentWillUnmount() {
     this.timeout();
   }
@@ -54,10 +56,12 @@ class SendCode extends React.Component<SendCodeProps, State> {
     const { onGetCaptcha } = this.props;
     const result = onGetCaptcha ? onGetCaptcha() : null;
 
-    if (!result === false) return;
+    if (result===false){
+      return;
+    }
 
     if (isPromise(result)) {
-      result.then(this.start);
+      (result as Promise<any>).then(this.start);
     } else {
       this.start();
     }
@@ -70,7 +74,7 @@ class SendCode extends React.Component<SendCodeProps, State> {
     });
     this.timer = setInterval(() => {
       const { lastSecond, runSecond } = this.state;
-      let second = lastSecond ? lastSecond : runSecond;
+      const second = lastSecond ? lastSecond : runSecond;
 
       this.setState({
         buttonText: this.getButtonText(second),

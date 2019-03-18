@@ -1,28 +1,27 @@
-import React from 'react';
-import { Dropdown, Avatar, Menu, Icon, Spin, Tag } from 'antd';
+
 import { SelectParam } from 'antd/es/menu';
+import { ICurrentUser } from '@/types/user';
+
+import React from 'react';
 import ClassNames from 'classnames';
 import Moment from 'moment';
-import groupBy from 'lodash/groupBy';
+import {groupBy} from 'lodash';
 import { FormattedMessage, formatMessage } from 'umi/locale';
-import { currentUserType } from '@/types/user';
+import { Dropdown, Avatar, Menu, Icon, Spin, Tag } from 'antd';
 import HeaderSearch, { HeaderSearchProps } from '../HeaderSearch';
 import NoticeIcon, { NoticeIconProps } from '../NoticeIcon';
 import SelectLang from '../SelectLang';
 import styles from './index.less';
 
 export interface GlobalHeaderRightProps {
-  currentUser?: currentUserType;
+  currentUser?: ICurrentUser;
   onMenuClick?: (params: SelectParam) => void;
   headerSearch?: boolean | HeaderSearchProps;
   noticeIcon?: false | NoticeIconProps;
   notices?: any[];
 }
 
-class GlobalHeaderRight extends React.PureComponent<
-  GlobalHeaderRightProps,
-  any
-> {
+class GlobalHeaderRight extends React.PureComponent<GlobalHeaderRightProps,any> {
   getNoticeData() {
     const { notices = [] } = this.props;
 

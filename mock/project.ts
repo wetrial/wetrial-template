@@ -91,10 +91,10 @@ function getNotice(req, res) {
 }
 
 function getList(req, res) {
-
+  return []
 }
 
 export default {
-  'GET /project/notice': getNotice,
-  'GET /project/list': getList,
+  'GET /api/project/notice': getNotice,
+  'GET /api/project/list': getList,
 }

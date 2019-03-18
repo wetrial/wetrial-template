@@ -6,7 +6,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-export interface PageHeaderProps {
+export interface IPageHeaderProps {
   className?: string;
   title?: React.ReactNode | string;
   logo?: React.ReactNode | string;
@@ -25,7 +25,7 @@ export interface PageHeaderProps {
   loading?: boolean;
 }
 
-class PageHeader extends React.PureComponent<PageHeaderProps, any> {
+class PageHeader extends React.PureComponent<IPageHeaderProps, any> {
   static defaultProps = {
     className: ''
   };
@@ -79,7 +79,7 @@ class PageHeader extends React.PureComponent<PageHeaderProps, any> {
           <Skeleton
             loading={loading}
             title={false}
-            active
+            active={true}
             paragraph={{ rows: 3 }}
             avatar={{ size: 'large', shape: 'circle' }}
           >

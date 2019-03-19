@@ -1,18 +1,20 @@
-import React from 'react';
-import { Layout } from 'antd';
 import H from 'history';
+import { Dispatch } from 'redux';
+import { ISettingsModelState } from '@/types/settings';
+
+import { Layout } from 'antd';
+import React from 'react';
 import DocumentTitle from 'react-document-title';
 import { ContainerQuery } from 'react-container-query';
-import PathToRegexp from 'path-to-regexp';
 import { connect } from 'dva';
-import { formatMessage } from 'umi/locale';
+import classNames from 'classnames';
 import Media from 'react-media';
-import { Dispatch } from 'redux';
-import SideMenu from '@/wetrial/components/SideMenu';
-import { ISettingsModelState } from '@/types/settings';
+import SiderMenu from '@/components/SiderMenu';
 import Context from './MenuContext';
 import Header from './Header';
 import Footer from './Footer';
+import getPageTitle from '@/utils/getPageTitle';
+import styles from './BasicLayout.less';
 import logo from '../assets/logo.svg';
 
 const { Content } = Layout;
@@ -48,124 +50,85 @@ export interface BasicLayoutProps {
     routes: any[];
     path: string;
     component: React.ReactNode;
+    authority: string | string[]
   };
   dispatch: Dispatch<any>;
   location: H.Location;
   setting: ISettingsModelState;
   collapsed: boolean;
-  fixSliderBar: boolean;
   menuData: any[];
   breadcrumbNameMap: any[];
   isMobile: boolean;
 }
 
-interface State {
-  rendering: boolean;
-}
-
-class BasicLayout extends React.PureComponent<BasicLayoutProps, State> {
+class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
   readonly breadcrumbNameMap: object;
-  
-  readonly state: State = {
-    rendering: true
-  };
 
   componentDidMount() {
     const {
       dispatch,
-      route: { routes }
+      route: { routes, authority },
     } = this.props;
-    // 获取当前用户信息
+
     dispatch({
-      type: 'user/fetchCurrent'
+      type: 'user/getCurrent',
     });
-    // 获取菜单数据
+
     dispatch({
       type: 'menu/getMenuData',
-      payload: { routes }
+      payload: { routes, authority },
     });
   }
-
-  matchParamsPath = (pathname: string) => {
-    const { breadcrumbNameMap } = this.props;
-    const pathKey = Object.keys(breadcrumbNameMap).find((key) =>
-      PathToRegexp(key).test(pathname)
-    );
-    return breadcrumbNameMap[pathKey];
-  };
-
-  getPageTitle = (pathname: string) => {
-    const currRouterData = this.matchParamsPath(pathname);
-
-    if (!currRouterData) {
-      return 'Ant Design Pro';
-    }
-
-    const message = formatMessage({
-      id: currRouterData.locale || currRouterData.name,
-      defaultMessage: currRouterData.name
-    });
-
-    return `${message} - Ant Design Pro`;
-  };
 
   getContext() {
     const { location, breadcrumbNameMap } = this.props;
     return {
       location,
-      breadcrumbNameMap
+      breadcrumbNameMap,
     };
   }
 
-  handleMenuCollapse = (collapsed) => {
-    const { dispatch } = this.props;
-
-    dispatch({
-      type: 'global/changeLayoutCollapsed',
-      payload: collapsed
-    });
-  };
-
   getLayoutStyle = () => {
-    const { isMobile } = this.props;
     const {
-      collapsed,
-      setting: { layout, fixSideBar }
+      setting: {
+        fixSiderbar,
+        layout
+      },
+      isMobile,
+      collapsed
     } = this.props;
-    if (fixSideBar && layout !== 'topMenu' && !isMobile) {
+    if (fixSiderbar && layout !== 'topmenu' && !isMobile) {
       return {
-        paddingLeft: collapsed ? '80px' : '256px'
+        paddingLeft: collapsed ? '80px' : '256px',
       };
     }
     return null;
   };
 
-  getContentStyle = () => {
-    const {
-      setting: { fixedHeader }
-    } = this.props;
-    return {
-      margin: '24px 24px 0',
-      paddingTop: fixedHeader ? 64 : 0
-    };
+  handleMenuCollapse = collapsed => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'global/changeCollapsed',
+      payload: collapsed,
+    });
   };
 
   render() {
     const {
-      setting: { navTheme },
       children,
-      menuData,
+      location: { pathname },
       isMobile,
-      setting,
-      collapsed,
-      location: { pathname }
+      menuData,
+      breadcrumbNameMap,
+      setting:{fixedHeader,navTheme,layout:PropsLayout},
     } = this.props;
-    const pageTitle = this.getPageTitle(pathname);
 
+    const isTop = PropsLayout === 'topmenu';
+    const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const layout = (
       <Layout>
-        {isMobile ? null : (
-          <SideMenu
+        {isTop && !isMobile ? null : (
+          <SiderMenu
             logo={logo}
             theme={navTheme}
             onCollapse={this.handleMenuCollapse}
@@ -177,28 +140,33 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, State> {
         <Layout
           style={{
             ...this.getLayoutStyle(),
-            minHeight: '100vh'
+            minHeight: '100vh',
           }}
         >
           <Header
-            logo={logo}
-            setting={setting}
-            collapsed={collapsed}
-            isMobile={isMobile}
+            menuData={menuData}
             handleMenuCollapse={this.handleMenuCollapse}
+            logo={logo}
+            isMobile={isMobile}
+            {...this.props}
           />
-          <Content style={this.getContentStyle()}>{children}</Content>
+          <Content className={styles.content} style={contentStyle}>
+            {children}
+          </Content>
           <Footer />
         </Layout>
       </Layout>
     );
-
     return (
       <React.Fragment>
-        <DocumentTitle title={pageTitle}>
-          <Context.Provider value={this.getContext()}>
-            <div>{layout}</div>
-          </Context.Provider>
+        <DocumentTitle title={getPageTitle(pathname, breadcrumbNameMap)}>
+          <ContainerQuery query={query}>
+            {params => (
+              <Context.Provider value={this.getContext()}>
+                <div className={classNames(params)}>{layout}</div>
+              </Context.Provider>
+            )}
+          </ContainerQuery>
         </DocumentTitle>
       </React.Fragment>
     );
@@ -207,12 +175,11 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, State> {
 
 export default connect(({ global, setting, menu }) => ({
   collapsed: global.collapsed,
-  layout: setting.layout,
   menuData: menu.menuData,
   breadcrumbNameMap: menu.breadcrumbNameMap,
   setting
 }))((props) => (
   <Media query="(max-width: 599px)">
-    {(isMobile) => <BasicLayout {...props} isMobile={isMobile} />}
+    {isMobile => <BasicLayout {...props} isMobile={isMobile} />}
   </Media>
 ));

@@ -1,13 +1,27 @@
 import {API_PREFIX} from '@/constants';
-import { get } from '@/wetrial/request';
+import { get,post } from '@/wetrial/request';
 
-export function fetchCurrentUser() {
-  return get(`${API_PREFIX}user/current`);
+/**
+ * 获取当前用户信息
+ */
+export function getCurrent() {
+  return get(`${API_PREFIX}user/getCurrent`);
 }
 
-export function fetchPage(data){
-  return get({
-    url:`${API_PREFIX}user/getPaged`,
+/**
+ * 登录
+ * @param {object} data 登录传递的数据
+ */
+export function login(data){
+  return post({
+    url:`${API_PREFIX}user/login`,
     data
   });
+}
+
+/**
+ * 注销登录
+ */
+export function loginout(){
+  return get(`${API_PREFIX}user/loginout`);
 }

@@ -1,13 +1,13 @@
+import { PureComponent } from '@/wetrial';
+import { ISettingsModelState } from '@/types/settings';
+
 import React from 'react';
-import { Layout, message } from 'antd';
+import { Layout } from 'antd';
 import Animate from 'rc-animate';
-import { formatMessage } from 'umi/locale';
 import router from 'umi/router';
-import { Dispatch } from 'redux';
 import { connect } from 'dva';
 import GlobalHeader from '@/components/GlobalHeader';
-import { PureComponent } from '@/components/BaseComponent';
-import { settingsModelState } from '@/types/settings';
+
 
 const { Header } = Layout;
 
@@ -18,7 +18,7 @@ export interface HeaderProps {
   handleMenuCollapse?: (collapsed: boolean) => any;
   fetchingNotices?: boolean;
   currentUser?: any;
-  setting: settingsModelState;
+  setting: ISettingsModelState;
   notices?: any[];
 }
 
@@ -63,9 +63,9 @@ class HeaderView extends PureComponent<HeaderProps, any> {
     }
   };
 
-  getHeadWidth = () => {
-    const { isMobile, collapsed } = this.props;
-  };
+  // getHeadWidth = () => {
+  //   const { isMobile, collapsed } = this.props;
+  // };
 
   render() {
     const {
@@ -74,7 +74,6 @@ class HeaderView extends PureComponent<HeaderProps, any> {
       currentUser,
       logo,
       collapsed,
-      setting,
       notices
     } = this.props;
     const { visible } = this.state;

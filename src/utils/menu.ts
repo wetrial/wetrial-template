@@ -1,14 +1,12 @@
 import MemoizeOne from 'memoize-one';
-import {isEqual} from 'lodash';
+import { isEqual } from 'lodash';
 import { formatMessage } from 'umi/locale';
 
 export interface Formatter {
-  (
-    routes: any[],
-    parentAuth?: string,
-    parentName?: string,
-    paths?: any[]
-  ): any[];
+  routes?: any;
+  parentAuth?: string;
+  parentName?: string;
+  paths?: any[];
 }
 
 /**
@@ -18,18 +16,12 @@ export interface Formatter {
  * @param parentName
  * @param paths
  */
-export const formatter: Formatter = function(
-  routes,
-  parentAuth,
-  parentName,
-  paths
-) {
+export const formatter = (routes, parentAuth, parentName, paths) => {
   return routes
     .map((item) => {
       if (!item.name || !item.path) {
         return null;
       }
-
       // 处理多语言
       let locale = 'menu';
       if (parentName) {

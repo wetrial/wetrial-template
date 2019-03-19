@@ -1,5 +1,5 @@
 import React from 'react';
-import GlobalFooter from '@/components/GlobalFooter';
+import {GlobalFooter} from '@/wetrial';
 import SelectLang from '@/components/SelectLang';
 import { copyright } from './Footer';
 import styles from './UserLayout.less';

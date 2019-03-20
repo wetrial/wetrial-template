@@ -1,6 +1,8 @@
 // api 前缀
 export const API_PREFIX = '/api/';
 
+export const COMPANY_NAME='湖南微试云';
+
 // 默认页码
 export const PAGE_SIZE = 15;
 

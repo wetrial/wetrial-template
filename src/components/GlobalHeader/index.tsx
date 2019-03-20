@@ -10,6 +10,9 @@ export interface GlobalHeaderProps extends GlobalHeaderRightProps {
   isMobile: boolean;
   collapsed?: boolean;
   onCollapse?: (collapse: boolean) => void;
+  onNoticeClear?:(type:any)=>void;
+  onMenuClick:({key})=>void;
+  onNoticeVisibleChange:(visible:boolean)=>void;
 }
 
 class GlobalHeader extends React.PureComponent<GlobalHeaderProps, any> {

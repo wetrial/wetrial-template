@@ -3,12 +3,12 @@ import H from 'history';
 import MemoizeOne from 'memoize-one';
 import {isEqual} from 'lodash';
 import { Menu, Icon } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link } from 'umi';
 import { MenuMode,MenuTheme } from 'antd/es/menu';
 import { CollapseType } from 'antd/es/layout/Sider';
 import {PureComponent} from '@/wetrial'
 import { isUrl } from '@/utils/regexp';
-import { urlToList } from '@/utils';
+import { urlToList } from '@/wetrial/utils';
 import { getMenuMatches } from './utils';
 import styles from './index.less';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Component } from '@/components/BaseComponent';
+import { Component } from '@/wetrial';
 
 class SecurityView extends Component {
   render() {

@@ -14,6 +14,7 @@ export default [
     {
       path: '/',
       component: '../layouts/BasicLayout',
+      // Routes: ['src/pages/Authorized'],
       // authority:Permissions.app,
       routes: [
         // dashboard

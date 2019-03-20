@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'umi';
 import { RouteProps } from 'react-router';
 import Authorized from './Authorized';
 import { TAuthority } from './type';

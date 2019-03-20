@@ -104,8 +104,8 @@ const getAll = (req, res) => {
 
 // 调用 delay 函数，统一处理
 export default delay({
-  'GET /api/getAll': getAll,
-  'GET /api/getMessages':getMessages,
-  'GET /api/getTodos':getTodos,
-  'GET /api/getNotifys':getNotifys,
+  'GET /api/message/getAll': getAll,
+  'GET /api/message/getMessages':getMessages,
+  'GET /api/message/getTodos':getTodos,
+  'GET /api/message/getNotifys':getNotifys,
 }, 1000);

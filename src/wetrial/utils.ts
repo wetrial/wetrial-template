@@ -7,6 +7,10 @@ export function interopDefault(m: any) {
     return m.default || m;
 }
 
+export function urlToList(url: string) {
+    const urlList = url.split('/').filter((i) => i);
+    return urlList.map((_, index) => `/${urlList.slice(0, index + 1).join('/')}`);
+}
 
 /**
  * 判断对象是否是Promise类型

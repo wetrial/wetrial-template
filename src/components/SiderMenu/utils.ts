@@ -1,5 +1,5 @@
 import PathToRegexp from 'path-to-regexp';
-import { urlToList } from '@/utils';
+import { urlToList } from '@/wetrial/utils';
 
 export const getFlatMenuKeys = (menuData) => {
   let keys = [];

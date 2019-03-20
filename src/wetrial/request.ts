@@ -65,7 +65,7 @@ export const get = (opt: IRequestOption|string) => {
     options=opt;
   }
   return fetch({
-    ...omit(opt, 'data'),
+    ...omit(options, 'data'),
     method: 'get',
     params: options.data,
     showTip: false,

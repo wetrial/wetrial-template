@@ -6,8 +6,8 @@ import { CollapseType } from 'antd/es/layout/Sider';
 
 import Link from 'umi/link';
 import RightContent from '../GlobalHeader/RightContent';
-import BaseMenu from '../SideMenu/BaseMenu';
-import { getFlatMenuKeys } from '../SideMenu/utils';
+import BaseMenu from '../SiderMenu/BaseMenu';
+import { getFlatMenuKeys } from '../SiderMenu/utils';
 import defaultSettings from '@/defaultSettings';
 import styles from './index.less';
 
@@ -22,6 +22,10 @@ interface ITopNavHeaderProps {
   isMobile: boolean;
   onCollapse: (collapsed: boolean, type?: CollapseType) => void;
   onOpenChange?: (openKeys: string[]) => void;
+
+  onNoticeClear?:(type:any)=>void;
+  onMenuClick:({key})=>void;
+  onNoticeVisibleChange:(visible:boolean)=>void;
 
   logo:any;
   contentWidth?:string;

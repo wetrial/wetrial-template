@@ -8,6 +8,7 @@ export default {
   history: 'hash',
   // hash: true,
   targets: { ie: 11 },
+  routes: pageRoutes,
   treeShaking: true,
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
@@ -15,7 +16,10 @@ export default {
       'umi-plugin-react',
       {
         antd: true,
-        dva: { immer: true },
+        dva: { 
+          hmr: true,
+          immer: true 
+        },
         locale: {
           enable: true, // default false
           default: 'zh-CN', // default zh-CN
@@ -32,12 +36,7 @@ export default {
           exclude:['wetrial']
         },
         hardSource: process.platform === 'darwin' /* isMac */,
-        pwa: {
-          manifestOptions: {
-            srcPath: 'manifest.json'
-          },
-        },
-        routes: pageRoutes,
+        pwa:false
       },
     ],
   ],
@@ -81,6 +80,9 @@ export default {
       }
       return localName;
     },
+  },
+  manifest: {
+    basePath: '/',
   },
   // chainWebpack(config) {
   //   // css打包成一个文件

@@ -15,7 +15,7 @@ import Header from './Header';
 import Footer from './Footer';
 import getPageTitle from '@/utils/getPageTitle';
 import styles from './BasicLayout.less';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.jpg';
 
 const { Content } = Layout;
 

@@ -1,5 +1,3 @@
-import { fetchPage } from '@/services/user';
-
 export default {
   namespace: 'systemAccount',
 
@@ -12,19 +10,6 @@ export default {
       }
     }
   },
-
-  effects: {
-    *fetchPage({ payload }, { call, put }) {
-      const response = yield call(fetchPage, payload);
-      if (response && response.code === 200) {
-        yield put({
-          type:'',
-          
-        })
-      }
-    }
-  },
-
   reducers: {
     saveTableData(state, { payload }) {
       return {

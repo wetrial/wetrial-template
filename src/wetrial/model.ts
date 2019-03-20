@@ -10,10 +10,10 @@ interface IModel {
 
 const baseModel = {
     reducers: {
-        update(state, newState) {
+        update(state, {payload}) {
             return {
                 ...state,
-                ...newState
+                ...payload
             }
         }
     }

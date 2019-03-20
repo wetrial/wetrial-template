@@ -134,7 +134,6 @@ class GlobalHeaderRight extends React.PureComponent<GlobalHeaderRightProps,any> 
   };
   render() {
     const { onMenuClick, currentUser } = this.props;
-
     const NoticeDom = this.getNoticeDom();
 
     const menu = (

@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router';
-import { fetchCurrentUser } from '@/services/user';
+import { getCurrent } from '@/services/user';
 import {setToken} from '@/wetrial/store'
 
 export default {
@@ -9,7 +9,7 @@ export default {
 
   effects: {
     *fetchLogin({ payload }, { call, put }) {
-      const response = yield call(fetchCurrentUser, payload);
+      const response = yield call(getCurrent, payload);
       // login success
       if (response && response.code === 200) {
         const { token } = response.data;

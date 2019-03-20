@@ -51,7 +51,7 @@ export const fetch = (opt: IRequestOption) => {
   };
   const { url } = opt;
   return request(url, fetchOption).then(result => {
-    return result.data;
+    return result.result;
   });
 };
 

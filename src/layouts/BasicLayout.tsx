@@ -88,22 +88,22 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
     };
   }
 
-  getLayoutStyle = () => {
-    const {
-      setting: {
-        fixSiderbar,
-        layout
-      },
-      isMobile,
-      collapsed
-    } = this.props;
-    if (fixSiderbar && layout !== 'topmenu' && !isMobile) {
-      return {
-        paddingLeft: collapsed ? '80px' : '256px',
-      };
-    }
-    return null;
-  };
+  // getLayoutStyle = () => {
+  //   const {
+  //     setting: {
+  //       fixSiderbar,
+  //       layout
+  //     },
+  //     isMobile,
+  //     collapsed
+  //   } = this.props;
+  //   if (fixSiderbar && layout !== 'topmenu' && !isMobile) {
+  //     return {
+  //       paddingLeft: collapsed ? '80px' : '256px',
+  //     };
+  //   }
+  //   return null;
+  // };
 
   handleMenuCollapse = collapsed => {
     const { dispatch } = this.props;
@@ -139,7 +139,6 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
         )}
         <Layout
           style={{
-            ...this.getLayoutStyle(),
             minHeight: '100vh',
           }}
         >

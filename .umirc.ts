@@ -5,8 +5,8 @@ import pageRoutes from './config/router.config'
 
 // ref: https://umijs.org/config/
 export default {
-  history: 'hash',
-  // hash: true,
+  // history: 'hash',
+  hash: true,
   targets: { ie: 11 },
   routes: pageRoutes,
   treeShaking: true,
@@ -15,11 +15,11 @@ export default {
     [
       'umi-plugin-react',
       {
-        antd: true,
-        dva: { 
+        dva: {
           hmr: true,
-          immer: true 
+          immer: true
         },
+        antd: true,
         locale: {
           enable: true, // default false
           default: 'zh-CN', // default zh-CN
@@ -32,11 +32,10 @@ export default {
         },
         title: 'wetrial-template',
         dll: {
-          include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch', 'antd/es'],
-          exclude:['wetrial']
+          include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch','antd/es']
         },
         hardSource: process.platform === 'darwin' /* isMac */,
-        pwa:false
+        pwa: false
       },
     ],
   ],
@@ -58,29 +57,29 @@ export default {
     javascriptEnabled: true,
   },
   disableRedirectHoist: true,
-  cssLoaderOptions: {
-    modules: true,
-    getLocalIdent: (context, localIdentName, localName) => {
-      if (
-        context.resourcePath.includes('node_modules') ||
-        context.resourcePath.includes('global.less') ||
-        context.resourcePath.includes('styles\\theme.less') ||
-        context.resourcePath.includes('styles\\mixin.less')
-      ) {
-        return localName;
-      }
-      const match = context.resourcePath.match(/src(.*)/);
-      if (match && match[1]) {
-        const antdProPath = match[1].replace('.less', '');
-        const arr = slash(antdProPath)
-          .split('/')
-          // .map(a => a.replace(/([A-Z])/g, '-$1'))
-          .map(a => a.toLowerCase());
-        return `wt-${arr.join('-')}-${localName}`.replace(/--/g, '-');
-      }
-      return localName;
-    },
-  },
+  // cssLoaderOptions: {
+  //   modules: true,
+  //   getLocalIdent: (context, localIdentName, localName) => {
+  //     if (
+  //       context.resourcePath.includes('node_modules') ||
+  //       context.resourcePath.includes('global.less') ||
+  //       context.resourcePath.includes('styles\\theme.less') ||
+  //       context.resourcePath.includes('styles\\mixin.less')
+  //     ) {
+  //       return localName;
+  //     }
+  //     const match = context.resourcePath.match(/src(.*)/);
+  //     if (match && match[1]) {
+  //       const antdProPath = match[1].replace('.less', '');
+  //       const arr = slash(antdProPath)
+  //         .split('/')
+  //         // .map(a => a.replace(/([A-Z])/g, '-$1'))
+  //         .map(a => a.toLowerCase());
+  //       return `wt-${arr.join('-')}-${localName}`.replace(/--/g, '-');
+  //     }
+  //     return localName;
+  //   },
+  // },
   manifest: {
     basePath: '/',
   },

@@ -15,7 +15,6 @@ import styles from './Header.less';
 const { Header } = Layout;
 
 export interface HeaderProps {
-  logo: string;
   isMobile: boolean;
   collapsed: boolean;
   handleMenuCollapse?: (collapsed: boolean) => any;

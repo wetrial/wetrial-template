@@ -143,6 +143,7 @@ class BaseMenu extends PureComponent<BaseMenuProps, any> {
       menuData
     } = this.props;
     let selectedKeys = this.getSelectedMenuKeys(pathname);
+  
     if (!selectedKeys.length && openKeys) {
       selectedKeys = [openKeys[openKeys.length - 1]];
     }

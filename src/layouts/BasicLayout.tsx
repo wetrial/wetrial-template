@@ -15,7 +15,9 @@ import Header from './Header';
 import Footer from './Footer';
 import getPageTitle from '@/utils/getPageTitle';
 import styles from './BasicLayout.less';
-import logo from '../assets/logo.jpg';
+
+import logo from '@/assets/imgs/wetrial-logo.jpg';
+import smallLogo from '@/assets/imgs/wetrial-logo-small.jpg';
 
 const { Content } = Layout;
 
@@ -121,6 +123,7 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
       menuData,
       breadcrumbNameMap,
       setting:{fixedHeader,navTheme,layout:PropsLayout},
+      collapsed
     } = this.props;
 
     const isTop = PropsLayout === 'topmenu';
@@ -129,7 +132,7 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
       <Layout>
         {isTop && !isMobile ? null : (
           <SiderMenu
-            logo={logo}
+            logo={collapsed?smallLogo:logo}
             theme={navTheme}
             onCollapse={this.handleMenuCollapse}
             menuData={menuData}
@@ -145,7 +148,6 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
           <Header
             menuData={menuData}
             handleMenuCollapse={this.handleMenuCollapse}
-            logo={logo}
             isMobile={isMobile}
             {...this.props}
           />

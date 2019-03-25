@@ -1,10 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Icon, Tabs, Badge, Spin } from 'antd';
 import ClassNames from 'classnames';
 import HeaderDropDown from '../HeaderDropDown';
-import { NoticeData } from './NoticeList';
-import List from './NoticeList';
+import NoticeList,{ NoticeData } from './NoticeList';
 import NoticeTab from './NoticeTab';
 import styles from './index.less';
 
@@ -47,7 +45,6 @@ interface State {
 
 class NoticeIcon extends React.PureComponent<NoticeIconProps, State> {
   static Tab = NoticeTab;
-  private dropDown: React.ReactNode;
 
   static defaultProps: DefaultProps = {
     bell: <Icon type="bell" className={styles.icon} />,
@@ -86,8 +83,10 @@ class NoticeIcon extends React.PureComponent<NoticeIconProps, State> {
   };
 
   getNotificationBox() {
-    const { children, loading, locale, onClear } = this.props;
-    if (!children) return null;
+    const { children, loading, locale } = this.props;
+    if (!children){
+      return null
+    }
     const panes = React.Children.map(
       children as React.ReactNode,
       (child: React.ReactElement<any>) => {
@@ -97,7 +96,7 @@ class NoticeIcon extends React.PureComponent<NoticeIconProps, State> {
         const tabTitle = msgCount > 0 ? `${title} (${msgCount})` : title;
         return (
           <TabPane tab={tabTitle} key={name}>
-            <List
+            <NoticeList
               {...child.props}
               data={list}
               onClick={(item) => this.onItemClick(item, child.props)}
@@ -164,7 +163,6 @@ class NoticeIcon extends React.PureComponent<NoticeIconProps, State> {
         trigger={['click']}
         visible={visible}
         onVisibleChange={this.handleVisibleChange}
-        ref={(node) => (this.dropDown = ReactDOM.findDOMNode(node))}
       >
         {trigger}
       </HeaderDropDown>

@@ -15,7 +15,7 @@ const defaultSettings:ISettingsModelState= {
     "title": "Wetrial",
     "pwa": true,
     "collapse": true,
-    "iconfontUrl": "//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js" // iconfont库地址 
+    "iconFontUrl": "//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js" // iconfont库地址 
 }
 
 export default defaultSettings;

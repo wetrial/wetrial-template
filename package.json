@@ -14,8 +14,8 @@
     "build": "umi build",
     "analyze": "cross-env ANALYZE=1 umi build",
     "test": "umi-test",
-    "lint": "umi-lint src",
-    "precommit": "umi-lint --staged --stylelint --prettier --fix"
+    "lint": "umi-lint --eslint.ext='.js,jsx' --tslint --stylelint src",
+    "precommit": "umi-lint --staged --stylelint --tslint --eslint.ext='.js,jsx' --prettier --fix"
   },
   "dependencies": {
     "antd": "^3.15.0",
@@ -54,8 +54,11 @@
     "mockjs": "^1.0.1-beta3",
     "react-test-renderer": "^16.8.4",
     "roadhog-api-doc": "^1.1.2",
+    "stylelint-config-css-modules": "^1.3.0",
     "stylelint-config-prettier": "^5.0.0",
     "stylelint-config-standard": "^18.2.0",
+    "stylelint-declaration-block-no-ignored-properties": "^1.1.0",
+    "stylelint-order": "^2.1.0",
     "tslint": "^5.14.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0",

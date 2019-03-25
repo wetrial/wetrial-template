@@ -27,7 +27,9 @@ class LoginPage extends Component<LoginPageProps, State> {
     event.preventDefault();
     const { form, dispatch } = this.props;
     form.validateFields((error, values) => {
-      if (error) return;
+      if (error) {
+        return;
+      }
       dispatch({
         type: 'login/fetchLogin',
         payload: values

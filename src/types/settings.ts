@@ -17,5 +17,5 @@ export interface ISettingsModelState {
   title?:string;
   pwa?:boolean;
   collapse?:boolean;
-  iconfontUrl?:string;
+  iconFontUrl?:string;
 }

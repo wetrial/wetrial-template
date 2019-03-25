@@ -3,31 +3,31 @@ import { Drawer } from 'antd';
 import SideMenu, { SideMenuProps } from './SideMenu';
 import { getFlatMenuKeys } from './utils';
 
-class SideMenuWrapper extends React.PureComponent<SideMenuProps, any> {
-  render() {
-    const { menuData, isMobile, collapsed, onCollapse } = this.props;
-    const flatMenuKeys = getFlatMenuKeys(menuData);
 
-    return isMobile ? (
-      <Drawer
-        visible={!collapsed}
-        placement="left"
-        onClose={() => onCollapse(true)}
-        style={{
-          padding: 0,
-          height: '100vh'
-        }}
-      >
-        <SideMenu
-          {...this.props}
-          flatMenuKeys={flatMenuKeys}
-          collapsed={isMobile ? false : collapsed}
-        />
-      </Drawer>
-    ) : (
-      <SideMenu {...this.props} flatMenuKeys={flatMenuKeys} />
-    );
-  }
-}
+const SiderMenuWrapper= React.memo((props:SideMenuProps) => {
+  
+  const { menuData, isMobile, collapsed, onCollapse } = props;
+  const flatMenuKeys = getFlatMenuKeys(menuData);
 
-export default SideMenuWrapper;
+  return isMobile ? (
+    <Drawer
+      visible={!collapsed}
+      placement="left"
+      onClose={() => onCollapse(true)}
+      style={{
+        padding: 0,
+        height: '100vh'
+      }}
+    >
+      <SideMenu
+        {...props}
+        flatMenuKeys={flatMenuKeys}
+        collapsed={isMobile ? false : collapsed}
+      />
+    </Drawer>
+  ) : (
+    <SideMenu {...props} flatMenuKeys={flatMenuKeys} />
+  );
+})
+
+export default SiderMenuWrapper;

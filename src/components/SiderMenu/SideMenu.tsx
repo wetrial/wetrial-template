@@ -12,7 +12,7 @@ const { Sider } = Layout;
 export interface SideMenuProps extends BaseMenuProps {
   logo: any;
   title?:string;
-  collapsed?: boolean;
+  collapsed: boolean;
   fixSideBar?: boolean;
 }
 
@@ -72,7 +72,9 @@ class SideMenu extends React.PureComponent<SideMenuProps, State> {
         <React.Suspense fallback={<PageLoading />}>
           <BaseMenu
             {...this.props}
+            collapsed={collapsed}
             mode="inline"
+            handleOpenChange={this.handleOpenChange}
             onOpenChange={this.handleOpenChange}
             style={{ padding: '16px 0', width: '100%' }}
             {...defaultProps}

@@ -3,7 +3,7 @@ import {ISettingsModelState} from './types/settings'
 
 const defaultSettings:ISettingsModelState= {
     "navTheme": "light",
-    "primaryColor":theme.primaryColor,
+    "primaryColor":theme['primary-color'],
     "layout": "sidemenu",
     "contentWidth": "Fluid",
     "fixedHeader": true,
@@ -15,7 +15,7 @@ const defaultSettings:ISettingsModelState= {
     "title": "Wetrial",
     "pwa": true,
     "collapse": true,
-    "iconfontUrl": ""    
+    "iconfontUrl": "//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js" // iconfont库地址 
 }
 
 export default defaultSettings;

@@ -2,6 +2,7 @@
 import { resolve } from 'path';
 import slash from 'slash2';
 import pageRoutes from './config/router.config'
+import themeConfig from './config/theme.config';
 
 // ref: https://umijs.org/config/
 export default {
@@ -41,7 +42,7 @@ export default {
   ],
   // Theme for antd
   // https://ant.design/docs/react/customize-theme
-  theme: './config/theme.config.ts',
+  theme:themeConfig,
   // proxy: {
   //   '/api/v1/weather': {
   //     target: 'https://api.seniverse.com/',

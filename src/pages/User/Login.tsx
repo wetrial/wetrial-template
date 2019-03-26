@@ -1,8 +1,11 @@
 import React from 'react';
 import { Card, Form, Input, Icon, Button } from 'antd';
 import { connect } from 'dva';
-import { FormattedMessage } from 'umi/locale';
-import { Component } from '@/wetrial';
+import { getToken } from '@/wetrial/store';
+import router from "umi/router";
+import { FormComponent } from '@/wetrial';
+import { getTextRequire } from '@/wetrial/validation';
+import { getRedirect } from '@/utils';
 import styles from './Login.less';
 
 const FormItem = Form.Item;
@@ -11,35 +14,28 @@ export interface LoginPageProps {
   loading?: boolean;
 }
 
-interface State {
-  readonly showPassword: boolean;
-}
-
 @connect(({ loading }) => ({
-  loading: loading.effects['login/fetchLogin']
+  loading: loading.effects['user/login']
 }))
-class LoginPage extends Component<LoginPageProps, State> {
-  readonly state: State = {
-    showPassword: false
-  };
-
+class LoginPage extends FormComponent<LoginPageProps, any> {
+  componentDidMount() {
+    if (getToken()) {
+      const redirect=getRedirect();
+      router.push(redirect);
+    }
+  }
   handleSubmit = (event) => {
     event.preventDefault();
     const { form, dispatch } = this.props;
+
     form.validateFields((error, values) => {
       if (error) {
         return;
       }
       dispatch({
-        type: 'login/fetchLogin',
+        type: 'user/login',
         payload: values
       });
-    });
-  };
-
-  changeShowPassword = () => {
-    this.setState({
-      showPassword: !this.state.showPassword
     });
   };
 
@@ -48,38 +44,30 @@ class LoginPage extends Component<LoginPageProps, State> {
       form: { getFieldDecorator },
       loading
     } = this.props;
-    const { showPassword } = this.state;
 
     return (
       <div className={styles.main}>
         <Card>
           <Form onSubmit={this.handleSubmit}>
             <FormItem>
-              {getFieldDecorator('username', {
+              {getFieldDecorator('userName', {
                 rules: [
-                  { required: true, message: 'Please input your username!' }
+                  getTextRequire()
                 ]
               })(
-                <Input prefix={<Icon type="user" />} placeholder="Username" />
+                <Input autoComplete="off" prefix={<Icon type="user" />} placeholder="用户名" />
               )}
             </FormItem>
             <FormItem>
               {getFieldDecorator('password', {
                 rules: [
-                  { required: true, message: 'Please input your Password!' }
+                  getTextRequire()
                 ]
               })(
-                <Input
+                <Input.Password
                   prefix={<Icon type="lock" />}
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Password"
-                  suffix={
-                    <Icon
-                      onClick={this.changeShowPassword}
-                      type="eye"
-                      style={showPassword ? { color: '#1890FF' } : {}}
-                    />
-                  }
+                  placeholder="密码"
+                  autoComplete="off"
                 />
               )}
             </FormItem>
@@ -90,7 +78,7 @@ class LoginPage extends Component<LoginPageProps, State> {
                 htmlType="submit"
                 className={styles.loginButton}
               >
-                <FormattedMessage id="app.login.login" />
+                登录
               </Button>
             </FormItem>
           </Form>
@@ -99,6 +87,4 @@ class LoginPage extends Component<LoginPageProps, State> {
     );
   }
 }
-
-// @ts-ignore
 export default Form.create()(LoginPage);

@@ -41,10 +41,11 @@ export const getToken = (): string => {
 }
 
 /**
- * 清除当前用户的token
+ * 清除当前用户的token、以及权限
  */
 export const clearToken = (): void => {
     storeWithExp.remove(TokenName);
+    storeWithExp.remove(PermisssName);
 }
 
 /**
@@ -60,5 +61,6 @@ export const getPermissions = (): string[] => {
 export const setPermissions = (permissions: string[]): void => {
     storeWithExp.set(PermisssName, permissions);
 }
+
 
 export default storeWithExp;

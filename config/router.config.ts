@@ -1,6 +1,7 @@
-// import Permissions from '../src/constants/permissions';
+import {IRoute} from 'umi-types';
+import Permissions from '../src/constants/permissions';
 
-export default [
+const routes:IRoute[]= [
     // user
     {
       path: '/user',
@@ -14,8 +15,8 @@ export default [
     {
       path: '/',
       component: '../layouts/BasicLayout',
-      // Routes: ['src/pages/Authorized'],
-      // authority:Permissions.app,
+      Routes: ['src/pages/Authorized'],
+      authority:Permissions.app,
       routes: [
         // dashboard
         { path: '/', redirect: '/dashboard/analysis' },
@@ -173,3 +174,4 @@ export default [
     }
   ];
   
+export default routes;

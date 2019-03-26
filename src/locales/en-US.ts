@@ -3,6 +3,7 @@ import exception from './en-US/exception';
 import menu from './en-US/menu';
 import login from './en-US/login';
 import settings from './en-US/settings';
+import validation from './zh-CN/validation';
 
 export default {
   'navBar.lang': 'Languages',
@@ -13,5 +14,6 @@ export default {
   ...login,
   ...settings,
   ...exception,
-  ...globalHeader
+  ...globalHeader,
+  ...validation
 };

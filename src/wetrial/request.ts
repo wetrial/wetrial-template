@@ -34,24 +34,46 @@ request.interceptors.request.use((_, options) => {
 //   return response;
 // });
 
+// // @ts-ignore
+// request.interceptors.response.use(async (response) => {
+//   if(response.status===500){
+
+//   }else if(response.status===200){
+
+//   }
+//   const jsonRep =await response.clone().json();
+//   if(jsonRep)
+//   return response;
+// })
+
 export const fetch = (opt: IRequestOption) => {
   const options = omit(opt, 'url');
   const fetchOption: RequestOptionsInit = {
     requestType: 'json',
     responseType: 'json',
     showTip: true,
-    errorHandler: error => {
-      const { Message = '出错啦！！！', Errors = '请联系管理员或重试。' } = error.data;
+    // 有些页面需要自己处理错误的业务逻辑
+    errorHandler: res => {
+      const { message = '出错啦！！！', error = '请联系管理员或重试。' } = res.data;
       notification.error({
-        message: Message,
-        description: Errors,
+        message,
+        description: error,
       });
     },
     ...options,
   };
   const { url } = opt;
-  return request(url, fetchOption).then(result => {
-    return result.result;
+  return request(url, fetchOption).then(rep => {
+    if(rep){
+      if(rep.unAuthorizedRequest){
+        // @ts-ignore
+        window.g_app._store.dispatch({
+          type: 'user/unAuthorizedRedirect',
+        });
+        return;
+      }
+      return rep.result;
+    }
   });
 };
 

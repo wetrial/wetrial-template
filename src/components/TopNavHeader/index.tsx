@@ -29,6 +29,7 @@ interface ITopNavHeaderProps {
 
   logo:any;
   contentWidth?:string;
+  collapsed:boolean;
 }
 
 interface IState {
@@ -47,7 +48,7 @@ export default class TopNavHeader extends PureComponent<ITopNavHeaderProps,IStat
   };
 
   render() {
-    const { theme, contentWidth, menuData, logo,location,isMobile,openKeys,mode } = this.props;
+    const { theme, contentWidth, menuData, logo,location,isMobile,openKeys,mode,collapsed } = this.props;
     const { maxWidth } = this.state;
     const flatMenuKeys = getFlatMenuKeys(menuData);
     return (
@@ -68,6 +69,7 @@ export default class TopNavHeader extends PureComponent<ITopNavHeaderProps,IStat
               }}
             >
               <BaseMenu
+                collapsed={collapsed}
                 openKeys={openKeys} 
                 theme={theme} 
                 mode={mode}

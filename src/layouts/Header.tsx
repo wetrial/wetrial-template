@@ -3,9 +3,8 @@ import { ISettingsModelState } from '@/types/settings';
 import H from 'history';
 
 import React from 'react';
-import { Layout,message } from 'antd';
+import { Layout } from 'antd';
 import Animate from 'rc-animate';
-import router from 'umi/router';
 import { connect } from 'dva';
 import GlobalHeader from '@/components/GlobalHeader';
 import TopNavHeader from '@/components/TopNavHeader';
@@ -24,6 +23,7 @@ export interface HeaderProps {
   notices?: any[];
   location: H.Location;
   menuData: any[];
+  logo: any,
 }
 
 @connect(({ global, loading, user }) => ({
@@ -49,6 +49,10 @@ class HeaderView extends PureComponent<HeaderProps, any> {
   private oldScrollTop:any;
 
   componentDidMount() {
+    const {dispatch}=this.props;
+    dispatch({
+      type:'global/getAll'
+    })
     document.addEventListener('scroll', this.handScroll, { passive: true });
   }
 
@@ -66,32 +70,15 @@ class HeaderView extends PureComponent<HeaderProps, any> {
   };
 
   handleNoticeClear = type => {
-    message.success(
-      `${formatMessage({ id: 'component.noticeIcon.cleared' })} ${formatMessage({
-        id: `component.globalHeader.${type}`,
-      })}`
-    );
     const { dispatch } = this.props;
     dispatch({
-      type: 'global/clearNotices',
+      type: 'global/setAllToRead',
       payload: type,
     });
   };
 
   handleMenuClick = ({ key }) => {
     const { dispatch } = this.props;
-    if (key === 'userCenter') {
-      router.push('/account/center');
-      return;
-    }
-    if (key === 'triggerError') {
-      router.push('/exception/trigger');
-      return;
-    }
-    if (key === 'userinfo') {
-      router.push('/account/settings/base');
-      return;
-    }
     if (key === 'logout') {
       dispatch({
         type: 'login/logout',
@@ -103,7 +90,7 @@ class HeaderView extends PureComponent<HeaderProps, any> {
     if (visible) {
       const { dispatch } = this.props;
       dispatch({
-        type: 'global/fetchNotices',
+        type: 'global/getAll',
       });
     }
   };

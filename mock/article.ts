@@ -1,3 +1,5 @@
+import responseWrapper,{errorWrapper,authorizeIntercept} from './base';
+import { delay } from 'roadhog-api-doc';
 import Mock from 'mockjs';
 
 const List = [];
@@ -15,17 +17,11 @@ for (let i = 0; i < 8; i++) {
   }));
 }
 
-function getList(req, res) {
-
-  res.json({
-    data: List,
-    status: 200,
-    message: 'success'
-  });
-  res.status(200).end();
+function getList({response}) {
+  response.json(responseWrapper(List));
 }
 
-export default {
-  // 获取文章列表
-  'GET /api/article/list': getList
-};
+// 调用 delay 函数，统一处理
+export default delay({
+  'GET /api/article/list':(req,res)=>authorizeIntercept({request:req,response:res},getList) 
+}, 1000);

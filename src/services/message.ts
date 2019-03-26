@@ -1,5 +1,5 @@
 import {API_PREFIX} from '@/constants';
-import { get } from '@/wetrial/request';
+import { get,post } from '@/wetrial/request';
 
 /**
  * 获取个人的待办、消息、通知列表
@@ -27,4 +27,17 @@ export function getMessages() {
  */
 export function getNotifys() {
   return get(`${API_PREFIX}message/getNotifys`);
+}
+
+/**
+ * 将指定类型的消息设置为已读
+ * @param type 指定的类型
+ */
+export function setAllToRead(type){
+  return post({
+    url:`${API_PREFIX}message/setAllToRead`,
+    data:{
+      type
+    }
+  });
 }

@@ -149,6 +149,7 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
             menuData={menuData}
             handleMenuCollapse={this.handleMenuCollapse}
             isMobile={isMobile}
+            logo={smallLogo}
             {...this.props}
           />
           <Content className={styles.content} style={contentStyle}>

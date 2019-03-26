@@ -8,9 +8,9 @@ export default function responseWrapper(result: any, success = true, unAuthorize
     return {
         error,
         result,
-        success: true,
+        success,
         targetUrl: null,
-        unAuthorizedRequest: false
+        unAuthorizedRequest
     }
 }
 
@@ -20,12 +20,30 @@ export default function responseWrapper(result: any, success = true, unAuthorize
  * @param result 结果
  * @param error 错误消息
  */
-export function errorWrapper(result:any,error){
+export function errorWrapper(result:any,unAuthorizedRequest = false,error){
     return {
         error,
         result,
         success: false,
         targetUrl: null,
-        unAuthorizedRequest: false
+        unAuthorizedRequest
     }
 }
+
+
+/**
+ * 验证拦截器，检测是否登录
+ * @param opt {request,response}
+ * @param dataFunc 数据api
+ */
+export function authorizeIntercept(opt,dataFunc){
+    const{request,response}=opt;
+    // request.get api参考 express@4 http://expressjs.com/zh-cn/api.html#req.get
+    if(request&&request.get('Authorization')){
+      return dataFunc(opt);
+    }
+    else{
+      response.json(responseWrapper({},false,true,'登录已过期！'));
+    }
+  }
+  

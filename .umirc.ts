@@ -1,48 +1,23 @@
+import { IConfig } from 'umi-types';
 // https://umijs.org/config/
 import { resolve } from 'path';
 import slash from 'slash2';
 import pageRoutes from './config/router.config'
 import themeConfig from './config/theme.config';
+import pluginConfig from './config/plugin.config';
 
-// ref: https://umijs.org/config/
-export default {
+const config: IConfig = {
   // history: 'hash',
   hash: true,
-  targets: { ie: 11 },
+  targets: { 
+    ie: 11 
+  },
   routes: pageRoutes,
   treeShaking: true,
-  plugins: [
-    // ref: https://umijs.org/plugin/umi-plugin-react.html
-    [
-      'umi-plugin-react',
-      {
-        dva: {
-          hmr: true,
-          immer: true
-        },
-        antd: true,
-        locale: {
-          enable: true, // default false
-          default: 'zh-CN', // default zh-CN
-          baseNavigator: false, // default true, when it is true, will use `navigator.language` overwrite default
-        },
-        dynamicImport: {
-          webpackChunkName: true,
-          loadingComponent: './components/PageLoading',
-          level: 3,
-        },
-        title: 'wetrial-template',
-        dll: {
-          include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch','antd/es']
-        },
-        hardSource: process.platform === 'darwin' /* isMac */,
-        pwa: false
-      },
-    ],
-  ],
+  plugins: pluginConfig,
   // Theme for antd
   // https://ant.design/docs/react/customize-theme
-  theme:themeConfig,
+  theme: themeConfig,
   // proxy: {
   //   '/api/v1/weather': {
   //     target: 'https://api.seniverse.com/',
@@ -98,4 +73,8 @@ export default {
   //     },
   //   });
   // },
-};
+}
+
+
+// ref: https://umijs.org/config/
+export default config

@@ -3,6 +3,7 @@ import exception from './zh-CN/exception';
 import menu from './zh-CN/menu';
 import login from './zh-CN/login';
 import settings from './zh-CN/settings';
+import validation from './zh-CN/validation';
 
 
 export default {
@@ -14,5 +15,6 @@ export default {
   ...login,
   ...settings,
   ...exception,
-  ...globalHeader
+  ...globalHeader,
+  ...validation
 };

@@ -1,4 +1,4 @@
-import responseWrapper from './base';
+import responseWrapper,{errorWrapper,authorizeIntercept} from './base';
 import Mock from 'mockjs';
 import { delay } from 'roadhog-api-doc';
 
@@ -78,24 +78,24 @@ function  generateNotifys(){
 
 
 
-const getTodos=(req,res)=>{
-  res.json(responseWrapper(generateTodos()));
+const getTodos=({response})=>{
+  response.json(responseWrapper(generateTodos()));
 }
 
-const getMessages=(req,res)=>{
-  res.json(responseWrapper(generateMessages()));
+const getMessages=({response})=>{
+  response.json(responseWrapper(generateMessages()));
 }
 
-const getNotifys=(req,res)=>{
-  res.json(responseWrapper(generateNotifys()));
+const getNotifys=({response})=>{
+  response.json(responseWrapper(generateNotifys()));
 }
 
-const getAll = (req, res) => {
+const getAll = ({response}) => {
   const todos=generateTodos();
   const messages=generateMessages();
   const notifys=generateNotifys();
 
-  res.json(responseWrapper({
+  response.json(responseWrapper({
     todos,
     messages,
     notifys
@@ -104,8 +104,8 @@ const getAll = (req, res) => {
 
 // 调用 delay 函数，统一处理
 export default delay({
-  'GET /api/message/getAll': getAll,
-  'GET /api/message/getMessages':getMessages,
-  'GET /api/message/getTodos':getTodos,
-  'GET /api/message/getNotifys':getNotifys,
+  'GET /api/message/getAll':(req,res)=>authorizeIntercept({request:req,response:res},getAll),
+  'GET /api/message/getMessages':(req,res)=>authorizeIntercept({request:req,response:res},getMessages),
+  'GET /api/message/getTodos':(req,res)=>authorizeIntercept({request:req,response:res},getTodos),
+  'GET /api/message/getNotifys':(req,res)=>authorizeIntercept({request:req,response:res},getNotifys),
 }, 1000);

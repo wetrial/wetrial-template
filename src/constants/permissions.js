@@ -1,4 +1,4 @@
-const Permissions = {
+const Permissions= {
   app:'',
   project: {
     base: ``, // 项目菜单权限
@@ -7,4 +7,4 @@ const Permissions = {
   },
 };
 
-export default Permissions;
+module.exports=Permissions;

@@ -1,7 +1,7 @@
-import responseWrapper,{errorWrapper} from './base';
+import responseWrapper,{errorWrapper,authorizeIntercept} from './base';
 import { delay } from 'roadhog-api-doc';
 
-function getCurrentUser(_, res) {
+function getCurrentUser({response}) {
   const current={
     name: 'XXG',
     avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
@@ -15,28 +15,31 @@ function getCurrentUser(_, res) {
       { key: '2', label: '海纳百川' },
     ],
   };
-  res.json(responseWrapper(current));
+  response.json(responseWrapper(current));
 }
 
 // 用户登录
-function login(req, res) {
-  const { username, password } = req.body;
+function login({request,response}) {
+  const { username, password } = request.body;
   if (username === 'admin' || password === 'Abcd1234') {
-    const loginResult={}
-    res.json(responseWrapper({loginResult}));
+    const loginResult={
+      token:'0000000000000'
+    }
+    response.json(responseWrapper(loginResult));
   } else {
-    res.status(500).send(errorWrapper({},'用户名或者密码错误!'));
+    response.status(500).send(errorWrapper({},false,'用户名或者密码错误!'));
   }
 }
 
-function logout(_, res) {
-  res.json(responseWrapper({}));
+function loginout({response}) {
+  response.json(responseWrapper({}));
 }
+
 
 
 // 调用 delay 函数，统一处理
 export default delay({
-  'GET /api/user/getCurrent': getCurrentUser,
-  'POST /api/user/login': login,
-  'GET /api/user/logout': logout
+  'GET /api/user/getCurrent':(req,res)=>authorizeIntercept({request:req,response:res},getCurrentUser),
+  'POST /api/user/login':(req,res)=>login({request:req,response:res}),
+  'GET /api/user/logout':(req,res)=>loginout({response:res})
 }, 1000);

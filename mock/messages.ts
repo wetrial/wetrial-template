@@ -4,8 +4,8 @@ import { delay } from 'roadhog-api-doc';
 
 function generateTodos(){
   const todos = Mock.mock({
-    totalCount: 10,
-    "items|10": [
+    count: 10,
+    "list|10": [
       {
         "id": '@guid',
         "avatar|+1": [
@@ -26,8 +26,8 @@ function generateTodos(){
 
 function generateMessages(){
   const messages = Mock.mock({
-    totalCount: 10,
-    "items|10": [
+    count: 10,
+    "list|10": [
       {
         "id": '@guid',
         "avatar|+1": [
@@ -49,8 +49,8 @@ function generateMessages(){
 
 function  generateNotifys(){
   const notify = Mock.mock({
-    totalCount: 10,
-    "items|10": [
+    count: 10,
+    "list|10": [
       {
         "id": '@guid',
         "avatar|+1": [

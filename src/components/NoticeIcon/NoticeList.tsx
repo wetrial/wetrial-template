@@ -1,99 +1,83 @@
 import React from 'react';
 import { Avatar, List } from 'antd';
-import ClassNames from 'classnames';
+import classNames from 'classnames';
 import styles from './NoticeList.less';
 
-export type NoticeData = {
-  // 头像图片
+export interface NoticeData {
   avatar?: string | React.ReactNode;
-  // 标题
   title?: React.ReactNode;
-  // 描述信息
   description?: React.ReactNode;
-  // 时间戳
   datetime?: React.ReactNode;
-  // 是否已读
-  read?: boolean;
-  key?: string | number;
-  // 额外信息，在列表项右上角
   extra?: React.ReactNode;
   style?: React.CSSProperties;
-};
+}
 
 export interface NoticeListProps {
-  // 是否显示清空按钮
-  showClear?: boolean;
-  // 清空消息的回调
-  onClear?: () => void;
-  // 消息数据
-  data: NoticeData[];
-  // 消息分类的页签标题
-  title?: string;
-  // 针对每个 Tab 定制空数据图片
+  count?: number;
+  emptyText?:string|React.ReactNode;
   emptyImage?: string;
-  // 针对每个 Tab 定制空数据文案
-  emptyText?: React.ReactNode;
-  // 默认文本
+  list?: NoticeData[];
+  name?: string;
+  showClear?: boolean;
+  showViewMore?: boolean;
+  style?: React.CSSProperties;
+  title?: string;
+  data?: any[];
+  onClick: (item: any) => void;
+  onClear: (item: any) => void;
   locale?: {
     emptyText: string;
     clear: string;
+    viewMore: string;
+    [key: string]: string;
   };
+  onViewMore: (e: any) => void;
 }
 
-const ListItem = List.Item;
-const ListItemMeta = ListItem.Meta;
-
-class NoticeList extends React.Component<NoticeListProps, any> {
-  static defaultProps: Partial<NoticeListProps> = {
-    showClear: true
-  };
-
-  handleClear = (event) => {
-    event.preventDefault();
-    const { onClear } = this.props;
-    onClear && onClear();
-  };
+export default class NoticeList extends React.Component<NoticeListProps, any> {
+  static defaultProps = {
+    showClear: true,
+    showViewMore: false,
+    locale: {
+      emptyText: '暂无数据',
+      clear: '清空',
+      viewMore: '加载更多',
+    }
+  }
 
   render() {
-    const {
-      data = [],
-      showClear,
-      locale,
-      title,
-      emptyImage,
-      emptyText
-    } = this.props;
-
-    return data.length === 0 ? (
-      <div className={styles.notFound}>
-        {emptyImage ? <img src={emptyImage} alt="not found" /> : null}
-        <div>{emptyText || locale.emptyText}</div>
-      </div>
-    ) : (
-      <React.Fragment>
+    const { title, showViewMore, data, emptyImage,emptyText, locale, showClear, onClear, onClick, onViewMore } = this.props;
+    if (data.length === 0) {
+      return (
+        <div className={styles.notFound}>
+          {emptyImage ? <img src={emptyImage} alt="not found" /> : null}
+          <div>{emptyText||locale.emptyText}</div>
+        </div>
+      );
+    }
+    return (
+      <div>
         <List
           className={styles.list}
           dataSource={data}
-          renderItem={(item, index) => {
-            const itemCls = ClassNames(styles.item, {
-              [styles.read]: item.read
+          renderItem={item => {
+            const itemCls = classNames(styles.item, {
+              [styles.read]: item.read,
             });
-
+            // eslint-disable-next-line no-nested-ternary
             const leftIcon = item.avatar ? (
               typeof item.avatar === 'string' ? (
                 <Avatar className={styles.avatar} src={item.avatar} />
               ) : (
-                item.avatar
-              )
+                  <span className={styles.iconElement}>{item.avatar}</span>
+                )
             ) : null;
 
             return (
-              <ListItem className={itemCls} key={item.key || index}>
-                <ListItemMeta
+              <List.Item className={itemCls} onClick={() => onClick(item)}>
+                <List.Item.Meta
                   className={styles.meta}
-                  avatar={
-                    <span className={styles.iconElement}>{leftIcon}</span>
-                  }
+                  avatar={leftIcon}
                   title={
                     <div className={styles.title}>
                       {item.title}
@@ -102,26 +86,26 @@ class NoticeList extends React.Component<NoticeListProps, any> {
                   }
                   description={
                     <div>
-                      <div className={styles.description}>
+                      <div className={styles.description} title={item.description}>
                         {item.description}
                       </div>
                       <div className={styles.datetime}>{item.datetime}</div>
                     </div>
                   }
                 />
-              </ListItem>
+              </List.Item>
             );
           }}
         />
-        {/** 清空 */}
-        {showClear ? (
-          <div className={styles.clear} onClick={this.handleClear}>
-            {locale.clear} {title}
-          </div>
-        ) : null}
-      </React.Fragment>
+        <div className={styles.bottomBar}>
+          {showClear ? (
+            <div onClick={onClear}>
+              {locale.clear} {locale[title] || title}
+            </div>
+          ) : null}
+          {showViewMore ? <div onClick={onViewMore}>{locale.viewMore}</div> : null}
+        </div>
+      </div>
     );
   }
 }
-
-export default NoticeList;

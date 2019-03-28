@@ -1,22 +1,20 @@
+import RightContent,{GlobalHeaderRightProps} from './RightContent';
+
 import React from 'react';
 import { Icon } from 'antd';
 import Link from 'umi/link';
 import Debounce from 'lodash-decorators/debounce';
-import RightContent, { GlobalHeaderRightProps } from './RightContent';
 import styles from './index.less';
 
 export interface GlobalHeaderProps extends GlobalHeaderRightProps {
   logo: string;
   isMobile: boolean;
   collapsed?: boolean;
-  onCollapse?: (collapse: boolean) => void;
-  onNoticeClear?:(type:any)=>void;
-  onMenuClick:({key})=>void;
-  onNoticeVisibleChange:(visible:boolean)=>void;
+  onCollapse?: (collapsed: boolean) => void;
 }
 
-class GlobalHeader extends React.PureComponent<GlobalHeaderProps, any> {
-  @Debounce(600)
+export default class GlobalHeader extends React.PureComponent<GlobalHeaderProps, any> {
+  @Debounce(400)
   triggerResizeEvent() {
     const event = document.createEvent('HTMLEvents');
     event.initEvent('resize', true, false);
@@ -34,10 +32,6 @@ class GlobalHeader extends React.PureComponent<GlobalHeaderProps, any> {
       collapsed,
       isMobile,
       logo,
-      currentUser,
-      notices,
-      noticeIcon,
-      onMenuClick
     } = this.props;
     return (
       <div className={styles.header}>
@@ -50,14 +44,9 @@ class GlobalHeader extends React.PureComponent<GlobalHeaderProps, any> {
           <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
         </span>
         <RightContent
-          currentUser={currentUser}
-          noticeIcon={noticeIcon}
-          notices={notices}
-          onMenuClick={onMenuClick}
+          {...this.props}
         />
       </div>
     );
   }
 }
-
-export default GlobalHeader;

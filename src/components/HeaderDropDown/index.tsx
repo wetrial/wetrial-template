@@ -1,16 +1,22 @@
 import React from 'react';
 import { Dropdown } from 'antd';
 import { DropDownProps } from 'antd/es/dropdown';
-import ClassNames from 'classnames';
+import classNames from 'classnames';
 import styles from './index.less';
 
-class HeaderDropDown extends React.PureComponent<DropDownProps, any> {
-  render() {
-    const { overlayClassName, ...rest } = this.props;
-    const cls = ClassNames(overlayClassName, styles.container);
+declare type OverlayFunc = () => React.ReactNode;
 
-    return <Dropdown overlayClassName={cls} {...rest} />;
-  }
+export interface HeaderDropdownProps extends DropDownProps {
+  overlayClassName?: string;
+  overlay: React.ReactNode | OverlayFunc;
+  placement?: "bottomLeft" | "bottomRight" | "topLeft" | "topCenter" | "topRight" | "bottomCenter";
 }
 
-export default HeaderDropDown;
+export default class HeaderDropDown extends React.Component<HeaderDropdownProps, any> {
+  render() {
+    const { overlayClassName, ...props } = this.props;
+    return (
+      <Dropdown overlayClassName={classNames(styles.container, overlayClassName)} {...props} />
+    );
+  }
+}

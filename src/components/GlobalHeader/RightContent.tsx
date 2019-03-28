@@ -1,130 +1,97 @@
 
 import { SelectParam } from 'antd/es/menu';
 import { ICurrentUser } from '@/types/user';
+import {NoticeData} from '../NoticeIcon/NoticeList';
+import NoticeIcon, { NoticeIconProps } from '../NoticeIcon';
+import { HeaderSearchProps } from '../HeaderSearch';
 
 import React from 'react';
-import Moment from 'moment';
-import {groupBy} from 'lodash';
 import { FormattedMessage, formatMessage } from 'umi/locale';
-import { Dropdown, Avatar, Menu, Icon, Spin, Tag } from 'antd';
-import { HeaderSearchProps } from '../HeaderSearch';
-import NoticeIcon, { NoticeIconProps } from '../NoticeIcon';
+import { Dropdown, Avatar, Menu, Icon, Spin, message } from 'antd';
+
 import styles from './index.less';
+
+export interface RightContextProps extends NoticeIconProps{
+  todos:{
+    count:number;
+    list:NoticeData[]
+  };
+  notifys:{
+    count:number;
+    list:NoticeData[]
+  };
+  messages:{
+    count:number;
+    list:NoticeData[]
+  };
+}
 
 export interface GlobalHeaderRightProps {
   currentUser?: ICurrentUser;
   onMenuClick?: (params: SelectParam) => void;
   headerSearch?: boolean | HeaderSearchProps;
-  noticeIcon?: false | NoticeIconProps;
-  notices?: any[];
+  noticeIcon?: false | RightContextProps;
 }
 
-class GlobalHeaderRight extends React.PureComponent<GlobalHeaderRightProps,any> {
-  getNoticeData() {
-    const { notices = [] } = this.props;
-
-    if (notices.length === 0) {
-      return {};
-    }
-
-    const newNotices = notices.map((notice) => {
-      const newNotice = { ...notice };
-      if (newNotice.datetime) {
-        newNotice.datetime = Moment(notice.datetime).fromNow();
-      }
-      if (newNotice.id) {
-        newNotice.key = newNotice.id;
-      }
-      if (newNotice.extra && newNotice.status) {
-        const color = {
-          todo: '',
-          processing: 'blue',
-          urgent: 'red',
-          doing: 'gold'
-        }[newNotice.status];
-        newNotice.extra = (
-          <Tag color={color} style={{ marginRight: 0 }}>
-            {newNotice.extra}
-          </Tag>
-        );
-      }
-      return newNotice;
-    });
-    return groupBy(newNotices, 'type');
-  }
-
-  // 获取未读消息
-  getUnreadData = (noticeData) => {
-    const unreadMsg = {};
-    Object.entries(noticeData).forEach(([key, value]) => {
-      if (!unreadMsg[key]) {
-        unreadMsg[key] = 0;
-      }
-      if (Array.isArray(value)) {
-        unreadMsg[key] = value.filter((item) => !item.read).length;
-      }
-    });
-    return unreadMsg;
-  };
-
+export default class RightContext extends React.PureComponent<GlobalHeaderRightProps,any> {
   getNoticeDom = () => {
-    const { noticeIcon, currentUser } = this.props;
-
-    if (!noticeIcon || noticeIcon === false) {
+    const { noticeIcon } = this.props;
+    if (!noticeIcon) {
       return null;
     } else {
       const {
         onItemClick,
         onClear,
         onPopupVisibleChange,
-        loading
+        loading,
+        count,
+        todos,
+        notifys,
+        messages
       } = noticeIcon;
-      const notices: any = this.getNoticeData();
-      const unreadMsg: any = this.getUnreadData(notices);
-
       return (
         <NoticeIcon
           className={styles.action}
-          count={currentUser.unreadCount}
-          onItemClick={onItemClick}
+          count={count}
+          loading={loading}
           locale={{
             emptyText: formatMessage({ id: 'component.noticeIcon.empty' }),
-            clear: formatMessage({ id: 'component.noticeIcon.clear' })
+            clear: formatMessage({ id: 'component.noticeIcon.clear' }),
+            viewMore: formatMessage({ id: 'component.noticeIcon.view-more' }),
+            notification: formatMessage({ id: 'component.globalHeader.notification' }),
+            message: formatMessage({ id: 'component.globalHeader.message' }),
+            todo: formatMessage({ id: 'component.globalHeader.todo' }),
           }}
+          onItemClick={onItemClick}
           onClear={onClear}
           onPopupVisibleChange={onPopupVisibleChange}
-          loading={loading}
+          onViewMore={() => message.info('点击查看更多')}
           clearClose={true}
         >
           <NoticeIcon.Tab
-            count={unreadMsg.notification}
-            data={notices.notification}
-            title={formatMessage({ id: 'component.globalHeader.notification' })}
-            name="notification"
-            emptyText={formatMessage({
-              id: 'component.globalHeader.notification.empty'
-            })}
+            count={notifys.count}
+            list={notifys.list}
+            title="notification"
+            emptyText={formatMessage({ id: 'component.globalHeader.notification.empty' })}
             emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
+            showViewMore
           />
           <NoticeIcon.Tab
-            count={unreadMsg.message}
-            data={notices.message}
-            title={formatMessage({ id: 'component.globalHeader.message' })}
-            name="message"
-            emptyText={formatMessage({
-              id: 'component.globalHeader.message.empty'
-            })}
+            count={messages.count}
+            list={messages.list}
+            title="message"
+            emptyText={formatMessage({ id: 'component.globalHeader.message.empty' })}
             emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
+            showViewMore
           />
           <NoticeIcon.Tab
-            count={unreadMsg.event}
-            data={notices.event}
-            title={formatMessage({ id: 'component.globalHeader.event' })}
-            name="event"
-            emptyText={formatMessage({
-              id: 'component.globalHeader.event.empty'
-            })}
+            count={todos.count}
+            list={todos.list}
+            title="todo"
+            emptyText={formatMessage({ id: 'component.globalHeader.todo.empty' })}
             emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
+            showViewMore
+            showClear={false}
           />
         </NoticeIcon>
       );
@@ -132,8 +99,6 @@ class GlobalHeaderRight extends React.PureComponent<GlobalHeaderRightProps,any> 
   };
   render() {
     const { onMenuClick, currentUser } = this.props;
-    const NoticeDom = this.getNoticeDom();
-
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         <Menu.Item key="logout">
@@ -146,7 +111,8 @@ class GlobalHeaderRight extends React.PureComponent<GlobalHeaderRightProps,any> 
     return (
       <div className={styles.right}>
         {/** 消息通知 */}
-        {NoticeDom}
+        {this.getNoticeDom()}
+
         {currentUser.name ? (
           <Dropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>
@@ -168,5 +134,3 @@ class GlobalHeaderRight extends React.PureComponent<GlobalHeaderRightProps,any> 
     );
   }
 }
-
-export default GlobalHeaderRight;

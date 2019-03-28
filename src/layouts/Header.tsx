@@ -3,7 +3,7 @@ import { ISettingsModelState } from '@/types/settings';
 import H from 'history';
 
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, message } from 'antd';
 import Animate from 'rc-animate';
 import { connect } from 'dva';
 import GlobalHeader from '@/components/GlobalHeader';
@@ -17,10 +17,10 @@ export interface HeaderProps {
   isMobile: boolean;
   collapsed: boolean;
   handleMenuCollapse?: (collapsed: boolean) => any;
-  fetchingNotices?: boolean;
+  fetchTips?: boolean;
   currentUser?: any;
   setting: ISettingsModelState;
-  notices?: any[];
+  tips?:any;
   location: H.Location;
   menuData: any[];
   logo: any,
@@ -29,8 +29,8 @@ export interface HeaderProps {
 @connect(({ global, loading, user }) => ({
   currentUser: user.currentUser,
   collapsed: global.collapsed,
-  notices: global.notices,
-  getAll: loading.effects['global/getAll']
+  tips: global.tips,
+  fetchTips: loading.effects['global/getAll']
 }))
 class HeaderView extends PureComponent<HeaderProps, any> {
   static getDerivedStateFromProps(props, state) {
@@ -51,7 +51,10 @@ class HeaderView extends PureComponent<HeaderProps, any> {
   componentDidMount() {
     const {dispatch}=this.props;
     dispatch({
-      type:'global/getAll'
+      type:'global/getAll',
+      payload:{
+        force:true
+      }
     })
     document.addEventListener('scroll', this.handScroll, { passive: true });
   }
@@ -75,6 +78,7 @@ class HeaderView extends PureComponent<HeaderProps, any> {
       type: 'global/setAllToRead',
       payload: type,
     });
+    message.info(`点击了清空-${type}`);
   };
 
   handleMenuClick = ({ key }) => {
@@ -86,11 +90,27 @@ class HeaderView extends PureComponent<HeaderProps, any> {
     }
   };
 
+  handleNoticeItemClick=(item,tabProps)=>{
+    const {title}=tabProps;
+    const {title:noticeTitle}=item;
+    message.info(`点击了${title}-${noticeTitle}`);
+  }
+
+  handleNoticeViewMore=(tabProps,e)=>{
+    console.log(tabProps,e);
+    message.info('点击了查看更多');
+  }
+
+  handleNoticeTabChange=(tabTitle)=>{
+    console.log(tabTitle);
+    message.info('切换了tab');
+  }
+
   handleNoticeVisibleChange = visible => {
     if (visible) {
       const { dispatch } = this.props;
       dispatch({
-        type: 'global/getAll',
+        type: 'global/getAll'
       });
     }
   };
@@ -129,7 +149,7 @@ class HeaderView extends PureComponent<HeaderProps, any> {
   };
 
   render() {
-    const { isMobile, handleMenuCollapse, setting,location } = this.props;
+    const { isMobile, handleMenuCollapse, setting,location,tips:{count,todos,notifys,messages},fetchTips,logo,currentUser,menuData } = this.props;
     const { navTheme, layout, fixedHeader } = setting;
     const { visible } = this.state;
     const isTop = layout === 'topmenu';
@@ -138,29 +158,54 @@ class HeaderView extends PureComponent<HeaderProps, any> {
       <Header style={{ padding: 0, width }} className={fixedHeader ? styles.fixedHeader : ''}>
         {isTop && !isMobile ? (
           <TopNavHeader
+            menuData={menuData}
+            isMobile={isMobile}
+            logo={logo}
+            collapsed={setting.collapse}
             theme={navTheme}
             mode="horizontal"
             onCollapse={handleMenuCollapse}
-            onNoticeClear={this.handleNoticeClear}
             onMenuClick={this.handleMenuClick}
-            onNoticeVisibleChange={this.handleNoticeVisibleChange}
             location={location}
-            {...this.props}
+            noticeIcon={{
+              loading:fetchTips,
+              count,
+              todos,
+              notifys,
+              messages,
+              onClear:this.handleNoticeClear,
+              onPopupVisibleChange:this.handleNoticeVisibleChange,
+              onItemClick:this.handleNoticeItemClick,
+              onViewMore:this.handleNoticeViewMore,
+              onTabChange:this.handleNoticeTabChange
+            }}
           />
         ) : (
             <GlobalHeader
+              logo={logo}
+              collapsed={setting.collapse}
               onCollapse={handleMenuCollapse}
-              onNoticeClear={this.handleNoticeClear}
+              isMobile={isMobile}
+              currentUser={currentUser}
               onMenuClick={this.handleMenuClick}
-              onNoticeVisibleChange={this.handleNoticeVisibleChange}
-              location={location}
-              {...this.props}
+              noticeIcon={{
+                loading:fetchTips,
+                count,
+                todos,
+                notifys,
+                messages,
+                onClear:this.handleNoticeClear,
+                onPopupVisibleChange:this.handleNoticeVisibleChange,
+                onItemClick:this.handleNoticeItemClick,
+                onViewMore:this.handleNoticeViewMore,
+                onTabChange:this.handleNoticeTabChange
+              }}
             />
           )}
       </Header>
     ) : null;
     return (
-      <Animate component="" transitionName="fade">
+      <Animate transitionName="fade">
         {HeaderDom}
       </Animate>
     );

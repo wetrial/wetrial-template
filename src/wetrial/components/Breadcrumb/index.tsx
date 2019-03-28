@@ -108,7 +108,6 @@ class LotusBreadcrumb extends React.PureComponent<LotusBreadcrumbProps, any> {
     );
   };
 
-  // @ts-ignore
   render() {
     const {
       breadcrumbList,

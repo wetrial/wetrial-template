@@ -1,11 +1,10 @@
 import React from 'react';
 import { Input, Icon, AutoComplete } from 'antd';
-import ClassNames from 'classnames';
+import classNames from 'classnames';
 import {Debounce,Bind} from 'lodash-decorators';
 import styles from './index.less';
 
 export interface HeaderSearchProps {
-  className?: string;
   placeholder?: string;
   dataSource?: string[];
   defaultOpen?: boolean;
@@ -15,11 +14,7 @@ export interface HeaderSearchProps {
   onVisibleChange?: (visible: boolean) => void;
   onPressEnter?: (value: string) => void;
   style?: React.CSSProperties;
-}
-
-interface DefaultProps {
-  readonly defaultOpen: boolean;
-  readonly open: boolean;
+  className?: string;
 }
 
 interface State {
@@ -27,44 +22,74 @@ interface State {
   readonly value: string;
 }
 
-class HeaderSearch extends React.PureComponent<HeaderSearchProps, State> {
-  static defaultProps: DefaultProps = {
+export default class HeaderSearch extends React.PureComponent<HeaderSearchProps, State> {
+  static defaultProps = {
+    defaultActiveFirstOption: false,
+    // tslint:disable-next-line:no-empty
+    onPressEnter:()=>{},
+    // tslint:disable-next-line:no-empty
+    onSearch: () => {},
+    // tslint:disable-next-line:no-empty
+    onChange: () => {},
+    className: '',
+    placeholder: '',
+    dataSource: [],
     defaultOpen: false,
-    open: false
+    // tslint:disable-next-line:no-empty
+    onVisibleChange: () => {},
   };
-  readonly state: State = {
-    searchMode: this.props.defaultOpen,
-    value: ''
-  };  private input: any;
+  static getDerivedStateFromProps(props) {
+    if ('open' in props) {
+      return {
+        searchMode: props.open,
+      };
+    }
+    return null;
+  }
 
-  private timeout: any;
+  private timeout:NodeJS.Timer;
+  private input=React.createRef<Input>();
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchMode: props.defaultOpen,
+      value: '',
+    };
+  }
 
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
 
-  handleChange = (value) => {
-    const { onChange } = this.props;
-    this.setState({ value });
-    onChange && onChange(value);
-  };
-
-  onKeyDown = (e) => {
+  onKeyDown = e => {
     if (e.key === 'Enter') {
       const { onPressEnter } = this.props;
       const { value } = this.state;
       this.timeout = setTimeout(() => {
-        onPressEnter && onPressEnter(value);
+        onPressEnter(value); // Fix duplicate onPressEnter
       }, 0);
     }
   };
 
+  onChange = value => {
+    const { onSearch, onChange } = this.props;
+    this.setState({ value });
+    if (onSearch) {
+      onSearch(value);
+    }
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
   enterSearchMode = () => {
+    const { onVisibleChange } = this.props;
+    onVisibleChange(true);
     this.setState({ searchMode: true }, () => {
       const { searchMode } = this.state;
       if (searchMode) {
-        this.input.focus();
+        this.input.current!.focus();
       }
     });
   };
@@ -72,33 +97,37 @@ class HeaderSearch extends React.PureComponent<HeaderSearchProps, State> {
   leaveSearchMode = () => {
     this.setState({
       searchMode: false,
-      value: ''
+      value: '',
     });
   };
 
+  // NOTE: 不能小于500，如果长按某键，第一次触发auto repeat的间隔是500ms，小于500会导致触发2次
   @Bind()
   @Debounce(500, {
     leading: true,
-    trailing: false
+    trailing: false,
   })
   debouncePressEnter() {
     const { onPressEnter } = this.props;
     const { value } = this.state;
-    onPressEnter && onPressEnter(value);
+    onPressEnter(value);
   }
 
   render() {
-    const { className, placeholder, ...restProps } = this.props;
+    const { className, placeholder, open, ...restProps } = this.props;
     const { searchMode, value } = this.state;
-    delete restProps.defaultOpen;
+    delete restProps.defaultOpen; // for rc-select not affected
+    const inputClass = classNames(styles.input, {
+      [styles.show]: searchMode,
+    });
     return (
       <span
-        className={ClassNames(className, styles.headerSearch)}
+        className={classNames(className, styles.headerSearch)}
         onClick={this.enterSearchMode}
         onTransitionEnd={({ propertyName }) => {
           if (propertyName === 'width' && !searchMode) {
             const { onVisibleChange } = this.props;
-            onVisibleChange && onVisibleChange(searchMode);
+            onVisibleChange(searchMode);
           }
         }}
       >
@@ -106,16 +135,12 @@ class HeaderSearch extends React.PureComponent<HeaderSearchProps, State> {
         <AutoComplete
           key="AutoComplete"
           {...restProps}
-          className={ClassNames(styles.input, {
-            [styles.show]: searchMode
-          })}
+          className={inputClass}
           value={value}
-          onChange={this.handleChange}
+          onChange={this.onChange}
         >
           <Input
-            ref={(node) => {
-              this.input = node;
-            }}
+            ref={this.input}
             aria-label={placeholder}
             placeholder={placeholder}
             onKeyDown={this.onKeyDown}
@@ -126,5 +151,3 @@ class HeaderSearch extends React.PureComponent<HeaderSearchProps, State> {
     );
   }
 }
-
-export default HeaderSearch;

@@ -3,58 +3,62 @@ import { getAll, getNotifys, getMessages, getTodos, setAllToRead } from '@/servi
 
 // 计算总数
 const calcTotal = (state) => {
-  let total = 0;
+  let count = 0;
   const { todos, messages, notifys } = state;
-  if (todos && todos.totalCount) {
-    total += todos.totalCount;
+  if (todos && todos.count) {
+    count += todos.count;
   }
-  if (messages && messages.totalCount) {
-    total += messages.totalCount;
+  if (messages && messages.count) {
+    count += messages.count;
   }
-  if (notifys && notifys.totalCount) {
-    total += notifys.totalCount;
+  if (notifys && notifys.count) {
+    count += notifys.count;
   }
-  return total;
+  return count;
 }
 
 export default extendModel({
   namespace: 'global',
   state: {
     collapsed: false, // 左侧菜单面板是否折叠
-    total: 0, // 总数量
-    // 待办列表
-    todos: {
-      items: [],
-      totalCount: 0
-    },
-    // 消息列表
-    messages: {
-      items: [],
-      totalCount: 0
-    },
-    // 通知列表
-    notifys: {
-      items: [],
-      totalCount: 0
-    }
+    tipsFetched:false,
+    tips:{
+      count: 0, // 总数量
+      // 待办列表
+      todos: {
+        list: [],
+        count: 0
+      },
+      // 消息列表
+      messages: {
+        list: [],
+        count: 0
+      },
+      // 通知列表
+      notifys: {
+        list: [],
+        count: 0
+      }
+    }    
   },
   effects: {
-    *getAll(_, { call, put }) {
-      const all = yield call(getAll);
-      yield put({
-        type: 'updateWithSum',
-        payload: all
-      });
-      // const unreadCount = yield select(
-      //   state => state.global.notices.filter(item => !item.read).length
-      // );
-      // yield put({
-      //   type: 'user/update',
-      //   payload: {
-      //     totalCount: data.length,
-      //     unreadCount,
-      //   },
-      // });
+    *getAll({payload={force:false}}, { call, put,select }) {
+      if(!payload.force){
+        const isFetched = yield select(state => state.global.tipsFetched);
+        if(isFetched){
+          return;
+        }
+      }
+      else{
+        const all = yield call(getAll);
+        yield put({
+          type: 'updateWithSum',
+          payload: {
+            ...all,
+            tipsFetched:true
+          }
+        });
+      }
     },
     *getNotifys(_, { call, put }) {
       const notifys = yield call(getNotifys);
@@ -86,9 +90,9 @@ export default extendModel({
     *setAllToRead({ payload }, { call, put }) {
       yield call(setAllToRead, payload);
       yield put({
-        type:'updateWithSum',
-        payload:{
-          
+        type: 'updateWithSum',
+        payload: {
+
         }
       })
     }
@@ -101,15 +105,17 @@ export default extendModel({
       }
     },
     updateWithSum(state, { payload }) {
-      const result = {
-        ...state,
+      const tips = {
+        ...state.tips,
         ...payload
       }
-      const total = calcTotal(result);
+      const count = calcTotal(tips);
       return {
         ...state,
-        ...payload,
-        total
+        tips:{
+          ...tips,
+          count
+        }
       }
     }
   },

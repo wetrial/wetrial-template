@@ -1,11 +1,10 @@
-import React, { PureComponent } from 'react';
-
 import H from 'history';
 import { MenuMode,MenuTheme } from 'antd/es/menu';
 import { CollapseType } from 'antd/es/layout/Sider';
+import RightContent,{RightContextProps} from '../GlobalHeader/RightContent';
 
+import React, { PureComponent } from 'react';
 import Link from 'umi/link';
-import RightContent from '../GlobalHeader/RightContent';
 import BaseMenu from '../SiderMenu/BaseMenu';
 import { getFlatMenuKeys } from '../SiderMenu/utils';
 import defaultSettings from '@/defaultSettings';
@@ -23,10 +22,8 @@ interface ITopNavHeaderProps {
   onCollapse: (collapsed: boolean, type?: CollapseType) => void;
   onOpenChange?: (openKeys: string[]) => void;
 
-  onNoticeClear?:(type:any)=>void;
   onMenuClick:({key})=>void;
-  onNoticeVisibleChange:(visible:boolean)=>void;
-
+  noticeIcon?: false | RightContextProps;
   logo:any;
   contentWidth?:string;
   collapsed:boolean;

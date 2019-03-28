@@ -1,173 +1,170 @@
-import React from 'react';
+
+import NoticeIconTab,{NoticeIconTabProps} from './NoticeIconTab';
+import NoticeList,{NoticeData} from './NoticeList';
+
+import React,{Fragment} from 'react';
+import ReactDOM from 'react-dom';
 import { Icon, Tabs, Badge, Spin } from 'antd';
-import ClassNames from 'classnames';
-import HeaderDropDown from '../HeaderDropDown';
-import NoticeList,{ NoticeData } from './NoticeList';
-import NoticeTab from './NoticeTab';
+import classNames from 'classnames';
+import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
 
 export interface NoticeIconProps {
-  className?: string;
-  // 消息总数
   count?: number;
-  // 消息显示的图标
   bell?: React.ReactNode;
-  // 弹出卡片加载状态
+  className?: string;
   loading?: boolean;
-  // 点击清空按钮的回调
   onClear?: (tabName: string) => void;
-  // 点击列表项的回调
-  onItemClick?: (item: NoticeData, tabProps: NoticeIconProps) => void;
-  // 切换页签的回调
+  onItemClick?: (item: NoticeData, tabProps: NoticeIconTabProps) => void;
+  onViewMore?: (tabProps: NoticeIconTabProps, e: MouseEvent) => void;
   onTabChange?: (tabTile: string) => void;
-  // 弹出卡片显隐的回调
-  onPopupVisibleChange?: (visible: boolean) => void;
   style?: React.CSSProperties;
-  // 控制下拉菜单显隐
-  dropDownVisible?: boolean;
-  // 清空是否关闭菜单
+  onPopupVisibleChange?: (visible: boolean) => void;
+  popupVisible?: boolean;
+  locale?: {
+    emptyText: string;
+    clear: string;
+    viewMore: string;
+    [key: string]: string;
+  };
   clearClose?: boolean;
-  // 默认文案
-  locale?: { emptyText: string; clear: string };
 }
 
-interface DefaultProps {
-  bell: React.ReactNode;
-  loading: boolean;
-  clearClose: boolean;
-}
-
-interface State {
-  readonly visible: boolean;
-}
-
-class NoticeIcon extends React.PureComponent<NoticeIconProps, State> {
-  static Tab = NoticeTab;
-
-  static defaultProps: DefaultProps = {
-    bell: <Icon type="bell" className={styles.icon} />,
+export default class NoticeIcon extends React.PureComponent<NoticeIconProps, any> {
+  static defaultProps = {
+    // tslint:disable-next-line:no-empty
+    onItemClick: () => { },
+    // tslint:disable-next-line:no-empty
+    onPopupVisibleChange: () => { },
+    // tslint:disable-next-line:no-empty
+    onTabChange: () => { },
+    // tslint:disable-next-line:no-empty
+    onClear: () => { },
+    // tslint:disable-next-line:no-empty
+    onViewMore: () => { },
     loading: false,
-    clearClose: false
+    clearClose: false,
+    locale: {
+      emptyText: '暂无信息',
+      clear: '清空',
+      viewMore: '更多',
+    },
+    emptyImage: 'https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg',
   };
 
-  readonly state: State = {
-    visible: false
+  static Tab=NoticeIconTab;
+
+  state = {
+    visible: false,
   };
+
+  private popover:HTMLElement
+
 
   onItemClick = (item, tabProps) => {
     const { onItemClick } = this.props;
     const { clickClose } = item;
-    onItemClick && onItemClick(item, tabProps);
+    onItemClick(item, tabProps);
     if (clickClose) {
-      this.setState({
-        visible: false
-      });
+      this.popover.click();
     }
   };
 
-  onTabChange = (tabType) => {
-    const { onTabChange } = this.props;
-    onTabChange && onTabChange(tabType);
-  };
-
-  onClear = (name) => {
+  onClear = name => {
     const { onClear, clearClose } = this.props;
-    onClear && onClear(name);
+    onClear(name);
     if (clearClose) {
-      this.setState({
-        visible: false
-      });
+      this.popover.click();
     }
+  };
+
+  onTabChange = tabType => {
+    const { onTabChange } = this.props;
+    onTabChange(tabType);
+  };
+
+  onViewMore = (tabProps, event) => {
+    const { onViewMore } = this.props;
+    onViewMore(tabProps, event);
   };
 
   getNotificationBox() {
     const { children, loading, locale } = this.props;
-    if (!children){
-      return null
+
+    if (!children) {
+      return null;
     }
-    const panes = React.Children.map(
-      children as React.ReactNode,
-      (child: React.ReactElement<any>) => {
-        const { data: list, title, name, count } = child.props;
-        const len = list && list.length ? list.length : 0;
-        const msgCount = count || count === 0 ? count : len;
-        const tabTitle = msgCount > 0 ? `${title} (${msgCount})` : title;
-        return (
-          <TabPane tab={tabTitle} key={name}>
-            <NoticeList
-              {...child.props}
-              data={list}
-              onClick={(item) => this.onItemClick(item, child.props)}
-              onClear={this.onClear}
-              title={title}
-              locale={locale}
-            />
-          </TabPane>
-        );
-      }
-    );
+    const panes = React.Children.map(children as NoticeIconTab[], child => {
+      const { list, title, count, emptyText, emptyImage, showClear, showViewMore } = child.props;
+      const len = list && list.length ? list.length : 0;
+      const msgCount = count || count === 0 ? count : len;
+      const localeTitle = locale[title] || title;
+      const tabTitle = msgCount > 0 ? `${localeTitle} (${msgCount})` : localeTitle;
+      return (
+        <TabPane tab={tabTitle} key={title}>
+          <NoticeList
+            count={count}
+            data={list}
+            emptyImage={emptyImage}
+            emptyText={emptyText}
+            locale={locale}
+            onClear={() => this.onClear(title)}
+            onClick={item => this.onItemClick(item, child.props)}
+            onViewMore={event => this.onViewMore(child.props, event)}
+            showClear={showClear}
+            showViewMore={showViewMore}
+            title={title}
+          />
+        </TabPane>
+      );
+    });
     return (
-      <Spin spinning={loading} delay={0}>
-        <Tabs className={styles.tabs} onChange={this.onTabChange}>
-          {panes}
-        </Tabs>
-      </Spin>
+      <Fragment>
+        <Spin spinning={loading} delay={0}>
+          <Tabs className={styles.tabs} onChange={this.onTabChange}>
+            {panes}
+          </Tabs>
+        </Spin>
+      </Fragment>
     );
   }
 
-  handleVisibleChange = (visible: boolean) => {
+  handleVisibleChange = visible => {
     const { onPopupVisibleChange } = this.props;
-    this.setState({
-      visible
-    });
+    this.setState({ visible });
     onPopupVisibleChange(visible);
   };
 
   render() {
-    const { className, count, dropDownVisible, bell } = this.props;
+    const { className, count, bell } = this.props;
     const { visible } = this.state;
+    const noticeButtonClass = classNames(className, styles.noticeButton);
     const notificationBox = this.getNotificationBox();
+    const NoticeBellIcon = bell || <Icon type="bell" className={styles.icon} />;
     const trigger = (
-      <span
-        className={ClassNames(className, styles.noticeButton, {
-          opened: visible
-        })}
-      >
-        <Badge
-          count={count}
-          style={{ boxShadow: 'none' }}
-          className={styles.badge}
-        >
-          {bell}
+      <span className={classNames(noticeButtonClass, { opened: visible })}>
+        <Badge count={count} style={{ boxShadow: 'none' }} className={styles.badge}>
+          {NoticeBellIcon}
         </Badge>
       </span>
     );
-
     if (!notificationBox) {
       return trigger;
     }
-
-    const dropDownProps: { visible?: boolean } = {};
-
-    if ('dropDownVisible' in this.props) {
-      dropDownProps.visible = dropDownVisible;
-    }
-
     return (
-      <HeaderDropDown
+      <HeaderDropdown
         placement="bottomRight"
         overlay={notificationBox}
         overlayClassName={styles.popover}
         trigger={['click']}
         visible={visible}
         onVisibleChange={this.handleVisibleChange}
+        ref={node => (this.popover = ReactDOM.findDOMNode(node) as HTMLElement)} // eslint-disable-line
       >
         {trigger}
-      </HeaderDropDown>
+      </HeaderDropdown>
     );
   }
 }
-
-export default NoticeIcon;

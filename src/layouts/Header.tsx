@@ -149,7 +149,7 @@ class HeaderView extends PureComponent<HeaderProps, any> {
   };
 
   render() {
-    const { isMobile, handleMenuCollapse, setting,location,tips:{count,todos,notifys,messages},fetchTips,logo,currentUser,menuData } = this.props;
+    const { isMobile,collapsed, handleMenuCollapse, setting,location,tips:{count,todos,notifys,messages},fetchTips,logo,currentUser,menuData } = this.props;
     const { navTheme, layout, fixedHeader } = setting;
     const { visible } = this.state;
     const isTop = layout === 'topmenu';
@@ -161,7 +161,7 @@ class HeaderView extends PureComponent<HeaderProps, any> {
             menuData={menuData}
             isMobile={isMobile}
             logo={logo}
-            collapsed={setting.collapse}
+            collapsed={collapsed}
             theme={navTheme}
             mode="horizontal"
             onCollapse={handleMenuCollapse}
@@ -183,7 +183,7 @@ class HeaderView extends PureComponent<HeaderProps, any> {
         ) : (
             <GlobalHeader
               logo={logo}
-              collapsed={setting.collapse}
+              collapsed={collapsed}
               onCollapse={handleMenuCollapse}
               isMobile={isMobile}
               currentUser={currentUser}

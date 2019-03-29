@@ -1,6 +1,7 @@
+import SideMenu, { SideMenuProps } from './SideMenu';
+
 import React from 'react';
 import { Drawer } from 'antd';
-import SideMenu, { SideMenuProps } from './SideMenu';
 import { getFlatMenuKeys } from './utils';
 
 

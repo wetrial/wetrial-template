@@ -1,7 +1,12 @@
 import PathToRegexp from 'path-to-regexp';
 import { urlToList } from '@/wetrial/utils';
 
-export const getFlatMenuKeys = (menuData) => {
+/**
+ * Recursively flatten the data
+ * [{path:string},{path:string}] => {path,path2}
+ * @param  menus
+ */
+export const getFlatMenuKeys = (menuData:any[]) => {
   let keys = [];
   menuData.forEach((item) => {
     keys.push(item.path);
@@ -20,12 +25,17 @@ export const getMenuMatches = (flatMenuKeys, path) =>
     return false;
   });
 
-export const getDefaultCollapsedSubMenus = (props) => {
+/**
+ * 获得菜单子节点
+ * @memberof SiderMenu
+ */
+export const getDefaultCollapsedSubMenus = props => {
   const {
     location: { pathname },
-    flatMenuKeys
+    flatMenuKeys,
   } = props;
   return urlToList(pathname)
-    .map((item) => getMenuMatches(flatMenuKeys, item)[0])
-    .filter((item) => item);
+    .map(item => getMenuMatches(flatMenuKeys, item)[0])
+    .filter(item => item)
+    .reduce((acc, curr) => [...acc, curr], ['/']);
 };

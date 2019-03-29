@@ -1,12 +1,11 @@
-import H from 'history';
-import { MenuMode, MenuTheme } from 'antd/es/menu';
-import { CollapseType } from 'antd/es/layout/Sider';
+import * as H from 'history';
+import { SiderTheme, CollapseType } from 'antd/es/Layout/Sider';
+import { MenuMode } from 'antd/es/menu';
 
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Menu, Icon } from 'antd';
 import classNames from 'classnames';
 import { Link } from 'umi';
-import { PureComponent } from '@/wetrial';
 import IconFont from '@/components/IconFont';
 import { isUrl } from '@/utils/regexp';
 import { urlToList } from '@/wetrial/utils';
@@ -34,21 +33,22 @@ const getIcon = icon => {
 const { SubMenu } = Menu;
 
 export interface BaseMenuProps {
-  openKeys?: string[];
-  theme?: MenuTheme;
-  mode?: MenuMode;
   flatMenuKeys?: any[];
-  location: H.Location;
-  style?: React.CSSProperties;
-  menuData: any[];
-  isMobile: boolean;
-  collapsed:boolean;
-  onCollapse: (collapsed: boolean, type?: CollapseType) => void;
+  location?: H.Location;
+  onCollapse?: (collapsed: boolean, type?: CollapseType) => void;
+  isMobile?: boolean;
+  openKeys?: any;
+  theme?: SiderTheme;
+  mode?: MenuMode;
+  className?: string;
+  collapsed?: boolean;
   handleOpenChange?: (openKeys: any[]) => void;
+  menuData?: any[];
+  style?: React.CSSProperties;
   onOpenChange?: (openKeys: string[]) => void;
 }
 
-class BaseMenu extends PureComponent<BaseMenuProps, any> {
+export default class BaseMenu extends PureComponent<BaseMenuProps, any> {
   /**
    * 获得菜单子节点
    * @memberof SiderMenu
@@ -184,5 +184,3 @@ class BaseMenu extends PureComponent<BaseMenuProps, any> {
     );
   }
 }
-
-export default BaseMenu;

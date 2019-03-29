@@ -26,7 +26,7 @@ function generateTodos(){
 
 function generateMessages(){
   const messages = Mock.mock({
-    count: 10,
+    count: 20,
     "list|10": [
       {
         "id": '@guid',

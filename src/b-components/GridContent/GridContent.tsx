@@ -1,10 +1,10 @@
-import React from 'react';
+import React,{PureComponent} from 'react';
 import { connect } from 'dva';
-import { PureComponent } from '@/wetrial';
 import styles from './GridContent.less';
 
 export interface GridContentProps {
   contentWidth?: string;
+  children: React.ReactNode;
 }
 
 @connect(({ setting }) => ({

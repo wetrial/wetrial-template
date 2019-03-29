@@ -9,7 +9,7 @@ import {PageHeader,PureComponent} from '@/wetrial';
 import GridContent from './GridContent';
 import styles from './index.less';
 
-export interface PageHeaderWrapperProps extends IPageHeaderProps {
+export interface PageHeaderGridContentProps extends IPageHeaderProps {
   wrapperClassName?: string;
   top?: React.ReactNode;
   contentWidth?: string;
@@ -18,7 +18,7 @@ export interface PageHeaderWrapperProps extends IPageHeaderProps {
 @connect(({ setting }) => ({
   contentWidth: setting.contentWidth
 }))
-class PageHeaderWrapper extends PureComponent<PageHeaderWrapperProps, any> {
+class PageHeaderGridContent extends PureComponent<PageHeaderGridContentProps, any> {
   render() {
     const {
       wrapperClassName,
@@ -64,4 +64,4 @@ class PageHeaderWrapper extends PureComponent<PageHeaderWrapperProps, any> {
   }
 }
 
-export default PageHeaderWrapper;
+export default PageHeaderGridContent;

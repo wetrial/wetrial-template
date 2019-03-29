@@ -10,7 +10,7 @@ import { connect } from 'dva';
 import classNames from 'classnames';
 import Media from 'react-media';
 import SiderMenu from '@/components/SiderMenu';
-import Context from './MenuContext';
+import MenuContext from './MenuContext';
 import Header from './Header';
 import Footer from './Footer';
 import getPageTitle from '@/utils/getPageTitle';
@@ -59,7 +59,7 @@ export interface BasicLayoutProps {
   setting: ISettingsModelState;
   collapsed: boolean;
   menuData: any[];
-  breadcrumbNameMap: any[];
+  breadcrumbNameMap:object;
   isMobile: boolean;
 }
 
@@ -164,9 +164,9 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
         <DocumentTitle title={getPageTitle(pathname, breadcrumbNameMap)}>
           <ContainerQuery query={query}>
             {params => (
-              <Context.Provider value={this.getContext()}>
+              <MenuContext.Provider value={this.getContext()}>
                 <div className={classNames(params)}>{layout}</div>
-              </Context.Provider>
+              </MenuContext.Provider>
             )}
           </ContainerQuery>
         </DocumentTitle>

@@ -2,7 +2,7 @@ type MenuTheme = 'light' | 'dark';
 type layoutType = 'sidemenu' | 'topmenu';
 type contentWidthType = 'Fluid' | 'Fixed';
 type menuType={
-  disableLocal:false
+  disableLocal:boolean
 }
 
 export interface ISettingsModelState {

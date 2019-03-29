@@ -1,102 +1,88 @@
-import React from 'react';
-import ClassNames from 'classnames';
+import Breadcrumb,{BreadcrumbProps} from '../Breadcrumb';
+
+import React,{PureComponent} from 'react';
+import classNames from 'classnames';
 import { Tabs, Skeleton } from 'antd';
-import Breadcrumb from '../Breadcrumb';
+
 import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-export interface IPageHeaderProps {
-  className?: string;
-  title?: React.ReactNode | string;
+export interface IPageHeaderProps extends BreadcrumbProps{
+  title?: React.ReactNode | string | number;
   logo?: React.ReactNode | string;
   action?: React.ReactNode | string;
   content?: React.ReactNode;
-  extraContent?: React.ReactNode;
+  extraContent?: React.ReactNode;  
   tabList?: Array<{ key: string; tab: React.ReactNode }>;
   tabActiveKey?: string;
   tabDefaultActiveKey?: string;
   onTabChange?: (key: string) => void;
   tabBarExtraContent?: React.ReactNode;
-  home?: React.ReactNode;
-  linkElement?: React.ReactNode;
-  itemRender?: any;
+  style?: React.CSSProperties;
   wide?: boolean;
+  hiddenBreadcrumb?: boolean;
+  className?: string;
   loading?: boolean;
 }
 
-class PageHeader extends React.PureComponent<IPageHeaderProps, any> {
-  static defaultProps = {
-    className: ''
-  };
-
-  constructor(props) {
-    super(props);
-  }
-
-  handleChange = (key) => {
+export default class PageHeader extends PureComponent<IPageHeaderProps, any> {
+  onChange = key => {
     const { onTabChange } = this.props;
-    onTabChange && onTabChange(key);
+    if (onTabChange) {
+      onTabChange(key);
+    }
   };
 
   render() {
     const {
-      className,
-      wide,
-      loading,
+      title = '',
       logo,
-      title,
       action,
       content,
       extraContent,
       tabList,
-      tabBarExtraContent,
-      tabDefaultActiveKey,
+      className,
       tabActiveKey,
-      ...restProps
+      tabDefaultActiveKey,
+      tabBarExtraContent,
+      loading = false,
+      wide = false,
+      hiddenBreadcrumb = false,
     } = this.props;
 
-    const cls = ClassNames(styles.pageHeader, className);
-
-    const activeKeyProps: {
-      defaultActiveKey: string;
-      activeKey: string;
-    } = {
-      defaultActiveKey: '',
-      activeKey: ''
+    const clsString = classNames(styles.pageHeader, className);
+    const activeKeyProps = {
+      defaultActiveKey:undefined,
+      activeKey:undefined
     };
-
     if (tabDefaultActiveKey !== undefined) {
       activeKeyProps.defaultActiveKey = tabDefaultActiveKey;
     }
     if (tabActiveKey !== undefined) {
       activeKeyProps.activeKey = tabActiveKey;
     }
-
     return (
-      <div className={cls}>
+      <div className={clsString}>
         <div className={wide ? styles.wide : ''}>
           <Skeleton
             loading={loading}
             title={false}
-            active={true}
+            active
             paragraph={{ rows: 3 }}
             avatar={{ size: 'large', shape: 'circle' }}
           >
-            {/** 面包屑导航 */}
-            <Breadcrumb {...restProps} />
+            {hiddenBreadcrumb ? null : <Breadcrumb {...this.props} />}
             <div className={styles.detail}>
               {logo && <div className={styles.logo}>{logo}</div>}
               <div className={styles.main}>
                 <div className={styles.row}>
-                  {title && <h1 className={styles.title}>{title}</h1>}
+                  <h1 className={styles.title}>{title}</h1>
                   {action && <div className={styles.action}>{action}</div>}
                 </div>
                 <div className={styles.row}>
                   {content && <div className={styles.content}>{content}</div>}
-                  {extraContent && (
-                    <div className={styles.extraContent}>{extraContent}</div>
-                  )}
+                  {extraContent && <div className={styles.extraContent}>{extraContent}</div>}
                 </div>
               </div>
             </div>
@@ -104,10 +90,10 @@ class PageHeader extends React.PureComponent<IPageHeaderProps, any> {
               <Tabs
                 className={styles.tabs}
                 {...activeKeyProps}
-                onChange={this.handleChange}
+                onChange={this.onChange}
                 tabBarExtraContent={tabBarExtraContent}
               >
-                {tabList.map((item) => (
+                {tabList.map(item => (
                   <TabPane tab={item.tab} key={item.key} />
                 ))}
               </Tabs>
@@ -118,5 +104,3 @@ class PageHeader extends React.PureComponent<IPageHeaderProps, any> {
     );
   }
 }
-
-export default PageHeader;

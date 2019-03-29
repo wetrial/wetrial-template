@@ -2,6 +2,7 @@ import H from 'history';
 import { MenuMode,MenuTheme } from 'antd/es/menu';
 import { CollapseType } from 'antd/es/layout/Sider';
 import RightContent,{RightContextProps} from '../GlobalHeader/RightContent';
+import { ICurrentUser } from '@/types/user';
 
 import React, { PureComponent } from 'react';
 import Link from 'umi/link';
@@ -19,6 +20,7 @@ interface ITopNavHeaderProps {
   style?: React.CSSProperties;
   menuData: any[];
   isMobile: boolean;
+  currentUser?: ICurrentUser;
   onCollapse: (collapsed: boolean, type?: CollapseType) => void;
   onOpenChange?: (openKeys: string[]) => void;
 

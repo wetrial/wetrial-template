@@ -158,14 +158,15 @@ class HeaderView extends PureComponent<HeaderProps, any> {
       <Header style={{ padding: 0, width }} className={fixedHeader ? styles.fixedHeader : ''}>
         {isTop && !isMobile ? (
           <TopNavHeader
-            menuData={menuData}
-            isMobile={isMobile}
             logo={logo}
             collapsed={collapsed}
-            theme={navTheme}
-            mode="horizontal"
             onCollapse={handleMenuCollapse}
+            isMobile={isMobile}
+            currentUser={currentUser}
             onMenuClick={this.handleMenuClick}
+            menuData={menuData}
+            theme={navTheme}
+            mode="horizontal"        
             location={location}
             noticeIcon={{
               loading:fetchTips,

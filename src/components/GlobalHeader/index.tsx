@@ -43,8 +43,7 @@ export default class GlobalHeader extends React.PureComponent<GlobalHeaderProps,
         <span className={styles.trigger} onClick={this.toggle}>
           <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
         </span>
-        <RightContent
-          {...this.props}
+        <RightContent {...this.props}
         />
       </div>
     );

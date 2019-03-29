@@ -4,7 +4,7 @@ import {ISettingsModelState} from './types/settings'
 const defaultSettings:ISettingsModelState= {
     "navTheme": "light",
     "primaryColor":theme['primary-color'],
-    "layout": "sidemenu",
+    "layout":"sidemenu",
     "contentWidth": "Fluid",
     "fixedHeader": true,
     "autoHideHeader": true,

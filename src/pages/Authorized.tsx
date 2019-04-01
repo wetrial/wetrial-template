@@ -1,5 +1,7 @@
 import React from 'react';
 import {Redirect} from 'umi';
+import { stringify } from 'qs';
+import router from 'umi/router';
 import pathToRegexp from 'path-to-regexp';
 import { connect } from 'dva';
 import Authorized from '@/utils/Authorized';
@@ -7,7 +9,15 @@ import {getToken} from '@/wetrial/store'
 
 function AuthComponent({ children, location, routerData }) {
   const isLogin = !!getToken();
-
+  if(!isLogin){
+    router.push({
+      pathname: '/user/login',
+      search: stringify({
+        redirect: window.location.href,
+      }),
+    })
+    return null;
+  }
   const getRouteAuthority = (path, routeData) => {
     let authorities;
     routeData.forEach(route => {

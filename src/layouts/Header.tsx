@@ -85,7 +85,7 @@ class HeaderView extends PureComponent<HeaderProps, any> {
     const { dispatch } = this.props;
     if (key === 'logout') {
       dispatch({
-        type: 'login/logout',
+        type: 'user/loginOut',
       });
     }
   };

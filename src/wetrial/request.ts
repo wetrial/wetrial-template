@@ -2,6 +2,7 @@ import request, { RequestOptionsInit } from 'umi-request'
 import { omit, assign } from 'lodash';
 import { notification } from 'antd';
 import { getToken } from './store';
+import { UnAuthorizedException } from './exception';
 
 interface IRequestOption extends RequestOptionsInit {
   showTip?: boolean; // 操作成功是否提示
@@ -13,7 +14,7 @@ interface IRequestOption extends RequestOptionsInit {
 // request拦截器,请求头增加Authorization token等信息
 request.interceptors.request.use((_, options) => {
   assign(options.headers, {
-    Authorization: getToken(),
+    Authorization: getToken()
     // '.AspNetCore.Culture':
   });
   return {
@@ -66,11 +67,7 @@ export const fetch = (opt: IRequestOption) => {
   return request(url, fetchOption).then(rep => {
     if(rep){
       if(rep.unAuthorizedRequest){
-        // @ts-ignore
-        window.g_app._store.dispatch({
-          type: 'user/unAuthorizedRedirect',
-        });
-        return;
+        throw new UnAuthorizedException(rep.error||'登录已经失效！')
       }
       return rep.result;
     }

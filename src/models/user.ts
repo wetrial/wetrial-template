@@ -2,10 +2,10 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
 import extendModel from '@/wetrial/model';
-import {clearToken,setToken} from '@/wetrial/store';
-import { getCurrent,loginout,login } from '@/services/user';
+import { clearToken, setToken } from '@/wetrial/store';
+import { getCurrent, loginout, login } from '@/services/user';
 import { reloadAuthorized } from '@/utils/Authorized';
-import {getRedirect} from '@/utils';
+import { getRedirect } from '@/utils';
 import { notification } from 'antd';
 
 export default extendModel({
@@ -26,14 +26,14 @@ export default extendModel({
     *login({ payload }, { call, put }) {
       const result = yield call(login, payload);
       // login success
-      if (result&&result.token) {
+      if (result && result.token) {
         setToken(result.token);
         reloadAuthorized();
-        const redirect=getRedirect();
+        const redirect = getRedirect();
         yield put(routerRedux.replace(redirect));
       }
     },
-    *loginOut(_,{call,put}){
+    *loginOut(_, { call, put }) {
       yield call(loginout);
       yield clearToken();
       yield reloadAuthorized();
@@ -49,9 +49,9 @@ export default extendModel({
         message:'提示',
         description: '登录已过期，请重新登录',
       });
-      // router.push()
+      
       yield put(
-        routerRedux.replace({
+        routerRedux.push({
           pathname: '/user/login',
           search: stringify({
             redirect: window.location.href,

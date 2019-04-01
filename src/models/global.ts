@@ -95,7 +95,25 @@ export default extendModel({
 
         }
       })
-    }
+    },
+    // throttle:[
+    //   function*({payload},{call,put}){
+    //     yield put({
+
+    //     })
+    //   },
+    //   {
+    //     type:'throttle',ms:100
+    //   }
+    // ],
+    // takeLatest:[
+    //   function*({payload},{call,put}){
+
+    //   },
+    //   {
+    //     type:'takeLatest'
+    //   }
+    // ]
   },
   reducers: {
     changeCollapsed(state, { payload }) {

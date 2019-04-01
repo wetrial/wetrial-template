@@ -39,7 +39,7 @@ export function errorWrapper(result:any,unAuthorizedRequest = false,error){
 export function authorizeIntercept(opt,dataFunc){
     const{request,response}=opt;
     // request.get api参考 express@4 http://expressjs.com/zh-cn/api.html#req.get
-    if(request&&request.get('Authorization')){
+    if(request&&request.get('Authorization')&&request.get('Authorization')!=='null'){
       return dataFunc(opt);
     }
     else{

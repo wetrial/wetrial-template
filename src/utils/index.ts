@@ -4,7 +4,7 @@ import { parse } from 'qs';
  * 解析url后的查询字符串并转化成object对象
  * @param data 要解析的字符串，没有则默认使用location.href
  */
-export function getQuery(data?: string) {
+export function getQuery(data?: string):{[key:string]:string} {
     const url = data || window.location.href.split('?')[1];
     return parse(url);
 }

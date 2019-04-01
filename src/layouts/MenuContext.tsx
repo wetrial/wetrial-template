@@ -3,7 +3,7 @@ import H from 'history';
 
 export type TProviderStore={
   location: H.Location;
-  breadcrumbNameMap: any[];
+  breadcrumbNameMap:{[key:string]:Object};
 }
 
 export default createContext({} as TProviderStore);

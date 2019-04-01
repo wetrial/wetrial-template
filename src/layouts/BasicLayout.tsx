@@ -1,6 +1,7 @@
 import H from 'history';
 import { Dispatch } from 'redux';
 import { ISettingsModelState } from '@/types/settings';
+import MenuContext,{TProviderStore} from './MenuContext';
 
 import { Layout } from 'antd';
 import React from 'react';
@@ -10,14 +11,15 @@ import { connect } from 'dva';
 import classNames from 'classnames';
 import Media from 'react-media';
 import SiderMenu from '@/components/SiderMenu';
-import MenuContext from './MenuContext';
 import Header from './Header';
 import Footer from './Footer';
 import getPageTitle from '@/utils/getPageTitle';
+
 import styles from './BasicLayout.less';
 
 import logo from '@/assets/imgs/wetrial-logo.jpg';
 import smallLogo from '@/assets/imgs/wetrial-logo-small.jpg';
+
 
 const { Content } = Layout;
 
@@ -59,12 +61,12 @@ export interface BasicLayoutProps {
   setting: ISettingsModelState;
   collapsed: boolean;
   menuData: any[];
-  breadcrumbNameMap:object;
+  breadcrumbNameMap: {[key:string]:string};
   isMobile: boolean;
 }
 
 class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
-  readonly breadcrumbNameMap: object;
+  readonly breadcrumbNameMap: {[key:string]:string};
 
   componentDidMount() {
     const {
@@ -82,7 +84,7 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
     });
   }
 
-  getContext() {
+  getContext():TProviderStore {
     const { location, breadcrumbNameMap } = this.props;
     return {
       location,
@@ -122,7 +124,7 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
       isMobile,
       menuData,
       breadcrumbNameMap,
-      setting:{fixedHeader,navTheme,layout:PropsLayout},
+      setting: { fixedHeader, navTheme, layout: PropsLayout },
       collapsed
     } = this.props;
 
@@ -132,7 +134,7 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
       <Layout>
         {isTop && !isMobile ? null : (
           <SiderMenu
-            logo={collapsed?smallLogo:logo}
+            logo={collapsed ? smallLogo : logo}
             theme={navTheme}
             onCollapse={this.handleMenuCollapse}
             menuData={menuData}

@@ -6,7 +6,7 @@ import NoticeIcon, { NoticeIconProps } from '../NoticeIcon';
 import { HeaderSearchProps } from '../HeaderSearch';
 
 import React from 'react';
-import { FormattedMessage, formatMessage } from 'umi/locale';
+import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import { Dropdown, Avatar, Menu, Icon, Spin, message } from 'antd';
 
 import styles from './index.less';

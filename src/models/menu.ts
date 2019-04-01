@@ -1,7 +1,7 @@
 import memoizeOne from 'memoize-one';
 import extendModel from '@/wetrial/model';
 import isEqual from 'lodash/isEqual';
-import { formatMessage } from 'umi/locale';
+import { formatMessage } from 'umi-plugin-react/locale';
 import defaultSettings from '@/defaultSettings';
 import Authorized from '@/utils/Authorized';
 

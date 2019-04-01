@@ -13,7 +13,7 @@ declare class FormattedMessage extends React.Component<
     render(): JSX.Element;
 }
 
-declare module 'umi/locale' {
+declare module 'umi-plugin-react/locale' {
     export const formatMessage
     export const setLocale
     export const getLocale

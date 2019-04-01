@@ -1,4 +1,4 @@
-import { formatMessage } from 'umi/locale';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { every, get as depGet } from 'lodash';
 import { get } from './request';
 
@@ -131,7 +131,7 @@ export const getRangeValue=(min:number,max:number):object[]=>{
  */
 export const getMaxValueLength = (max:number):object => {
   return {
-    validator: (rule, value, callback) => {
+    validator: (_, value, callback) => {
       if (value && `${value}`.length > max) {
         callback(formatMessage({ id: 'validation.max-value-length' }, { max }));
       }

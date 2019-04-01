@@ -1,7 +1,7 @@
 import React from 'react';
 import ClassNames from 'classnames';
 import { Menu, Icon } from 'antd';
-import { formatMessage, setLocale, getLocale } from 'umi/locale';
+import { formatMessage, setLocale, getLocale } from 'umi-plugin-react/locale';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 

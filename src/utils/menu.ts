@@ -1,6 +1,6 @@
 import MemoizeOne from 'memoize-one';
 import { isEqual } from 'lodash';
-import { formatMessage } from 'umi/locale';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export interface Formatter {
   routes?: any;

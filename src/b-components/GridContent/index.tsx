@@ -1,7 +1,7 @@
 import {IPageHeaderProps} from '@/wetrial/types';
 
 import React from 'react';
-import { FormattedMessage } from 'umi/locale';
+import { FormattedMessage } from 'umi-plugin-react/locale';
 import Link from 'umi/link';
 import { connect } from 'dva';
 import MenuContext from '@/layouts/MenuContext';

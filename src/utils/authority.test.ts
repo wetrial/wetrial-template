@@ -1,19 +1,19 @@
-import { getAuthority } from './authority';
+import { getPermissions } from './authority';
 
-describe('getAuthority should be strong', () => {
+describe('getPermissions should be strong', () => {
   it('empty', () => {
-    expect(getAuthority(null)).toEqual(['admin']); // default value
+    expect(getPermissions(null)).toEqual(['admin']); // default value
   });
   it('string', () => {
-    expect(getAuthority('admin')).toEqual(['admin']);
+    expect(getPermissions('admin')).toEqual(['admin']);
   });
   it('array with double quotes', () => {
-    expect(getAuthority('"admin"')).toEqual(['admin']);
+    expect(getPermissions('"admin"')).toEqual(['admin']);
   });
   it('array with single item', () => {
-    expect(getAuthority('["admin"]')).toEqual(['admin']);
+    expect(getPermissions('["admin"]')).toEqual(['admin']);
   });
   it('array with multiple items', () => {
-    expect(getAuthority('["admin", "guest"]')).toEqual(['admin', 'guest']);
+    expect(getPermissions('["admin", "guest"]')).toEqual(['admin', 'guest']);
   });
 });

@@ -1,4 +1,5 @@
 import { parse } from 'qs';
+import {mapValues,isString} from 'lodash';
 
 /**
  * 解析url后的查询字符串并转化成object对象
@@ -24,9 +25,28 @@ export function getRedirect(defaultPath:string='/') {
             if (redirect.match(/^\/.*#/)) {
                 redirect = redirect.substr(redirect.indexOf('#') + 1);
             }
-        } else {
-            redirect = defaultPath;
         }
     }
-    return redirect;
+    return redirect||defaultPath;
+}
+
+/**
+ * 根据对象获取对象中的字符串值
+ * @param obj 要遍历的对象
+ * @returns string[]
+ */
+export function deepGetValue(obj:{[key:string]:any}){
+    const values=new Set();
+    mapValues(obj,(v)=>{
+        if(isString(v)){
+            values.add(v);
+        }
+        else{
+            const subValues=deepGetValue(v);
+            subValues.forEach(subValue=>{
+                values.add(subValue);
+            })
+        }
+    })
+    return [...values];
 }

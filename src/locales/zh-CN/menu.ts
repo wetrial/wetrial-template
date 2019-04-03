@@ -1,9 +1,7 @@
 export default {
   'menu.home': '首页',
-  'menu.dashboard': '看板',
-  'menu.dashboard.analysis': '分析页',
-  'menu.dashboard.monitor': '监控页',
-  'menu.dashboard.workplace': '工作台',
+  'menu.example': '案例',
+  'menu.example.drag-drop': '拖拽',
   'menu.exception': '异常页',
   'menu.exception.not-permission': '403',
   'menu.exception.not-find': '404',

@@ -18,27 +18,18 @@ const routes:IRoute[]= [
       Routes: ['src/pages/Authorized'],
       authority:Permissions.app,
       routes: [
-        // dashboard
-        { path: '/', redirect: '/dashboard/analysis' },
+        { path: '/', redirect: '/example/drag' },
         {
-          path: '/dashboard',
-          name: 'dashboard',
-          icon: 'dashboard',
+          path: 'example',
+          name: 'example',
+          authority:Permissions.example.base,
+          icon: 'smile',
           routes: [
             {
-              path: '/dashboard/analysis',
-              name: 'analysis',
-              component: './Dashboard/Analysis'
-            },
-            {
-              path: '/dashboard/monitor',
-              name: 'monitor',
-              component: './Dashboard/Monitor'
-            },
-            {
-              path: '/dashboard/workplace',
-              name: 'workplace',
-              component: './Dashboard/Workplace'
+              path: 'drag',
+              name: 'drag-drop',
+              authority:Permissions.example.reactDnd,
+              component: './Example/Drag-Drop/index'
             }
           ]
         },

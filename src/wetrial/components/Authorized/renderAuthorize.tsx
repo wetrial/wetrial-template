@@ -1,7 +1,7 @@
 /* eslint-disable import/no-mutable-exports */
 let CURRENT = 'NULL';
 /**
- * use  authority or getAuthority
+ * use  authority or getPermissions
  * @param {string|()=>String} currentAuthority
  */
 const renderAuthorize = Authorized => currentAuthority => {

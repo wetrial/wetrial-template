@@ -1,4 +1,6 @@
 import responseWrapper,{errorWrapper,authorizeIntercept} from './base';
+import Permissions from '../src/constants/permissions';
+import { deepGetValue } from "../src/utils";
 import { delay } from 'roadhog-api-doc';
 
 function getCurrentUser({response}) {
@@ -14,6 +16,7 @@ function getCurrentUser({response}) {
       { key: '1', label: '专注前后端' },
       { key: '2', label: '海纳百川' },
     ],
+    permissions:deepGetValue(Permissions)
   };
   response.json(responseWrapper(current));
 }

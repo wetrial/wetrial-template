@@ -1,22 +1,23 @@
+
+import { getPermissions as storeGetPermissions,setPermissions as storeSetPermissions } from '@/wetrial/store';
+
 // use localStorage to store the authority info, which might be sent from server in actual project.
-export function getAuthority(str?:string) {
-  // return localStorage.getItem('antd-pro-authority') || ['admin', 'user'];
-  const authorityString =
-    typeof str === 'undefined' ? localStorage.getItem('antd-pro-authority') : str;
-  // authorityString could be admin, "admin", ["admin"]
-  let authority;
+export function getPermissions(str?:string) {
+  const permissionString =
+    typeof str === 'undefined' ? storeGetPermissions() : str;
+  let permission;
   try {
-    authority = JSON.parse(authorityString);
+    permission = JSON.parse(permissionString as string);
   } catch (e) {
-    authority = authorityString;
+    permission = permissionString;
   }
-  if (typeof authority === 'string') {
-    return [authority];
+  if (typeof permission === 'string') {
+    return [permission];
   }
-  return authority;
+  return permission;
 }
 
-export function setAuthority(authority?:string|string[]) {
-  const proAuthority = typeof authority === 'string' ? [authority] : authority;
-  return localStorage.setItem('antd-pro-authority', JSON.stringify(proAuthority));
+export function setPermissions(permissions?:string|string[]) {
+  const tempPermissions = typeof permissions === 'string' ? [permissions] : permissions;
+  return storeSetPermissions(tempPermissions);
 }

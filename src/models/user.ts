@@ -1,21 +1,24 @@
 // import router from "umi/router";
 import { routerRedux } from 'dva/router';
-import { stringify } from 'qs';
 import extendModel from '@/wetrial/model';
 import { clearToken, setToken } from '@/wetrial/store';
 import { getCurrent, loginout, login } from '@/services/user';
 import { reloadAuthorized } from '@/utils/Authorized';
-import { getRedirect } from '@/utils';
-import { notification } from 'antd';
+import { setPermissions } from "@/utils/authority";
+import { getRedirect} from '@/utils';
 
 export default extendModel({
   namespace: 'user',
   state: {
-    currentUser: {}
+    currentUser: {
+      permissions:null
+    }
   },
   effects: {
     *getCurrent(_, { call, put }) {
       const currentUser = yield call(getCurrent);
+      setPermissions(currentUser.permissions);
+      reloadAuthorized();
       yield put({
         type: 'update',
         payload: {
@@ -28,7 +31,6 @@ export default extendModel({
       // login success
       if (result && result.token) {
         setToken(result.token);
-        reloadAuthorized();
         const redirect = getRedirect();
         yield put(routerRedux.replace(redirect));
       }
@@ -43,21 +45,21 @@ export default extendModel({
         })
       )
     },
-    // 当request获取api后端数据 算作未登录时，触发此effects
-    *unAuthorizedRedirect(_,{put}){
-      notification.error({
-        message:'提示',
-        description: '登录已过期，请重新登录',
-      });
+    // // 当request获取api后端数据 算作未登录时，触发此effects
+    // *unAuthorizedRedirect(_,{put}){
+    //   notification.error({
+    //     message:'提示',
+    //     description: '登录已过期，请重新登录',
+    //   });
       
-      yield put(
-        routerRedux.push({
-          pathname: '/user/login',
-          search: stringify({
-            redirect: window.location.href,
-          }),
-        })
-      )
-    }
+    //   yield put(
+    //     routerRedux.push({
+    //       pathname: '/user/login',
+    //       search: stringify({
+    //         redirect: window.location.href,
+    //       }),
+    //     })
+    //   )
+    // }
   }
 });

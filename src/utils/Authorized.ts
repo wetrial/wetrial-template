@@ -1,11 +1,11 @@
 import {Authorized as RenderAuthorized} from '@/wetrial';
-import { getAuthority } from './authority';
+import { getPermissions } from './authority';
 
-let Authorized = RenderAuthorized(getAuthority()); // eslint-disable-line
+let Authorized = RenderAuthorized(getPermissions()); // eslint-disable-line
 
 // Reload the rights component
 const reloadAuthorized = () => {
-  Authorized = RenderAuthorized(getAuthority());
+  Authorized = RenderAuthorized(getPermissions());
 };
 
 export { reloadAuthorized };

@@ -47,7 +47,7 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
 
     return (
       <div className={styles.main}>
-        <Card>
+        <Card title="用户登录">
           <Form onSubmit={this.handleSubmit}>
             <FormItem>
               {getFieldDecorator('userName', {
@@ -55,7 +55,7 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
                   getTextRequire()
                 ]
               })(
-                <Input autoComplete="off" prefix={<Icon type="user" />} placeholder="用户名" />
+                <Input autoComplete="off" prefix={<Icon type="user" />} placeholder="admin" />
               )}
             </FormItem>
             <FormItem>
@@ -66,7 +66,7 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
               })(
                 <Input.Password
                   prefix={<Icon type="lock" />}
-                  placeholder="密码"
+                  placeholder="Abcd1234"
                   autoComplete="off"
                 />
               )}

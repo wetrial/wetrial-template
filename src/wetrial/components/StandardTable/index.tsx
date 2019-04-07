@@ -22,13 +22,13 @@ class StandardTable<T> extends React.PureComponent<StandardTableProps<T>, any> {
   static defaultProps: DefaultProps = {
     paginationConfig: {
       showQuickJumper: true,
-      showSizeChanger: true
-    }
+      showSizeChanger: true,
+    },
   };
 
-  handleTableChange = (pagination, filters, sorter,extra) => {
+  handleTableChange = (pagination, filters, sorter, extra) => {
     const { onChange } = this.props;
-    onChange && onChange(pagination, filters, sorter,extra);
+    onChange && onChange(pagination, filters, sorter, extra);
   };
 
   render() {
@@ -42,7 +42,7 @@ class StandardTable<T> extends React.PureComponent<StandardTableProps<T>, any> {
     } else {
       paginationProps = {
         ...pagination,
-        ...paginationConfig
+        ...paginationConfig,
       };
     }
 

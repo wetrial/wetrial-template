@@ -8,6 +8,10 @@ export interface IAuthorizedProps {
 }
 
 class Authorized extends React.PureComponent<IAuthorizedProps> {
+  static check;
+  static Secured;
+  static AuthorizedRoute;
+
   render() {
     const { children, authority, noMatch = null } = this.props;
     const childrenRender = typeof children === 'undefined' ? null : children;

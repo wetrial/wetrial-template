@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'antd';
-import ClassNames from 'classnames';
-import {capitalize} from 'lodash';
+import classNames from 'classnames';
+import { capitalize } from 'lodash';
 import styles from './index.less';
 
 export interface NumberInfoProps {
@@ -19,32 +19,20 @@ export interface NumberInfoProps {
 class NumberInfo extends React.Component<NumberInfoProps, any> {
   static defaultProps = {
     theme: 'light',
-    gap: 8
+    gap: 8,
   };
 
   render() {
-    const {
-      theme,
-      title,
-      subTitle,
-      total,
-      suffix,
-      subTotal,
-      gap,
-      status
-    } = this.props;
+    const { theme, title, subTitle, total, suffix, subTotal, gap, status } = this.props;
 
-    const cls = ClassNames(styles.numberInfo, {
-      [styles[`numberInfo${capitalize(theme)}`]]: theme
+    const cls = classNames(styles.numberInfo, {
+      [styles[`numberInfo${capitalize(theme)}`]]: theme,
     });
 
     return (
       <div className={cls}>
         {title && (
-          <div
-            className={styles.numberInfoTitle}
-            title={typeof title === 'string' ? title : ''}
-          >
+          <div className={styles.numberInfoTitle} title={typeof title === 'string' ? title : ''}>
             {title}
           </div>
         )}
@@ -56,10 +44,7 @@ class NumberInfo extends React.Component<NumberInfoProps, any> {
             {subTitle}
           </div>
         )}
-        <div
-          className={styles.numberInfoValue}
-          style={gap ? { marginTop: gap } : null}
-        >
+        <div className={styles.numberInfoValue} style={gap ? { marginTop: gap } : null}>
           <span>
             {total}
             {suffix && <em className={styles.suffix}>{suffix}</em>}

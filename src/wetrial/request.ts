@@ -1,4 +1,4 @@
-import request, { RequestOptionsInit } from 'umi-request'
+import request, { RequestOptionsInit } from 'umi-request';
 import { omit, assign } from 'lodash';
 import { notification } from 'antd';
 import { getToken } from './store';
@@ -14,7 +14,7 @@ interface IRequestOption extends RequestOptionsInit {
 // request拦截器,请求头增加Authorization token等信息
 request.interceptors.request.use((_, options) => {
   assign(options.headers, {
-    Authorization: getToken()
+    Authorization: getToken(),
     // '.AspNetCore.Culture':
   });
   return {
@@ -65,23 +65,23 @@ export const fetch = (opt: IRequestOption) => {
   };
   const { url } = opt;
   return request(url, fetchOption).then(rep => {
-    if(rep){
-      if(rep.unAuthorizedRequest){
-        throw new UnAuthorizedException(rep.error||'登录已经失效！')
+    if (rep) {
+      if (rep.unAuthorizedRequest) {
+        throw new UnAuthorizedException(rep.error || '登录已经失效！');
       }
       return rep.result;
     }
   });
 };
 
-export const get = (opt: IRequestOption|string) => {
-  let options:IRequestOption;
-  if(typeof(opt)==="string"){
-    options={
-      url:opt as string
-    }
-  }else{
-    options=opt;
+export const get = (opt: IRequestOption | string) => {
+  let options: IRequestOption;
+  if (typeof opt === 'string') {
+    options = {
+      url: opt as string,
+    };
+  } else {
+    options = opt;
   }
   return fetch({
     ...omit(options, 'data'),

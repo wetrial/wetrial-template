@@ -10,9 +10,9 @@ export interface AvatarListProps {
 
 class AvatarList extends React.Component<AvatarListProps, any> {
   static Item: typeof Item;
-  
+
   static defaultProps = {
-    size: 'default'
+    size: 'default',
   };
 
   constructor(props) {
@@ -24,17 +24,14 @@ class AvatarList extends React.Component<AvatarListProps, any> {
 
     const childrenWithProps = [];
 
-    React.Children.map(
-      children as React.ReactNode,
-      (child: React.ReactElement<any>, index) => {
-        childrenWithProps.push(
-          React.cloneElement(child, {
-            size,
-            key: child.key || index
-          })
-        );
-      }
-    );
+    React.Children.map(children as React.ReactNode, (child: React.ReactElement<any>, index) => {
+      childrenWithProps.push(
+        React.cloneElement(child, {
+          size,
+          key: child.key || index,
+        })
+      );
+    });
 
     return <div className={styles.avatarList}>{childrenWithProps}</div>;
   }

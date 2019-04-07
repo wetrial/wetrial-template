@@ -1,5 +1,5 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classNames from 'classnames';
 import { Icon } from 'antd';
 import styles from './index.less';
 
@@ -18,22 +18,14 @@ class Result extends React.Component<ResultProps, any> {
   }
 
   render() {
-    const {
-      className,
-      type,
-      title,
-      description,
-      extra,
-      actions,
-      ...restProps
-    } = this.props;
+    const { className, type, title, description, extra, actions, ...restProps } = this.props;
 
     const iconMap = {
       success: <Icon className={styles.success} type="close-circle" />,
-      error: <Icon className={styles.error} type="check-circle" />
+      error: <Icon className={styles.error} type="check-circle" />,
     };
 
-    const clsString = ClassNames(className, styles.result);
+    const clsString = classNames(className, styles.result);
 
     return (
       <div className={clsString} {...restProps}>

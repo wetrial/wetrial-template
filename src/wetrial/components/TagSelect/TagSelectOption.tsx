@@ -19,11 +19,7 @@ class TagSelectOption extends React.Component<TagSelectOptionProps, any> {
   render() {
     const { checked, children, value, onChange } = this.props;
     return (
-      <CheckableTag
-        checked={checked}
-        key={value}
-        onChange={(state) => onChange(value, state)}
-      >
+      <CheckableTag checked={checked} key={value} onChange={state => onChange(value, state)}>
         {children}
       </CheckableTag>
     );

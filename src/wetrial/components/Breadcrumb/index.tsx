@@ -1,6 +1,6 @@
 import { Location } from 'history';
 
-import React,{PureComponent,createElement} from 'react';
+import React, { PureComponent, createElement } from 'react';
 import { Breadcrumb } from 'antd';
 import pathToRegexp from 'path-to-regexp';
 import { urlToList } from '../../utils';
@@ -30,8 +30,8 @@ export const getBreadcrumb = (breadcrumbNameMap, url) => {
   return breadcrumb || {};
 };
 
-interface State{
-  breadcrumb:React.ReactNode;
+interface State {
+  breadcrumb: React.ReactNode;
 }
 
 export default class LotusBreadcrumb extends PureComponent<BreadcrumbProps, State> {
@@ -112,10 +112,12 @@ export default class LotusBreadcrumb extends PureComponent<BreadcrumbProps, Stat
       const name = itemRender ? itemRender(currentBreadcrumb) : currentBreadcrumb.name;
       return currentBreadcrumb.name && !currentBreadcrumb.hideInBreadcrumb ? (
         <Breadcrumb.Item key={url}>
-          {
+          {createElement(
             // @ts-ignore
-            createElement(isLinkable ? linkElement: 'span',{ [linkElement === 'a' ? 'href' : 'to']: url },name)
-          }
+            isLinkable ? linkElement : 'span',
+            { [linkElement === 'a' ? 'href' : 'to']: url },
+            name
+          )}
         </Breadcrumb.Item>
       ) : null;
     });

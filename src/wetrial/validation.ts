@@ -6,7 +6,7 @@ import { get } from './request';
  * 必填校验
  * @param {bool} isRequire 是否必填
  */
-export const getRequire = (isRequire:boolean=true):object => {
+export const getRequire = (isRequire: boolean = true): object => {
   return {
     required: isRequire,
     message: formatMessage({ id: 'validation.require' }),
@@ -17,20 +17,20 @@ export const getRequire = (isRequire:boolean=true):object => {
  * 文字必填
  * @param {boolean} isRequire 是否必填
  */
-export const getTextRequire = (isRequire:boolean=true):object => {
-    return {
-      required: isRequire,
-      whitespace: true,
-      message: formatMessage({ id: 'validation.require' }),
-    };
+export const getTextRequire = (isRequire: boolean = true): object => {
+  return {
+    required: isRequire,
+    whitespace: true,
+    message: formatMessage({ id: 'validation.require' }),
   };
+};
 
 /**
  * 校验复杂类型的数据是否为空
  * @param {array<string>} checkProps
  * @example getObjRequireRules('project.key')
  */
-export const getObjRequire = (...checkProps:string[]):object => {
+export const getObjRequire = (...checkProps: string[]): object => {
   return {
     validator: (_, value, callback) => {
       if (value) {
@@ -51,12 +51,11 @@ export const getObjRequire = (...checkProps:string[]):object => {
   };
 };
 
-
 /**
  * 字符串最大长度
  * @param {number} max 最大值
  */
-export const getMaxLength= (max:number):object => {
+export const getMaxLength = (max: number): object => {
   return {
     max,
     message: formatMessage({ id: 'validation.max' }, { max }),
@@ -67,7 +66,7 @@ export const getMaxLength= (max:number):object => {
  * 字符串最小长度
  * @param {number} min 最小值
  */
-export const getMinLength = (min:number):object => {
+export const getMinLength = (min: number): object => {
   return {
     min,
     message: formatMessage({ id: 'validation.min' }, { min }),
@@ -79,18 +78,15 @@ export const getMinLength = (min:number):object => {
  * @param min {number} 最小长度
  * @param max {number} 最大长度
  */
-export const getRangeLength=(min:number,max:number):object[]=>{
-    return [
-        getMinLength(min),
-        getMaxLength(max)
-    ]
-}
+export const getRangeLength = (min: number, max: number): object[] => {
+  return [getMinLength(min), getMaxLength(max)];
+};
 
 /**
  * 数值最大值
  * @param {number} max 最大值
  */
-export const getMaxValue= max => {
+export const getMaxValue = max => {
   return {
     type: 'number',
     max,
@@ -118,18 +114,15 @@ export const getMinValue = min => {
  * @param min {number} 最小值
  * @param max {number} 最大值
  */
-export const getRangeValue=(min:number,max:number):object[]=>{
-    return [
-        getMinValue(min),
-        getMaxValue(max)
-    ]
-}
+export const getRangeValue = (min: number, max: number): object[] => {
+  return [getMinValue(min), getMaxValue(max)];
+};
 
 /**
  * 数值总位数
  * @param {number} max 最大的数字位数
  */
-export const getMaxValueLength = (max:number):object => {
+export const getMaxValueLength = (max: number): object => {
   return {
     validator: (_, value, callback) => {
       if (value && `${value}`.length > max) {
@@ -145,42 +138,44 @@ export const getMaxValueLength = (max:number):object => {
  * 手机号码校验
  * @param rule 号码规则 中国、其他
  */
-export const getPhone=(rule:'china'|'all'='china'):object=> {
-    let pattern;
-    switch(rule){
-        case 'china':
-            pattern= /^1\d{10}$/;
-            break;
-        case 'all':
-            pattern= /^[0-9|-]$/;
-            break;
-        default:
-            pattern= /^[0-9|-]$/;
-            break;
-    }
-    return {
-        pattern,
-        message: 'validation.phone',
-      }
+export const getPhone = (rule: 'china' | 'all' = 'china'): object => {
+  let pattern;
+  switch (rule) {
+    case 'china':
+      pattern = /^1\d{10}$/;
+      break;
+    case 'all':
+      pattern = /^[0-9|-]$/;
+      break;
+    default:
+      pattern = /^[0-9|-]$/;
+      break;
+  }
+  return {
+    pattern,
+    message: 'validation.phone',
+  };
 };
 
 /**
  * 邮箱规则
  */
-export const getEmail=():object=>{
-    return{
-        pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/gi,
-        message: 'validation.email',
-    }
-}
-
+export const getEmail = (): object => {
+  return {
+    pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/gi,
+    message: 'validation.email',
+  };
+};
 
 /**
  * 远程校验
  * @param {string} url 校验地址 需要返回true 通过 或者false 失败
  * @param {string} message 校验不通过的提示消息
  */
-export const getRemoteRule = (url:string, message:string = formatMessage({ id: 'validation.remote' })) => {
+export const getRemoteRule = (
+  url: string,
+  message: string = formatMessage({ id: 'validation.remote' })
+) => {
   return {
     validator(_, value, callback) {
       if (!value) {
@@ -204,13 +199,12 @@ export const getRemoteRule = (url:string, message:string = formatMessage({ id: '
   };
 };
 
-
 /**
  * 邮编验证 暂时只限制为数字
  */
-export const getPost = ():object => {
+export const getPost = (): object => {
   return {
     pattern: /^\d+$/,
-    message:formatMessage({ id: 'validation.email' }),
+    message: formatMessage({ id: 'validation.email' }),
   };
 };

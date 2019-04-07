@@ -1,5 +1,5 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classNames from 'classnames';
 import { Avatar, Tooltip } from 'antd';
 import { size } from './AvatarList';
 import styles from './index.less';
@@ -13,7 +13,7 @@ export interface AvatarListItemProps {
 
 class AvatarListItem extends React.Component<AvatarListItemProps, any> {
   static defaultProps = {
-    size: 'default'
+    size: 'default',
   };
 
   constructor(props) {
@@ -23,10 +23,10 @@ class AvatarListItem extends React.Component<AvatarListItemProps, any> {
   render() {
     const { tips, size, src } = this.props;
 
-    const clsString = ClassNames(styles.avatarItem, {
+    const clsString = classNames(styles.avatarItem, {
       [styles.avatarItemLarge]: size === 'large',
       [styles.avatarItemSmall]: size === 'small',
-      [styles.avatarItemMini]: size === 'mini'
+      [styles.avatarItemMini]: size === 'mini',
     });
 
     return (

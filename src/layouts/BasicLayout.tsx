@@ -1,7 +1,7 @@
 import H from 'history';
 import { Dispatch } from 'redux';
 import { ISettingsModelState } from '@/types/settings';
-import MenuContext,{TProviderStore} from './MenuContext';
+import MenuContext, { TProviderStore } from './MenuContext';
 
 import { Layout } from 'antd';
 import React from 'react';
@@ -20,32 +20,31 @@ import styles from './BasicLayout.less';
 import logo from '@/assets/imgs/wetrial-logo.jpg';
 import smallLogo from '@/assets/imgs/wetrial-logo-small.jpg';
 
-
 const { Content } = Layout;
 
 const query = {
   'screen-xs': {
-    maxWidth: 575
+    maxWidth: 575,
   },
   'screen-sm': {
     minWidth: 576,
-    maxWidth: 767
+    maxWidth: 767,
   },
   'screen-md': {
     minWidth: 768,
-    maxWidth: 991
+    maxWidth: 991,
   },
   'screen-lg': {
     minWidth: 992,
-    maxWidth: 1199
+    maxWidth: 1199,
   },
   'screen-xl': {
     minWidth: 1200,
-    maxWidth: 1599
+    maxWidth: 1599,
   },
   'screen-xxl': {
-    minWidth: 1600
-  }
+    minWidth: 1600,
+  },
 };
 
 export interface BasicLayoutProps {
@@ -54,19 +53,19 @@ export interface BasicLayoutProps {
     routes: any[];
     path: string;
     component: React.ReactNode;
-    authority: string | string[]
+    authority: string | string[];
   };
   dispatch: Dispatch<any>;
   location: H.Location;
   setting: ISettingsModelState;
   collapsed: boolean;
   menuData: any[];
-  breadcrumbNameMap: {[key:string]:string};
+  breadcrumbNameMap: { [key: string]: string };
   isMobile: boolean;
 }
 
 class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
-  readonly breadcrumbNameMap: {[key:string]:string};
+  readonly breadcrumbNameMap: { [key: string]: string };
 
   componentDidMount() {
     const {
@@ -84,7 +83,7 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
     });
   }
 
-  getContext():TProviderStore {
+  getContext(): TProviderStore {
     const { location, breadcrumbNameMap } = this.props;
     return {
       location,
@@ -125,7 +124,7 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
       menuData,
       breadcrumbNameMap,
       setting: { fixedHeader, navTheme, layout: PropsLayout },
-      collapsed
+      collapsed,
     } = this.props;
 
     const isTop = PropsLayout === 'topmenu';
@@ -181,8 +180,8 @@ export default connect(({ global, setting, menu }) => ({
   collapsed: global.collapsed,
   menuData: menu.menuData,
   breadcrumbNameMap: menu.breadcrumbNameMap,
-  setting
-}))((props) => (
+  setting,
+}))(props => (
   <Media query="(max-width: 599px)">
     {isMobile => <BasicLayout {...props} isMobile={isMobile} />}
   </Media>

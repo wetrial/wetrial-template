@@ -1,6 +1,6 @@
-import Breadcrumb,{BreadcrumbProps} from '../Breadcrumb';
+import Breadcrumb, { BreadcrumbProps } from '../Breadcrumb';
 
-import React,{PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import { Tabs, Skeleton } from 'antd';
 
@@ -8,12 +8,12 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-export interface IPageHeaderProps extends BreadcrumbProps{
+export interface IPageHeaderProps extends BreadcrumbProps {
   title?: React.ReactNode | string | number;
   logo?: React.ReactNode | string;
   action?: React.ReactNode | string;
   content?: React.ReactNode;
-  extraContent?: React.ReactNode;  
+  extraContent?: React.ReactNode;
   tabList?: Array<{ key: string; tab: React.ReactNode }>;
   tabActiveKey?: string;
   tabDefaultActiveKey?: string;
@@ -53,8 +53,8 @@ export default class PageHeader extends PureComponent<IPageHeaderProps, any> {
 
     const clsString = classNames(styles.pageHeader, className);
     const activeKeyProps = {
-      defaultActiveKey:undefined,
-      activeKey:undefined
+      defaultActiveKey: undefined,
+      activeKey: undefined,
     };
     if (tabDefaultActiveKey !== undefined) {
       activeKeyProps.defaultActiveKey = tabDefaultActiveKey;

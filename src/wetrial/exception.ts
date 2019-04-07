@@ -1,6 +1,4 @@
 /**
  * 未登录异常
  */
-export class UnAuthorizedException extends Error{
-    
-}
+export class UnAuthorizedException extends Error {}

@@ -1,1 +1,1 @@
-export {IPageHeaderProps} from './components/PageHeader';
+export { IPageHeaderProps } from './components/PageHeader';

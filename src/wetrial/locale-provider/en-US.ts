@@ -1,6 +1,4 @@
 export default {
-    locale: 'en-US',
-    global:{
-        
-    }
-}
+  locale: 'en-US',
+  global: {},
+};

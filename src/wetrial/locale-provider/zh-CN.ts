@@ -1,6 +1,4 @@
 export default {
-    locale: 'zh-CN',
-    global:{
-        
-    }
-}
+  locale: 'zh-CN',
+  global: {},
+};

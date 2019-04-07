@@ -1,5 +1,5 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classNames from 'classnames';
 import styles from './index.less';
 
 export interface FooterToolbarProps {
@@ -10,13 +10,13 @@ export interface FooterToolbarProps {
 
 class FooterToolbar extends React.Component<FooterToolbarProps, any> {
   static defaultProps = {
-    className: ''
+    className: '',
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      width: undefined
+      width: undefined,
     };
   }
 
@@ -38,7 +38,7 @@ class FooterToolbar extends React.Component<FooterToolbarProps, any> {
     const { width: stateWidth } = this.state;
     if (stateWidth !== width) {
       this.setState({
-        width
+        width,
       });
     }
   };
@@ -46,7 +46,7 @@ class FooterToolbar extends React.Component<FooterToolbarProps, any> {
   render() {
     const { className, children, extra, ...restProps } = this.props;
     const { width } = this.state;
-    const cls = ClassNames(className, styles.toolbar);
+    const cls = classNames(className, styles.toolbar);
 
     return (
       <div className={cls} style={{ width }} {...restProps}>

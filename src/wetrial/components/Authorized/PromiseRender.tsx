@@ -1,6 +1,6 @@
 import React from 'react';
 import { Spin } from 'antd';
-import { TReactComponent, TAuthority } from './IProps';
+import { TReactComponent, TAuthority } from './type';
 
 interface IPromiseRenderProps {
   ok: TReactComponent;

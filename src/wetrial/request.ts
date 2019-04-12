@@ -86,7 +86,7 @@ export const get = (opt: IRequestOption | string) => {
   return fetch({
     ...omit(options, 'data'),
     method: 'get',
-    params: options.data,
+    params: {timespan:new Date().getTime(),...options.data},
     showTip: false,
   });
 };

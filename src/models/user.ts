@@ -4,7 +4,7 @@ import extendModel from '@/wetrial/model';
 import { clearToken, setToken } from '@/wetrial/store';
 import { getCurrent, loginout, login } from '@/services/user';
 import { reloadAuthorized } from '@/utils/Authorized';
-import { setPermissions } from "@/utils/authority";
+import { setPermissions,clearPermissions } from "@/utils/authority";
 import { getRedirect} from '@/utils';
 
 export default extendModel({
@@ -12,13 +12,17 @@ export default extendModel({
   state: {
     currentUser: {
       permissions:null
-    }
+    },
   },
   effects: {
     *getCurrent(_, { call, put }) {
       const currentUser = yield call(getCurrent);
-      setPermissions(currentUser.permissions);
-      reloadAuthorized();
+      yield setPermissions(currentUser.permissions);
+      // yield reloadAuthorized();
+      yield put({
+        type:'reloadAuthorizedAndMenu',
+      })
+
       yield put({
         type: 'update',
         payload: {
@@ -38,6 +42,7 @@ export default extendModel({
     *loginOut(_, { call, put }) {
       yield call(loginout);
       yield clearToken();
+      yield clearPermissions();
       yield reloadAuthorized();
       yield put(
         routerRedux.replace({
@@ -45,6 +50,16 @@ export default extendModel({
         })
       )
     },
+    *reloadAuthorizedAndMenu(_,{put,select}){
+      yield reloadAuthorized();
+      const routes=yield select(state => state.menu.routerData)||[]
+      yield put({
+        type:'menu/getMenuData',
+        payload:{
+          routes
+        }
+      })
+    }
     // // 当request获取api后端数据 算作未登录时，触发此effects
     // *unAuthorizedRedirect(_,{put}){
     //   notification.error({

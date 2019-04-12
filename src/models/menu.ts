@@ -72,7 +72,13 @@ const filterMenuData = menuData => {
   return menuData
     .filter(item => item.name && !item.hideInMenu)
     .map(item => check(item.authority, getSubMenu(item)))
-    .filter(item => item);
+    .filter(item => {
+      if(item){
+        const hasChildrens=(!item.children)||item.children.length>0;
+        return hasChildrens;
+      }
+      return false;
+    });
 };
 /**
  * 获取面包屑映射

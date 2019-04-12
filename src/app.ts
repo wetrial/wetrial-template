@@ -9,6 +9,7 @@ export const dva = {
         notification.info({
           message:unAuthorizedErr.message
         })
+        // tslint:disable-next-line:no-console
         console.log(unAuthorizedErr.message);
       }
       err.preventDefault();

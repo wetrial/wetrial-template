@@ -13,7 +13,7 @@ before_install:
 
 # 依赖安装
 install:
-  - npm install
+  - npm i -f --no-optional --no-shrinkwrap --no-package-lock
 
 # 构建脚本
 script: 

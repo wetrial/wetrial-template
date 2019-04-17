@@ -72,6 +72,14 @@ const config: IConfig = {
   //       }
   //     },
   //   });
+
+  //    // exp .svg 希望不走 base64，而是全部产生 svg 文件
+  //   config.module.rule('svg-with-file')
+  //   .test(/.svg$/)
+  //   .use('svg-with-file-loader')
+  //   .loader('file-loader')
+  // }
+
   // },
 }
 

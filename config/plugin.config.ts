@@ -21,12 +21,18 @@ const plugins: IPlugin[] = [
           loadingComponent: './components/PageLoading',
           level: 3,
         },
+        pwa: {
+          workboxPluginMode: 'InjectManifest',
+          workboxOptions: {
+            importWorkboxFrom: 'local',
+          },
+        },
         title: 'wetrial-template',
         dll: {
-          include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch','antd/es']
+          include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
+          exclude: ['@babel/runtime', 'netlify-lambda']
         },
         hardSource: process.platform === 'darwin' /* isMac */,
-        pwa: false
       },
     ],
   ];

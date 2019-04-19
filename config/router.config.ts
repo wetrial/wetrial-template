@@ -16,20 +16,65 @@ const routes:IRoute[]= [
       path: '/',
       component: '../layouts/BasicLayout',
       Routes: ['src/pages/Authorized'],
-      authority:Permissions.app,
       routes: [
-        { path: '/', redirect: '/example/drag' },
+        { path: '/', redirect: '/example' },
         {
-          path: 'example',
+          path: '/example',
           name: 'example',
           authority:Permissions.example.base,
           icon: 'smile',
           routes: [
+            { path: '/example', redirect: '/example/drag' },
             {
-              path: 'drag',
+              path: '/example/drag',
               name: 'drag-drop',
               authority:Permissions.example.reactDnd,
               component: './Example/Drag-Drop/index'
+            }
+          ]
+        },
+        // 系统管理模块
+        {
+          name: 'system',
+          icon: 'desktop',
+          path: '/system',
+          routes: [
+            { path: '/system', redirect: '/system/user' },
+            {
+              path: '/system/user',
+              name: 'user',
+              component: '../layouts/BlankLayout',
+              routes: [
+                { path: '/system/user', redirect: '/system/user/groups' },
+                {
+                  path: '/system/user/groups',
+                  name: 'groups',
+                  component: './system/user/groups'
+                },
+                {
+                  path: '/system/user/users',
+                  name: 'users',
+                  component: './system/user/users'
+                },
+              ]
+            },
+            {
+              path: '/system/permission',
+              name: 'permission',
+              component: '../layouts/BlankLayout',
+              routes: [
+                { path: '/system/permission', redirect: '/system/permission/permissions' },
+                {
+                  path: '/system/permission/permissions',
+                  name: 'permissions',
+                  component: './system/permission/permissions'
+                },
+                {
+                  path: '/system/permission/policies',
+                  name: 'policies',
+                  component: './system/permission/policies',
+                },
+              ]
             }
           ]
         },
@@ -59,48 +104,6 @@ const routes:IRoute[]= [
               name: 'trigger',
               hideInMenu: true,
               component: './Exception/TriggerException'
-            }
-          ]
-        },
-        // 系统管理模块
-        {
-          name: 'system',
-          icon: 'desktop',
-          path: '/system',
-          routes: [
-            {
-              path: '/system/user',
-              name: 'user',
-              component: '../layouts/BlankLayout',
-              routes: [
-                {
-                  path: '/system/user/groups',
-                  name: 'groups',
-                  component: './system/user/groups'
-                },
-                {
-                  path: '/system/user/users',
-                  name: 'users',
-                  component: './system/user/users'
-                },
-              ]
-            },
-            {
-              path: '/system/permission',
-              name: 'permission',
-              component: '../layouts/BlankLayout',
-              routes: [
-                {
-                  path: '/system/permission/permissions',
-                  name: 'permissions',
-                  component: './system/permission/permissions'
-                },
-                {
-                  path: '/system/permission/policies',
-                  name: 'policies',
-                  component: './system/permission/policies',
-                },
-              ]
             }
           ]
         }

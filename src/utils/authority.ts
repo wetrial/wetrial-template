@@ -1,5 +1,5 @@
 
-import { getPermissions as storeGetPermissions,setPermissions as storeSetPermissions } from '@/wetrial/store';
+import { getPermissions as storeGetPermissions,setPermissions as storeSetPermissions,clearPermissions as storeClearPermissions } from '@/wetrial/store';
 
 // use localStorage to store the authority info, which might be sent from server in actual project.
 export function getPermissions(str?:string) {
@@ -20,4 +20,8 @@ export function getPermissions(str?:string) {
 export function setPermissions(permissions?:string|string[]) {
   const tempPermissions = typeof permissions === 'string' ? [permissions] : permissions;
   return storeSetPermissions(tempPermissions);
+}
+
+export function clearPermissions(){
+  return storeClearPermissions();
 }

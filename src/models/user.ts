@@ -3,8 +3,7 @@ import { routerRedux } from 'dva/router';
 import extendModel from '@/wetrial/model';
 import { clearToken, setToken } from '@/wetrial/store';
 import { getCurrent, loginout, login } from '@/services/user';
-import { reloadAuthorized } from '@/utils/Authorized';
-import { setPermissions } from "@/utils/authority";
+import { setPermissions,clearPermissions } from "@/utils/authority";
 import { getRedirect} from '@/utils';
 
 export default extendModel({
@@ -12,13 +11,12 @@ export default extendModel({
   state: {
     currentUser: {
       permissions:null
-    }
+    },
   },
   effects: {
     *getCurrent(_, { call, put }) {
       const currentUser = yield call(getCurrent);
-      setPermissions(currentUser.permissions);
-      reloadAuthorized();
+      
       yield put({
         type: 'update',
         payload: {
@@ -30,7 +28,8 @@ export default extendModel({
       const result = yield call(login, payload);
       // login success
       if (result && result.token) {
-        setToken(result.token);
+        yield setToken(result.token);
+        yield setPermissions(result.permissions);
         const redirect = getRedirect();
         yield put(routerRedux.replace(redirect));
       }
@@ -38,7 +37,7 @@ export default extendModel({
     *loginOut(_, { call, put }) {
       yield call(loginout);
       yield clearToken();
-      yield reloadAuthorized();
+      yield clearPermissions();
       yield put(
         routerRedux.replace({
           pathname: '/user/login',

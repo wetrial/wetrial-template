@@ -65,4 +65,11 @@ export const setPermissions = (permissions: string[]): void => {
   storeWithExp.set(PermisssName, permissions);
 };
 
+/**
+ * 清除权限值
+ */
+export const clearPermissions=():void=>{
+  storeWithExp.remove(PermisssName)
+}
+
 export default storeWithExp;

@@ -97,11 +97,13 @@ class HeaderView extends PureComponent<HeaderProps, any> {
   }
 
   handleNoticeViewMore=(tabProps,e)=>{
+    // tslint:disable-next-line:no-console
     console.log(tabProps,e);
     message.info('点击了查看更多');
   }
 
   handleNoticeTabChange=(tabTitle)=>{
+    // tslint:disable-next-line:no-console
     console.log(tabTitle);
     message.info('切换了tab');
   }

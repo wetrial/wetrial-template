@@ -15,8 +15,7 @@ function getCurrentUser({response}) {
       { key: '0', label: '很有想法的' },
       { key: '1', label: '专注前后端' },
       { key: '2', label: '海纳百川' },
-    ],
-    permissions:deepGetValue(Permissions)
+    ]
   };
   response.json(responseWrapper(current));
 }
@@ -26,7 +25,8 @@ function login({request,response}) {
   const { username, password } = request.body;
   if (username === 'admin' || password === 'Abcd1234') {
     const loginResult={
-      token:'0000000000000'
+      token:'0000000000000',
+      permissions:deepGetValue(Permissions)
     }
     response.json(responseWrapper(loginResult));
   } else {
@@ -38,11 +38,9 @@ function loginout({response}) {
   response.json(responseWrapper({}));
 }
 
-
-
 // 调用 delay 函数，统一处理
 export default delay({
   'GET /api/user/getCurrent':(req,res)=>authorizeIntercept({request:req,response:res},getCurrentUser),
   'POST /api/user/login':(req,res)=>login({request:req,response:res}),
   'GET /api/user/logout':(req,res)=>loginout({response:res})
-}, 1000);
+}, 4000);

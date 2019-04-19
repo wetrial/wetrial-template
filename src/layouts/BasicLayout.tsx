@@ -72,11 +72,10 @@ class BasicLayout extends React.PureComponent<BasicLayoutProps, any> {
       dispatch,
       route: { routes, authority },
     } = this.props;
-
     dispatch({
       type: 'user/getCurrent',
-    });
-
+    })
+    
     dispatch({
       type: 'menu/getMenuData',
       payload: { routes, authority },

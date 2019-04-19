@@ -108,11 +108,12 @@ const memoizeOneGetBreadcrumbNameMap = memoizeOne(getBreadcrumbNameMap, isEqual)
 export default extendModel({
   namespace: 'menu',
   state: {
-    menuData: [],
-    routerData: [],
-    breadcrumbNameMap: {},
+    menuData: [], // 当前有权限的菜单列表
+    routerData: [], // 当前系统配置的所有路由列表
+    breadcrumbNameMap: {}, // 根据路由生成的面包屑
   },
   effects: {
+    // 根据当前权限生成菜单 用于layout页面第一次生成的场景
     *getMenuData({ payload }, { put }) {
       const { routes, authority } = payload;
       const originalMenuData = memoizeOneFormatter(routes, authority);
@@ -123,5 +124,16 @@ export default extendModel({
         payload: { menuData, breadcrumbNameMap, routerData: routes },
       });
     },
+    // 重新生成菜单，一般用于动态修改当前用户角色的场景
+    *reloadMenu(_,{put,select}){
+      const routes=yield select(state=>state.menu.routerData);
+      const originalMenuData = memoizeOneFormatter(routes,'');
+      const menuData = filterMenuData(originalMenuData);
+      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(originalMenuData);
+      yield put({
+        type: 'update',
+        payload: { menuData, breadcrumbNameMap, routerData: routes },
+      });
+    }
   }
 });

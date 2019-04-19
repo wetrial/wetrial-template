@@ -26,6 +26,12 @@ const routes:IRoute[]= [
           routes: [
             { path: '/example', redirect: '/example/drag' },
             {
+              path: '/example/permission',
+              name: 'permission',
+              authority:Permissions.example.permission,
+              component: './Example/Permission/index'
+            },
+            {
               path: '/example/drag',
               name: 'drag-drop',
               authority:Permissions.example.reactDnd,

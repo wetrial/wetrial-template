@@ -3,7 +3,6 @@ import { routerRedux } from 'dva/router';
 import extendModel from '@/wetrial/model';
 import { clearToken, setToken } from '@/wetrial/store';
 import { getCurrent, loginout, login } from '@/services/user';
-import { reloadAuthorized } from '@/utils/Authorized';
 import { setPermissions,clearPermissions } from "@/utils/authority";
 import { getRedirect} from '@/utils';
 
@@ -17,12 +16,7 @@ export default extendModel({
   effects: {
     *getCurrent(_, { call, put }) {
       const currentUser = yield call(getCurrent);
-      yield setPermissions(currentUser.permissions);
-      // yield reloadAuthorized();
-      yield put({
-        type:'reloadAuthorizedAndMenu',
-      })
-
+      
       yield put({
         type: 'update',
         payload: {
@@ -34,7 +28,8 @@ export default extendModel({
       const result = yield call(login, payload);
       // login success
       if (result && result.token) {
-        setToken(result.token);
+        yield setToken(result.token);
+        yield setPermissions(result.permissions);
         const redirect = getRedirect();
         yield put(routerRedux.replace(redirect));
       }
@@ -43,23 +38,12 @@ export default extendModel({
       yield call(loginout);
       yield clearToken();
       yield clearPermissions();
-      yield reloadAuthorized();
       yield put(
         routerRedux.replace({
           pathname: '/user/login',
         })
       )
     },
-    *reloadAuthorizedAndMenu(_,{put,select}){
-      yield reloadAuthorized();
-      const routes=yield select(state => state.menu.routerData)||[]
-      yield put({
-        type:'menu/getMenuData',
-        payload:{
-          routes
-        }
-      })
-    }
     // // 当request获取api后端数据 算作未登录时，触发此effects
     // *unAuthorizedRedirect(_,{put}){
     //   notification.error({

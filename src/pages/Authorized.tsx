@@ -46,7 +46,24 @@ const getDefaultRedirect=(pathname:string,menuData:any[])=>{
   return redirect;
 }
 
-function AuthComponent({ children, location, routerData,currentUser,menuData }) {
+interface DefaultRedirectProps{
+  pathname:string;
+  menuData:any[]
+}
+
+class DefaultRedirect extends React.PureComponent<DefaultRedirectProps>{
+  componentDidMount(){
+    const {pathname,menuData}=this.props;
+    const redirect=getDefaultRedirect(pathname,menuData);
+    router.push(redirect);
+  }
+
+  render(){
+    return <></>
+  }
+}
+
+function AuthComponent({ children, location, routerData,menuData }) {
   const isLogin = !!getToken();
   if (!isLogin) {
     router.push({
@@ -74,15 +91,14 @@ function AuthComponent({ children, location, routerData,currentUser,menuData }) 
   };
   return (
     <Authorized
-      authority={currentUser.permissions?getRouteAuthority(location.pathname, routerData):null}
-      noMatch={isLogin ? <Redirect to={getDefaultRedirect(location.pathname,menuData)} /> : <Redirect to="/user/login" />}
+      authority={getRouteAuthority(location.pathname, routerData)}
+      noMatch={isLogin?<DefaultRedirect pathname={location.pathname} menuData={menuData} />:<Redirect to={`/user/login?redirect=${window.location.href}`} />}
     >
       {children}
     </Authorized>
   );
 }
-export default connect(({ menu,user }) => ({
+export default connect(({ menu }) => ({
   routerData: menu.routerData,
-  menuData:menu.menuData,
-  currentUser:user.currentUser
+  menuData:menu.menuData
 }))(AuthComponent);

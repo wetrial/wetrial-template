@@ -43,4 +43,4 @@ export default delay({
   'GET /api/user/getCurrent':(req,res)=>authorizeIntercept({request:req,response:res},getCurrentUser),
   'POST /api/user/login':(req,res)=>login({request:req,response:res}),
   'GET /api/user/logout':(req,res)=>loginout({response:res})
-}, 4000);
+}, 1500);

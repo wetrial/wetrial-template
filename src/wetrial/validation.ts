@@ -4,25 +4,49 @@ import { get } from './request';
 
 /**
  * 必填校验
- * @param {bool} isRequire 是否必填
  */
-export const getRequire = (isRequire: boolean = true): object => {
-  return {
-    required: isRequire,
-    message: formatMessage({ id: 'validation.require' }),
-  };
+export const required = {
+  required: true,
+  message: formatMessage({ id: 'validation.require' }),
 };
 
 /**
- * 文字必填
- * @param {boolean} isRequire 是否必填
+ * 整数校验
  */
-export const getTextRequire = (isRequire: boolean = true): object => {
-  return {
-    required: isRequire,
-    whitespace: true,
-    message: formatMessage({ id: 'validation.require' }),
-  };
+export const integer = {
+  type: 'integer',
+  message: formatMessage({ id: 'validation.integer' }),
+};
+
+/**
+ * bool值校验
+ */
+export const bool = {
+  type: 'bool',
+  message: formatMessage({ id: 'validation.bool' }),
+};
+
+/**
+ * float值校验
+ */
+export const float = {
+  type: 'float',
+  message: formatMessage({ id: 'validation.float' }),
+};
+
+/**
+ * url值校验
+ */
+export const url = {
+  type: 'url',
+  message: formatMessage({ id: 'validation.url' }),
+};
+/**
+ * email值校验
+ */
+export const email = {
+  type: 'email',
+  message: formatMessage({ id: 'validation.email' }),
 };
 
 /**
@@ -52,57 +76,34 @@ export const getObjRequire = (...checkProps: string[]): object => {
 };
 
 /**
- * 字符串最大长度
- * @param {number} max 最大值
+ * 最大值规则校验
+ * @param max 最大值
  */
-export const getMaxLength = (max: number): object => {
+export const getMax = (max: number, type: 'number' | 'string' = 'string'): object => {
   return {
-    max,
-    message: formatMessage({ id: 'validation.max' }, { max }),
-  };
-};
-
-/**
- * 字符串最小长度
- * @param {number} min 最小值
- */
-export const getMinLength = (min: number): object => {
-  return {
-    min,
-    message: formatMessage({ id: 'validation.min' }, { min }),
-  };
-};
-
-/**
- * 字符串长度范围
- * @param min {number} 最小长度
- * @param max {number} 最大长度
- */
-export const getRangeLength = (min: number, max: number): object[] => {
-  return [getMinLength(min), getMaxLength(max)];
-};
-
-/**
- * 数值最大值
- * @param {number} max 最大值
- */
-export const getMaxValue = max => {
-  return {
-    type: 'number',
-    max,
-    message: formatMessage({ id: 'validation.max-value' }, { max }),
-  };
-};
-
-/**
- * 数值最小值
- * @param {number} min 数值最小值
- */
-export const getMinValue = min => {
-  return {
-    validator: (_, value, callback) => {
-      if (value && value < min) {
-        callback(formatMessage({ id: 'validation.min-value' }, { min }));
+    validator: (rule, value, callback) => {
+      if (value === undefined) {
+        callback();
+        return;
+      }
+      rule.max = max;
+      rule.type = type;
+      if (value.length === 0) {
+        callback();
+      } else {
+        if (rule.type === 'string') {
+          if (value.length > rule.max) {
+            rule.message =
+              rule.message || formatMessage({ id: 'validation.stringMax' }, { max: rule.max });
+            callback(new Error(rule.message));
+          }
+        } else {
+          if (Number(value) > rule.max) {
+            rule.message =
+              rule.message || formatMessage({ id: 'validation.max' }, { max: rule.max });
+            callback(new Error(rule.message));
+          }
+        }
       }
       callback();
     },
@@ -110,60 +111,106 @@ export const getMinValue = min => {
 };
 
 /**
- * 数值范围
- * @param min {number} 最小值
- * @param max {number} 最大值
+ * 最小值规则校验
+ * @param min 最小值校验
+ * @param type 数值类型
  */
-export const getRangeValue = (min: number, max: number): object[] => {
-  return [getMinValue(min), getMaxValue(max)];
-};
-
-/**
- * 数值总位数
- * @param {number} max 最大的数字位数
- */
-export const getMaxValueLength = (max: number): object => {
+export const getMin = (min: number, type: 'number' | 'string' = 'string'): object => {
   return {
-    validator: (_, value, callback) => {
-      if (value && `${value}`.length > max) {
-        callback(formatMessage({ id: 'validation.max-value-length' }, { max }));
+    validator: (rule, value, callback) => {
+      if (value === undefined) {
+        callback();
+        return;
+      }
+      rule.min = min;
+      rule.type = type;
+      if (value.length === 0) {
+        callback();
+      } else {
+        if (rule.type === 'string') {
+          if (value.length < rule.min) {
+            rule.message =
+              rule.message || formatMessage({ id: 'validation.stringMin' }, { min: rule.min });
+            callback(new Error(rule.message));
+          }
+        } else {
+          if (Number(value) < rule.min) {
+            rule.message =
+              rule.message || formatMessage({ id: 'validation.min' }, { min: rule.min });
+            callback(new Error(rule.message));
+          }
+        }
       }
       callback();
     },
   };
 };
 
-// TODO 需要添加支持其他国家的号码规则
 /**
- * 手机号码校验
- * @param rule 号码规则 中国、其他
+ * 范围校验
+ * @param min 最小值
+ * @param max 最大值
+ * @param type 数值类型
  */
-export const getPhone = (rule: 'china' | 'all' = 'china'): object => {
-  let pattern;
-  switch (rule) {
-    case 'china':
-      pattern = /^1\d{10}$/;
-      break;
-    case 'all':
-      pattern = /^[0-9|-]$/;
-      break;
-    default:
-      pattern = /^[0-9|-]$/;
-      break;
-  }
+export const getRange = (
+  min: number,
+  max: number,
+  type: 'number' | 'string' = 'string'
+): object => {
   return {
-    pattern,
-    message: 'validation.phone',
+    validator: (rule, value, callback) => {
+      if (value === undefined) {
+        callback();
+        return;
+      }
+      rule.min = min;
+      rule.max = max;
+      rule.type = type;
+      if (value.length === 0) {
+        callback();
+      } else {
+        if (rule.type === 'string') {
+          if (value.length < rule.min || value.length > rule.max) {
+            rule.message =
+              rule.message ||
+              formatMessage({ id: 'validation.stringRange' }, { min: rule.min, max: rule.max });
+            callback(new Error(rule.message));
+          }
+        } else {
+          if (Number(value) < rule.min || Number(value) > rule.max) {
+            rule.message =
+              rule.message ||
+              formatMessage({ id: 'validation.range' }, { min: rule.min, max: rule.max });
+            callback(new Error(rule.message));
+          }
+        }
+      }
+      callback();
+    },
   };
 };
 
 /**
- * 邮箱规则
+ * 正则校验
+ * @param regex 正则表达式
  */
-export const getEmail = (): object => {
+export const getRegex = (regex: string | RegExp): object => {
   return {
-    pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/gi,
-    message: 'validation.email',
+    validator: (rule, value, callback) => {
+      if (value === undefined) {
+        callback();
+        return;
+      }
+      rule.regex = regex;
+      rule.message = rule.message || formatMessage({ id: 'validation.regex' });
+      if (typeof rule.regex === 'string') {
+        rule.regex = new RegExp(regex);
+      }
+      if (value && !rule.regex.test(value)) {
+        callback(new Error(rule.message));
+      }
+      callback();
+    },
   };
 };
 
@@ -175,9 +222,10 @@ export const getEmail = (): object => {
 export const getRemoteRule = (
   url: string,
   message: string = formatMessage({ id: 'validation.remote' })
-) => {
+): object => {
   return {
-    validator(_, value, callback) {
+    validator(rule, value, callback) {
+      rule.message = rule.message || message;
       if (!value) {
         callback();
         return;
@@ -192,19 +240,9 @@ export const getRemoteRule = (
         if (rep) {
           callback();
         } else {
-          callback(message);
+          callback(new Error(rule.message));
         }
       });
     },
-  };
-};
-
-/**
- * 邮编验证 暂时只限制为数字
- */
-export const getPost = (): object => {
-  return {
-    pattern: /^\d+$/,
-    message: formatMessage({ id: 'validation.email' }),
   };
 };

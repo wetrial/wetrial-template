@@ -123,7 +123,6 @@ class Index extends FormComponent<any,any> {
 
   render() {
     const { pagination,onTableChange, loading, pagedData } = this.props;
-    console.log(this.props);
     return (
       <Card style={{ margin: 16 }}>
         <div>{this.renderForm()}</div>

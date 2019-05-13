@@ -168,9 +168,9 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
       });
     };
 
-    getSortOrder=()=>{
-        const {}=this.state.order;
-    }
+    // getSortOrder=()=>{
+    //     const {}=this.state.order;
+    // }
 
     render() {
         const {page,pageSize}=this.state;
@@ -184,7 +184,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
             current: page,
             // onChange:this.handlePageChange
           }}
-          getSortOrder={this.getSortOrder}
+          // getSortOrder={this.getSortOrder}
           onResetData={this.handleResetData}
           onSearchData={this.onSearchData}
           onTableChange={this.handleTableChange}

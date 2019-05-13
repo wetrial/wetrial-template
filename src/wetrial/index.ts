@@ -18,6 +18,8 @@ export { default as GlobalFooter } from './components/GlobalFooter';
 
 export { default as NumberInfo } from './components/NumberInfo';
 
+export {default as pagedQuery} from './components/PagedQuery';
+
 export { default as PageHeader } from './components/PageHeader';
 
 export { default as PageLoading } from './components/PageLoading';

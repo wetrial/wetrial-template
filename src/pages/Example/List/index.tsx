@@ -3,12 +3,11 @@ import { ColumnProps } from 'antd/lib/table';
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
 import { Form, Row, Col, Button, Card, Input, Checkbox, Popconfirm, Divider } from 'antd';
-import { FormComponent,pagedQuery } from '@/wetrial';
-import TableList from "@/components/TableList";
+import { FormComponent, pagedQuery } from '@/wetrial';
+import TableList from '@/components/TableList';
 import Authorized from '@/utils/Authorized';
 import Permissions from '@/constants/permissions';
 import { getDateString } from '@/utils';
-
 
 const FormItem = Form.Item;
 
@@ -17,14 +16,14 @@ const FormItem = Form.Item;
   loading: loading.effects['example_tenant/getTenants'],
 }))
 @Form.create()
-@pagedQuery({type:'example_tenant/getTenants',pageSize:2})
-class Index extends FormComponent<any,any> {
+@pagedQuery({ type: 'example_tenant/getTenants', pageSize: 2 })
+class Index extends FormComponent<any, any> {
   columns: Array<ColumnProps<any>> = [
     {
       title: '租户编码',
       fixed: 'left',
-      width: 160,
-      sorter:true,
+      width: 240,
+      sorter: true,
       dataIndex: 'tenancyName',
     },
     {
@@ -53,8 +52,8 @@ class Index extends FormComponent<any,any> {
       title: '操作',
       dataIndex: 'operator',
       fixed: 'right',
-      width: 130,
-      render: (_) => {
+      width: 145,
+      render: _ => {
         return (
           <Fragment>
             <Authorized authority={Permissions.example.tenant}>
@@ -63,17 +62,17 @@ class Index extends FormComponent<any,any> {
               </Button>
             </Authorized>
             <Authorized authority={Permissions.example.tenant}>
-                <Divider type="vertical" />
-                <Popconfirm title="确定删除">
-                  <Button size="small" type="danger">
-                    删除
-                  </Button>
-                </Popconfirm>
-              </Authorized>
+              <Divider type="vertical" />
+              <Popconfirm title="确定删除">
+                <Button size="small" type="danger">
+                  删除
+                </Button>
+              </Popconfirm>
+            </Authorized>
           </Fragment>
         );
       },
-    }
+    },
   ];
 
   // getQueryParams = () => {
@@ -95,25 +94,36 @@ class Index extends FormComponent<any,any> {
     const {
       form: { getFieldDecorator },
       onResetData,
+      filterData
     } = this.props;
     return (
-      <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={10}>
-          <Col span={10}>
-            <FormItem label="查询">
+      <Form onSubmit={this.handleSearch}>
+        <Row gutter={{ md: 5, lg: 24, xl: 48 }}>
+          <Col md={12} sm={24}>
+            <FormItem>
               {getFieldDecorator('filter', {
-                initialValue: '',
-              })(<Input placeholder="查询" />)}
+                initialValue:filterData.filter
+              })(<Input autoComplete="off" placeholder="输入以搜索" />)}
             </FormItem>
           </Col>
-          <Col md={4} sm={10}>
+
+          <Col md={12} sm={24}>
             <FormItem>
-              <Button type="primary" htmlType="submit">
-                确认
-              </Button>
-              <Button style={{ marginLeft: 10 }} onClick={onResetData}>
-                重置
-              </Button>
+              <Row type="flex" align="middle" justify="space-between">
+                <div>
+                  <Button type="primary" onClick={this.handleSearch}>
+                    查询
+                  </Button>
+                  <Button style={{ marginLeft: 8 }} onClick={onResetData}>
+                    重置
+                  </Button>
+                </div>
+                <Authorized authority={Permissions.example.list}>
+                  <Button type="primary" icon="plus">
+                    创建
+                  </Button>
+                </Authorized>
+              </Row>
             </FormItem>
           </Col>
         </Row>
@@ -122,22 +132,21 @@ class Index extends FormComponent<any,any> {
   };
 
   render() {
-    const { pagination,onTableChange, loading, pagedData } = this.props;
+    const { pagination, onTableChange, sorter, loading, pagedData } = this.props;
     return (
       <Card style={{ margin: 16 }}>
-        <div>{this.renderForm()}</div>
-        <div style={{ marginTop: 20 }}>
-          <TableList
+        {this.renderForm()}
+        <TableList
             loading={loading}
             columns={this.columns}
             dataSource={pagedData.items}
             onChange={onTableChange}
+            sorter={sorter}
             pagination={{
               total: pagedData.total,
-              ...pagination
+              ...pagination,
             }}
           />
-        </div>
       </Card>
     );
   }

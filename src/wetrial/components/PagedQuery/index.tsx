@@ -2,19 +2,19 @@ import { PaginationProps } from 'antd/es/pagination/Pagination';
 import { SorterResult } from 'antd/es/table';
 
 import React, { PureComponent } from 'react';
-import { isEqual, reduce,omit } from 'lodash';
+import { isEqual, reduce, omit } from 'lodash';
 import { PAGE_SIZE } from '@/constants';
 
 type PagedTableHocProps = {
   type: string; // 类型 一般指获取数据源的action
-  current?: number; // 当前页 从1开始
+  page?: number; // 当前页 从1开始
   pageSize?: number; // 每页显示数量
   record?: boolean; // 是否记录搜索状态
 };
 
 const Index = (prop: PagedTableHocProps): any => WrapComponent => {
   prop = {
-    current: 1,
+    page: 1,
     pageSize: PAGE_SIZE,
     record: true,
     ...prop,
@@ -36,18 +36,19 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
     static getDerivedStateFromProps(nextProps, prevState) {
       const { location } = nextProps;
 
-      const query = { page: prop.current, num: prop.pageSize, ...location.query };
+      const query = { page: prop.page, pageSize: prop.pageSize, ...location.query };
       if (!isEqual(query, prevState)) {
-        query.pageSize=Number(query.pageSize);
-        query.page=Number(query.page);
-        return omit(query, ['_t']);;
+        query.pageSize = Number(query.pageSize);
+        query.page = Number(query.page);
+        return omit(query, ['_t']);
       }
       return null;
     }
 
     state = {
-      page: prop.current,
+      page: prop.page,
       pageSize: prop.pageSize,
+      order:false
     };
 
     private wrapC: any;
@@ -94,7 +95,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
         query: {
           ...query,
           ...values,
-          page:1,
+          page: 1,
           _t: new Date().getTime(),
         },
       });
@@ -121,14 +122,16 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
       const {
         location: { pathname, query },
       } = this.props;
-      const params:any={
-        page:pagination.current,
-        pageSize:pagination.pageSize
-      }
-      if(sorter.field){
-          params.order=`${sorter.field} ${sorter.order.toLowerCase() === 'ascend' ? 'asc' : 'desc'}`;
-      }else{
-          query.order=undefined;
+      const params: any = {
+        page: pagination.current,
+        pageSize: pagination.pageSize,
+      };
+      if (sorter.field) {
+        params.order = `${sorter.field} ${
+          sorter.order.toLowerCase() === 'ascend' ? 'asc' : 'desc'
+        }`;
+      } else {
+        query.order = undefined;
       }
       // @ts-ignore
       window.g_history.push({
@@ -168,22 +171,35 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
       });
     };
 
-    // getSortOrder=()=>{
-    //     const {}=this.state.order;
-    // }
+    getSorter = () => {
+      const { order } = this.state;
+      if (order) {
+          const orderData=`${order}`.split(' ');
+          return {
+            field: orderData[0],
+            order:orderData[1]==="asc"?"ascend":orderData[1]==="desc"?"descend":false
+          }
+      } else {
+        return null;
+      }
+    };
 
     render() {
-        const {page,pageSize}=this.state;
+      const { page, pageSize } = this.state;
+      const filterData = omit(this.state, ['page', 'pageSize', 'order']);
+      const sorter = this.getSorter();
       return (
         <WrapComponent
           ref={c => (this.wrapC = c)}
           {...this.props}
           pagination={{
-            defaultCurrent:1,
+            defaultCurrent: 1,
             pageSize,
             current: page,
             // onChange:this.handlePageChange
           }}
+          filterData={filterData}
+          sorter={sorter}
           // getSortOrder={this.getSortOrder}
           onResetData={this.handleResetData}
           onSearchData={this.onSearchData}

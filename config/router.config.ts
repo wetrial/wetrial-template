@@ -36,7 +36,21 @@ const routes:IRoute[]= [
               name: 'drag-drop',
               authority:Permissions.example.reactDnd,
               component: './Example/Drag-Drop/index'
-            }
+            },
+            {
+              path: '/example/list',
+              name: 'list',
+              exact:true,
+              authority:Permissions.example.list,
+              component: './Example/List/index'
+            },
+            {
+              path: '/example/list/:id?',
+              hideInMenu:true,
+              authority:Permissions.example.list,
+              component: './Example/List/edit'
+            },
+           
           ]
         },
         // 系统管理模块

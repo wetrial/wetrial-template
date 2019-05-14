@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { getToken } from '@/wetrial/store';
 import router from "umi/router";
 import { FormComponent } from '@/wetrial';
-import { getTextRequire } from '@/wetrial/validation';
+import { required } from '@/wetrial/validation';
 import { getRedirect } from '@/utils';
 import styles from './Login.less';
 
@@ -52,7 +52,7 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
             <FormItem>
               {getFieldDecorator('userName', {
                 rules: [
-                  getTextRequire()
+                  required
                 ]
               })(
                 <Input autoComplete="off" prefix={<Icon type="user" />} placeholder="admin" />
@@ -61,7 +61,7 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
             <FormItem>
               {getFieldDecorator('password', {
                 rules: [
-                  getTextRequire()
+                  required
                 ]
               })(
                 <Input.Password

@@ -3,6 +3,7 @@ export default {
   'menu.example': '案例',
   'menu.example.drag-drop': '拖拽',
   'menu.example.permission':'权限测试',
+  'menu.example.list':'列表',
   'menu.exception': '异常页',
   'menu.exception.not-permission': '403',
   'menu.exception.not-find': '404',

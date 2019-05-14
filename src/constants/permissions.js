@@ -3,6 +3,7 @@ const Permissions= {
     base:'example.base',
     permission:'example.permission',
     reactDnd:'example.reactDnd',
+    list:'example.list'
   },
 };
 

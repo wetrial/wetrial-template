@@ -2,7 +2,8 @@ import { PaginationProps } from 'antd/es/pagination/Pagination';
 import { SorterResult } from 'antd/es/table';
 
 import React, { PureComponent } from 'react';
-import { isEqual, reduce, omit } from 'lodash';
+import { isEqual, omit } from 'lodash';
+import { Throttle } from 'lodash-decorators';
 import { PAGE_SIZE } from '@/constants';
 
 type PagedTableHocProps = {
@@ -20,27 +21,32 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
     ...prop,
   };
 
-  const filterParams = params =>
-    reduce(
-      params,
-      (result, value, key) => {
-        if (!['_t'].includes(key)) {
-          result[key] = value;
-        }
-        return result;
-      },
-      {}
-    );
+  //   const filterParams = params =>
+  //     reduce(
+  //       params,
+  //       (result, value, key) => {
+  //         if (!['_t'].includes(key)) {
+  //           result[key] = value;
+  //         }
+  //         return result;
+  //       },
+  //       {}
+  //     );
 
   class Decorator extends PureComponent<any, any> {
     static getDerivedStateFromProps(nextProps, prevState) {
       const { location } = nextProps;
 
-      const query = { page: prop.page, pageSize: prop.pageSize, ...location.query };
+      const query:any = { page: prop.page, pageSize: prop.pageSize, ...location.query };
+
       if (!isEqual(query, prevState)) {
+        const preQuery={};
+        Object.keys(prevState).map(key=>{
+            preQuery[key]=undefined;
+        });
         query.pageSize = Number(query.pageSize);
         query.page = Number(query.page);
-        return omit(query, ['_t']);
+        return {...preQuery,...query}; // omit(query, ['_t']);
       }
       return null;
     }
@@ -48,7 +54,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
     state = {
       page: prop.page,
       pageSize: prop.pageSize,
-      order:false
+      order: false,
     };
 
     private wrapC: any;
@@ -66,13 +72,13 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
 
     getSnapshotBeforeUpdate(preProps) {
       const {
-        location: { query },
+        location: { query, state: locationState },
       } = preProps;
       const {
-        location: { query: curQuery },
+        location: { query: curQuery, state: curLocationState },
       } = this.props;
       const snapShot: any = {};
-      if (!isEqual(query, curQuery)) {
+      if (!isEqual(query, curQuery) || !isEqual(locationState, curLocationState)) {
         snapShot.urlChange = true;
       }
       return snapShot;
@@ -89,79 +95,86 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
       const {
         location: { pathname, query },
       } = this.props;
+      let newQuery = {
+        ...query,
+        ...values,
+        page: 1,
+      };
+      newQuery = this.getSimpleQuery(newQuery);
       // @ts-ignore
       window.g_history.push({
         pathname,
-        query: {
-          ...query,
-          ...values,
-          page: 1,
+        query: newQuery,
+        state: {
           _t: new Date().getTime(),
         },
       });
     };
 
-    // handlePageChange = (page: number, pageSize?: number): void => {
-    //   debugger;
-    //   const {
-    //     location: { pathname, query },
-    //   } = this.props;
-    //   // @ts-ignore
-    //   window.g_history.push({
-    //     pathname,
-    //     query: {
-    //       ...query,
-    //       page,
-    //       pageSize,
-    //       _t: new Date().getTime(),
-    //     },
-    //   });
-    // };
+    getSimpleQuery = query => {
+      if (query.page === 1) {
+        delete query.page;
+      }
+      if (query.pageSize === PAGE_SIZE) {
+        delete query.pageSize;
+      }
+      return query;
+    };
 
     handleTableChange = (pagination: PaginationProps, _, sorter: SorterResult<any>) => {
       const {
         location: { pathname, query },
       } = this.props;
-      const params: any = {
+
+      let newQuery: any = {
+        ...query,
         page: pagination.current,
         pageSize: pagination.pageSize,
       };
       if (sorter.field) {
-        params.order = `${sorter.field} ${
+        newQuery.order = `${sorter.field} ${
           sorter.order.toLowerCase() === 'ascend' ? 'asc' : 'desc'
         }`;
       } else {
-        query.order = undefined;
+        newQuery.order = undefined;
       }
+      newQuery = this.getSimpleQuery(newQuery);
       // @ts-ignore
       window.g_history.push({
         pathname,
-        query: {
-          ...query,
-          ...params,
-        },
+        query: newQuery,
       });
     };
 
     handleResetData = () => {
       const {
         location: { query },
+        form: { getFieldsValue, setFieldsValue },
       } = this.props;
       if (Object.keys(query)) {
+        const resetFileds: any = {};
+        Object.keys(getFieldsValue()).map(key => {
+          resetFileds[key] = undefined;
+        });
+        setFieldsValue(resetFileds);
         // @ts-ignore
         window.g_history.push({
           pathname: location.pathname,
           query: {},
+          state: {
+            _t: new Date().getTime(),
+          },
         });
       }
     };
 
-    getPagedData = () => {
+    @Throttle(1000)
+    getPagedData() {
       let pageSearchParams = {};
       if (this.wrapC.getQueryParams) {
         pageSearchParams = this.wrapC.getQueryParams();
       }
-      const params = filterParams(this.state);
+      const params = this.state; // filterParams(this.state);
       this.props.dispatch({
         type: prop.type,
         payload: {
@@ -169,16 +182,16 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
           ...params,
         },
       });
-    };
+    }
 
     getSorter = () => {
       const { order } = this.state;
       if (order) {
-          const orderData=`${order}`.split(' ');
-          return {
-            field: orderData[0],
-            order:orderData[1]==="asc"?"ascend":orderData[1]==="desc"?"descend":false
-          }
+        const orderData = `${order}`.split(' ');
+        return {
+          field: orderData[0],
+          order: orderData[1] === 'asc' ? 'ascend' : orderData[1] === 'desc' ? 'descend' : false,
+        };
       } else {
         return null;
       }

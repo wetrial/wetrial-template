@@ -2,7 +2,7 @@ import { ColumnProps } from 'antd/lib/table';
 
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Form, Row, Col, Button, Card, Input, Checkbox, Popconfirm, Divider } from 'antd';
+import { Form, Row, Col, Button, Card, Input, Checkbox, Popconfirm, Divider, Select } from 'antd';
 import { FormComponent, pagedQuery } from '@/wetrial';
 import TableList from '@/components/TableList';
 import Authorized from '@/utils/Authorized';
@@ -94,20 +94,31 @@ class Index extends FormComponent<any, any> {
     const {
       form: { getFieldDecorator },
       onResetData,
-      filterData
+      filterData,
     } = this.props;
     return (
       <Form onSubmit={this.handleSearch}>
         <Row gutter={{ md: 5, lg: 24, xl: 48 }}>
-          <Col md={12} sm={24}>
+          <Col md={6} sm={12}>
             <FormItem>
               {getFieldDecorator('filter', {
-                initialValue:filterData.filter
+                initialValue: filterData.filter,
               })(<Input autoComplete="off" placeholder="输入以搜索" />)}
             </FormItem>
           </Col>
-
-          <Col md={12} sm={24}>
+          <Col md={6} sm={12}>
+            <FormItem>
+              {getFieldDecorator('type', {
+                initialValue: filterData.type,
+              })(
+                <Select placeholder="请选择">
+                  <Select.Option value="1">vip</Select.Option>
+                  <Select.Option value="2">普通</Select.Option>
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          <Col md={{span:6,offset:6}} sm={{span:12}}>
             <FormItem>
               <Row type="flex" align="middle" justify="space-between">
                 <div>
@@ -137,16 +148,16 @@ class Index extends FormComponent<any, any> {
       <Card style={{ margin: 16 }}>
         {this.renderForm()}
         <TableList
-            loading={loading}
-            columns={this.columns}
-            dataSource={pagedData.items}
-            onChange={onTableChange}
-            sorter={sorter}
-            pagination={{
-              total: pagedData.total,
-              ...pagination,
-            }}
-          />
+          loading={loading}
+          columns={this.columns}
+          dataSource={pagedData.items}
+          onChange={onTableChange}
+          sorter={sorter}
+          pagination={{
+            total: pagedData.total,
+            ...pagination,
+          }}
+        />
       </Card>
     );
   }

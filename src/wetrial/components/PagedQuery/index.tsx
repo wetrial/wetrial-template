@@ -4,6 +4,7 @@ import { SorterResult } from 'antd/es/table';
 import React, { PureComponent } from 'react';
 import { isEqual, omit } from 'lodash';
 import { Throttle } from 'lodash-decorators';
+import { parse } from 'qs';
 import { PAGE_SIZE } from '@/constants';
 
 type PagedTableHocProps = {
@@ -87,7 +88,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
     componentWillUnmount() {
       const { location } = this.props;
       if (prop.record) {
-        sessionStorage.setItem(location.pathname, location.search);
+        sessionStorage&&sessionStorage.setItem(location.pathname, location.search);
       }
     }
 
@@ -226,3 +227,22 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
 };
 
 export default Index;
+
+/**
+ * 根据pathname获取查询串
+ * @param pathname 路由
+ */
+export const backRouter=(pathname,newQuery?:any)=>{
+    let query={};
+    if(sessionStorage&&sessionStorage.getItem(pathname)){
+        query=parse(sessionStorage.getItem(pathname));
+    }
+    // @ts-ignore
+    window.g_history.push({
+        pathname,
+        query:{
+            ...query,
+            ...newQuery
+        }
+      });
+}

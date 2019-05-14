@@ -2,6 +2,7 @@ import { ColumnProps } from 'antd/lib/table';
 
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
+import { router } from "umi";
 import { Form, Row, Col, Button, Card, Input, Checkbox, Popconfirm, Divider, Select } from 'antd';
 import { FormComponent, pagedQuery } from '@/wetrial';
 import TableList from '@/components/TableList';
@@ -16,7 +17,7 @@ const FormItem = Form.Item;
   loading: loading.effects['example_tenant/getTenants'],
 }))
 @Form.create()
-@pagedQuery({ type: 'example_tenant/getTenants', pageSize: 2 })
+@pagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
 class Index extends FormComponent<any, any> {
   columns: Array<ColumnProps<any>> = [
     {
@@ -53,11 +54,11 @@ class Index extends FormComponent<any, any> {
       dataIndex: 'operator',
       fixed: 'right',
       width: 145,
-      render: _ => {
+      render: (_,record) => {
         return (
           <Fragment>
             <Authorized authority={Permissions.example.tenant}>
-              <Button size="small" type="primary">
+              <Button size="small" onClick={()=>{this.handleCreateOrEditTenant(record.id);}} type="primary">
                 编辑
               </Button>
             </Authorized>
@@ -89,6 +90,12 @@ class Index extends FormComponent<any, any> {
       onSearchData(values);
     });
   };
+
+  handleCreateOrEditTenant=(id)=>{
+    router.push({
+      pathname:`/example/list/${id}`
+    })
+  }
 
   renderForm = () => {
     const {
@@ -130,7 +137,7 @@ class Index extends FormComponent<any, any> {
                   </Button>
                 </div>
                 <Authorized authority={Permissions.example.list}>
-                  <Button type="primary" icon="plus">
+                  <Button type="primary" icon="plus" onClick={()=>this.handleCreateOrEditTenant('')}>
                     创建
                   </Button>
                 </Authorized>

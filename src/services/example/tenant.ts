@@ -7,3 +7,10 @@ export function GetTenants(data) {
     data
   });
 }
+
+export function GetTenant(data) {
+  return get({
+    url:`${API_PREFIX}Tenant/GetTenant`,
+    data
+  });
+}

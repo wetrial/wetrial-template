@@ -2,7 +2,7 @@ import { PaginationProps } from 'antd/es/pagination/Pagination';
 import { SorterResult } from 'antd/es/table';
 
 import React, { PureComponent } from 'react';
-import { isEqual, omit } from 'lodash';
+import { isEqual, omit,reduce } from 'lodash';
 import { Throttle } from 'lodash-decorators';
 import { parse } from 'qs';
 import { PAGE_SIZE } from '@/constants';
@@ -22,17 +22,17 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
     ...prop,
   };
 
-  //   const filterParams = params =>
-  //     reduce(
-  //       params,
-  //       (result, value, key) => {
-  //         if (!['_t'].includes(key)) {
-  //           result[key] = value;
-  //         }
-  //         return result;
-  //       },
-  //       {}
-  //     );
+    const filterParams = params =>
+      reduce(
+        params,
+        (result, value, key) => {
+          if (!['_t'].includes(key)) {
+            result[key] = value;
+          }
+          return result;
+        },
+        {}
+      );
 
   class Decorator extends PureComponent<any, any> {
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -47,7 +47,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
         });
         query.pageSize = Number(query.pageSize);
         query.page = Number(query.page);
-        return {...preQuery,...query}; // omit(query, ['_t']);
+        return {...preQuery,...omit(query, ['_t'])};
       }
       return null;
     }
@@ -105,10 +105,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
       // @ts-ignore
       window.g_history.push({
         pathname,
-        query: newQuery,
-        state: {
-          _t: new Date().getTime(),
-        },
+        query: {...newQuery,_t: new Date().getTime()}
       });
     };
 
@@ -161,10 +158,9 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
         // @ts-ignore
         window.g_history.push({
           pathname: location.pathname,
-          query: {},
-          state: {
-            _t: new Date().getTime(),
-          },
+          query: {
+            _t: new Date().getTime()
+          }
         });
       }
     };
@@ -175,7 +171,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
       if (this.wrapC.getQueryParams) {
         pageSearchParams = this.wrapC.getQueryParams();
       }
-      const params = this.state; // filterParams(this.state);
+      const params = filterParams(this.state);
       this.props.dispatch({
         type: prop.type,
         payload: {

@@ -1,77 +1,62 @@
-import request, { RequestOptionsInit } from 'umi-request';
-import { omit, assign } from 'lodash';
-import { notification } from 'antd';
-import { getToken } from './store';
-import { UnAuthorizedException } from './exception';
+import axios, { AxiosRequestConfig } from 'axios';
 
-interface IRequestOption extends RequestOptionsInit {
+import { omit, assign } from 'lodash';
+import {  message } from 'antd';
+import { getToken } from './store';
+import { UnAuthorizedException,UserFriendlyException } from './exception';
+
+interface IRequestOption extends AxiosRequestConfig {
   showTip?: boolean; // 操作成功是否提示
   url: string; // 请求的url
-  data?: any;
   method?: 'post' | 'get' | 'put' | 'delete' | 'patch';
 }
 
-// request拦截器,请求头增加Authorization token等信息
-request.interceptors.request.use((_, options) => {
-  assign(options.headers, {
-    Authorization: getToken(),
-    // '.AspNetCore.Culture':
-  });
-  return {
-    options,
-  };
+const instance = axios.create({
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-// // response拦截器, 处理response
-// request.interceptors.response.use((response, options) => {
-//   // response.headers.append('interceptors', 'yes yo');
-//   debugger;
-//   if (response.status === 200) {
-//     return response.json().then(result=>{
-//       debugger;
-//       return result.data;
-//     })
-//   }
-//   return response;
-// });
-
-// // @ts-ignore
-// request.interceptors.response.use(async (response) => {
-//   if(response.status===500){
-
-//   }else if(response.status===200){
-
-//   }
-//   const jsonRep =await response.clone().json();
-//   if(jsonRep)
-//   return response;
-// })
-
-export const fetch = (opt: IRequestOption) => {
-  const options = omit(opt, 'url');
-  const fetchOption: RequestOptionsInit = {
-    requestType: 'json',
-    responseType: 'json',
-    showTip: true,
-    // 有些页面需要自己处理错误的业务逻辑
-    errorHandler: res => {
-      const { message = '出错啦！！！', error = '请联系管理员或重试。' } = res.data;
-      notification.error({
-        message,
-        description: error,
-      });
-    },
-    ...options,
-  };
-  const { url } = opt;
-  return request(url, fetchOption).then(rep => {
-    if (rep) {
-      if (rep.unAuthorizedRequest) {
-        throw new UnAuthorizedException(rep.error || '登录已经失效！');
-      }
-      return rep.result;
-    }
+/**
+ * 通用请求拦截器
+ */
+const commonRequestInterceptor = instance.interceptors.request.use(config => {
+  assign(config.headers, {
+    Authorization: `Bearer ${getToken()}`
   });
+  return config;
+});
+
+/**
+ * 通用响应拦截，拦截异常信息(非200-302之间的状态码)、未授权等
+ */
+const commonResponseInterceptor = instance.interceptors.response.use(
+  ({data,config}) => {
+    if(config['showTip']){
+      message.success('操作成功',1.5);
+    }
+    return data.result;
+  },
+  ({response}) => {
+    const {error,unAuthorizedRequest}=response.data;
+    let exception;
+    if(unAuthorizedRequest){
+      exception=new UnAuthorizedException(error.message);
+    }else if(error){
+      exception=new UserFriendlyException;
+      exception.code=error.code;
+      exception.details=error.details;
+      exception.message=error.message;
+      exception.validationErrors=error.validationErrors; 
+    }else{
+      exception=new Error(response.statusText);
+    }
+    return Promise.reject(exception);
+  }
+);
+
+const request = (opt: IRequestOption) => {
+  return instance.request(opt);
 };
 
 export const get = (opt: IRequestOption | string) => {
@@ -83,42 +68,44 @@ export const get = (opt: IRequestOption | string) => {
   } else {
     options = opt;
   }
-  return fetch({
+  return request({
     ...omit(options, 'data'),
     method: 'get',
-    params: {timespan:new Date().getTime(),...options.data},
+    params: { timespan: new Date().getTime(), ...options.data },
     showTip: false,
   });
 };
 
 export const post = (opt: IRequestOption) => {
-  return fetch({
-    ...opt,
-    method: 'post',
+  return request({
     showTip: true,
+    ...opt,
+    method: 'post'
   });
 };
 
 export const put = (opt: IRequestOption) => {
-  return fetch({
+  return request({
+    showTip: true,
     ...opt,
     method: 'put',
-    showTip: true,
   });
 };
 
 export const patch = (opt: IRequestOption) => {
-  return fetch({
+  return request({
+    showTip: true,
     ...opt,
     method: 'patch',
-    showTip: true,
   });
 };
 
 export const del = (opt: IRequestOption) => {
-  return fetch({
+  return request({
+    showTip: true,
     ...opt,
     method: 'delete',
-    showTip: true,
   });
 };
+
+export { instance,request, commonRequestInterceptor, commonResponseInterceptor };

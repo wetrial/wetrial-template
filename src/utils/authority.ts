@@ -1,5 +1,5 @@
 
-import { getPermissions as storeGetPermissions,setPermissions as storeSetPermissions,clearPermissions as storeClearPermissions } from '@/wetrial/store';
+import { getPermissions as storeGetPermissions,setPermissions as storeSetPermissions,clearPermissions as storeClearPermissions } from '@/utils/store';
 
 // use localStorage to store the authority info, which might be sent from server in actual project.
 export function getPermissions(str?:string) {

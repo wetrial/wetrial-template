@@ -5,6 +5,7 @@ const preFix = 'WETRIAL';
 const TokenName = `${preFix}.TOKEN`;
 const PermisssName = `${preFix}.PERMISSIONs`;
 
+
 const storeWithExp = {
   set: (key: string, val: any, exp?: number) => {
     store.set(key, { val, exp, time: new Date().getTime() });
@@ -15,6 +16,8 @@ const storeWithExp = {
       return null;
     }
     if (new Date().getTime() - info.time > info.exp) {
+      // 过期 移除
+      storeWithExp.remove(key);
       return null;
     }
     return info.val;
@@ -50,6 +53,7 @@ export const clearToken = (): void => {
   storeWithExp.remove(TokenName);
   storeWithExp.remove(PermisssName);
 };
+
 
 /**
  * 获取当前用户的权限列表

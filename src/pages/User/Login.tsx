@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Form, Input, Icon, Button } from 'antd';
 import { connect } from 'dva';
-import { getToken } from '@/wetrial/store';
+import { getToken } from '@/utils/store';
 import router from "umi/router";
 import { FormComponent } from '@/wetrial';
 import { required } from '@/wetrial/validation';

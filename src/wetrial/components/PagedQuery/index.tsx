@@ -5,11 +5,13 @@ import React, { PureComponent } from 'react';
 import { isEqual, omit,reduce } from 'lodash';
 import { Throttle } from 'lodash-decorators';
 import { parse } from 'qs';
-import { PAGE_SIZE } from '@/constants';
+
+const DEFAULT_PAGE_SIZE=15;
 
 type PagedTableHocProps = {
   type: string; // 类型 一般指获取数据源的action
   page?: number; // 当前页 从1开始
+  defaultPageSize?:number; // 每页默认显示的条数
   pageSize?: number; // 每页显示数量
   record?: boolean; // 是否记录搜索状态
 };
@@ -17,7 +19,8 @@ type PagedTableHocProps = {
 const Index = (prop: PagedTableHocProps): any => WrapComponent => {
   prop = {
     page: 1,
-    pageSize: PAGE_SIZE,
+    pageSize: DEFAULT_PAGE_SIZE,
+    defaultPageSize:DEFAULT_PAGE_SIZE,
     record: true,
     ...prop,
   };
@@ -113,7 +116,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
       if (query.page === 1) {
         delete query.page;
       }
-      if (query.pageSize === PAGE_SIZE) {
+      if (query.pageSize === DEFAULT_PAGE_SIZE) {
         delete query.pageSize;
       }
       return query;

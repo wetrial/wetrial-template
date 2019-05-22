@@ -28,8 +28,4 @@ export { default as Result } from './components/Result';
 
 export { default as ScrollBar } from './components/ScrollBar';
 
-export { default as SendCode } from './components/SendCode';
-
-export { default as StandardTable } from './components/StandardTable';
-
 export { default as TagSelect } from './components/TagSelect';

@@ -149,9 +149,10 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
 
     handleResetData = () => {
       const {
-        location: { query },
+        location,
         form: { getFieldsValue, setFieldsValue },
       } = this.props;
+      const {query}=location;
       if (Object.keys(query)) {
         const resetFileds: any = {};
         Object.keys(getFieldsValue()).map(key => {

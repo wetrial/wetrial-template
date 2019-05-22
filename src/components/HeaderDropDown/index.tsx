@@ -9,10 +9,10 @@ declare type OverlayFunc = () => React.ReactNode;
 export interface HeaderDropdownProps extends DropDownProps {
   overlayClassName?: string;
   overlay: React.ReactNode | OverlayFunc;
-  placement?: "bottomLeft" | "bottomRight" | "topLeft" | "topCenter" | "topRight" | "bottomCenter";
+  placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topCenter' | 'topRight' | 'bottomCenter';
 }
 
-export default class HeaderDropDown extends React.Component<HeaderDropdownProps, any> {
+export default class HeaderDropdown extends React.Component<HeaderDropdownProps, any> {
   render() {
     const { overlayClassName, ...props } = this.props;
     return (

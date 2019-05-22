@@ -2,7 +2,7 @@ import { ColumnProps } from 'antd/lib/table';
 
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { router } from "umi";
+import { router } from 'umi';
 import { Form, Row, Col, Button, Card, Input, Checkbox, Popconfirm, Divider, Select } from 'antd';
 import { FormComponent, pagedQuery } from '@/wetrial';
 import TableList from '@/components/TableList';
@@ -53,12 +53,18 @@ class Index extends FormComponent<any, any> {
       title: '操作',
       dataIndex: 'operator',
       fixed: 'right',
-      width: 145,
-      render: (_,record) => {
+      width: 150,
+      render: (_, record) => {
         return (
           <Fragment>
             <Authorized authority={Permissions.example.tenant}>
-              <Button size="small" onClick={()=>{this.handleCreateOrEditTenant(record.id);}} type="primary">
+              <Button
+                size="small"
+                onClick={() => {
+                  this.handleCreateOrEditTenant(record.id);
+                }}
+                type="primary"
+              >
                 编辑
               </Button>
             </Authorized>
@@ -91,11 +97,11 @@ class Index extends FormComponent<any, any> {
     });
   };
 
-  handleCreateOrEditTenant=(id)=>{
+  handleCreateOrEditTenant = id => {
     router.push({
-      pathname:`/example/list/${id}`
-    })
-  }
+      pathname: `/example/list/${id}`,
+    });
+  };
 
   renderForm = () => {
     const {
@@ -125,7 +131,7 @@ class Index extends FormComponent<any, any> {
               )}
             </FormItem>
           </Col>
-          <Col md={{span:6,offset:6}} sm={{span:12}}>
+          <Col md={{ span: 6, offset: 6 }} sm={{ span: 12 }}>
             <FormItem>
               <Row type="flex" align="middle" justify="space-between">
                 <div>
@@ -137,7 +143,11 @@ class Index extends FormComponent<any, any> {
                   </Button>
                 </div>
                 <Authorized authority={Permissions.example.list}>
-                  <Button type="primary" icon="plus" onClick={()=>this.handleCreateOrEditTenant('')}>
+                  <Button
+                    type="primary"
+                    icon="plus"
+                    onClick={() => this.handleCreateOrEditTenant('')}
+                  >
                     创建
                   </Button>
                 </Authorized>

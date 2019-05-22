@@ -3,24 +3,25 @@ import { routerRedux } from 'dva/router';
 import extendModel from '@/wetrial/model';
 import { clearToken, setToken } from '@/utils/store';
 import { getCurrent, loginout, login } from '@/services/user';
-import { setPermissions,clearPermissions } from "@/utils/authority";
-import { getRedirect} from '@/utils';
+import { setPermissions, clearPermissions } from '@/utils/authority';
+import { reloadAuthorized } from '@/utils/Authorized';
+import { getRedirect } from '@/utils';
 
 export default extendModel({
   namespace: 'user',
   state: {
     currentUser: {
-      permissions:null
+      permissions: null,
     },
   },
   effects: {
     *getCurrent(_, { call, put }) {
       const currentUser = yield call(getCurrent);
-      
+
       yield put({
         type: 'update',
         payload: {
-          currentUser
+          currentUser,
         },
       });
     },
@@ -30,6 +31,7 @@ export default extendModel({
       if (result && result.token) {
         yield setToken(result.token);
         yield setPermissions(result.permissions);
+        yield reloadAuthorized();
         const redirect = getRedirect();
         yield put(routerRedux.replace(redirect));
       }
@@ -42,7 +44,7 @@ export default extendModel({
         routerRedux.replace({
           pathname: '/user/login',
         })
-      )
+      );
     },
     // // 当request获取api后端数据 算作未登录时，触发此effects
     // *unAuthorizedRedirect(_,{put}){
@@ -50,7 +52,7 @@ export default extendModel({
     //     message:'提示',
     //     description: '登录已过期，请重新登录',
     //   });
-      
+
     //   yield put(
     //     routerRedux.push({
     //       pathname: '/user/login',
@@ -60,5 +62,5 @@ export default extendModel({
     //     })
     //   )
     // }
-  }
+  },
 });

@@ -2,16 +2,16 @@ import { PaginationProps } from 'antd/es/pagination/Pagination';
 import { SorterResult } from 'antd/es/table';
 
 import React, { PureComponent } from 'react';
-import { isEqual, omit,reduce } from 'lodash';
+import { isEqual, omit, reduce } from 'lodash';
 import { Throttle } from 'lodash-decorators';
 import { parse } from 'qs';
 
-const DEFAULT_PAGE_SIZE=15;
+const DEFAULT_PAGE_SIZE = 15;
 
 type PagedTableHocProps = {
   type: string; // 类型 一般指获取数据源的action
   page?: number; // 当前页 从1开始
-  defaultPageSize?:number; // 每页默认显示的条数
+  defaultPageSize?: number; // 每页默认显示的条数
   pageSize?: number; // 每页显示数量
   record?: boolean; // 是否记录搜索状态
 };
@@ -20,37 +20,37 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
   prop = {
     page: 1,
     pageSize: DEFAULT_PAGE_SIZE,
-    defaultPageSize:DEFAULT_PAGE_SIZE,
+    defaultPageSize: DEFAULT_PAGE_SIZE,
     record: true,
     ...prop,
   };
 
-    const filterParams = params =>
-      reduce(
-        params,
-        (result, value, key) => {
-          if (!['_t'].includes(key)) {
-            result[key] = value;
-          }
-          return result;
-        },
-        {}
-      );
+  const filterParams = params =>
+    reduce(
+      params,
+      (result, value, key) => {
+        if (!['_t'].includes(key)) {
+          result[key] = value;
+        }
+        return result;
+      },
+      {}
+    );
 
   class Decorator extends PureComponent<any, any> {
     static getDerivedStateFromProps(nextProps, prevState) {
       const { location } = nextProps;
 
-      const query:any = { page: prop.page, pageSize: prop.pageSize, ...location.query };
+      const query: any = { page: prop.page, pageSize: prop.pageSize, ...location.query };
 
       if (!isEqual(query, prevState)) {
-        const preQuery={};
-        Object.keys(prevState).map(key=>{
-            preQuery[key]=undefined;
+        const preQuery = {};
+        Object.keys(prevState).map(key => {
+          preQuery[key] = undefined;
         });
         query.pageSize = Number(query.pageSize);
         query.page = Number(query.page);
-        return {...preQuery,...omit(query, ['_t'])};
+        return { ...preQuery, ...omit(query, ['_t']) };
       }
       return null;
     }
@@ -76,13 +76,13 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
 
     getSnapshotBeforeUpdate(preProps) {
       const {
-        location: { query, state: locationState },
+        location: { query },
       } = preProps;
       const {
-        location: { query: curQuery, state: curLocationState },
+        location: { query: curQuery },
       } = this.props;
       const snapShot: any = {};
-      if (!isEqual(query, curQuery) || !isEqual(locationState, curLocationState)) {
+      if (!isEqual(query, curQuery)) {
         snapShot.urlChange = true;
       }
       return snapShot;
@@ -91,7 +91,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
     componentWillUnmount() {
       const { location } = this.props;
       if (prop.record) {
-        sessionStorage&&sessionStorage.setItem(location.pathname, location.search);
+        sessionStorage && sessionStorage.setItem(location.pathname, location.search);
       }
     }
 
@@ -108,7 +108,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
       // @ts-ignore
       window.g_history.push({
         pathname,
-        query: {...newQuery,_t: new Date().getTime()}
+        query: { ...newQuery, _t: new Date().getTime() },
       });
     };
 
@@ -152,7 +152,7 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
         location,
         form: { getFieldsValue, setFieldsValue },
       } = this.props;
-      const {query}=location;
+      const { query } = location;
       if (Object.keys(query)) {
         const resetFileds: any = {};
         Object.keys(getFieldsValue()).map(key => {
@@ -163,8 +163,8 @@ const Index = (prop: PagedTableHocProps): any => WrapComponent => {
         window.g_history.push({
           pathname: location.pathname,
           query: {
-            _t: new Date().getTime()
-          }
+            _t: new Date().getTime(),
+          },
         });
       }
     };
@@ -232,17 +232,17 @@ export default Index;
  * 根据pathname获取查询串
  * @param pathname 路由
  */
-export const backRouter=(pathname,newQuery?:any)=>{
-    let query={};
-    if(sessionStorage&&sessionStorage.getItem(pathname)){
-        query=parse(sessionStorage.getItem(pathname));
-    }
-    // @ts-ignore
-    window.g_history.push({
-        pathname,
-        query:{
-            ...query,
-            ...newQuery
-        }
-      });
-}
+export const backRouter = (pathname, newQuery?: any) => {
+  let query = {};
+  if (sessionStorage && sessionStorage.getItem(pathname)) {
+    query = parse(sessionStorage.getItem(pathname));
+  }
+  // @ts-ignore
+  window.g_history.push({
+    pathname,
+    query: {
+      ...query,
+      ...newQuery,
+    },
+  });
+};

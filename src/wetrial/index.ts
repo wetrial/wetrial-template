@@ -18,7 +18,7 @@ export { default as GlobalFooter } from './components/GlobalFooter';
 
 export { default as NumberInfo } from './components/NumberInfo';
 
-export {default as pagedQuery,backRouter} from './components/PagedQuery';
+export { default as withPagedQuery, backRouter } from './components/PagedQuery';
 
 export { default as PageHeader } from './components/PageHeader';
 

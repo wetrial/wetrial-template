@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'dva';
 import { router } from 'umi';
 import { Form, Row, Col, Button, Card, Input, Checkbox, Popconfirm, Divider, Select } from 'antd';
-import { FormComponent, pagedQuery } from '@/wetrial';
+import { FormComponent, withPagedQuery } from '@/wetrial';
 import TableList from '@/components/TableList';
 import Authorized from '@/utils/Authorized';
 import Permissions from '@/constants/permissions';
@@ -17,7 +17,7 @@ const FormItem = Form.Item;
   loading: loading.effects['example_tenant/getTenants'],
 }))
 @Form.create()
-@pagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
+@withPagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
 class Index extends FormComponent<any, any> {
   columns: Array<ColumnProps<any>> = [
     {

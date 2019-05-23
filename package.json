@@ -18,7 +18,7 @@
     "precommit": "umi-lint --staged --stylelint --tslint --eslint.ext='.js,jsx' --prettier --fix"
   },
   "dependencies": {
-    "antd": "^3.17.0",
+    "antd": "^3.18.2",
     "axios": "^0.18.0",
     "dva": "^2.4.1",
     "dva-model-extend": "^0.1.2",

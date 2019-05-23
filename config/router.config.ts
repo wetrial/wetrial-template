@@ -68,12 +68,12 @@ const routes: IRoute[] = [
               {
                 path: '/system/user/groups',
                 name: 'groups',
-                component: './system/user/groups',
+                component: './System/User/Groups',
               },
               {
                 path: '/system/user/users',
                 name: 'users',
-                component: './system/user/users',
+                component: './System/User/Users',
               },
             ],
           },
@@ -86,12 +86,12 @@ const routes: IRoute[] = [
               {
                 path: '/system/permission/permissions',
                 name: 'permissions',
-                component: './system/permission/permissions',
+                component: './System/Permission/Permissions',
               },
               {
                 path: '/system/permission/policies',
                 name: 'policies',
-                component: './system/permission/policies',
+                component: './System/Permission/Policies',
               },
             ],
           },

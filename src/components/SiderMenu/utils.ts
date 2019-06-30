@@ -1,14 +1,14 @@
 import PathToRegexp from 'path-to-regexp';
-import { urlToList } from '@/wetrial/utils';
+import { urlToList } from 'wetrial/utils';
 
 /**
  * Recursively flatten the data
  * [{path:string},{path:string}] => {path,path2}
  * @param  menus
  */
-export const getFlatMenuKeys = (menuData:any[]) => {
+export const getFlatMenuKeys = (menuData: any[]) => {
   let keys = [];
-  menuData.forEach((item) => {
+  menuData.forEach(item => {
     keys.push(item.path);
     if (item.children) {
       keys = keys.concat(getFlatMenuKeys(item.children));
@@ -18,7 +18,7 @@ export const getFlatMenuKeys = (menuData:any[]) => {
 };
 
 export const getMenuMatches = (flatMenuKeys, path) =>
-  flatMenuKeys.filter((item) => {
+  flatMenuKeys.filter(item => {
     if (item) {
       return PathToRegexp(item).test(path);
     }

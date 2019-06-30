@@ -1,7 +1,7 @@
 import React from 'react';
 import { notification, Button, message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import defaultSettings from './defaultSettings';
+import defaultSettings from '@config/defaultSettings';
 
 // @ts-ignore
 window.React = React;
@@ -42,7 +42,7 @@ if (pwa) {
     };
     const key = `open${Date.now()}`;
     const btn = (
-      <Button 
+      <Button
         type="primary"
         onClick={() => {
           notification.close(key);

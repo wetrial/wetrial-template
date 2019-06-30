@@ -1,8 +1,7 @@
+import NoticeIconTab, { NoticeIconTabProps } from './NoticeIconTab';
+import NoticeList, { NoticeData } from './NoticeList';
 
-import NoticeIconTab,{NoticeIconTabProps} from './NoticeIconTab';
-import NoticeList,{NoticeData} from './NoticeList';
-
-import React,{Fragment} from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { Icon, Tabs, Badge, Spin } from 'antd';
 import classNames from 'classnames';
@@ -32,18 +31,21 @@ export interface NoticeIconProps {
   clearClose?: boolean;
 }
 
-export default class NoticeIcon extends React.PureComponent<NoticeIconProps, any> {
+export default class NoticeIcon extends React.PureComponent<
+  NoticeIconProps,
+  any
+> {
   static defaultProps = {
     // tslint:disable-next-line:no-empty
-    onItemClick: () => { },
+    onItemClick: () => {},
     // tslint:disable-next-line:no-empty
-    onPopupVisibleChange: () => { },
+    onPopupVisibleChange: () => {},
     // tslint:disable-next-line:no-empty
-    onTabChange: () => { },
+    onTabChange: () => {},
     // tslint:disable-next-line:no-empty
-    onClear: () => { },
+    onClear: () => {},
     // tslint:disable-next-line:no-empty
-    onViewMore: () => { },
+    onViewMore: () => {},
     loading: false,
     clearClose: false,
     locale: {
@@ -51,17 +53,17 @@ export default class NoticeIcon extends React.PureComponent<NoticeIconProps, any
       clear: '清空',
       viewMore: '更多',
     },
-    emptyImage: 'https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg',
+    emptyImage:
+      'https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg',
   };
 
-  static Tab=NoticeIconTab;
+  static Tab = NoticeIconTab;
 
   state = {
     visible: false,
   };
 
-  private popover:HTMLElement
-
+  private popover: HTMLElement;
 
   onItemClick = (item, tabProps) => {
     const { onItemClick } = this.props;
@@ -97,11 +99,20 @@ export default class NoticeIcon extends React.PureComponent<NoticeIconProps, any
       return null;
     }
     const panes = React.Children.map(children as NoticeIconTab[], child => {
-      const { list, title, count, emptyText, emptyImage, showClear, showViewMore } = child.props;
+      const {
+        list,
+        title,
+        count,
+        emptyText,
+        emptyImage,
+        showClear,
+        showViewMore,
+      } = child.props;
       const len = list && list.length ? list.length : 0;
       const msgCount = count || count === 0 ? count : len;
       const localeTitle = locale[title] || title;
-      const tabTitle = msgCount > 0 ? `${localeTitle} (${msgCount})` : localeTitle;
+      const tabTitle =
+        msgCount > 0 ? `${localeTitle} (${msgCount})` : localeTitle;
       return (
         <TabPane tab={tabTitle} key={title}>
           <NoticeList
@@ -145,7 +156,11 @@ export default class NoticeIcon extends React.PureComponent<NoticeIconProps, any
     const NoticeBellIcon = bell || <Icon type="bell" className={styles.icon} />;
     const trigger = (
       <span className={classNames(noticeButtonClass, { opened: visible })}>
-        <Badge count={count} style={{ boxShadow: 'none' }} className={styles.badge}>
+        <Badge
+          count={count}
+          style={{ boxShadow: 'none' }}
+          className={styles.badge}
+        >
           {NoticeBellIcon}
         </Badge>
       </span>

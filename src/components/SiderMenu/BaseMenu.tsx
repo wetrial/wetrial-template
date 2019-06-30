@@ -1,5 +1,5 @@
 import * as H from 'history';
-import { SiderTheme, CollapseType } from 'antd/es/Layout/Sider';
+import { SiderTheme, CollapseType } from 'antd/es/layout/Sider';
 import { MenuMode } from 'antd/es/menu';
 
 import React, { PureComponent } from 'react';
@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { Link } from 'umi';
 import IconFont from '@/components/IconFont';
 import { isUrl } from '@/utils/regexp';
-import { urlToList } from '@/wetrial/utils';
+import { urlToList } from 'wetrial/utils';
 import { getMenuMatches } from './utils';
 import styles from './index.less';
 
@@ -20,7 +20,13 @@ import styles from './index.less';
 const getIcon = icon => {
   if (typeof icon === 'string') {
     if (isUrl(icon)) {
-      return <Icon component={() => <img src={icon} alt="icon" className={styles.icon} />} />;
+      return (
+        <Icon
+          component={() => (
+            <img src={icon} alt="icon" className={styles.icon} />
+          )}
+        />
+      );
     }
     if (icon.startsWith('icon-')) {
       return <IconFont type={icon} />;
@@ -66,7 +72,9 @@ export default class BaseMenu extends PureComponent<BaseMenuProps, any> {
   // Get the currently selected menu
   getSelectedMenuKeys = pathname => {
     const { flatMenuKeys } = this.props;
-    return urlToList(pathname).map(itemPath => getMenuMatches(flatMenuKeys, itemPath).pop());
+    return urlToList(pathname).map(itemPath =>
+      getMenuMatches(flatMenuKeys, itemPath).pop(),
+    );
   };
 
   /**
@@ -74,7 +82,11 @@ export default class BaseMenu extends PureComponent<BaseMenuProps, any> {
    */
   getSubMenuOrItem = item => {
     // doc: add hideChildrenInMenu
-    if (item.children && !item.hideChildrenInMenu && item.children.some(child => child.name)) {
+    if (
+      item.children &&
+      !item.hideChildrenInMenu &&
+      item.children.some(child => child.name)
+    ) {
       const { name } = item;
       return (
         <SubMenu
@@ -85,8 +97,8 @@ export default class BaseMenu extends PureComponent<BaseMenuProps, any> {
                 <span>{name}</span>
               </span>
             ) : (
-                name
-              )
+              name
+            )
           }
           key={item.path}
         >
@@ -125,8 +137,8 @@ export default class BaseMenu extends PureComponent<BaseMenuProps, any> {
         onClick={
           isMobile
             ? () => {
-              onCollapse(true);
-            }
+                onCollapse(true);
+              }
             : undefined
         }
       >

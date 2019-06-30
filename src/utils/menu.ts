@@ -18,7 +18,7 @@ export interface Formatter {
  */
 export const formatter = (routes, parentAuth, parentName, paths) => {
   return routes
-    .map((item) => {
+    .map(item => {
       if (!item.name || !item.path) {
         return null;
       }
@@ -34,7 +34,7 @@ export const formatter = (routes, parentAuth, parentName, paths) => {
         ...item,
         name: formatMessage({ id: locale, defaultMessage: item.name }),
         locale,
-        auth: item.auth || parentAuth || 'on'
+        auth: item.auth || parentAuth || 'on',
       };
 
       // 处理权限
@@ -52,18 +52,18 @@ export const formatter = (routes, parentAuth, parentName, paths) => {
       delete result.routes;
       return result;
     })
-    .filter((item) => item);
+    .filter(item => item);
 };
 
 /**
  * 获取面包屑映射
  * @param {Object} menuData 菜单配置
  */
-const getBreadcrumbNameMap = (menuData) => {
+const getBreadcrumbNameMap = menuData => {
   const routerMap = {};
 
-  const flattenMenuData = (data) => {
-    data.forEach((menuItem) => {
+  const flattenMenuData = data => {
+    data.forEach(menuItem => {
       if (menuItem.children) {
         flattenMenuData(menuItem.children);
       }
@@ -76,13 +76,13 @@ const getBreadcrumbNameMap = (menuData) => {
 };
 
 // 过滤需要隐藏的菜单
-export const filterMenuData = (menuData) => {
+export const filterMenuData = menuData => {
   if (!menuData) {
     return [];
   }
   return menuData
-    .filter((item) => item.name && !item.hideInMenu)
-    .filter((item) => item);
+    .filter(item => item.name && !item.hideInMenu)
+    .filter(item => item);
 };
 
 export const MOGetBreadcrumbNameMap = MemoizeOne(getBreadcrumbNameMap, isEqual);

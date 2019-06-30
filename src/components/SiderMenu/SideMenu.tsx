@@ -1,14 +1,12 @@
 import { BaseMenuProps } from './BaseMenu';
 
-import React, { PureComponent,Suspense } from 'react';
+import React, { PureComponent, Suspense } from 'react';
 import { Link } from 'umi';
 import { Layout } from 'antd';
 import classNames from 'classnames';
-import { PageLoading } from '@/wetrial';
+import { PageLoading } from 'wetrial';
 import { getDefaultCollapsedSubMenus } from './utils';
-// import defaultSettings from '@/defaultSettings';
 import styles from './index.less';
-
 
 const { Sider } = Layout;
 const BaseMenu = React.lazy(() => import('./BaseMenu'));
@@ -20,7 +18,6 @@ export interface SideMenuProps extends BaseMenuProps {
   fixSiderbar?: boolean;
 }
 
-
 interface State {
   readonly openKeys: string[];
 }
@@ -28,7 +25,10 @@ interface State {
 export default class SideMenu extends PureComponent<SideMenuProps, State> {
   static getDerivedStateFromProps(props, state) {
     const { pathname, flatMenuKeysLen } = state;
-    if (props.location.pathname !== pathname || props.flatMenuKeys.length !== flatMenuKeysLen) {
+    if (
+      props.location.pathname !== pathname ||
+      props.flatMenuKeys.length !== flatMenuKeysLen
+    ) {
       return {
         pathname: props.location.pathname,
         flatMenuKeysLen: props.flatMenuKeys.length,
@@ -39,7 +39,7 @@ export default class SideMenu extends PureComponent<SideMenuProps, State> {
   }
 
   state: State = {
-    openKeys: getDefaultCollapsedSubMenus(this.props)
+    openKeys: getDefaultCollapsedSubMenus(this.props),
   };
 
   componentDidMount() {
@@ -57,14 +57,22 @@ export default class SideMenu extends PureComponent<SideMenuProps, State> {
   };
 
   handleOpenChange = openKeys => {
-    const moreThanOne = openKeys.filter(openKey => this.isMainMenu(openKey)).length > 1;
+    const moreThanOne =
+      openKeys.filter(openKey => this.isMainMenu(openKey)).length > 1;
     this.setState({
       openKeys: moreThanOne ? [openKeys.pop()] : [...openKeys],
     });
   };
 
   render() {
-    const { logo, collapsed, onCollapse, fixSiderbar, theme, isMobile } = this.props;
+    const {
+      logo,
+      collapsed,
+      onCollapse,
+      fixSiderbar,
+      theme,
+      isMobile,
+    } = this.props;
     const { openKeys } = this.state;
     const defaultProps = collapsed ? {} : { openKeys };
     const siderClassName = classNames(styles.sider, {

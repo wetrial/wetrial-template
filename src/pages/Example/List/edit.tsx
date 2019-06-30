@@ -1,9 +1,9 @@
 import React from 'react';
-import { PureComponent,backRouter } from '@/wetrial';
+import { PureComponent, backRouter } from 'wetrial';
 import { Form, Input, Button, Checkbox, Row, Col, PageHeader } from 'antd';
 import { connect } from 'dva';
 import { FORM_SINGLE_LAYOUT } from '@/constants';
-import { required, getRegex, getRange } from '@/wetrial/validation';
+import { required, getRegex, getRange } from 'wetrial/validation';
 
 const FormItem = Form.Item;
 
@@ -62,7 +62,8 @@ class Edit extends PureComponent<any> {
                 required,
                 {
                   ...getRegex('^[a-zA-Z][a-zA-Z0-9_-]{1,}$'),
-                  message: '租户名称必须由2个以上字母、数字、-、_组成,以字母开头',
+                  message:
+                    '租户名称必须由2个以上字母、数字、-、_组成,以字母开头',
                 },
               ],
             })(<Input autoComplete="off" />)}

@@ -2,9 +2,9 @@ import React from 'react';
 import { Card, Form, Input, Icon, Button } from 'antd';
 import { connect } from 'dva';
 import { getToken } from '@/utils/store';
-import router from "umi/router";
-import { FormComponent } from '@/wetrial';
-import { required } from '@/wetrial/validation';
+import router from 'umi/router';
+import { FormComponent } from 'wetrial';
+import { required } from 'wetrial/validation';
 import { getRedirect } from '@/utils';
 import styles from './Login.less';
 
@@ -15,16 +15,16 @@ export interface LoginPageProps {
 }
 
 @connect(({ loading }) => ({
-  loading: loading.effects['user/login']
+  loading: loading.effects['user/login'],
 }))
 class LoginPage extends FormComponent<LoginPageProps, any> {
   componentDidMount() {
     if (getToken()) {
-      const redirect=getRedirect();
+      const redirect = getRedirect();
       router.push(redirect);
     }
   }
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
     const { form, dispatch } = this.props;
 
@@ -34,7 +34,7 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
       }
       dispatch({
         type: 'user/login',
-        payload: values
+        payload: values,
       });
     });
   };
@@ -42,7 +42,7 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
   render() {
     const {
       form: { getFieldDecorator },
-      loading
+      loading,
     } = this.props;
 
     return (
@@ -51,24 +51,24 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
           <Form onSubmit={this.handleSubmit}>
             <FormItem>
               {getFieldDecorator('userName', {
-                rules: [
-                  required
-                ]
+                rules: [required],
               })(
-                <Input autoComplete="off" prefix={<Icon type="user" />} placeholder="admin" />
+                <Input
+                  autoComplete="off"
+                  prefix={<Icon type="user" />}
+                  placeholder="admin"
+                />,
               )}
             </FormItem>
             <FormItem>
               {getFieldDecorator('password', {
-                rules: [
-                  required
-                ]
+                rules: [required],
               })(
                 <Input.Password
                   prefix={<Icon type="lock" />}
                   placeholder="Abcd1234"
                   autoComplete="off"
-                />
+                />,
               )}
             </FormItem>
             <FormItem>

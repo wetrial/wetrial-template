@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Icon, AutoComplete } from 'antd';
 import classNames from 'classnames';
-import {Debounce,Bind} from 'lodash-decorators';
+import { Debounce, Bind } from 'lodash-decorators';
 import styles from './index.less';
 
 export interface HeaderSearchProps {
@@ -22,11 +22,14 @@ interface State {
   readonly value: string;
 }
 
-export default class HeaderSearch extends React.PureComponent<HeaderSearchProps, State> {
+export default class HeaderSearch extends React.PureComponent<
+  HeaderSearchProps,
+  State
+> {
   static defaultProps = {
     defaultActiveFirstOption: false,
     // tslint:disable-next-line:no-empty
-    onPressEnter:()=>{},
+    onPressEnter: () => {},
     // tslint:disable-next-line:no-empty
     onSearch: () => {},
     // tslint:disable-next-line:no-empty
@@ -47,8 +50,8 @@ export default class HeaderSearch extends React.PureComponent<HeaderSearchProps,
     return null;
   }
 
-  private timeout:NodeJS.Timer;
-  private input=React.createRef<Input>();
+  private timeout: NodeJS.Timer;
+  private input = React.createRef<Input>();
 
   constructor(props) {
     super(props);

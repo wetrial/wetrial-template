@@ -80,6 +80,10 @@ export function fixedZero(val: number): string {
  * 下载文件
  * @param file 要下载的文件
  */
-export function downloadTempFile(file: { fileName: string; fileType: string; fileToken: string }) {
+export function downloadTempFile(file: {
+  fileName: string;
+  fileType: string;
+  fileToken: string;
+}) {
   location.href = `${BASE_PATH}File/DownloadTempFile?${stringify(file)}`;
 }

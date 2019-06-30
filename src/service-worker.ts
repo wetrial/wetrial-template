@@ -43,16 +43,19 @@ workbox.routing.registerRoute(/\/api\//, workbox.strategies.networkFirst());
 workbox.routing.registerRoute(
   /^https:\/\/gw.alipayobjects.com\//,
   // @ts-ignore
-  workbox.strategies.networkFirst()
+  workbox.strategies.networkFirst(),
 );
 // @ts-ignore
 workbox.routing.registerRoute(
   /^https:\/\/cdnjs.cloudflare.com\//,
   // @ts-ignore
-  workbox.strategies.networkFirst()
+  workbox.strategies.networkFirst(),
 );
 // @ts-ignore
-workbox.routing.registerRoute(/\/color.less/, workbox.strategies.networkFirst());
+workbox.routing.registerRoute(
+  /\/color.less/,
+  workbox.strategies.networkFirst(),
+);
 
 /**
  * Response to client after skipping waiting with MessageChannel
@@ -64,11 +67,12 @@ addEventListener('message', event => {
     // @ts-ignore
     event.waitUntil(
       // @ts-ignore
-      self.skipWaiting()
+      self
+        .skipWaiting()
         .then(
           () => replyPort.postMessage({ error: null }),
-          error => replyPort.postMessage({ error })
-        )
+          error => replyPort.postMessage({ error }),
+        ),
     );
   }
 });

@@ -1,8 +1,11 @@
-
-import { getPermissions as storeGetPermissions,setPermissions as storeSetPermissions,clearPermissions as storeClearPermissions } from '@/utils/store';
+import {
+  getPermissions as storeGetPermissions,
+  setPermissions as storeSetPermissions,
+  clearPermissions as storeClearPermissions,
+} from './store';
 
 // use localStorage to store the authority info, which might be sent from server in actual project.
-export function getPermissions(str?:string) {
+export function getPermissions(str?: string) {
   const permissionString =
     typeof str === 'undefined' ? storeGetPermissions() : str;
   let permission;
@@ -17,11 +20,12 @@ export function getPermissions(str?:string) {
   return permission;
 }
 
-export function setPermissions(permissions?:string|string[]) {
-  const tempPermissions = typeof permissions === 'string' ? [permissions] : permissions;
+export function setPermissions(permissions?: string | string[]) {
+  const tempPermissions =
+    typeof permissions === 'string' ? [permissions] : permissions;
   return storeSetPermissions(tempPermissions);
 }
 
-export function clearPermissions(){
+export function clearPermissions() {
   return storeClearPermissions();
 }

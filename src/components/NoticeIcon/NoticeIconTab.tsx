@@ -1,5 +1,5 @@
 import React from 'react';
-import {NoticeData} from './NoticeList';
+import { NoticeData } from './NoticeList';
 
 export interface NoticeIconTabProps {
   count?: number;
@@ -15,4 +15,7 @@ export interface NoticeIconTabProps {
   locale?: any;
 }
 
-export default class NoticeIconTab extends React.PureComponent<NoticeIconTabProps, any>{}
+export default class NoticeIconTab extends React.PureComponent<
+  NoticeIconTabProps,
+  any
+> {}

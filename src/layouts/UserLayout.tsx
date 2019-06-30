@@ -1,8 +1,9 @@
 import React from 'react';
-import {GlobalFooter} from '@/wetrial';
+import { NormalLayout } from 'wetrial';
 import SelectLang from '@/components/SelectLang';
-import { copyright } from './Footer';
 import styles from './UserLayout.less';
+
+const {DefaultFooter}=NormalLayout;
 
 class UserLayout extends React.PureComponent {
   render() {
@@ -15,7 +16,7 @@ class UserLayout extends React.PureComponent {
         </div>
 
         <div className={styles.content}>{children}</div>
-        <GlobalFooter copyright={copyright} />
+        <DefaultFooter />
       </div>
     );
   }

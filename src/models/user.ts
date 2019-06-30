@@ -1,6 +1,6 @@
 // import router from "umi/router";
 import { routerRedux } from 'dva/router';
-import extendModel from '@/wetrial/model';
+import extendModel from 'wetrial/model';
 import { clearToken, setToken } from '@/utils/store';
 import { getCurrent, loginout, login } from '@/services/user';
 import { setPermissions, clearPermissions } from '@/utils/authority';
@@ -43,7 +43,7 @@ export default extendModel({
       yield put(
         routerRedux.replace({
           pathname: '/user/login',
-        })
+        }),
       );
     },
     // // 当request获取api后端数据 算作未登录时，触发此effects

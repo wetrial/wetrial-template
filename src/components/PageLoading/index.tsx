@@ -1,1 +1,1 @@
-export {PageLoading} from '@/wetrial';
+export { PageLoading } from 'wetrial';

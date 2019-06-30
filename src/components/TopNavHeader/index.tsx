@@ -1,14 +1,14 @@
 import H from 'history';
-import { MenuMode,MenuTheme } from 'antd/es/menu';
+import { MenuMode, MenuTheme } from 'antd/es/menu';
 import { CollapseType } from 'antd/es/layout/Sider';
-import RightContent,{RightContextProps} from '../GlobalHeader/RightContent';
+import RightContent, { RightContextProps } from '../GlobalHeader/RightContent';
 import { ICurrentUser } from '@/types/user';
 
 import React, { PureComponent } from 'react';
 import Link from 'umi/link';
 import BaseMenu from '../SiderMenu/BaseMenu';
 import { getFlatMenuKeys } from '../SiderMenu/utils';
-import defaultSettings from '@/defaultSettings';
+import defaultSettings from '@config/defaultSettings';
 import styles from './index.less';
 
 interface ITopNavHeaderProps {
@@ -24,36 +24,57 @@ interface ITopNavHeaderProps {
   onCollapse: (collapsed: boolean, type?: CollapseType) => void;
   onOpenChange?: (openKeys: string[]) => void;
 
-  onMenuClick:({key})=>void;
+  onMenuClick: ({ key }) => void;
   noticeIcon?: false | RightContextProps;
-  logo:any;
-  contentWidth?:string;
-  collapsed:boolean;
+  logo: any;
+  contentWidth?: string;
+  collapsed: boolean;
 }
 
 interface IState {
   readonly maxWidth: number;
 }
 
-export default class TopNavHeader extends PureComponent<ITopNavHeaderProps,IState> {
+export default class TopNavHeader extends PureComponent<
+  ITopNavHeaderProps,
+  IState
+> {
   static getDerivedStateFromProps(props) {
     return {
-      maxWidth: (props.contentWidth === 'Fixed' ? 1200 : window.innerWidth) - 280 - 165 - 40
+      maxWidth:
+        (props.contentWidth === 'Fixed' ? 1200 : window.innerWidth) -
+        280 -
+        165 -
+        40,
     };
   }
 
-  state:IState = {
+  state: IState = {
     maxWidth: undefined,
   };
 
   render() {
-    const { theme, contentWidth, menuData, logo,location,isMobile,openKeys,mode,collapsed } = this.props;
+    const {
+      theme,
+      contentWidth,
+      menuData,
+      logo,
+      location,
+      isMobile,
+      openKeys,
+      mode,
+      collapsed,
+    } = this.props;
     const { maxWidth } = this.state;
     const flatMenuKeys = getFlatMenuKeys(menuData);
     return (
-      <div className={`${styles.head} ${theme === 'light' ? styles.light : ''}`}>
-        <div 
-          className={`${styles.main} ${contentWidth === 'Fixed' ? styles.wide : ''}`}
+      <div
+        className={`${styles.head} ${theme === 'light' ? styles.light : ''}`}
+      >
+        <div
+          className={`${styles.main} ${
+            contentWidth === 'Fixed' ? styles.wide : ''
+          }`}
         >
           <div className={styles.left}>
             <div className={styles.logo} key="logo" id="logo">
@@ -69,15 +90,17 @@ export default class TopNavHeader extends PureComponent<ITopNavHeaderProps,IStat
             >
               <BaseMenu
                 collapsed={collapsed}
-                openKeys={openKeys} 
-                theme={theme} 
+                openKeys={openKeys}
+                theme={theme}
                 mode={mode}
-                flatMenuKeys={flatMenuKeys} 
+                flatMenuKeys={flatMenuKeys}
                 location={location}
                 menuData={menuData}
                 isMobile={isMobile}
-                onCollapse={()=>{return ;}}
-                className={styles.menu} 
+                onCollapse={() => {
+                  return;
+                }}
+                className={styles.menu}
               />
             </div>
           </div>

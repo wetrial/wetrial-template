@@ -1,6 +1,6 @@
-import responseWrapper, { errorWrapper, authorizeIntercept } from './base';
 import { delay } from 'roadhog-api-doc';
 import Mock from 'mockjs';
+import responseWrapper, { authorizeIntercept } from './base';
 
 const List = [];
 

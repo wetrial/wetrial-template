@@ -59,15 +59,16 @@ export function deepGetValue(obj: { [key: string]: any }) {
  * @param {string} param.format 格式 默认为年月日
  */
 export function getDateString({ date, format = 'Y-MM-DD' }) {
-  if (!date) {
+  let tempDate=date;
+  if (!tempDate) {
     return '';
   }
 
-  if (typeof date === 'string') {
-    date = moment(date);
+  if (typeof tempDate === 'string') {
+    tempDate = moment(tempDate);
   }
-  if (date) {
-    return date.format(format);
+  if (tempDate) {
+    return tempDate.format(format);
   }
   return '';
 }
@@ -85,5 +86,5 @@ export function downloadTempFile(file: {
   fileType: string;
   fileToken: string;
 }) {
-  location.href = `${BASE_PATH}File/DownloadTempFile?${stringify(file)}`;
+  window.location.href = `${BASE_PATH}File/DownloadTempFile?${stringify(file)}`;
 }

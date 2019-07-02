@@ -49,6 +49,6 @@ export function authorizeIntercept(opt, dataFunc) {
   ) {
     return dataFunc(opt);
   } else {
-    response.json(responseWrapper({}, false, true, '登录已过期！'));
+    return response.json(responseWrapper({}, false, true, '登录已过期！'));
   }
 }

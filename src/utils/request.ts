@@ -18,6 +18,7 @@ instance.interceptors.response.use(
     ) {
       return opt;
     } else {
+      // eslint-disable-next-line dot-notation
       if (opt.config['showTip']) {
         message.success('操作成功', 1.5);
       }

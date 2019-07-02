@@ -11,7 +11,7 @@ export {
 
 export { storeWithExp };
 
-const Tenant = `WETRIAL.Tenant`;
+const Tenant = 'WETRIAL.Tenant';
 
 export const getTenant = (): string | number => {
   return storeWithExp.get(Tenant);

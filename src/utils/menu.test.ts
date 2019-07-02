@@ -1,8 +1,7 @@
 import { formatter } from './menu';
 
 describe('utils >> menu', () => {
-  describe('formatter', () => {
-    
+  describe('formatter', () => {    
     it('formatter([]) => []', () => {
       expect(formatter([],'','','')).toEqual([]);
     });

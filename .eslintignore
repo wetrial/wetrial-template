@@ -1,4 +1,4 @@
 /functions/mock/**
 /scripts
 /config
-document.ejs
+/**/*.ejs

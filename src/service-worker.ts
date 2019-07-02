@@ -13,6 +13,7 @@ workbox.clientsClaim();
  * https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.precaching
  */
 // @ts-ignore
+// eslint-disable-next-line
 workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
 
 /**
@@ -54,12 +55,14 @@ workbox.routing.registerRoute(
 // @ts-ignore
 workbox.routing.registerRoute(
   /\/color.less/,
+  // @ts-ignore
   workbox.strategies.networkFirst(),
 );
 
 /**
  * Response to client after skipping waiting with MessageChannel
  */
+// eslint-disable-next-line no-restricted-globals
 addEventListener('message', event => {
   const replyPort = event.ports[0];
   const message = event.data;
@@ -67,8 +70,8 @@ addEventListener('message', event => {
     // @ts-ignore
     event.waitUntil(
       // @ts-ignore
-      self
-        .skipWaiting()
+      // eslint-disable-next-line no-restricted-globals
+      self.skipWaiting()
         .then(
           () => replyPort.postMessage({ error: null }),
           error => replyPort.postMessage({ error }),

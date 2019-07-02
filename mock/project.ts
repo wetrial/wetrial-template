@@ -1,5 +1,5 @@
-import responseWrapper, { authorizeIntercept } from './base';
 import { delay } from 'roadhog-api-doc';
+import responseWrapper, { authorizeIntercept } from './base';
 
 const titles = [
   'Alipay',

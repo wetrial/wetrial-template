@@ -1,5 +1,6 @@
-import { API_PREFIX } from '@/constants';
 import { get, post } from 'wetrial/request';
+import { API_PREFIX } from '@/constants';
+
 
 /**
  * 获取当前用户信息

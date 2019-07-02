@@ -1,6 +1,6 @@
-import responseWrapper, { errorWrapper, authorizeIntercept } from './base';
 import Mock from 'mockjs';
 import { delay } from 'roadhog-api-doc';
+import responseWrapper, { authorizeIntercept } from './base';
 
 function generateTodos() {
   const todos = Mock.mock({

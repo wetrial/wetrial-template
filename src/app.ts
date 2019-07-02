@@ -1,8 +1,6 @@
 import { UnAuthorizedException } from 'wetrial/exception';
 import { notification } from 'antd';
 
-const a='';
-
 export const dva = {
   config: {
     onError(err) {
@@ -11,7 +9,8 @@ export const dva = {
         notification.info({
           message: unAuthorizedErr.message,
         });
-        // tslint:disable-next-line:no-console
+
+        // eslint-disable-next-line no-console
         console.log(unAuthorizedErr.message);
       }
       err.preventDefault();

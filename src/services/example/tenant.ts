@@ -1,5 +1,6 @@
-import { API_PREFIX } from '@/constants';
 import { get } from 'wetrial/request';
+import { API_PREFIX } from '@/constants';
+
 
 export function GetTenants(data) {
   return get({

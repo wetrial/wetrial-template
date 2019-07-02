@@ -1,5 +1,5 @@
-import { API_PREFIX } from '@/constants';
 import { get, post } from 'wetrial/request';
+import { API_PREFIX } from '@/constants';
 
 /**
  * 获取个人的待办、消息、通知列表

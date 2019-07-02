@@ -1,7 +1,7 @@
-import responseWrapper, { errorWrapper, authorizeIntercept } from './base';
+import { delay } from 'roadhog-api-doc';
 import Permissions from '../config/permissions';
 import { deepGetValue } from '../src/utils';
-import { delay } from 'roadhog-api-doc';
+import responseWrapper, { errorWrapper, authorizeIntercept } from './base';
 
 function getCurrentUser({ response }) {
   const current = {

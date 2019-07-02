@@ -4,5 +4,5 @@ export default {
   'app.login.tab-login-credentials': '账户密码登录',
   'app.login.tab-login-mobile': '手机号登录',
   'app.login.sign-in-with': '其他登录方式',
-  'app.login.login': '登录'
+  'app.login.login': '登录',
 };

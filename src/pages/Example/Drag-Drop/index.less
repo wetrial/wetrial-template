@@ -1,5 +1,4 @@
-@import '~antd/lib/style/themes/default.less';
-@import '../../styles/index.less';
+@import '~themes/index.less';
 
 .iconGroup {
   i {
@@ -21,6 +20,7 @@
 
   li {
     .clearfix();
+
     margin-top: 16px;
     display: flex;
     align-items: center;
@@ -138,12 +138,12 @@
       padding-right: 40px;
     }
 
-    .ant-tabs-tab-prev-icon:before {
+    .ant-tabs-tab-prev-icon::before {
       position: relative;
       left: 6px;
     }
 
-    .ant-tabs-tab-next-icon:before {
+    .ant-tabs-tab-next-icon::before {
       position: relative;
       right: 6px;
     }

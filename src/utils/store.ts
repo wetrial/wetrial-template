@@ -1,7 +1,14 @@
-import storeWithExp from '@/wetrial/store';
+import storeWithExp from 'wetrial/store';
 
-export {getToken,setToken,clearToken,getPermissions,setPermissions,clearPermissions} from '@/wetrial/store';
-export {storeWithExp}
+export {
+  getToken,
+  setToken,
+  clearToken,
+  getPermissions,
+  setPermissions,
+  clearPermissions,
+} from 'wetrial/store';
+export { storeWithExp };
 
 const Tenant = `WETRIAL.Tenant`;
 

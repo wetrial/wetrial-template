@@ -1,4 +1,4 @@
-@import '~antd/lib/style/themes/default.less';
+@import '~themes/index.less';
 
 @nav-header-height: @layout-header-height;
 
@@ -86,7 +86,11 @@
       > .ant-menu-item
       .sider-menu-item-img
       + span,
-    & > .ant-menu-submenu > .ant-menu-submenu-title .sider-menu-item-img + span {
+    &
+      > .ant-menu-submenu
+      > .ant-menu-submenu-title
+      .sider-menu-item-img
+      + span {
       display: inline-block;
       max-width: 0;
       opacity: 0;

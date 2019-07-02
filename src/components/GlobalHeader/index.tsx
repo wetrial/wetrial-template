@@ -1,4 +1,4 @@
-import RightContent,{GlobalHeaderRightProps} from './RightContent';
+import RightContent, { GlobalHeaderRightProps } from './RightContent';
 
 import React from 'react';
 import { Icon } from 'antd';
@@ -13,7 +13,10 @@ export interface GlobalHeaderProps extends GlobalHeaderRightProps {
   onCollapse?: (collapsed: boolean) => void;
 }
 
-export default class GlobalHeader extends React.PureComponent<GlobalHeaderProps, any> {
+export default class GlobalHeader extends React.PureComponent<
+  GlobalHeaderProps,
+  any
+> {
   @Debounce(400)
   triggerResizeEvent() {
     const event = document.createEvent('HTMLEvents');
@@ -28,11 +31,7 @@ export default class GlobalHeader extends React.PureComponent<GlobalHeaderProps,
   };
 
   render() {
-    const {
-      collapsed,
-      isMobile,
-      logo,
-    } = this.props;
+    const { collapsed, isMobile, logo } = this.props;
     return (
       <div className={styles.header}>
         {isMobile && (
@@ -43,8 +42,7 @@ export default class GlobalHeader extends React.PureComponent<GlobalHeaderProps,
         <span className={styles.trigger} onClick={this.toggle}>
           <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
         </span>
-        <RightContent {...this.props}
-        />
+        <RightContent {...this.props} />
       </div>
     );
   }

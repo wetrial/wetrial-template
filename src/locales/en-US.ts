@@ -15,5 +15,5 @@ export default {
   ...settings,
   ...exception,
   ...globalHeader,
-  ...validation
+  ...validation,
 };

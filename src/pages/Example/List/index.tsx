@@ -3,11 +3,22 @@ import { ColumnProps } from 'antd/lib/table';
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
 import { router } from 'umi';
-import { Form, Row, Col, Button, Card, Input, Checkbox, Popconfirm, Divider, Select } from 'antd';
-import { FormComponent, withPagedQuery } from '@/wetrial';
+import {
+  Form,
+  Row,
+  Col,
+  Button,
+  Card,
+  Input,
+  Checkbox,
+  Popconfirm,
+  Divider,
+  Select,
+} from 'antd';
+import { FormComponent, withPagedQuery } from 'wetrial';
 import TableList from '@/components/TableList';
 import Authorized from '@/utils/Authorized';
-import Permissions from '@/constants/permissions';
+import Permissions from '@config/permissions';
 import { getDateString } from '@/utils';
 
 const FormItem = Form.Item;
@@ -16,9 +27,10 @@ const FormItem = Form.Item;
   pagedData,
   loading: loading.effects['example_tenant/getTenants'],
 }))
+// @ts-ignore
 @Form.create()
 @withPagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
-class Index extends FormComponent<any, any> {
+class Index extends FormComponent {
   columns: Array<ColumnProps<any>> = [
     {
       title: '租户编码',
@@ -38,7 +50,7 @@ class Index extends FormComponent<any, any> {
     {
       title: '激活',
       dataIndex: 'isActive',
-      render: actived => {
+      render: (actived:boolean) => {
         return <Checkbox checked={actived} />;
       },
     },
@@ -57,7 +69,7 @@ class Index extends FormComponent<any, any> {
       render: (_, record) => {
         return (
           <Fragment>
-            <Authorized authority={Permissions.example.tenant}>
+            <Authorized authority={Permissions.example.list}>
               <Button
                 size="small"
                 onClick={() => {
@@ -68,7 +80,7 @@ class Index extends FormComponent<any, any> {
                 编辑
               </Button>
             </Authorized>
-            <Authorized authority={Permissions.example.tenant}>
+            <Authorized authority={Permissions.example.list}>
               <Divider type="vertical" />
               <Popconfirm title="确定删除">
                 <Button size="small" type="danger">
@@ -111,15 +123,15 @@ class Index extends FormComponent<any, any> {
     } = this.props;
     return (
       <Form onSubmit={this.handleSearch}>
-        <Row gutter={{ md: 5, lg: 24, xl: 48 }}>
-          <Col md={6} sm={12}>
+        <Row gutter={5}>
+          <Col xxl={{span:4}} xl={{span:6}} lg={{span:6}} md={6} sm={24} xs={24}>
             <FormItem>
               {getFieldDecorator('filter', {
                 initialValue: filterData.filter,
               })(<Input autoComplete="off" placeholder="输入以搜索" />)}
             </FormItem>
           </Col>
-          <Col md={6} sm={12}>
+          <Col xxl={{span:4}} xl={{span:6}} lg={{span:6}} md={6} sm={24} xs={24}>
             <FormItem>
               {getFieldDecorator('type', {
                 initialValue: filterData.type,
@@ -127,11 +139,11 @@ class Index extends FormComponent<any, any> {
                 <Select placeholder="请选择">
                   <Select.Option value="1">vip</Select.Option>
                   <Select.Option value="2">普通</Select.Option>
-                </Select>
+                </Select>,
               )}
             </FormItem>
           </Col>
-          <Col md={{ span: 6, offset: 6 }} sm={{ span: 12 }}>
+          <Col xxl={{span:16}} xl={{span:12}} lg={{span:12}} md={{ span: 12}} sm={{ span: 24 }} xs={{span:24}}>
             <FormItem>
               <Row type="flex" align="middle" justify="space-between">
                 <div>
@@ -160,7 +172,13 @@ class Index extends FormComponent<any, any> {
   };
 
   render() {
-    const { pagination, onTableChange, sorter, loading, pagedData } = this.props;
+    const {
+      pagination,
+      onTableChange,
+      sorter,
+      loading,
+      pagedData,
+    } = this.props;
     return (
       <Card style={{ margin: 16 }}>
         {this.renderForm()}

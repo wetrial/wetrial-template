@@ -14,7 +14,7 @@ export interface NoticeData {
 
 export interface NoticeListProps {
   count?: number;
-  emptyText?:string|React.ReactNode;
+  emptyText?: string | React.ReactNode;
   emptyImage?: string;
   list?: NoticeData[];
   name?: string;
@@ -42,16 +42,27 @@ export default class NoticeList extends React.Component<NoticeListProps, any> {
       emptyText: '暂无数据',
       clear: '清空',
       viewMore: '加载更多',
-    }
-  }
+    },
+  };
 
   render() {
-    const { title, showViewMore, data, emptyImage,emptyText, locale, showClear, onClear, onClick, onViewMore } = this.props;
+    const {
+      title,
+      showViewMore,
+      data,
+      emptyImage,
+      emptyText,
+      locale,
+      showClear,
+      onClear,
+      onClick,
+      onViewMore,
+    } = this.props;
     if (data.length === 0) {
       return (
         <div className={styles.notFound}>
           {emptyImage ? <img src={emptyImage} alt="not found" /> : null}
-          <div>{emptyText||locale.emptyText}</div>
+          <div>{emptyText || locale.emptyText}</div>
         </div>
       );
     }
@@ -69,8 +80,8 @@ export default class NoticeList extends React.Component<NoticeListProps, any> {
               typeof item.avatar === 'string' ? (
                 <Avatar className={styles.avatar} src={item.avatar} />
               ) : (
-                  <span className={styles.iconElement}>{item.avatar}</span>
-                )
+                <span className={styles.iconElement}>{item.avatar}</span>
+              )
             ) : null;
 
             return (
@@ -86,7 +97,10 @@ export default class NoticeList extends React.Component<NoticeListProps, any> {
                   }
                   description={
                     <div>
-                      <div className={styles.description} title={item.description}>
+                      <div
+                        className={styles.description}
+                        title={item.description}
+                      >
                         {item.description}
                       </div>
                       <div className={styles.datetime}>{item.datetime}</div>
@@ -103,7 +117,9 @@ export default class NoticeList extends React.Component<NoticeListProps, any> {
               {locale.clear} {locale[title] || title}
             </div>
           ) : null}
-          {showViewMore ? <div onClick={onViewMore}>{locale.viewMore}</div> : null}
+          {showViewMore ? (
+            <div onClick={onViewMore}>{locale.viewMore}</div>
+          ) : null}
         </div>
       </div>
     );

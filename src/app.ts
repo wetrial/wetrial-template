@@ -1,14 +1,14 @@
-import { UnAuthorizedException } from '@/wetrial/exception';
+import { UnAuthorizedException } from 'wetrial/dist/exception';
 import { notification } from 'antd';
 
 export const dva = {
   config: {
     onError(err) {
-      if(err instanceof UnAuthorizedException){
-        const unAuthorizedErr=err as UnAuthorizedException;
+      if (err instanceof UnAuthorizedException) {
+        const unAuthorizedErr = err as UnAuthorizedException;
         notification.info({
-          message:unAuthorizedErr.message
-        })
+          message: unAuthorizedErr.message,
+        });
         // tslint:disable-next-line:no-console
         console.log(unAuthorizedErr.message);
       }

@@ -1,8 +1,7 @@
-
-export type TTags={
-  label:string;
-  key:string
-}
+export type TTags = {
+  label: string;
+  key: string;
+};
 
 export interface ICurrentUser {
   name: string;
@@ -14,5 +13,5 @@ export interface ICurrentUser {
   signature: string;
   title: string;
   group: string;
-  tags:TTags[]
+  tags: TTags[];
 }

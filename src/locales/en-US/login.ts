@@ -5,5 +5,5 @@ export default {
   'app.login.tab-login-credentials': 'Credentials',
   'app.login.tab-login-mobile': 'Mobile number',
   'app.login.sign-in-with': 'Sign in with',
-  'app.login.login': 'Login'
+  'app.login.login': 'Login',
 };

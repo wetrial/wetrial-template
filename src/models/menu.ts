@@ -1,8 +1,8 @@
 import memoizeOne from 'memoize-one';
-import extendModel from '@/wetrial/model';
+import extendModel from 'wetrial/model';
 import isEqual from 'lodash/isEqual';
 import { formatMessage } from 'umi-plugin-react/locale';
-import defaultSettings from '@/defaultSettings';
+import defaultSettings from '@config/defaultSettings';
 import Authorized from '@/utils/Authorized';
 
 const { check } = Authorized;
@@ -26,9 +26,9 @@ function formatter(data, parentAuthority, parentName) {
       }
       // if enableMenuLocale use item.name,
       // close menu international
-      const name = defaultSettings.menu.disableLocal
-        ? item.name
-        : formatMessage({ id: locale, defaultMessage: item.name });
+      const name = defaultSettings.menu.locale
+        ? formatMessage({ id: locale, defaultMessage: item.name })
+        : item.name;
       const result = {
         ...item,
         name,
@@ -53,7 +53,11 @@ const memoizeOneFormatter = memoizeOne(formatter, isEqual);
  */
 const getSubMenu = item => {
   // doc: add hideChildrenInMenu
-  if (item.children && !item.hideChildrenInMenu && item.children.some(child => child.name)) {
+  if (
+    item.children &&
+    !item.hideChildrenInMenu &&
+    item.children.some(child => child.name)
+  ) {
     return {
       ...item,
       children: filterMenuData(item.children), // eslint-disable-line
@@ -73,8 +77,8 @@ const filterMenuData = menuData => {
     .filter(item => item.name && !item.hideInMenu)
     .map(item => check(item.authority, getSubMenu(item)))
     .filter(item => {
-      if(item){
-        const hasChildrens=(!item.children)||item.children.length>0;
+      if (item) {
+        const hasChildrens = !item.children || item.children.length > 0;
         return hasChildrens;
       }
       return false;
@@ -103,7 +107,10 @@ const getBreadcrumbNameMap = menuData => {
   return routerMap;
 };
 
-const memoizeOneGetBreadcrumbNameMap = memoizeOne(getBreadcrumbNameMap, isEqual);
+const memoizeOneGetBreadcrumbNameMap = memoizeOne(
+  getBreadcrumbNameMap,
+  isEqual,
+);
 
 export default extendModel({
   namespace: 'menu',
@@ -118,22 +125,26 @@ export default extendModel({
       const { routes, authority } = payload;
       const originalMenuData = memoizeOneFormatter(routes, authority);
       const menuData = filterMenuData(originalMenuData);
-      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(originalMenuData);
+      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(
+        originalMenuData,
+      );
       yield put({
         type: 'update',
         payload: { menuData, breadcrumbNameMap, routerData: routes },
       });
     },
     // 重新生成菜单，一般用于动态修改当前用户角色的场景
-    *reloadMenu(_,{put,select}){
-      const routes=yield select(state=>state.menu.routerData);
-      const originalMenuData = memoizeOneFormatter(routes,'');
+    *reloadMenu(_, { put, select }) {
+      const routes = yield select(state => state.menu.routerData);
+      const originalMenuData = memoizeOneFormatter(routes, '');
       const menuData = filterMenuData(originalMenuData);
-      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(originalMenuData);
+      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(
+        originalMenuData,
+      );
       yield put({
         type: 'update',
         payload: { menuData, breadcrumbNameMap, routerData: routes },
       });
-    }
-  }
+    },
+  },
 });

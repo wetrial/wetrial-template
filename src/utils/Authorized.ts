@@ -1,4 +1,4 @@
-import {Authorized as RenderAuthorized} from '@/wetrial';
+import { Authorized as RenderAuthorized } from 'wetrial';
 import { getPermissions } from './authority';
 
 let Authorized = RenderAuthorized(getPermissions()); // eslint-disable-line

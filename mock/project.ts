@@ -1,4 +1,4 @@
-import responseWrapper, {authorizeIntercept} from './base';
+import responseWrapper, { authorizeIntercept } from './base';
 import { delay } from 'roadhog-api-doc';
 
 const titles = [
@@ -23,8 +23,8 @@ const avatars = [
   'https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png', // Webpack
 ];
 
-function getNotice({response}) {
-  const list=[
+function getNotice({ response }) {
+  const list = [
     {
       id: 'xxx1',
       title: titles[0],
@@ -86,15 +86,20 @@ function getNotice({response}) {
       memberLink: '',
     },
   ];
-  response.json(responseWrapper(list))
+  response.json(responseWrapper(list));
 }
 
 function getList() {
-  return []
+  return [];
 }
 
 // 调用 delay 函数，统一处理
-export default delay({
-  'GET /api/project/notice':(req,res)=>authorizeIntercept({request:req,response:res},getNotice) ,
-  'GET /api/project/list': (req,res)=>authorizeIntercept({request:req,response:res},getList) ,
-}, 1000);
+export default delay(
+  {
+    'GET /api/project/notice': (req, res) =>
+      authorizeIntercept({ request: req, response: res }, getNotice),
+    'GET /api/project/list': (req, res) =>
+      authorizeIntercept({ request: req, response: res }, getList),
+  },
+  1000,
+);

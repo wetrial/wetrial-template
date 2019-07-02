@@ -1,4 +1,4 @@
-import { PureComponent } from '@/wetrial';
+import { PureComponent } from 'wetrial';
 import { ISettingsModelState } from '@/types/settings';
 import H from 'history';
 

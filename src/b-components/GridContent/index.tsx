@@ -1,15 +1,15 @@
-import {IPageHeaderProps} from '@/wetrial/types';
+import {IPageHeaderProp} from 'wetrial/components/PageHeader';
 
 import React from 'react';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import Link from 'umi/link';
 import { connect } from 'dva';
 import MenuContext from '@/layouts/MenuContext';
-import {PageHeader,PureComponent} from '@/wetrial';
+import {PageHeader,PureComponent} from 'wetrial';
 import GridContent from './GridContent';
 import styles from './index.less';
 
-export interface PageHeaderGridContentProps extends IPageHeaderProps {
+export interface PageHeaderGridContentProps extends IPageHeaderProp {
   wrapperClassName?: string;
   top?: React.ReactNode;
   contentWidth?: string;

@@ -4,7 +4,7 @@ describe('utils >> menu', () => {
   describe('formatter', () => {
     
     it('formatter([]) => []', () => {
-      expect(formatter([])).toEqual([]);
+      expect(formatter([],'','','')).toEqual([]);
     });
 
     it('单个路由', () => {
@@ -15,7 +15,7 @@ describe('utils >> menu', () => {
           icon: 'dashboard'
         }
       ];
-      expect(formatter(routes)).toEqual([
+      expect(formatter(routes,'','','')).toEqual([
         {
           path: '/dashboard',
           name: null, // formatMessage 无返回值
@@ -40,7 +40,7 @@ describe('utils >> menu', () => {
           ]
         }
       ];
-      expect(formatter(routes)).toEqual([
+      expect(formatter(routes,'','','')).toEqual([
         {
           path: '/dashboard',
           name: null, // formatMessage 无返回值
@@ -72,7 +72,7 @@ describe('utils >> menu', () => {
           icon: 'dashboard1'
         }
       ];
-      expect(formatter(routes)).toEqual([
+      expect(formatter(routes,'','','')).toEqual([
         {
           path: '/dashboard',
           name: null, // formatMessage 无返回值
@@ -105,7 +105,7 @@ describe('utils >> menu', () => {
           ]
         }
       ];
-      expect(formatter(routes)).toEqual([
+      expect(formatter(routes,'','','')).toEqual([
         {
           path: '/dashboard',
           name: null, // formatMessage 无返回值

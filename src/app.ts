@@ -1,5 +1,7 @@
-import { UnAuthorizedException } from 'wetrial/dist/exception';
+import { UnAuthorizedException } from 'wetrial/exception';
 import { notification } from 'antd';
+
+const a='';
 
 export const dva = {
   config: {

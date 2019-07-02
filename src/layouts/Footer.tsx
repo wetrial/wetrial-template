@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Icon } from 'antd';
-import {GlobalFooter} from '@/wetrial';
+import {GlobalFooter} from 'wetrial';
 import {COMPANY_NAME} from '@/constants';
 
 const { Footer } = Layout;

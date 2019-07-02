@@ -11,6 +11,7 @@ const FormItem = Form.Item;
   model,
   submitting: loading.effects['example_tenant/saveTenant'],
 }))
+// @ts-ignore
 @Form.create()
 class Edit extends PureComponent<any> {
   componentDidMount() {

@@ -75,7 +75,7 @@ const filterMenuData = menuData => {
   }
   return menuData
     .filter(item => item.name && !item.hideInMenu)
-    .map(item => check(item.authority, getSubMenu(item)))
+    .map(item => check(item.authority, getSubMenu(item),null))
     .filter(item => {
       if (item) {
         const hasChildrens = !item.children || item.children.length > 0;
@@ -123,7 +123,7 @@ export default extendModel({
     // 根据当前权限生成菜单 用于layout页面第一次生成的场景
     *getMenuData({ payload }, { put }) {
       const { routes, authority } = payload;
-      const originalMenuData = memoizeOneFormatter(routes, authority);
+      const originalMenuData = memoizeOneFormatter(routes, authority,null);
       const menuData = filterMenuData(originalMenuData);
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(
         originalMenuData,
@@ -136,7 +136,7 @@ export default extendModel({
     // 重新生成菜单，一般用于动态修改当前用户角色的场景
     *reloadMenu(_, { put, select }) {
       const routes = yield select(state => state.menu.routerData);
-      const originalMenuData = memoizeOneFormatter(routes, '');
+      const originalMenuData = memoizeOneFormatter(routes, '',null);
       const menuData = filterMenuData(originalMenuData);
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(
         originalMenuData,

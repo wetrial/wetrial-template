@@ -8,6 +8,7 @@ export {
   setPermissions,
   clearPermissions,
 } from 'wetrial/store';
+
 export { storeWithExp };
 
 const Tenant = `WETRIAL.Tenant`;

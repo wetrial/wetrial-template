@@ -20,7 +20,13 @@ module.exports = {
     "no-plusplus":0,
     "no-else-return":0,
     "arrow-body-style":0,
-    "eol-last":0
+    "eol-last":0,
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ['@config/','@/']
+      }
+    ]
   },
   globals: {
     page: true,

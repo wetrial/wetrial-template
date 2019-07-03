@@ -3,5 +3,6 @@
         "javascript",
         "javascriptreact",
         "typescript"
-    ]
+    ],
+    "tslint.enable": false
 }

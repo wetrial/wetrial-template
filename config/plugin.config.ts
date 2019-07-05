@@ -19,7 +19,7 @@ const plugins: IPlugin[] = [
         enable: false, // default false
         default: 'zh-CN', // default zh-CN
         baseNavigator: false, // default true, when it is true, will use `navigator.language` overwrite default
-        antd: true, // 是否启用antd的<LocaleProvider />
+        // antd: true, // 是否启用antd的<LocaleProvider />
       },
       dynamicImport: {
         webpackChunkName: true,

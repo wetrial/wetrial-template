@@ -1,3 +1,4 @@
+import { MenuTheme } from 'antd/es/menu';
 import theme from '../config/theme.config';
 
 export type ContentWidth = 'Fluid' | 'Fixed';
@@ -6,7 +7,7 @@ export interface ISettings {
   /**
    * theme for nav menu
    */
-  navTheme: 'dark'|'light'|undefined;
+  navTheme:MenuTheme;
   primaryColor?:string,
   /**
    * nav menu position: `sidemenu` or `topmenu`
@@ -41,20 +42,20 @@ export interface ISettings {
 
 
 const defaultSettings:ISettings= {
-    "navTheme": "light",
-    "primaryColor":theme['primary-color'],
-    "layout":"sidemenu",
-    "contentWidth": "Fluid",
-    "fixedHeader": true,
-    "autoHideHeader": true,
-    "fixSiderbar": true,
-    "menu": {
+    navTheme: "light",
+    primaryColor:theme['@primary-color'],
+    layout:"sidemenu",
+    contentWidth: "Fluid",
+    fixedHeader: true,
+    autoHideHeader: true,
+    fixSiderbar: true,
+    menu: {
         locale: false
     },
-    "title": "Wetrial",
-    "pwa": false,
-    "collapse": true,
-    "iconfontUrl": "//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js" // iconfont库地址 
+    title: "Wetrial",
+    pwa: false,
+    collapse: false,
+    iconfontUrl: "//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js" // iconfont库地址 
 }
 
 export default defaultSettings;

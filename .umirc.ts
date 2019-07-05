@@ -6,7 +6,7 @@ import themeConfig from './config/theme.config';
 import pluginConfig from './config/plugin.config';
 import webpackPlugin from './config/plugin.chinaWebpack';
 
-const { APP_TYPE } = process.env;
+const { APP_TYPE,DEV } = process.env;
 
 const config: IConfig = {
   history: 'hash',
@@ -14,6 +14,7 @@ const config: IConfig = {
   targets: {
     ie: 11,
   },
+  devtool: DEV ? 'source-map' : false,
   routes: pageRoutes,
   treeShaking: true,
   plugins: pluginConfig,
@@ -50,11 +51,8 @@ const config: IConfig = {
     ) => {
       if (
         context.resourcePath.includes('node_modules') ||
-        context.resourcePath.includes('ant-design-wetrial.less') ||
-        context.resourcePath.includes('global.less') ||
-        context.resourcePath.includes('themes\\vars.less') ||
-        context.resourcePath.includes('themes\\index.less') ||
-        context.resourcePath.includes('themes\\utils.less')
+        context.resourcePath.includes('ant.design.pro.less') ||
+        context.resourcePath.includes('global.less')
       ) {
         return localName;
       }

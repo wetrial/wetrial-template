@@ -1,5 +1,5 @@
 import memoizeOne from 'memoize-one';
-import extendModel from 'wetrial/model';
+import extendModel from '@wetrial/model';
 import isEqual from 'lodash/isEqual';
 import { formatMessage } from 'umi-plugin-react/locale';
 import defaultSettings from '@config/defaultSettings';

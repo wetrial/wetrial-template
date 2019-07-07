@@ -1,6 +1,6 @@
 // import router from "umi/router";
 import { routerRedux } from 'dva/router';
-import extendModel from 'wetrial/model';
+import extendModel from '@wetrial/model';
 import { clearToken, setToken } from '@/utils/store';
 import { getCurrent, loginout, login } from '@/services/user';
 import { setPermissions, clearPermissions } from '@/utils/authority';

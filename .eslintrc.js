@@ -24,7 +24,7 @@ module.exports = {
     "import/no-unresolved": [
       "error",
       {
-        "ignore": ['@config/','@/']
+        "ignore": ['@config/','@/','@wetrial']
       }
     ]
   },

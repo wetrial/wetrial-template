@@ -1,5 +1,5 @@
 import PathToRegexp from 'path-to-regexp';
-import { urlToList } from 'wetrial/utils';
+import { urlToList } from '@wetrial/utils';
 
 /**
  * Recursively flatten the data

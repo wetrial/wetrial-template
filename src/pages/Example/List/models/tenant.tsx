@@ -1,4 +1,4 @@
-import extendModel from 'wetrial/model';
+import extendModel from '@wetrial/model';
 import { GetTenants, GetTenant } from '@/services/example/tenant';
 
 export default extendModel({

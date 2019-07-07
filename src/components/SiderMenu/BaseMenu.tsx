@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { Link } from 'umi';
 import IconFont from '@/components/IconFont';
 import { isUrl } from '@/utils/regexp';
-import { urlToList } from 'wetrial/utils';
+import { urlToList } from '@wetrial/utils';
 import { getMenuMatches } from './utils';
 import styles from './index.less';
 

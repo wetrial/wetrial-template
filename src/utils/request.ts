@@ -2,12 +2,12 @@ import { message } from 'antd';
 import {
   UnAuthorizedException,
   UserFriendlyException,
-} from 'wetrial/exception';
+} from '@wetrial/exception';
 /**
  * TODO 可以根据自己的情况来扩展、覆写请求
  * exp 删除通用拦截器 添加自定义拦截器。。。
  */
-import { instance, commonResponseInterceptor } from 'wetrial/request';
+import { instance, commonResponseInterceptor } from '@wetrial/request';
 
 instance.interceptors.response.eject(commonResponseInterceptor);
 instance.interceptors.response.use(
@@ -43,4 +43,4 @@ instance.interceptors.response.use(
   },
 );
 
-export { get, post, put, del, patch, request } from 'wetrial/request';
+export { get, post, put, del, patch, request } from '@wetrial/request';

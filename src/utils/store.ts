@@ -1,4 +1,4 @@
-import storeWithExp from 'wetrial/store';
+import storeWithExp from '@wetrial/store';
 
 export {
   getToken,
@@ -7,7 +7,7 @@ export {
   getPermissions,
   setPermissions,
   clearPermissions,
-} from 'wetrial/store';
+} from '@wetrial/store';
 
 export { storeWithExp };
 

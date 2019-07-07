@@ -1,4 +1,4 @@
-import { UnAuthorizedException } from 'wetrial/exception';
+import { UnAuthorizedException } from '@wetrial/exception';
 import { notification } from 'antd';
 
 export const dva = {

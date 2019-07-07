@@ -6,7 +6,7 @@ import { isEqual } from 'lodash';
 import { Redirect, router } from 'umi';
 import { connect } from 'dva';
 import { getToken } from '@/utils/store';
-import { urlToList } from 'wetrial/utils';
+import { urlToList } from '@wetrial/utils';
 import Authorized from '@/utils/Authorized';
 
 // 将menu转换成 列表

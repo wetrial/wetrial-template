@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { getToken } from '@/utils/store';
 import router from 'umi/router';
 import { FormComponent } from 'wetrial';
-import { required } from 'wetrial/validation';
+import { required } from '@wetrial/validation';
 import { getRedirect } from '@/utils';
 import styles from './Login.less';
 

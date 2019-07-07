@@ -1,4 +1,4 @@
-import { get } from 'wetrial/request';
+import { get } from '@wetrial/request';
 import { API_PREFIX } from '@/constants';
 
 

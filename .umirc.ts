@@ -33,7 +33,8 @@ const config: IConfig = {
   // },
   alias: {
     themes: join(__dirname, './src/themes'),
-    '@config': join(__dirname, './config')
+    '@config': join(__dirname, './config'),
+    '@wetrial':join(__dirname, './node_modules/wetrial/es')
   },
   ignoreMomentLocale: true,
   lessLoaderOptions: {

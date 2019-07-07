@@ -1,4 +1,4 @@
-import {IPageHeaderProp} from 'wetrial/components/PageHeader';
+import {IPageHeaderProp} from '@wetrial/components/PageHeader';
 
 import React from 'react';
 import { FormattedMessage } from 'umi-plugin-react/locale';

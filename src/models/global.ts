@@ -1,4 +1,4 @@
-import extendModel from 'wetrial/model';
+import extendModel from '@wetrial/model';
 import {
   getAll,
   getNotifys,

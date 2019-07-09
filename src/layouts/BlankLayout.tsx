@@ -1,10 +1,9 @@
 import React from 'react';
 
-class BlankLayout extends React.Component {
-  render() {
-    const { children } = this.props;
-    return <React.Fragment>{children}</React.Fragment>;
-  }
-}
+const Layout: React.FC = ({ children }) => (
+  <>
+    {children}
+  </>
+);
 
-export default BlankLayout;
+export default Layout;

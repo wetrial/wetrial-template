@@ -35,18 +35,24 @@ function login({ request, response }) {
   }
 }
 
+// 注销登录
 function loginout({ response }) {
   response.json(responseWrapper({}));
+}
+
+// 获取用户权限列表
+function getCurrentPermissions({response}){
+  const permissions=deepGetValue(Permissions);
+  response.json(responseWrapper(permissions));
 }
 
 // 调用 delay 函数，统一处理
 export default delay(
   {
-    'GET /api/user/getCurrent': (req, res) =>
-      authorizeIntercept({ request: req, response: res }, getCurrentUser),
-    'POST /api/user/login': (req, res) =>
-      login({ request: req, response: res }),
+    'GET /api/user/getCurrent': (req, res) =>authorizeIntercept({ request: req, response: res }, getCurrentUser),
+    'POST /api/user/login': (req, res) =>login({ request: req, response: res }),
     'GET /api/user/logout': (req, res) => loginout({ response: res }),
+    'GET /api/user/getCurrentPermissions': (req, res) =>authorizeIntercept({ request: req, response: res }, getCurrentPermissions),
   },
   1500,
 );

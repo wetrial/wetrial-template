@@ -1,64 +1,49 @@
+import { Icon, Menu } from 'antd';
+import { formatMessage, getLocale, setLocale } from 'umi-plugin-react/locale';
+
+import { ClickParam } from 'antd/es/menu';
 import React from 'react';
-import ClassNames from 'classnames';
-import { Menu, Icon } from 'antd';
-import { formatMessage, setLocale, getLocale } from 'umi-plugin-react/locale';
+import classNames from 'classnames';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
-export interface SelectLangProps {
+interface SelectLangProps {
   className?: string;
 }
-
-class SelectLang extends React.PureComponent<SelectLangProps, any> {
-  changeLang = ({ key }) => {
-    setLocale(key);
+const SelectLang: React.FC<SelectLangProps> = props => {
+  const { className } = props;
+  const selectedLang = getLocale();
+  const changeLang = ({ key }: ClickParam): void => setLocale(key, false);
+  const locales = ['zh-CN', 'zh-TW', 'en-US'];
+  const languageLabels = {
+    'zh-CN': '简体中文',
+    'zh-TW': '繁体中文',
+    'en-US': 'English'
   };
-
-  render() {
-    const { className } = this.props;
-    const selectedLang = getLocale();
-
-    const locales = {
-      'zh-CN': {
-        label: '简体中文',
-        icon: '🇨🇳',
-      },
-      'en-US': {
-        label: 'English',
-        icon: '🇬🇧',
-      },
-    };
-
-    const langMenu = (
-      <Menu
-        className={styles.menu}
-        selectedKeys={[selectedLang]}
-        onClick={this.changeLang}
-      >
-        {Object.keys(locales).map(locale => {
-          const data = locales[locale];
-          return (
-            <Menu.Item key={locale}>
-              <span role="img" aria-label={data.label}>
-                {data.icon}
-              </span>{' '}
-              {data.label}
-            </Menu.Item>
-          );
-        })}
-      </Menu>
-    );
-
-    return (
-      <HeaderDropdown overlay={langMenu} placement="bottomRight">
-        <Icon
-          type="global"
-          className={ClassNames(styles.dropDown, className)}
-          title={formatMessage({ id: 'navBar.lang' })}
-        />
-      </HeaderDropdown>
-    );
-  }
-}
+  const languageIcons = {
+    'zh-CN': '🇨🇳',
+    'zh-TW': '🇭🇰',
+    'en-US': '🇬🇧'
+  };
+  const langMenu = (
+    <Menu className={styles.menu} selectedKeys={[selectedLang]} onClick={changeLang}>
+      {locales.map(locale => (
+        <Menu.Item key={locale}>
+          <span role="img" aria-label={languageLabels[locale]}>
+            {languageIcons[locale]}
+          </span>{' '}
+          {languageLabels[locale]}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+  return (
+    <HeaderDropdown overlay={langMenu} placement="bottomRight">
+      <span className={classNames(styles.dropDown, className)}>
+        <Icon type="global" title={formatMessage({ id: 'navBar.lang' })} />
+      </span>
+    </HeaderDropdown>
+  );
+};
 
 export default SelectLang;

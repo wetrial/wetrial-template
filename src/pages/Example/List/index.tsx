@@ -124,14 +124,14 @@ class Index extends FormComponent {
     return (
       <Form onSubmit={this.handleSearch}>
         <Row gutter={5}>
-          <Col xxl={{span:4}} xl={{span:6}} lg={{span:6}} md={6} sm={24} xs={24}>
+          <Col xxl={{span:4}} xl={{span:6}} lg={{span:12}} sm={24} xs={24}>
             <FormItem>
               {getFieldDecorator('filter', {
                 initialValue: filterData.filter,
               })(<Input autoComplete="off" placeholder="输入以搜索" />)}
             </FormItem>
           </Col>
-          <Col xxl={{span:4}} xl={{span:6}} lg={{span:6}} md={6} sm={24} xs={24}>
+          <Col xxl={{span:4}} xl={{span:6}} lg={{span:12}} sm={24} xs={24}>
             <FormItem>
               {getFieldDecorator('type', {
                 initialValue: filterData.type,
@@ -143,7 +143,7 @@ class Index extends FormComponent {
               )}
             </FormItem>
           </Col>
-          <Col xxl={{span:16}} xl={{span:12}} lg={{span:12}} md={{ span: 12}} sm={{ span: 24 }} xs={{span:24}}>
+          <Col xxl={{span:16}} xl={{span:12}} lg={{span:24}} sm={{ span: 24 }} xs={{span:24}}>
             <FormItem>
               <Row type="flex" align="middle" justify="space-between">
                 <div>

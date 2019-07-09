@@ -26,7 +26,12 @@ module.exports = {
       {
         "ignore": ['@config/','@/','@wetrial']
       }
-    ]
+    ],
+    "key-spacing":0,
+    "space-before-blocks":0,
+    "semi":0,
+    "keyword-spacing":0,
+    "arrow-spacing":0
   },
   globals: {
     page: true,

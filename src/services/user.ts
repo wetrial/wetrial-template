@@ -21,6 +21,13 @@ export function login(data) {
 }
 
 /**
+ * 获取当前用户的权限列表
+ */
+export function getCurrentPermissions(){
+  return get(`${API_PREFIX}user/getCurrentPermissions`);
+}
+
+/**
  * 注销登录
  */
 export function loginout() {

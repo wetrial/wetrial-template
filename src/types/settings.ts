@@ -5,7 +5,7 @@ type menuType={
   disableLocal:boolean
 }
 
-export interface ISettingsModelState {
+export interface SettingsModelState {
   navTheme: MenuTheme;
   primaryColor?:string;
   layout: layoutType;

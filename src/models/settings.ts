@@ -2,6 +2,6 @@ import extendModel from '@wetrial/model';
 import defaultSettings from '@config/defaultSettings';
 
 export default extendModel({
-  namespace: 'setting',
+  namespace: 'settings',
   state: defaultSettings,
 });

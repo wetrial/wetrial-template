@@ -8,6 +8,7 @@ import { connect } from 'dva';
 import { getToken } from '@/utils/store';
 import { urlToList } from '@wetrial/utils';
 import Authorized from '@/utils/Authorized';
+import { Route } from '@wetrial/types';
 
 // 将menu转换成 列表
 const menuToList = memoizeOne((menus: any[]) => {
@@ -57,13 +58,36 @@ class DefaultRedirect extends React.PureComponent<DefaultRedirectProps> {
     const redirect = getDefaultRedirect(pathname, menuData);
     router.push(redirect);
   }
-
   render() {
     return <></>;
   }
 }
 
-function AuthComponent({ children, location, routerData, menuData }) {
+
+const getRouteAuthority = (path: string, routeData: Route[]) => {
+  let authorities: string[] | string | undefined;
+  routeData.forEach(route => {
+    // match prefix
+    if (pathToRegexp(`${route.path}(.*)`).test(path)) {
+      // exact match
+      if (route.path === path) {
+        authorities = route.authority || authorities;
+      }
+      // get children authority recursively
+      if (route.routes) {
+        authorities = getRouteAuthority(path, route.routes) || authorities;
+      }
+    }
+  });
+  return authorities;
+};
+
+function AuthComponent({
+  children,
+  location = { pathname: '' },
+  route = { routes: [] }
+}) {
+  const { routes = [] } = route;
   const isLogin = !!getToken();
   if (!isLogin) {
     router.push({
@@ -74,37 +98,22 @@ function AuthComponent({ children, location, routerData, menuData }) {
     });
     return null;
   }
-  const getRouteAuthority = (path, routeData) => {
-    let authorities;
-    routeData.forEach(route => {
-      // match prefix
-      if (pathToRegexp(`${route.path}(.*)`).test(path)) {
-        authorities = route.authority || authorities;
 
-        // get children authority recursively
-        if (route.routes) {
-          authorities = getRouteAuthority(path, route.routes) || authorities;
-        }
-      }
-    });
-    return authorities;
-  };
   return (
     <Authorized
-      authority={getRouteAuthority(location.pathname, routerData)}
+      authority={getRouteAuthority(location.pathname, routes)}
       noMatch={
         isLogin ? (
-          <DefaultRedirect pathname={location.pathname} menuData={menuData} />
+          <DefaultRedirect pathname={location.pathname} menuData={routes} />
         ) : (
-          <Redirect to={`/user/login?redirect=${window.location.href}`} />
-        )
+            <Redirect to={`/user/login?redirect=${window.location.href}`} />
+          )
       }
     >
       {children}
     </Authorized>
   );
 }
-export default connect(({ menu }) => ({
-  routerData: menu.routerData,
-  menuData: menu.menuData,
+export default connect(({ user }) => ({
+  user
 }))(AuthComponent);

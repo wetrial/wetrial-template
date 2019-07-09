@@ -3,26 +3,25 @@ import { connect } from 'dva';
 import Link from 'umi/link';
 import {NormalLayout} from 'wetrial';
 import {BasicLayoutProps as NormalLayoutProps} from '@wetrial/components/NormalLayout';
-import { IMenuDataItem,TDispatch } from '@wetrial/types';
-import {ISettings} from '@wetrial/defaultSettings';
+import { MenuDataItem,Dispatch } from '@wetrial/types';
+import {Settings} from '@wetrial/defaultSettings';
 import { formatMessage } from 'umi-plugin-react/locale';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 
 import smallLog from '@/assets/imgs/wetrial-logo-small.jpg';
 
-
-
 export interface BasicLayoutProps extends NormalLayoutProps {
   breadcrumbNameMap: {
-    [path: string]: IMenuDataItem;
+    [path: string]: MenuDataItem;
   };
-  settings: ISettings;
-  dispatch: TDispatch;
+  settings: Settings;
+  dispatch: Dispatch;
+  user:object
 }
 export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   breadcrumbNameMap: {
-    [path: string]: IMenuDataItem;
+    [path: string]: MenuDataItem;
   };
 };
 
@@ -30,10 +29,10 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
  * use Authorized check all menu item
  */
 
-const menuDataRender = (menuList: IMenuDataItem[]): IMenuDataItem[] =>
+const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
   menuList.map(item => {
     const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
-    return Authorized.check(item.authority, localItem, null) as IMenuDataItem;
+    return Authorized.check(item.authority, localItem, null) as MenuDataItem;
   });
 
 const footerRender: BasicLayoutProps['footerRender'] = (_, defaultDom) => {
@@ -51,26 +50,20 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   useEffect(() => {
     if (dispatch) {
       dispatch({
-        type: 'user/fetchCurrent',
-      });
-      dispatch({
-        type: 'settings/getSetting',
+        type: 'user/getCurrent',
       });
     }
   }, []);
   
-  /**
-   * init variables
-   */
-
-  const handleMenuCollapse = (payload: boolean): void =>
-    dispatch &&
-    dispatch({
-      type: 'global/changeLayoutCollapsed',
-      payload,
-    });
-
-
+  const handleMenuCollapse = (payload: boolean): void =>{
+    if(dispatch){
+      dispatch({
+        type: 'global/changeLayoutCollapsed',
+        payload,
+      })
+    }
+  }
+console.log(props.user)
   return (
     <>
       <NormalLayout
@@ -95,7 +88,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         ]}
         footerRender={footerRender}
         menuDataRender={menuDataRender}
-        formatMessage={formatMessage}
+        // formatMessage={formatMessage}
         rightContentRender={rightProps => <RightContent {...rightProps} />}
         {...props}
         {...settings}
@@ -107,7 +100,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   );
 };
 
-export default connect(({ global, settings }) => ({
+export default connect(({ global, settings,user }) => ({
   collapsed: global.collapsed,
   settings,
+  user
 }))(BasicLayout);

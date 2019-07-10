@@ -56,7 +56,7 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
                 <Input
                   autoComplete="off"
                   prefix={<Icon type="user" />}
-                  placeholder="admin"
+                  placeholder="admin/user"
                 />,
               )}
             </FormItem>

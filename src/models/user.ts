@@ -8,7 +8,24 @@ import { setPermissions, clearPermissions,getPermissions } from '@/utils/authori
 import { reloadAuthorized } from '@/utils/Authorized';
 import { getRedirect } from '@/utils';
 
-export default extendModel({
+export interface ICurrentUser {
+  avatar?: string;
+  name?: string;
+  title?: string;
+  group?: string;
+  signature?: string;
+  tags?: {
+    key: string;
+    label: string;
+  }[];
+}
+
+export interface IUserModelState{
+  currentUser:ICurrentUser,
+  permissions?:string[]
+}
+
+export default extendModel<IUserModelState>({
   namespace: 'user',
   state: {
     // 当前用户信息

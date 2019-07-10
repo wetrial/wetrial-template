@@ -31,7 +31,8 @@ module.exports = {
     "space-before-blocks":0,
     "semi":0,
     "keyword-spacing":0,
-    "arrow-spacing":0
+    "arrow-spacing":0,
+    "brace-style":0
   },
   globals: {
     page: true,

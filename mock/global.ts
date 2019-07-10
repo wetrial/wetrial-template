@@ -49,7 +49,7 @@ function generateMessages() {
 
 function generateNotifys() {
   const notify = Mock.mock({
-    count: 10,
+    count: 120,
     'list|10': [
       {
         id: '@guid',
@@ -64,7 +64,7 @@ function generateNotifys() {
         'extra|+1': ['进行中', '马上到期', '已耗时 8 天', '未开始'],
         'status|+1': ['processing', 'urgent', 'doing', 'todo'],
         datetime: '@datetime("yyyy-MM-dd")',
-        type: 'message',
+        type: 'notify',
         clickClose: '@boolean',
       },
     ],

@@ -7,7 +7,7 @@ import { MenuDataItem,Dispatch } from '@wetrial/types';
 import {Settings} from '@wetrial/defaultSettings';
 import { formatMessage } from 'umi-plugin-react/locale';
 import Authorized from '@/utils/Authorized';
-import RightContent from '@/components/GlobalHeader/RightContent';
+import RightContent from '@/b-components/GlobalHeader/RightContent';
 
 import smallLog from '@/assets/imgs/wetrial-logo-small.jpg';
 
@@ -43,10 +43,6 @@ const footerRender: BasicLayoutProps['footerRender'] = (_, defaultDom) => {
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
   const { dispatch, children, settings } = props;
   
-   /**
-   * constructor
-   */
-
   useEffect(() => {
     if (dispatch) {
       dispatch({
@@ -63,7 +59,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       })
     }
   }
-console.log(props.user)
+
   return (
     <>
       <NormalLayout

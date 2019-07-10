@@ -23,14 +23,22 @@ function getCurrentUser({ response }) {
 
 // 用户登录
 function login({ request, response }) {
-  const { username, password } = request.body;
-  if (username === 'admin' || password === 'Abcd1234') {
+  const { userName, password } = request.body;
+  if (userName === 'admin' && password === 'Abcd1234') {
     const loginResult = {
       token: '0000000000000',
       permissions: deepGetValue(Permissions),
     };
     response.json(responseWrapper(loginResult));
-  } else {
+  }
+  else if (userName === 'user' && password === 'Abcd1234') {
+    const permissions=deepGetValue(Permissions);
+    const loginResult = {
+      token: '0000000000000',
+      permissions: permissions.filter(m=>Permissions.example.reactDnd!==m),
+    };
+    response.json(responseWrapper(loginResult));
+  }else {
     response.status(500).send(errorWrapper({}, false, '用户名或者密码错误!'));
   }
 }

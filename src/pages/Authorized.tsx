@@ -1,22 +1,26 @@
-import React from 'react';
+import { MenuDataItem } from '@wetrial/types';
+
+import React,{useEffect} from 'react';
 import { stringify } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import memoizeOne from 'memoize-one';
-import { isEqual } from 'lodash';
+import { isEqual,union } from 'lodash';
 import { Redirect, router } from 'umi';
 import { connect } from 'dva';
 import { getToken } from '@/utils/store';
 import { urlToList } from '@wetrial/utils';
 import Authorized from '@/utils/Authorized';
-import { Route } from '@wetrial/types';
+
 
 // 将menu转换成 列表
-const menuToList = memoizeOne((menus: any[]) => {
+const menuToList = memoizeOne((menus: MenuDataItem[]):string[] => {
   let urls = [];
   menus.forEach(item => {
-    urls.push(item.path);
-    if (Array.isArray(item.children)) {
-      urls = urls.concat(menuToList(item.children));
+    if(item.path){
+      urls.push(item.path);
+    }
+    if (Array.isArray(item.routes)) {
+      urls = urls.concat(menuToList(item.routes));
     }
   });
   return urls;
@@ -28,17 +32,19 @@ const menuToList = memoizeOne((menus: any[]) => {
  * @param pathname 当前的路由
  * @param menuData 当前有权限的路由列表
  */
-const getDefaultRedirect = (pathname: string, menuData: any[]) => {
+const getDefaultRedirect = (pathname: string, menuData: MenuDataItem[]) => {
   if (pathname === '/') {
     return pathname;
   }
   const urlList = [''].concat(urlToList(pathname));
-  const menus: any[] = menuToList(menuData);
+  const menus: string[] = union(menuToList(menuData).filter(m=>m!==pathname));
   let redirect = '/exception/403';
   for (let i = urlList.length - 2; i >= 0; i--) {
     const urlReg = `^${urlList[i]}/`;
     // 查找第一个该路由的兄弟节点
-    const browserMenu = menus.find(m => m.match(new RegExp(urlReg, 'i')));
+    const browserMenu = menus.find(m => {
+      return m.match(new RegExp(urlReg, 'i'));
+    });
     if (browserMenu) {
       redirect = browserMenu;
       break;
@@ -49,22 +55,40 @@ const getDefaultRedirect = (pathname: string, menuData: any[]) => {
 
 interface DefaultRedirectProps {
   pathname: string;
-  menuData: any[];
+  menuData: MenuDataItem[];
 }
 
-class DefaultRedirect extends React.PureComponent<DefaultRedirectProps> {
-  componentDidMount() {
-    const { pathname, menuData } = this.props;
+// class DefaultRedirect extends React.PureComponent<DefaultRedirectProps> {
+//   componentDidMount() {
+//     const { pathname, menuData } = this.props;
+//     const redirect = getDefaultRedirect(pathname, menuData);
+//     router.push({
+//       pathname:redirect
+//     });
+//   }
+//   render() {
+//     return <></>;
+//   }
+// }
+
+const DefaultRedirect: React.FC<DefaultRedirectProps> = props => {
+  
+  useEffect(() => {
+    const { pathname, menuData } = props;
     const redirect = getDefaultRedirect(pathname, menuData);
-    router.push(redirect);
-  }
-  render() {
-    return <></>;
-  }
+    router.push({
+      pathname:redirect
+    });
+  }, []);
+  
+  return (
+    <>
+    无权限，正在跳转...
+    </>
+  )
 }
 
-
-const getRouteAuthority = (path: string, routeData: Route[]) => {
+const getRouteAuthority = (path: string, routeData: MenuDataItem[]) => {
   let authorities: string[] | string | undefined;
   routeData.forEach(route => {
     // match prefix

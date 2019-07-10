@@ -6,6 +6,31 @@ import {
   getTodos,
   setAllToRead,
 } from '@/services/message';
+import { NoticeIconData } from '@/components/NoticeIcon';
+
+export interface INoticeItem extends NoticeIconData {
+  id: string;
+  type: string;
+  status: string;
+}
+
+interface ITipTypeModel{
+  count:number;
+  list:INoticeItem[]
+}
+
+export interface ITipsModel{
+  count:number;
+  todos:ITipTypeModel,
+  messages:ITipTypeModel,
+  notifys:ITipTypeModel
+}
+
+export interface IGlobalStateModel{
+  collapsed:boolean;
+  tipsFetched:boolean;
+  tips:ITipsModel
+}
 
 // 计算总数
 const calcTotal = state => {
@@ -23,7 +48,7 @@ const calcTotal = state => {
   return count;
 };
 
-export default extendModel({
+export default extendModel<IGlobalStateModel>({
   namespace: 'global',
   state: {
     collapsed: false, // 左侧菜单面板是否折叠
@@ -119,7 +144,7 @@ export default extendModel({
     // ]
   },
   reducers: {
-    changeCollapsed(state, { payload }) {
+    changeLayoutCollapsed(state, { payload }) {
       return {
         ...state,
         collapsed: payload,

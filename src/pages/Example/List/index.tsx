@@ -34,8 +34,6 @@ class Index extends FormComponent {
   columns: Array<ColumnProps<any>> = [
     {
       title: '租户编码',
-      fixed: 'left',
-      width: 240,
       sorter: true,
       dataIndex: 'tenancyName',
     },
@@ -180,7 +178,7 @@ class Index extends FormComponent {
       pagedData,
     } = this.props;
     return (
-      <Card style={{ margin: 16 }}>
+      <Card>
         {this.renderForm()}
         <TableList
           loading={loading}

@@ -71,4 +71,4 @@ export const FORM_SINGLE_LAYOUT = {
 // };
 
 // table 显示滚动条的宽度界限
-export const TABLE_SCROLL_WIDTH = 1000;
+export const TABLE_SCROLL_WIDTH = 1300;

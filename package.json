@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "wetrial-template",
+  "version": "1.0.0",
   "types": "./typings/*.d.ts",
   "typesVersions": {
     ">=3.3": {
@@ -15,7 +16,10 @@
     "analyze": "cross-env ANALYZE=1 umi build",
     "test": "umi-test",
     "lint": "umi-lint --eslint.ext='.js,.jsx,.ts,.tsx' --stylelint src/ config/ mock/",
-    "precommit": "umi-lint --staged --eslint.ext='.js,.jsx,.ts,.tsx' --stylelint --prettier --fix"
+    "precommit": "umi-lint --staged --eslint.ext='.js,.jsx,.ts,.tsx' --stylelint --prettier --fix",
+    "patch": "yarn version --patch && git push origin master && git push origin --tags",
+    "minor": "yarn version --minor && git push origin master && git push origin --tags",
+    "major": "yarn version --major && git push origin master && git push origin --tags"
   },
   "dependencies": {
     "antd": "^3.18.2",

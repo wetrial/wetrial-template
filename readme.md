@@ -1,5 +1,5 @@
-##介绍
-基于wetrial、antd、dva、umi的模板项目，可以clone本项目或者通过wetrial-cli在本地创建一个基架项目。
+## 介绍
+基于wetrial、antd、dva、umi，大部分借鉴pro的模板项目，可以clone本项目或者通过wetrial-cli在本地创建一个基架项目。
 ### wetrial是什么
 wetrial是基于antd、father打包的业务组件，弥补了一些常用但antd没有的组件
 

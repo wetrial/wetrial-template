@@ -8,6 +8,7 @@ module.exports = {
     '@typescript-eslint/class-name-casing': 0,
     "@typescript-eslint/prefer-interface":0,
     "@typescript-eslint/no-explicit-any":0,
+    "@typescript-eslint/no-empty-interface":"warn",
     "space-infix-ops":0,
     "eslint-comments/no-unlimited-disable":0,
     "space-infix-ops":0,

@@ -4,6 +4,8 @@ import { Form, Input, Button, Checkbox, Row, Col, PageHeader } from 'antd';
 import { connect } from 'dva';
 import { FORM_SINGLE_LAYOUT } from '@/constants';
 import { required, getRegex, getRange } from '@wetrial/validation';
+import Authorized from '@/utils/Authorized'
+import Permissions from '@config/permissions';
 
 const FormItem = Form.Item;
 
@@ -86,14 +88,17 @@ class Edit extends PureComponent<any> {
               <Button className="m-l-sm" onClick={this.resetForm}>
                 重置
               </Button>
-              <Button
-                style={{ marginLeft: 20 }}
-                type="primary"
-                htmlType="submit"
-                loading={submitting}
-              >
-                保存
-              </Button>
+              <Authorized authority={Permissions.example.list}>
+                <Button
+                  style={{ marginLeft: 20 }}
+                  type="primary"
+                  htmlType="submit"
+                  loading={submitting}
+                >
+                  保存
+                </Button>
+            </Authorized>
+              
             </Col>
           </Row>
         </Form>

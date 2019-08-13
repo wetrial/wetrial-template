@@ -1,40 +1,69 @@
+# language: node_js
+
+# node_js:
+#   - "10"
+
+# # 缓存依赖
+# cache:
+#   directories:
+#     - node_modules
+
+# before_install:
+#   - export TZ='Asia/Shanghai' # 更改时区
+
+# # 依赖安装
+# install:
+#   - npm i yarn -g
+#   - yarn global add umi
+#   - yarn
+
+# # 构建脚本
+# script: 
+#   - yarn build
+
+# # 分支白名单
+# branches:
+#   only:
+#     - master # 只对 master 分支进行构建
+
+# # GitHub Pages 部署
+# deploy:
+#   - provider: pages
+#     skip_cleanup: true
+#      # 在项目仪表盘的 Settings -> Environment Variables 中配置
+#     github_token: $GITHUB_TOKEN
+#     # 将 build 目录下的内容推送到默认的 gh-pages 分支上，并不会连带 build 目录一起
+#     local_dir: dist
+#     # 自定义域名
+#     fqdn: $CUSTOM_DOMAIN
+#     name: $GIT_NAME
+#     email: $GIT_EMAIL
+
 language: node_js
-
 node_js:
-  - "10"
+  - "10.16.0"
 
-# 缓存依赖
-cache:
-  directories:
-    - node_modules
+cache: yarn
 
-before_install:
-  - export TZ='Asia/Shanghai' # 更改时区
+install: yarn
 
-# 依赖安装
-install:
-  - npm i yarn -g
-  - yarn global add umi
-  - yarn
+jobs:
+  include:
+    - state: test
+      if: tag IS present
+      script: yarn test
 
-# 构建脚本
-script: 
-  - yarn build
-
-# 分支白名单
-branches:
-  only:
-    - master # 只对 master 分支进行构建
-
-# GitHub Pages 部署
-deploy:
-  - provider: pages
-    skip_cleanup: true
-     # 在项目仪表盘的 Settings -> Environment Variables 中配置
-    github_token: $GITHUB_TOKEN
-    # 将 build 目录下的内容推送到默认的 gh-pages 分支上，并不会连带 build 目录一起
-    local_dir: dist
-    # 自定义域名
-    fqdn: $CUSTOM_DOMAIN
-    name: $GIT_NAME
-    email: $GIT_EMAIL
+    - stage: release
+      if: tag IS present
+      script: yarn build
+      # before_deploy:
+      #   - cp package.json ./dist
+      #   - cd dist
+      deploy:
+        provider: npm
+        email: "$NPM_EMAIL"
+        api_key: "$NPM_TOKEN"
+        skip_cleanup: true
+        on:
+          branch: master
+          tags: true

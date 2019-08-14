@@ -19,10 +19,11 @@
     "precommit": "umi-lint --staged --eslint.ext='.js,.jsx,.ts,.tsx' --stylelint --prettier --fix",
     "patch": "yarn version --patch && git push origin master && git push origin --tags",
     "minor": "yarn version --minor && git push origin master && git push origin --tags",
-    "major": "yarn version --major && git push origin master && git push origin --tags"
+    "major": "yarn version --major && git push origin master && git push origin --tags",
+    "new": "node scripts/template"
   },
   "dependencies": {
-    "antd": "^3.18.2",
+    "antd": "^3.21.4",
     "dva": "^2.4.1",
     "dva-model-extend": "^0.1.2",
     "lodash": "^4.17.11",
@@ -35,7 +36,7 @@
     "react-media": "^1.9.2",
     "react-router": "^5.0.1",
     "react-transition-group": "^4.0.0",
-    "wetrial": "^1.7.0"
+    "wetrial": "^1.9.4"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.12",
@@ -46,7 +47,7 @@
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-test-renderer": "^16.8.1",
-    "@umijs/fabric": "^1.1.7",
+    "@umijs/fabric": "^1.1.9",
     "antd-pro-merge-less": "^1.0.0",
     "antd-theme-webpack-plugin": "^1.2.0",
     "babel-eslint": "^10.0.1",
@@ -59,10 +60,10 @@
     "react-test-renderer": "^16.8.6",
     "roadhog-api-doc": "^1.1.2",
     "typescript": "^3.5.2",
-    "umi": "^2.8.7",
+    "umi": "^2.8.17",
     "umi-lint": "^2.0.2",
-    "umi-plugin-react": "^1.9.6",
-    "umi-types": "^0.3.10"
+    "umi-plugin-react": "^1.9.15",
+    "umi-types": "^0.3.16"
   },
   "engines": {
     "node": ">=8.0.0"

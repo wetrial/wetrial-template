@@ -236,14 +236,14 @@ effects: {
 const serviceTemplate = `import { get,post } from '@wetrial/request';
 import { API_PREFIX } from '@/constants';
 
-export function GetPagedList(data){
+export async function GetPagedList(data):Promise<any>{
     return get({
         url:\`\${API_PREFIX}${PascalPageName}/GetPagedList\`,
         data
     });
 }
 
-export function create(data){
+export async function create(data):Promise<any>{
     return post({
         url:\`\${API_PREFIX}${PascalPageName}/Create\`,
         data

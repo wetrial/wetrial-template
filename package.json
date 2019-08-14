@@ -60,10 +60,10 @@
     "react-test-renderer": "^16.8.6",
     "roadhog-api-doc": "^1.1.2",
     "typescript": "^3.5.2",
-    "umi": "^2.8.17",
+    "umi": "^2.8.18",
     "umi-lint": "^2.0.2",
-    "umi-plugin-react": "^1.9.15",
-    "umi-types": "^0.3.16"
+    "umi-plugin-react": "^1.9.16",
+    "umi-types": "^0.3.17"
   },
   "engines": {
     "node": ">=8.0.0"

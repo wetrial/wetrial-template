@@ -15,12 +15,18 @@
     "build": "umi build",
     "analyze": "cross-env ANALYZE=1 umi build",
     "test": "umi-test",
-    "lint": "umi-lint --eslint.ext='.js,.jsx,.ts,.tsx' --stylelint src/ config/ mock/",
-    "precommit": "umi-lint --staged --eslint.ext='.js,.jsx,.ts,.tsx' --stylelint --prettier --fix",
     "patch": "yarn version --patch && git push origin master && git push origin --tags",
     "minor": "yarn version --minor && git push origin master && git push origin --tags",
     "major": "yarn version --major && git push origin master && git push origin --tags",
-    "new": "node scripts/template"
+    "new": "node scripts/template",
+    "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
+    "lint-staged": "lint-staged",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
+    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./",
+    "lint:prettier": "check-prettier lint",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "prettier": "prettier -c --write \"**/*\""
   },
   "dependencies": {
     "antd": "^3.21.4",
@@ -61,9 +67,22 @@
     "roadhog-api-doc": "^1.1.2",
     "typescript": "^3.5.2",
     "umi": "^2.8.17",
-    "umi-lint": "^2.0.2",
     "umi-plugin-react": "^1.9.15",
     "umi-types": "^0.3.16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.less": "stylelint --syntax less",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "**/*.{js,jsx}": "npm run lint-staged:js",
+    "**/*.{js,ts,tsx}": "npm run lint-staged:js"
   },
   "engines": {
     "node": ">=8.0.0"

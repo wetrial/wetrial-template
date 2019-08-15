@@ -16,15 +16,17 @@ interface TableListProps<T> extends TableProps<T> {
 }
 
 const getColumns = (
-  columns: Array<ColumnProps<any>>,
+  columns: ColumnProps<any>[],
   sortOrder: SortOrderType,
 ) => {
   columns.map(item => {
+    const row=item;
     if (sortOrder && sortOrder.order) {
-      item.sortOrder = sortOrder.order;
+      row.sortOrder = sortOrder.order;
     } else {
-      item.sortOrder = false;
+      row.sortOrder = false;
     }
+    return row;
   });
   return columns;
 };

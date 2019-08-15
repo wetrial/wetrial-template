@@ -1,21 +1,21 @@
-type formatValues = { [key: string]: string | number }
-declare const formatMessage: ({ id }: { id: string }, values?: formatValues) => string;
-declare const getLocale: () => string;
-declare const setLocale: (lang: string) => string;
+// import React from 'react';
+// import { formatMessage  } from "umi-plugin-react/locale";
 
-declare class FormattedMessage extends React.Component<
-    {
-        id: string;
-        values?: formatValues;
-    },
-    any
-    > {
-    render(): JSX.Element;
-}
+// type formatValues = { [key: string]: string | number }
 
-declare module 'umi-plugin-react/locale' {
-    export const formatMessage
-    export const setLocale
-    export const getLocale
-    export const FormattedMessage
-}
+// declare class TFormattedMessage extends React.Component<
+//     {
+//         id: string;
+//         values?: formatValues;
+//     },
+//     any
+//     > {
+//     render(): JSX.Element;
+// }
+
+// declare module 'umi-plugin-react/locale' {
+//     export const formatMessage:({ id }: { id: string }, values?: formatValues) => string;
+//     export const setLocale: (lang: string) => string;
+//     export const getLocale: () => string;
+//     export const FormattedMessage:TFormattedMessage
+// }

@@ -31,7 +31,7 @@ const FormItem = Form.Item;
 @Form.create()
 @withPagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
 class Index extends FormComponent {
-  columns: Array<ColumnProps<any>> = [
+  columns: ColumnProps<any>[] = [
     {
       title: '租户编码',
       sorter: true,

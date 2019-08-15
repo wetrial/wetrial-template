@@ -1,30 +1,7 @@
-const fs = require('fs');
 
-/**
- * 根据配置生成页面
- * @param {object} option 配置项
- * @param {string} option.pageName 名称
- * @param {string} option.pagePath 页面路径
- */
-function generate(option) {
-  const { pageName, pagePath } = option;
-  let modelNamespace = pageName;
-  if (pagePath) {
-    modelNamespace = `${pagePath.replace('/', '_')}_${pageName}`;
-  }
-  // 处理首字母小写的问题
-  modelNamespace = modelNamespace
-    .split('_')
-    .map(item =>item.substring(0, 1).toLocaleLowerCase() + item.substring(1))
-    .join('_');
-
-  const PascalPageName = pageName.substring(0, 1).toUpperCase() + pageName.substr(1);
-
-const pageTemplate = `
 import { ColumnProps } from 'antd/lib/table';
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { router } from 'umi';
 import {
     Form,
     Row,
@@ -32,7 +9,6 @@ import {
     Button,
     Card,
     Input,
-    Checkbox,
     Popconfirm,
     Divider,
     Select,
@@ -45,17 +21,16 @@ import { getDateString } from '@/utils';
 
 const FormItem = Form.Item;
 
-import { I${PascalPageName}Props, I${PascalPageName}State } from './props'
-// import styles from './index.less'
+import { IOrderProps, IOrderState } from './props'
     
-@connect(({ ${modelNamespace}:\{pagedData\},loading }) => ({
-    pagedData:pagedData,
-    loading:loading.effects['${modelNamespace}/getPagedList']
+@connect(({ example_order:{pagedData},loading }) => ({
+    pagedData,
+    loading:loading.effects['example_order/getPagedList']
 }))
 // @ts-ignore
 @Form.create()
-@withPagedQuery({ type: '${modelNamespace}/getPagedList' })
-class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalPageName}State > {
+@withPagedQuery({ type: 'example_order/getPagedList' })
+class Order extends FormComponent<IOrderProps,IOrderState,any> {
     columns: ColumnProps<any>[] = [
         {
             title: '创建时间',
@@ -72,7 +47,7 @@ class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalP
             render: (_, record) => {
             return (
                 <Fragment>
-                <Authorized authority={\`\`}>
+                <Authorized authority={'test'}>
                     <Button
                     size="small"
                     onClick={() => {
@@ -83,7 +58,7 @@ class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalP
                     编辑
                     </Button>
                 </Authorized>
-                <Authorized authority={\`\`}>
+                <Authorized authority={'test'}>
                     <Divider type="vertical" />
                     <Popconfirm title="确定删除">
                     <Button size="small" type="danger">
@@ -114,7 +89,7 @@ class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalP
     
         handleCreateOrEdit = id => {
         // router.push({
-        //   pathname: \`/\${id}\`,
+        //   pathname: `/${id}`,
         // });
         console.log(id);
         };
@@ -201,112 +176,4 @@ class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalP
         );
         }
 }
-export default ${PascalPageName}
-`;
-
-  // scss 模板
-  const lessTemplate = `@import '~themes/index.less';   
-.container{
-
-}`;
-
-  // model 模板
-  const modelTemplate = `import extendModel from '@wetrial/model';
-import { GetPagedList } from './service';
-
-export default extendModel({
-namespace: '${modelNamespace}',
-state: {
-    pagedData: {},
-    // model: {},
-},
-effects: {
-    *getPagedList({ payload }, { call, put }) {
-    const pagedData = yield call(GetPagedList, payload);
-    yield put({
-        type: 'update',
-        payload: {
-        pagedData
-        },
-    });
-    }
-},
-});`;
-// 接口模板
-const serviceTemplate = `import { get,post } from '@wetrial/request';
-import { API_PREFIX } from '@/constants';
-
-export function GetPagedList(data):Promise<any>{
-    return get({
-        url:\`\${API_PREFIX}${PascalPageName}/GetPagedList\`,
-        data
-    });
-}
-
-export function create(data):Promise<any>{
-    return post({
-        url:\`\${API_PREFIX}${PascalPageName}/Create\`,
-        data
-    });
-}`;
-
-  // 属性模板
-  const interfaceTemplate = `import { IPagedListProps,IFormComponentProps } from '@/types'
-/**
- * ${pageName} state 参数类型
- */
-export interface I${PascalPageName}State {
-
-}
-
-/**
- * ${pageName} props 参数类型
- */
-export interface I${PascalPageName}Props extends IPagedListProps{
-
-}
-/**
- * ${pageName} edit state 参数类型
- */
-export interface I${PascalPageName}EditState {
-
-}
-
-/**
- * ${pageName} edit props 参数类型
- */
-export interface I${PascalPageName}EditProps extends IFormComponentProps{
-    submitting?:boolean;
-    model:{[key:string]:any}
-}`;
-
-    const ParcalPath=pagePath.split('/').map(item=>item.substring(0, 1).toUpperCase() + item.substr(1)).join('/');
-  // 检测目录、文件是否存在,存在跳过生成
-  const folderFullPath = `./src/pages/${pagePath ? ParcalPath + '/' : ''}${PascalPageName}`;
-  const utils = require('./utils');
-  const exists = utils.checkExists(
-    `${folderFullPath}/index.tsx`,
-    // `${folderFullPath}/index.less`,
-    `${folderFullPath}/service.ts`,
-    `${folderFullPath}/model.ts`,
-    `${folderFullPath}/props.ts`,
-  );
-  if (exists) {
-    console.log('检测到已经存在部分文件，生成操作已经取消....');
-    process.exit(0);
-  }
-
-  fs.mkdirSync(folderFullPath, { recursive: true }); // mkdir $1
-  process.chdir(folderFullPath); // cd $1
-
-  fs.writeFileSync(`index.tsx`, pageTemplate); //tsx
-  // fs.writeFileSync(`index.less`, lessTemplate); // scss
-  fs.writeFileSync('service.ts', serviceTemplate); // service
-  fs.writeFileSync('model.ts', modelTemplate); // model
-  fs.writeFileSync(`props.ts`, interfaceTemplate); // interface
-  process.exit(0);
-}
-
-module.exports = {
-  generate: generate,
-};
+export default Order

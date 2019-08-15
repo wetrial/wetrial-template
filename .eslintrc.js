@@ -9,6 +9,8 @@ module.exports = {
     "@typescript-eslint/prefer-interface":0,
     "@typescript-eslint/no-explicit-any":0,
     "@typescript-eslint/no-empty-interface":"warn",
+    "@typescript-eslint/array-type":"warn",
+    "@typescript-eslint/no-non-null-assertion":0,
     "space-infix-ops":0,
     "eslint-comments/no-unlimited-disable":0,
     "space-infix-ops":0,
@@ -33,7 +35,15 @@ module.exports = {
     "semi":0,
     "keyword-spacing":0,
     "arrow-spacing":0,
-    "brace-style":0
+    "brace-style":0,
+    "space-before-function-paren":0,
+    "import/order":0,
+    "padded-blocks":0,
+    "react/prefer-stateless-function":0,
+    "lines-between-class-members":0,
+    "consistent-return":0,
+    "import/first":0,
+    "react/jsx-no-bind":0
   },
   globals: {
     page: true,

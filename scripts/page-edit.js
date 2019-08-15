@@ -33,7 +33,7 @@ import Permissions from '@config/permissions';
 const FormItem = Form.Item;
 
 import { I${PascalPageName}EditProps, I${PascalPageName}EditState } from './props'
-import styles from './edit.less'
+// import styles from './edit.less'
     
 @connect(({ ${modelNamespace}:\{model\},loading }) => ({
     model,
@@ -162,7 +162,7 @@ export default ${PascalPageName}Edit`;
 
   const exists = utils.checkExists(
     `${folderFullPath}/edit.tsx`,
-    `${folderFullPath}/edit.less`
+    // `${folderFullPath}/edit.less`
   );
   if (exists) {
     console.log('检测到已经存在部分文件，生成操作已经取消....');
@@ -173,7 +173,7 @@ export default ${PascalPageName}Edit`;
   process.chdir(folderFullPath); // cd $1
 
   fs.writeFileSync(`edit.tsx`, pageTemplate); //tsx
-  fs.writeFileSync(`edit.less`, lessTemplate); // scss
+  // fs.writeFileSync(`edit.less`, lessTemplate); // scss
   process.exit(0);
 }
 

@@ -1,4 +1,4 @@
-import { getQueryPath } from './index';
+import { stringify } from 'qs';
 import { notification, Progress } from 'antd';
 import { get } from './request';
 import React from 'react';
@@ -79,7 +79,7 @@ export const downloadFile = ({
   ext = getExtension(url),
   onDownloadProgress = null,
 }) => {
-  const downloadUrl = getQueryPath(url, data);
+  const downloadUrl =url.indexOf('?')!==-1?`${url}&${stringify(data)}`:`${url}?${stringify(data)}`
 
   return get({
     url: downloadUrl,

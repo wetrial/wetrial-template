@@ -1,4 +1,3 @@
-import { MenuTheme } from 'antd/es/menu';
 import theme from '../config/theme.config';
 
 export type ContentWidth = 'Fluid' | 'Fixed';
@@ -7,7 +6,7 @@ export interface Settings {
   /**
    * theme for nav menu
    */
-  navTheme:MenuTheme;
+  navTheme:'dark'|'light';
   primaryColor?:string,
   /**
    * nav menu position: `sidemenu` or `topmenu`

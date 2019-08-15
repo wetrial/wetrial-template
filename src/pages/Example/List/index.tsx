@@ -21,6 +21,8 @@ import Authorized from '@/utils/Authorized';
 import Permissions from '@config/permissions';
 import { getDateString } from '@/utils';
 
+import {IListProps,IListStates} from './props'
+
 const FormItem = Form.Item;
 
 @connect(({ example_tenant: { pagedData }, loading }) => ({
@@ -30,7 +32,7 @@ const FormItem = Form.Item;
 // @ts-ignore
 @Form.create()
 @withPagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
-class Index extends FormComponent {
+class Index extends FormComponent<IListProps,IListStates> {
   columns: ColumnProps<any>[] = [
     {
       title: '租户编码',

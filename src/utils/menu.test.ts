@@ -1,9 +1,9 @@
 import { formatter } from './menu';
 
 describe('utils >> menu', () => {
-  describe('formatter', () => {    
+  describe('formatter', () => {
     it('formatter([]) => []', () => {
-      expect(formatter([],'','','')).toEqual([]);
+      expect(formatter([], '', '', '')).toEqual([]);
     });
 
     it('单个路由', () => {
@@ -11,17 +11,17 @@ describe('utils >> menu', () => {
         {
           path: '/dashboard',
           name: 'dashboard',
-          icon: 'dashboard'
-        }
+          icon: 'dashboard',
+        },
       ];
-      expect(formatter(routes,'','','')).toEqual([
+      expect(formatter(routes, '', '', '')).toEqual([
         {
           path: '/dashboard',
           name: null, // formatMessage 无返回值
           icon: 'dashboard',
           auth: 'on',
-          locale: 'menu.dashboard'
-        }
+          locale: 'menu.dashboard',
+        },
       ]);
     });
 
@@ -34,12 +34,12 @@ describe('utils >> menu', () => {
           routes: [
             {
               path: '/dashboard/analysis',
-              name: 'analysis'
-            }
-          ]
-        }
+              name: 'analysis',
+            },
+          ],
+        },
       ];
-      expect(formatter(routes,'','','')).toEqual([
+      expect(formatter(routes, '', '', '')).toEqual([
         {
           path: '/dashboard',
           name: null, // formatMessage 无返回值
@@ -51,10 +51,10 @@ describe('utils >> menu', () => {
               path: '/dashboard/analysis',
               name: null,
               auth: 'on',
-              locale: 'menu.dashboard.analysis'
-            }
-          ]
-        }
+              locale: 'menu.dashboard.analysis',
+            },
+          ],
+        },
       ]);
     });
 
@@ -63,29 +63,29 @@ describe('utils >> menu', () => {
         {
           path: '/dashboard',
           name: 'dashboard',
-          icon: 'dashboard'
+          icon: 'dashboard',
         },
         {
           path: '/dashboard1',
           name: 'dashboard1',
-          icon: 'dashboard1'
-        }
+          icon: 'dashboard1',
+        },
       ];
-      expect(formatter(routes,'','','')).toEqual([
+      expect(formatter(routes, '', '', '')).toEqual([
         {
           path: '/dashboard',
           name: null, // formatMessage 无返回值
           icon: 'dashboard',
           auth: 'on',
-          locale: 'menu.dashboard'
+          locale: 'menu.dashboard',
         },
         {
           path: '/dashboard1',
           name: null, // formatMessage 无返回值
           icon: 'dashboard1',
           auth: 'on',
-          locale: 'menu.dashboard1'
-        }
+          locale: 'menu.dashboard1',
+        },
       ]);
     });
 
@@ -99,12 +99,12 @@ describe('utils >> menu', () => {
           routes: [
             {
               path: '/dashboard/analysis',
-              name: 'analysis'
-            }
-          ]
-        }
+              name: 'analysis',
+            },
+          ],
+        },
       ];
-      expect(formatter(routes,'','','')).toEqual([
+      expect(formatter(routes, '', '', '')).toEqual([
         {
           path: '/dashboard',
           name: null, // formatMessage 无返回值
@@ -116,10 +116,10 @@ describe('utils >> menu', () => {
               path: '/dashboard/analysis',
               name: null,
               auth: 'off',
-              locale: 'menu.dashboard.analysis'
-            }
-          ]
-        }
+              locale: 'menu.dashboard.analysis',
+            },
+          ],
+        },
       ]);
     });
   });

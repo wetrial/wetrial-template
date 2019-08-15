@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 import NoticeIcon from '@/components/NoticeIcon';
 import { ConnectProps } from '@wetrial/types';
-import { ITipsModel,INoticeItem } from '@/models/global';
+import { ITipsModel, INoticeItem } from '@/models/global';
 import styles from './index.less';
 
 export interface INoticeIconViewProps extends ConnectProps {
@@ -14,11 +14,11 @@ export interface INoticeIconViewProps extends ConnectProps {
   onNoticeClear?: (tabName?: string) => void;
 }
 
-const notifyType={
-  todo:'待办',
-  message:'消息',
-  notify:'通知'
-}
+const notifyType = {
+  todo: '待办',
+  message: '消息',
+  notify: '通知',
+};
 
 class NoticeIconView extends Component<INoticeIconViewProps> {
   componentDidMount() {
@@ -26,16 +26,16 @@ class NoticeIconView extends Component<INoticeIconViewProps> {
     if (dispatch) {
       dispatch({
         type: 'global/getAll',
-        payload:{
-          force:true
-        }
+        payload: {
+          force: true,
+        },
       });
     }
   }
 
   changeReadState = (clickedItem: INoticeItem): void => {
     const { id, type } = clickedItem;
-    message.success(`标记 ${notifyType[type]}(${id})为已读`)
+    message.success(`标记 ${notifyType[type]}(${id})为已读`);
   };
 
   handleNoticeClear = (title: string, key: string) => {
@@ -46,12 +46,7 @@ class NoticeIconView extends Component<INoticeIconViewProps> {
     const {
       getAlling,
       onNoticeVisibleChange,
-      tips:{
-        count,
-        todos,
-        messages,
-        notifys
-      },
+      tips: { count, todos, messages, notifys },
     } = this.props;
 
     return (
@@ -77,7 +72,7 @@ class NoticeIconView extends Component<INoticeIconViewProps> {
           emptyText={formatMessage({ id: 'component.globalHeader.notification.empty' })}
           showViewMore
         />
-         <NoticeIcon.Tab
+        <NoticeIcon.Tab
           tabKey="event"
           title={formatMessage({ id: 'component.globalHeader.event' })}
           emptyText={formatMessage({ id: 'component.globalHeader.event.empty' })}
@@ -92,7 +87,7 @@ class NoticeIconView extends Component<INoticeIconViewProps> {
           title={formatMessage({ id: 'component.globalHeader.message' })}
           emptyText={formatMessage({ id: 'component.globalHeader.message.empty' })}
           showViewMore
-        />       
+        />
       </NoticeIcon>
     );
   }

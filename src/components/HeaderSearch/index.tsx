@@ -22,10 +22,7 @@ interface State {
   readonly value: string;
 }
 
-export default class HeaderSearch extends React.PureComponent<
-  HeaderSearchProps,
-  State
-> {
+export default class HeaderSearch extends React.PureComponent<HeaderSearchProps, State> {
   static defaultProps = {
     defaultActiveFirstOption: false,
     // tslint:disable-next-line:no-empty

@@ -1,10 +1,10 @@
-const Permissions= {
+const Permissions = {
   example: {
-    base:'example.base',
-    permission:'example.permission',
-    reactDnd:'example.reactDnd',
-    list:'example.list'
+    base: 'example.base',
+    permission: 'example.permission',
+    reactDnd: 'example.reactDnd',
+    list: 'example.list',
   },
 };
 
-module.exports=Permissions;
+module.exports = Permissions;

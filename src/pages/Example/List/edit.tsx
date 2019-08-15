@@ -4,7 +4,7 @@ import { Form, Input, Button, Checkbox, Row, Col, PageHeader } from 'antd';
 import { connect } from 'dva';
 import { FORM_SINGLE_LAYOUT } from '@/constants';
 import { required, getRegex, getRange } from '@wetrial/validation';
-import Authorized from '@/utils/Authorized'
+import Authorized from '@/utils/Authorized';
 import Permissions from '@config/permissions';
 
 const FormItem = Form.Item;
@@ -65,8 +65,7 @@ class Edit extends PureComponent<any> {
                 required,
                 {
                   ...getRegex('^[a-zA-Z][a-zA-Z0-9_-]{1,}$'),
-                  message:
-                    '租户名称必须由2个以上字母、数字、-、_组成,以字母开头',
+                  message: '租户名称必须由2个以上字母、数字、-、_组成,以字母开头',
                 },
               ],
             })(<Input autoComplete="off" />)}
@@ -97,8 +96,7 @@ class Edit extends PureComponent<any> {
                 >
                   保存
                 </Button>
-            </Authorized>
-              
+              </Authorized>
             </Col>
           </Row>
         </Form>

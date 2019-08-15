@@ -18,7 +18,7 @@
 #   - yarn
 
 # # 构建脚本
-# script: 
+# script:
 #   - yarn build
 
 # # 分支白名单
@@ -41,7 +41,7 @@
 
 language: node_js
 node_js:
-  - "10.16.0"
+  - '10.16.0'
 
 cache: yarn
 
@@ -61,8 +61,8 @@ jobs:
       #   - cd dist
       deploy:
         provider: npm
-        email: "$NPM_EMAIL"
-        api_key: "$NPM_TOKEN"
+        email: '$NPM_EMAIL'
+        api_key: '$NPM_TOKEN'
         skip_cleanup: true
         on:
           branch: master

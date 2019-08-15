@@ -3,8 +3,8 @@ import { routerRedux } from 'dva/router';
 import WetrialPermissions from '@config/permissions';
 import extendModel from '@wetrial/model';
 import { clearToken, setToken } from '@/utils/store';
-import { getCurrent,getCurrentPermissions, loginout, login } from '@/services/user';
-import { setPermissions, clearPermissions,getPermissions } from '@/utils/authority';
+import { getCurrent, getCurrentPermissions, loginout, login } from '@/services/user';
+import { setPermissions, clearPermissions, getPermissions } from '@/utils/authority';
 import { reloadAuthorized } from '@/utils/Authorized';
 import { getRedirect } from '@/utils';
 
@@ -20,16 +20,16 @@ export interface ICurrentUser {
   }[];
 }
 
-export interface IUserModelState{
-  currentUser:ICurrentUser,
-  permissions?:string[]
+export interface IUserModelState {
+  currentUser: ICurrentUser;
+  permissions?: string[];
 }
 
 export default extendModel<IUserModelState>({
   namespace: 'user',
   state: {
     // 当前用户信息
-    currentUser:{},
+    currentUser: {},
     // 当前用户权限列表
     permissions: getPermissions(),
   },
@@ -49,42 +49,42 @@ export default extendModel<IUserModelState>({
       // login success
       if (result && result.token) {
         yield put({
-          type:'reloadAuthorized',
-          payload:{
-            ...result
-          }
-        })
+          type: 'reloadAuthorized',
+          payload: {
+            ...result,
+          },
+        });
         const redirect = getRedirect();
         yield put(routerRedux.replace(redirect));
       }
     },
-    // 重新加载权限 
-    *reloadAuthorized({payload:{token,permissions}},{put}){
-      if (token){
+    // 重新加载权限
+    *reloadAuthorized({ payload: { token, permissions } }, { put }) {
+      if (token) {
         yield setToken(token);
       }
-      if(permissions){
+      if (permissions) {
         yield setPermissions(permissions);
         yield reloadAuthorized();
         yield put({
           type: 'update',
-          payload:{
-            permissions
-          }
-        })
-      }      
+          payload: {
+            permissions,
+          },
+        });
+      }
     },
-    *testToggleAuthorized({payload:{isAdmin}},{call,put}){
-      let permissions=yield call(getCurrentPermissions);
-      if(!isAdmin){
-        permissions=permissions.filter(item=>item!==WetrialPermissions.example.reactDnd)
+    *testToggleAuthorized({ payload: { isAdmin } }, { call, put }) {
+      let permissions = yield call(getCurrentPermissions);
+      if (!isAdmin) {
+        permissions = permissions.filter(item => item !== WetrialPermissions.example.reactDnd);
       }
       yield put({
-        type:'reloadAuthorized',
-        payload:{
-          permissions
-        }
-      })
+        type: 'reloadAuthorized',
+        payload: {
+          permissions,
+        },
+      });
     },
     *loginOut(_, { call, put }) {
       yield call(loginout);
@@ -112,5 +112,5 @@ export default extendModel<IUserModelState>({
     //     })
     //   )
     // }
-  }
+  },
 });

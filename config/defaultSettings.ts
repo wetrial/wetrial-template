@@ -6,8 +6,8 @@ export interface Settings {
   /**
    * theme for nav menu
    */
-  navTheme:'dark'|'light';
-  primaryColor?:string,
+  navTheme: 'dark' | 'light';
+  primaryColor?: string;
   /**
    * nav menu position: `sidemenu` or `topmenu`
    */
@@ -29,8 +29,8 @@ export interface Settings {
    */
   fixSiderbar: boolean;
   menu: { locale: boolean };
-  pwa?:boolean;
-  collapse?:boolean;
+  pwa?: boolean;
+  collapse?: boolean;
   title: string;
   // Your custom iconfont Symbol script Url
   // eg：//at.alicdn.com/t/font_1039637_btcrd5co4w.js
@@ -39,22 +39,21 @@ export interface Settings {
   iconfontUrl: string;
 }
 
-
-const defaultSettings:Settings= {
-    navTheme: "light",
-    primaryColor:theme['@primary-color'],
-    layout:"sidemenu",
-    contentWidth: "Fluid",
-    fixedHeader: true,
-    autoHideHeader: true,
-    fixSiderbar: true,
-    menu: {
-        locale: false
-    },
-    title: "Wetrial",
-    pwa: false,
-    collapse: false,
-    iconfontUrl: "//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js" // iconfont库地址 
-}
+const defaultSettings: Settings = {
+  navTheme: 'light',
+  primaryColor: theme['@primary-color'],
+  layout: 'sidemenu',
+  contentWidth: 'Fluid',
+  fixedHeader: true,
+  autoHideHeader: true,
+  fixSiderbar: true,
+  menu: {
+    locale: false,
+  },
+  title: 'Wetrial',
+  pwa: false,
+  collapse: false,
+  iconfontUrl: '//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js', // iconfont库地址
+};
 
 export default defaultSettings;

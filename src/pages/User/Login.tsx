@@ -53,11 +53,7 @@ class LoginPage extends FormComponent<LoginPageProps, any> {
               {getFieldDecorator('userName', {
                 rules: [required],
               })(
-                <Input
-                  autoComplete="off"
-                  prefix={<Icon type="user" />}
-                  placeholder="admin/user"
-                />,
+                <Input autoComplete="off" prefix={<Icon type="user" />} placeholder="admin/user" />,
               )}
             </FormItem>
             <FormItem>

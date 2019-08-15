@@ -79,7 +79,8 @@ export const downloadFile = ({
   ext = getExtension(url),
   onDownloadProgress = null,
 }) => {
-  const downloadUrl =url.indexOf('?')!==-1?`${url}&${stringify(data)}`:`${url}?${stringify(data)}`
+  const downloadUrl =
+    url.indexOf('?') !== -1 ? `${url}&${stringify(data)}` : `${url}?${stringify(data)}`;
 
   return get({
     url: downloadUrl,
@@ -98,10 +99,7 @@ export const downloadFile = ({
           responseJson = JSON.parse(decoder.decode(dataView));
         } else {
           // Fallback decode as ASCII
-          const decodedString = String.fromCharCode.apply(
-            null,
-            new Uint8Array(res.data),
-          );
+          const decodedString = String.fromCharCode.apply(null, new Uint8Array(res.data));
           responseJson = JSON.parse(decodedString);
         }
         notification.warn({
@@ -159,8 +157,7 @@ export const downloadWithProgress = ({
     ext,
     onDownloadProgress: progressEvent => {
       const maxSize = progressEvent.srcElement.getResponseHeader('size');
-      const percent =
-        Math.floor((progressEvent.loaded / maxSize) * 100 * 100) / 100;
+      const percent = Math.floor((progressEvent.loaded / maxSize) * 100 * 100) / 100;
       notification.open({
         duration: null,
         key: downloadTipKey,

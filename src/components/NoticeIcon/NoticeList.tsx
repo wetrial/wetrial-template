@@ -1,4 +1,4 @@
-import { Avatar, List,Empty } from 'antd';
+import { Avatar, List, Empty } from 'antd';
 
 import React from 'react';
 import classNames from 'classnames';

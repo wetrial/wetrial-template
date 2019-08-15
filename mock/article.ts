@@ -1,4 +1,3 @@
-
 import { delay } from 'roadhog-api-doc';
 import Mock from 'mockjs';
 import responseWrapper, { authorizeIntercept } from './base';
@@ -11,8 +10,7 @@ for (let i = 0; i < 8; i++) {
       id: '@increment',
       title: '@ctitle',
       content: '@cparagraph(3, 5)',
-      avatar:
-        'https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png',
+      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png',
       updateTime: '@date("yyyy-MM-dd HH:mm:ss")',
       star: 123,
       like: 220,

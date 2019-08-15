@@ -4,9 +4,9 @@ import { Icon } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
 // import SelectLang from '@/components/SelectLang';
-import { GlobalFooter } from 'wetrial'
-import { ConnectProps, MenuDataItem } from '@wetrial/types'
-import { getPageTitle, getMenuData } from '@wetrial/components/NormalLayout'
+import { GlobalFooter } from 'wetrial';
+import { ConnectProps, MenuDataItem } from '@wetrial/types';
+import { getPageTitle, getMenuData } from '@wetrial/components/NormalLayout';
 import styles from './UserLayout.less';
 
 export interface UserLayoutProps extends ConnectProps {
@@ -41,13 +41,12 @@ const UserLayout: React.SFC<UserLayoutProps> = props => {
         {/* <div className={styles.lang}>
           <SelectLang />
         </div> */}
-        <div className={styles.content}>
-          {children}
-        </div>
+        <div className={styles.content}>{children}</div>
         <GlobalFooter
           copyright={
             <Fragment>
-              Copyright <Icon type="copyright" />2019 湖南微试云技术部出品
+              Copyright <Icon type="copyright" />
+              2019 湖南微试云技术部出品
             </Fragment>
           }
         />

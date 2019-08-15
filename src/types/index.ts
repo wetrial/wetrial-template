@@ -2,7 +2,7 @@ import * as router from 'react-router';
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { FormComponentProps } from 'antd/lib/form';
-import {IWithPagedQueryProps} from '@wetrial/components/withPagedQuery'
+import { IWithPagedQueryProps } from '@wetrial/components/withPagedQuery';
 
 /**
  * 通用组件属性接口
@@ -17,6 +17,4 @@ export interface IComponentProps extends router.RouteComponentProps {
  */
 export interface IFormComponentProps extends IComponentProps, FormComponentProps {}
 
-export interface IPagedListProps extends IFormComponentProps,IWithPagedQueryProps{
-
-}
+export interface IPagedListProps extends IFormComponentProps, IWithPagedQueryProps {}

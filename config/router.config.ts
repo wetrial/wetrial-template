@@ -16,7 +16,7 @@ const routes: IRoute[] = [
             redirect: '/user/login',
           },
           {
-            name:'登录',
+            name: '登录',
             path: '/user/login',
             component: './User/Login',
           },
@@ -29,7 +29,7 @@ const routes: IRoute[] = [
         routes: [
           {
             path: '/',
-            redirect: '/example'
+            redirect: '/example',
           },
           {
             path: '/example',
@@ -96,7 +96,7 @@ const routes: IRoute[] = [
           },
           {
             component: '404',
-          }
+          },
         ],
       },
     ],

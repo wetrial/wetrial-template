@@ -1,22 +1,21 @@
 import { MenuDataItem } from '@wetrial/types';
 
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { stringify } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 import memoizeOne from 'memoize-one';
-import { isEqual,union } from 'lodash';
+import { isEqual, union } from 'lodash';
 import { Redirect, router } from 'umi';
 import { connect } from 'dva';
 import { getToken } from '@/utils/store';
 import { urlToList } from '@wetrial/utils';
 import Authorized from '@/utils/Authorized';
 
-
 // 将menu转换成 列表
-const menuToList = memoizeOne((menus: MenuDataItem[]):string[] => {
+const menuToList = memoizeOne((menus: MenuDataItem[]): string[] => {
   let urls = [];
   menus.forEach(item => {
-    if(item.path){
+    if (item.path) {
       urls.push(item.path);
     }
     if (Array.isArray(item.routes)) {
@@ -37,7 +36,7 @@ const getDefaultRedirect = (pathname: string, menuData: MenuDataItem[]) => {
     return pathname;
   }
   const urlList = [''].concat(urlToList(pathname));
-  const menus: string[] = union(menuToList(menuData).filter(m=>m!==pathname));
+  const menus: string[] = union(menuToList(menuData).filter(m => m !== pathname));
   let redirect = '/exception/403';
   for (let i = urlList.length - 2; i >= 0; i--) {
     const urlReg = `^${urlList[i]}/`;
@@ -72,21 +71,16 @@ interface DefaultRedirectProps {
 // }
 
 const DefaultRedirect: React.FC<DefaultRedirectProps> = props => {
-  
   useEffect(() => {
     const { pathname, menuData } = props;
     const redirect = getDefaultRedirect(pathname, menuData);
     router.push({
-      pathname:redirect
+      pathname: redirect,
     });
   }, []);
-  
-  return (
-    <>
-    无权限，正在跳转...
-    </>
-  )
-}
+
+  return <>无权限，正在跳转...</>;
+};
 
 const getRouteAuthority = (path: string, routeData: MenuDataItem[]) => {
   let authorities: string[] | string | undefined;
@@ -106,11 +100,7 @@ const getRouteAuthority = (path: string, routeData: MenuDataItem[]) => {
   return authorities;
 };
 
-function AuthComponent({
-  children,
-  location = { pathname: '' },
-  route = { routes: [] }
-}) {
+function AuthComponent({ children, location = { pathname: '' }, route = { routes: [] } }) {
   const { routes = [] } = route;
   const isLogin = !!getToken();
   if (!isLogin) {
@@ -130,8 +120,8 @@ function AuthComponent({
         isLogin ? (
           <DefaultRedirect pathname={location.pathname} menuData={routes} />
         ) : (
-            <Redirect to={`/user/login?redirect=${window.location.href}`} />
-          )
+          <Redirect to={`/user/login?redirect=${window.location.href}`} />
+        )
       }
     >
       {children}
@@ -139,5 +129,5 @@ function AuthComponent({
   );
 }
 export default connect(({ user }) => ({
-  user
+  user,
 }))(AuthComponent);

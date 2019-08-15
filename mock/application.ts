@@ -9,8 +9,7 @@ for (let i = 0; i < 8; i++) {
     Mock.mock({
       id: '@increment',
       title: '@ctitle',
-      avatar:
-        'https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png',
+      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png',
     }),
   );
 }

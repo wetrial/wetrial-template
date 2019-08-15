@@ -3,25 +3,14 @@ import { ColumnProps } from 'antd/lib/table';
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
 import { router } from 'umi';
-import {
-  Form,
-  Row,
-  Col,
-  Button,
-  Card,
-  Input,
-  Checkbox,
-  Popconfirm,
-  Divider,
-  Select,
-} from 'antd';
+import { Form, Row, Col, Button, Card, Input, Checkbox, Popconfirm, Divider, Select } from 'antd';
 import { FormComponent, withPagedQuery } from 'wetrial';
 import TableList from '@/components/TableList';
 import Authorized from '@/utils/Authorized';
 import Permissions from '@config/permissions';
 import { getDateString } from '@/utils';
 
-import {IListProps,IListStates} from './props'
+import { IListProps, IListStates } from './props';
 
 const FormItem = Form.Item;
 
@@ -32,7 +21,7 @@ const FormItem = Form.Item;
 // @ts-ignore
 @Form.create()
 @withPagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
-class Index extends FormComponent<IListProps,IListStates> {
+class Index extends FormComponent<IListProps, IListStates> {
   columns: ColumnProps<any>[] = [
     {
       title: '租户编码',
@@ -50,7 +39,7 @@ class Index extends FormComponent<IListProps,IListStates> {
     {
       title: '激活',
       dataIndex: 'isActive',
-      render: (actived:boolean) => {
+      render: (actived: boolean) => {
         return <Checkbox checked={actived} />;
       },
     },
@@ -124,14 +113,14 @@ class Index extends FormComponent<IListProps,IListStates> {
     return (
       <Form onSubmit={this.handleSearch}>
         <Row gutter={5}>
-          <Col xxl={{span:4}} xl={{span:6}} lg={{span:12}} sm={24} xs={24}>
+          <Col xxl={{ span: 4 }} xl={{ span: 6 }} lg={{ span: 12 }} sm={24} xs={24}>
             <FormItem>
               {getFieldDecorator('filter', {
                 initialValue: filterData.filter,
               })(<Input autoComplete="off" placeholder="输入以搜索" />)}
             </FormItem>
           </Col>
-          <Col xxl={{span:4}} xl={{span:6}} lg={{span:12}} sm={24} xs={24}>
+          <Col xxl={{ span: 4 }} xl={{ span: 6 }} lg={{ span: 12 }} sm={24} xs={24}>
             <FormItem>
               {getFieldDecorator('type', {
                 initialValue: filterData.type,
@@ -143,7 +132,13 @@ class Index extends FormComponent<IListProps,IListStates> {
               )}
             </FormItem>
           </Col>
-          <Col xxl={{span:16}} xl={{span:12}} lg={{span:24}} sm={{ span: 24 }} xs={{span:24}}>
+          <Col
+            xxl={{ span: 16 }}
+            xl={{ span: 12 }}
+            lg={{ span: 24 }}
+            sm={{ span: 24 }}
+            xs={{ span: 24 }}
+          >
             <FormItem>
               <Row type="flex" align="middle" justify="space-between">
                 <div>
@@ -172,13 +167,7 @@ class Index extends FormComponent<IListProps,IListStates> {
   };
 
   render() {
-    const {
-      pagination,
-      onTableChange,
-      sorter,
-      loading,
-      pagedData,
-    } = this.props;
+    const { pagination, onTableChange, sorter, loading, pagedData } = this.props;
     return (
       <Card>
         {this.renderForm()}

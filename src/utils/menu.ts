@@ -80,9 +80,7 @@ export const filterMenuData = menuData => {
   if (!menuData) {
     return [];
   }
-  return menuData
-    .filter(item => item.name && !item.hideInMenu)
-    .filter(item => item);
+  return menuData.filter(item => item.name && !item.hideInMenu).filter(item => item);
 };
 
 export const MOGetBreadcrumbNameMap = MemoizeOne(getBreadcrumbNameMap, isEqual);

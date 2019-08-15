@@ -1,7 +1,5 @@
-export interface IListProps{
-    [key:string]:any
+export interface IListProps {
+  [key: string]: any;
 }
 
-export interface IListStates{
-
-}
+export interface IListStates {}

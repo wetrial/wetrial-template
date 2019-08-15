@@ -6,7 +6,7 @@ import themeConfig from './config/theme.config';
 import pluginConfig from './config/plugin.config';
 import webpackPlugin from './config/plugin.chinaWebpack';
 
-const { APP_TYPE,DEV } = process.env;
+const { APP_TYPE, DEV } = process.env;
 
 const config: IConfig = {
   history: 'hash',
@@ -34,7 +34,7 @@ const config: IConfig = {
   alias: {
     themes: join(__dirname, './src/themes'),
     '@config': join(__dirname, './config'),
-    '@wetrial':join(__dirname, './node_modules/wetrial/es')
+    '@wetrial': join(__dirname, './node_modules/wetrial/es'),
   },
   ignoreMomentLocale: true,
   lessLoaderOptions: {

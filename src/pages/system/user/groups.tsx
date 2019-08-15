@@ -2,11 +2,7 @@ import React from 'react';
 
 class Groups extends React.PureComponent {
   render() {
-    return (
-      <div>
-        Groups
-      </div>
-    )
+    return <div>Groups</div>;
   }
 }
 

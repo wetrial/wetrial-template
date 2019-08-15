@@ -1,7 +1,6 @@
 import { get, post } from '@wetrial/request';
 import { API_PREFIX } from '@/constants';
 
-
 /**
  * 获取当前用户信息
  */
@@ -23,7 +22,7 @@ export async function login(data) {
 /**
  * 获取当前用户的权限列表
  */
-export async function getCurrentPermissions(){
+export async function getCurrentPermissions() {
   return get(`${API_PREFIX}user/getCurrentPermissions`);
 }
 

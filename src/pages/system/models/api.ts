@@ -6,12 +6,10 @@ export default {
       list: [],
       pagination: {
         current: 1,
-        total: 0
-      }
-    }
+        total: 0,
+      },
+    },
   },
 
-  effects: {
-    
-  }
+  effects: {},
 };

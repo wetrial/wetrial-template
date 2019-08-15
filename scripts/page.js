@@ -15,12 +15,12 @@ function generate(option) {
   // 处理首字母小写的问题
   modelNamespace = modelNamespace
     .split('_')
-    .map(item =>item.substring(0, 1).toLocaleLowerCase() + item.substring(1))
+    .map(item => item.substring(0, 1).toLocaleLowerCase() + item.substring(1))
     .join('_');
 
   const PascalPageName = pageName.substring(0, 1).toUpperCase() + pageName.substr(1);
 
-const pageTemplate = `
+  const pageTemplate = `
 import { ColumnProps } from 'antd/lib/table';
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
@@ -232,8 +232,8 @@ effects: {
     }
 },
 });`;
-// 接口模板
-const serviceTemplate = `import { get,post } from '@wetrial/request';
+  // 接口模板
+  const serviceTemplate = `import { get,post } from '@wetrial/request';
 import { API_PREFIX } from '@/constants';
 
 export async function GetPagedList(data):Promise<any>{
@@ -280,7 +280,10 @@ export interface I${PascalPageName}EditProps extends IFormComponentProps{
     model:{[key:string]:any}
 }`;
 
-    const ParcalPath=pagePath.split('/').map(item=>item.substring(0, 1).toUpperCase() + item.substr(1)).join('/');
+  const ParcalPath = pagePath
+    .split('/')
+    .map(item => item.substring(0, 1).toUpperCase() + item.substr(1))
+    .join('/');
   // 检测目录、文件是否存在,存在跳过生成
   const folderFullPath = `./src/pages/${pagePath ? ParcalPath + '/' : ''}${PascalPageName}`;
   const utils = require('./utils');

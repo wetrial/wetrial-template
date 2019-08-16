@@ -11,6 +11,7 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'warn',
     '@typescript-eslint/array-type': 'warn',
     '@typescript-eslint/no-non-null-assertion': 0,
+    '@typescript-eslint/no-unused-vars': 'error',
     'space-infix-ops': 0,
     'eslint-comments/no-unlimited-disable': 0,
     'space-infix-ops': 0,
@@ -44,6 +45,9 @@ module.exports = {
     'consistent-return': 0,
     'import/first': 0,
     'react/jsx-no-bind': 0,
+    'no-template-curly-in-string': 0,
+    'max-len': ['warn', { code: 400 }],
+    'no-unused-expressions': ['error', { allowShortCircuit: true }],
   },
   globals: {
     page: true,

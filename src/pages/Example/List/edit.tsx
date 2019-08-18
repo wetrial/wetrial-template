@@ -65,7 +65,8 @@ class Edit extends PureComponent<any> {
                 required,
                 {
                   ...getRegex('^[a-zA-Z][a-zA-Z0-9_-]{1,}$'),
-                  message: '租户名称必须由2个以上字母、数字、-、_组成,以字母开头',
+                  message:
+                    '租户名称必须由2个以上字母、数字、-、_组成,以字母开头',
                 },
               ],
             })(<Input autoComplete="off" />)}

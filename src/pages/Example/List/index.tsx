@@ -1,9 +1,21 @@
 import { ColumnProps } from 'antd/lib/table';
 
-import React, { Fragment } from 'react';
+import React, { Fragment, Suspense } from 'react';
 import { connect } from 'dva';
 import { router } from 'umi';
-import { Form, Row, Col, Button, Card, Input, Checkbox, Popconfirm, Divider, Select } from 'antd';
+import {
+  Form,
+  Row,
+  Col,
+  Button,
+  Card,
+  Input,
+  Checkbox,
+  Popconfirm,
+  Divider,
+  Select,
+  message
+} from 'antd';
 import { FormComponent, withPagedQuery } from 'wetrial';
 import TableList from '@/components/TableList';
 import Authorized from '@/utils/Authorized';
@@ -13,6 +25,7 @@ import { getDateString } from '@/utils';
 import { IListProps, IListStates } from './props';
 
 const FormItem = Form.Item;
+const ViewPage = React.lazy(() => import('./View'))
 
 @connect(({ example_tenant: { pagedData }, loading }) => ({
   pagedData,
@@ -20,7 +33,20 @@ const FormItem = Form.Item;
 }))
 // @ts-ignore
 @Form.create()
-@withPagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
+@withPagedQuery({
+  type: 'example_tenant/getTenants',
+  pageSize: 3,
+  // // 修改发送的默认参数
+  // changeParams: params => {
+  //   const result = params;
+  //   result.limit = result.pageSize;
+  //   result.pageIndex = result.page;
+  //   delete result.pageSize;
+  //   delete result.page;
+  //   return result;
+  // },
+  ignoreQueryKeys:['_id']
+})
 class Index extends FormComponent<IListProps, IListStates> {
   columns: ColumnProps<any>[] = [
     {
@@ -54,11 +80,17 @@ class Index extends FormComponent<IListProps, IListStates> {
       title: '操作',
       dataIndex: 'operator',
       fixed: 'right',
-      width: 150,
+      width: 240,
       render: (_, record) => {
         return (
           <Fragment>
             <Authorized authority={Permissions.example.list}>
+              <Button onClick={this.handleToggleView.bind(this, record.id)} size="small" icon="eye" type="default">
+                查看
+                </Button>
+            </Authorized>
+            <Authorized authority={Permissions.example.list}>
+              <Divider type="vertical" />
               <Button
                 size="small"
                 onClick={() => {
@@ -83,18 +115,33 @@ class Index extends FormComponent<IListProps, IListStates> {
     },
   ];
 
-  // getQueryParams = () => {
-  //   return {};
-  // };
+  // 设置默认搜索值(注意写法)
+  setDefaultFilter() {
+    return {
+      type: '3',
+      filter: 'test'
+    }
+  }
+
+  handleToggleView = _id => {
+    const { location: { query } } = this.props;
+    router.replace({
+      pathname: '/example/list',
+      query: {
+        ...query,
+        _id
+      }
+    });
+  }
 
   handleSearch = e => {
     e.preventDefault();
-    const { form, onSearchData } = this.props;
+    const { form, triggerSearch } = this.props;
     form.validateFields((err, values) => {
       if (err) {
         return;
       }
-      onSearchData(values);
+      triggerSearch(values);
     });
   };
 
@@ -103,6 +150,16 @@ class Index extends FormComponent<IListProps, IListStates> {
       pathname: `/example/list/${id}`,
     });
   };
+
+  handleCloseView=result=>{
+    if(result){
+      message.success('点击了确定按钮');
+    }else{
+      message.warn('点击了取消按钮');
+    }
+   this.handleToggleView();
+
+  }
 
   renderForm = () => {
     const {
@@ -113,14 +170,26 @@ class Index extends FormComponent<IListProps, IListStates> {
     return (
       <Form onSubmit={this.handleSearch}>
         <Row gutter={5}>
-          <Col xxl={{ span: 4 }} xl={{ span: 6 }} lg={{ span: 12 }} sm={24} xs={24}>
+          <Col
+            xxl={{ span: 4 }}
+            xl={{ span: 6 }}
+            lg={{ span: 12 }}
+            sm={24}
+            xs={24}
+          >
             <FormItem>
               {getFieldDecorator('filter', {
                 initialValue: filterData.filter,
               })(<Input autoComplete="off" placeholder="输入以搜索" />)}
             </FormItem>
           </Col>
-          <Col xxl={{ span: 4 }} xl={{ span: 6 }} lg={{ span: 12 }} sm={24} xs={24}>
+          <Col
+            xxl={{ span: 4 }}
+            xl={{ span: 6 }}
+            lg={{ span: 12 }}
+            sm={24}
+            xs={24}
+          >
             <FormItem>
               {getFieldDecorator('type', {
                 initialValue: filterData.type,
@@ -128,6 +197,7 @@ class Index extends FormComponent<IListProps, IListStates> {
                 <Select placeholder="请选择">
                   <Select.Option value="1">vip</Select.Option>
                   <Select.Option value="2">普通</Select.Option>
+                  <Select.Option value="3">皇冠</Select.Option>
                 </Select>,
               )}
             </FormItem>
@@ -167,7 +237,14 @@ class Index extends FormComponent<IListProps, IListStates> {
   };
 
   render() {
-    const { pagination, onTableChange, sorter, loading, pagedData } = this.props;
+    const {
+      pagination,
+      onTableChange,
+      sorter,
+      loading,
+      pagedData,
+      location: { query: { _id } }
+    } = this.props;
     return (
       <Card>
         {this.renderForm()}
@@ -182,6 +259,9 @@ class Index extends FormComponent<IListProps, IListStates> {
             ...pagination,
           }}
         />
+        {
+          _id ? <Suspense fallback={null}><ViewPage onClose={this.handleCloseView} id={_id} /></Suspense> : null
+        }
       </Card>
     );
   }

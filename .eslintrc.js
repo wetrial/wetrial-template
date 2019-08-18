@@ -48,6 +48,7 @@ module.exports = {
     'no-template-curly-in-string': 0,
     'max-len': ['warn', { code: 400 }],
     'no-unused-expressions': ['error', { allowShortCircuit: true }],
+    'class-methods-use-this':0,//  ["error", { "exceptMethods": ["setDefaultFilter"] }]
   },
   globals: {
     page: true,

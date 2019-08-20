@@ -28,7 +28,7 @@ import { FormComponent, backRouter } from 'wetrial';
 import { required, getRegex, getRange } from '@wetrial/validation';
 import { FORM_SINGLE_LAYOUT } from '@/constants';
 import Authorized from '@/utils/Authorized'
-import Permissions from '@config/permissions';
+// import Permissions from '@config/permissions';
 
 const FormItem = Form.Item;
 

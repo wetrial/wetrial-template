@@ -24,7 +24,7 @@ function generate(option) {
 import { ColumnProps } from 'antd/lib/table';
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { router } from 'umi';
+// import { router } from 'umi';
 import {
     Form,
     Row,
@@ -32,7 +32,6 @@ import {
     Button,
     Card,
     Input,
-    Checkbox,
     Popconfirm,
     Divider,
     Select,
@@ -49,7 +48,7 @@ import { I${PascalPageName}Props, I${PascalPageName}State } from './props'
 // import styles from './index.less'
     
 @connect(({ ${modelNamespace}:\{pagedData\},loading }) => ({
-    pagedData:pagedData,
+    pagedData,
     loading:loading.effects['${modelNamespace}/getPagedList']
 }))
 // @ts-ignore
@@ -72,7 +71,7 @@ class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalP
             render: (_, record) => {
             return (
                 <Fragment>
-                <Authorized authority={\`\`}>
+                <Authorized authority={null}>
                     <Button
                     size="small"
                     onClick={() => {
@@ -83,7 +82,7 @@ class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalP
                     编辑
                     </Button>
                 </Authorized>
-                <Authorized authority={\`\`}>
+                <Authorized authority={null}>
                     <Divider type="vertical" />
                     <Popconfirm title="确定删除">
                     <Button size="small" type="danger">

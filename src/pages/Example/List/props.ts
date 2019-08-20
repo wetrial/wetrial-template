@@ -3,3 +3,10 @@ export interface IListProps {
 }
 
 export interface IListStates {}
+
+
+export interface IViewProps{
+  onClose:{
+    (result:boolean):void;
+  }
+}

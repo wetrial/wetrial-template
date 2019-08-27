@@ -2,7 +2,7 @@
   "private": true,
   "name": "wetrial-template",
   "version": "1.0.0",
-  "types": "./typings/*.d.ts",
+  "types": ".typings.d.ts",
   "typesVersions": {
     ">=3.3": {
       "*": [

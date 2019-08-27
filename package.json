@@ -15,7 +15,7 @@
     "build": "umi build",
     "analyze": "cross-env ANALYZE=1 umi build",
     "test": "umi-test",
-    "lint": "umi-lint --eslint.ext='.js,.jsx,.ts,.tsx' --stylelint src/ config/ mock/",
+    "lint": "umi-lint --eslint.ext=.js,.jsx,.ts,.tsx --stylelint src/ config/ mock/",
     "precommit": "umi-lint --staged --eslint.ext='.js,.jsx,.ts,.tsx' --stylelint --prettier --fix",
     "patch": "yarn version --patch && git push origin master && git push origin --tags",
     "minor": "yarn version --minor && git push origin master && git push origin --tags",
@@ -46,7 +46,7 @@
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-test-renderer": "^16.8.1",
-    "@umijs/fabric": "^1.1.7",
+    "@umijs/fabric": "^1.1.10",
     "antd-pro-merge-less": "^1.0.0",
     "antd-theme-webpack-plugin": "^1.2.0",
     "babel-eslint": "^10.0.1",
@@ -58,11 +58,11 @@
     "prettier": "^1.18.2",
     "react-test-renderer": "^16.8.6",
     "roadhog-api-doc": "^1.1.2",
-    "typescript": "^3.5.2",
+    "typescript": "^3.5.3",
     "umi": "^2.8.7",
     "umi-lint": "^2.0.2",
-    "umi-plugin-react": "^1.9.6",
-    "umi-types": "^0.3.10"
+    "umi-plugin-react": "^1.9.19",
+    "umi-types": "^0.3.17"
   },
   "engines": {
     "node": ">=8.0.0"

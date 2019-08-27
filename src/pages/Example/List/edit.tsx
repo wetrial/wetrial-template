@@ -2,8 +2,9 @@ import React from 'react';
 import { PureComponent, backRouter } from 'wetrial';
 import { Form, Input, Button, Checkbox, Row, Col, PageHeader } from 'antd';
 import { connect } from 'dva';
-import { FORM_SINGLE_LAYOUT } from '@/constants';
 import { required, getRegex, getRange } from '@wetrial/validation';
+import { FORM_SINGLE_LAYOUT } from '@/constants';
+
 
 const FormItem = Form.Item;
 

@@ -16,9 +16,10 @@ import {
   Select,
 } from 'antd';
 import { FormComponent, withPagedQuery } from 'wetrial';
+import Permissions from '@config/permissions';
 import TableList from '@/components/TableList';
 import Authorized from '@/utils/Authorized';
-import Permissions from '@config/permissions';
+
 import { getDateString } from '@/utils';
 
 const FormItem = Form.Item;
@@ -31,7 +32,7 @@ const FormItem = Form.Item;
 @Form.create()
 @withPagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
 class Index extends FormComponent {
-  columns: Array<ColumnProps<any>> = [
+  columns: ColumnProps<any>[] = [
     {
       title: '租户编码',
       sorter: true,

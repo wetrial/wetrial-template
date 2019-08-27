@@ -5,7 +5,6 @@ import { PureComponent } from 'wetrial';
 
 @connect()
 class Index extends PureComponent {
-
   togglePermissions=(isAdmin?:boolean)=>{
     const { dispatch } = this.props;
     dispatch({

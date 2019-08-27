@@ -1,7 +1,22 @@
 {
     "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "typescript"
-    ]
-}
+      "javascript",
+      // jsx
+      "javascriptreact",
+      // ts
+      {
+        "language": "typescript",
+        "autoFix": true
+      },
+      // tsx
+      {
+        "language": "typescriptreact",
+        "autoFix": true
+      },
+      "html"
+    ],
+    // "typescript.validate.enable": false,
+    "eslint.autoFixOnSave": true,
+    "eslint.alwaysShowStatus": true
+  }
+  

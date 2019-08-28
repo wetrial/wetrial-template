@@ -1,4 +1,4 @@
-import { TableProps, ColumnProps } from 'antd/lib/table';
+import { ColumnProps } from 'antd/lib/table';
 
 import React from 'react';
 import { Table } from 'antd';

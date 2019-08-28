@@ -55,6 +55,8 @@ module.exports = {
         order: [
           'static-properties',
           'static-methods',
+          'type-annotations',
+          'propTypes',
           'conventional-private-properties',
           'state',
           'private-instance-fields',

@@ -42,7 +42,7 @@
     "react-media": "^1.9.2",
     "react-router": "^5.0.1",
     "react-transition-group": "^4.0.0",
-    "wetrial": "^2.0.1"
+    "wetrial": "^2.0.2"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.12",

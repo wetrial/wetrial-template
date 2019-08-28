@@ -11,29 +11,26 @@ type SortOrderType = {
   field: string;
   order: 'ascend' | 'descend' | false;
 };
-interface TableListProps<T> extends TableProps<T> {
-  sorter: SortOrderType;
-}
+// interface TableListProps<T = any> extends TableProps<T> {
+//   sorter: SortOrderType;
+// }
 
-const getColumns = (
-  columns: ColumnProps<any>[],
-  sortOrder: SortOrderType,
-) => {
-  columns.forEach(item => {
-    const newItem=item;
+const getColumns = (columns: ColumnProps<any>[], sortOrder: SortOrderType) => {
+  columns.map(item => {
+    const row = item;
     if (sortOrder && sortOrder.order) {
-      newItem.sortOrder = sortOrder.order;
+      row.sortOrder = sortOrder.order;
     } else {
-      newItem.sortOrder = false;
+      row.sortOrder = false;
     }
-    return newItem;
+    return row;
   });
   return columns;
 };
 
 const momoizeOneGetColumns = memoizeOne(getColumns, isEqual);
 
-export default class TableList extends PureComponent<TableListProps<any>> {
+export default class TableList extends PureComponent<any, any> {
   render() {
     const { columns, sorter } = this.props;
     return (

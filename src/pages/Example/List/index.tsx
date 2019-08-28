@@ -1,6 +1,6 @@
 import { ColumnProps } from 'antd/lib/table';
 
-import React, { Fragment } from 'react';
+import React, { Fragment, Suspense } from 'react';
 import { connect } from 'dva';
 import { router } from 'umi';
 import {
@@ -14,15 +14,18 @@ import {
   Popconfirm,
   Divider,
   Select,
+  message,
 } from 'antd';
 import { FormComponent, withPagedQuery } from 'wetrial';
-import Permissions from '@config/permissions';
 import TableList from '@/components/TableList';
 import Authorized from '@/utils/Authorized';
-
+import Permissions from '@config/permissions';
 import { getDateString } from '@/utils';
 
+import { IListProps } from './props';
+
 const FormItem = Form.Item;
+const ViewPage = React.lazy<any>(() => import('./View'));
 
 @connect(({ example_tenant: { pagedData }, loading }) => ({
   pagedData,
@@ -30,8 +33,22 @@ const FormItem = Form.Item;
 }))
 // @ts-ignore
 @Form.create()
-@withPagedQuery({ type: 'example_tenant/getTenants', pageSize: 5 })
-class Index extends FormComponent {
+// @ts-ignore
+@withPagedQuery({
+  type: 'example_tenant/getTenants',
+  pageSize: 3,
+  // // 修改发送的默认参数
+  // changeParams: params => {
+  //   const result = params;
+  //   result.limit = result.pageSize;
+  //   result.pageIndex = result.page;
+  //   delete result.pageSize;
+  //   delete result.page;
+  //   return result;
+  // },
+  ignoreQueryKeys: ['_id'],
+})
+class Index extends FormComponent<IListProps> {
   columns: ColumnProps<any>[] = [
     {
       title: '租户编码',
@@ -49,7 +66,7 @@ class Index extends FormComponent {
     {
       title: '激活',
       dataIndex: 'isActive',
-      render: (actived:boolean) => {
+      render: (actived: boolean) => {
         return <Checkbox checked={actived} />;
       },
     },
@@ -64,11 +81,22 @@ class Index extends FormComponent {
       title: '操作',
       dataIndex: 'operator',
       fixed: 'right',
-      width: 150,
+      width: 240,
       render: (_, record) => {
         return (
           <Fragment>
             <Authorized authority={Permissions.example.list}>
+              <Button
+                onClick={this.handleToggleView.bind(this, record.id)}
+                size="small"
+                icon="eye"
+                type="default"
+              >
+                查看
+              </Button>
+            </Authorized>
+            <Authorized authority={Permissions.example.list}>
+              <Divider type="vertical" />
               <Button
                 size="small"
                 onClick={() => {
@@ -93,18 +121,36 @@ class Index extends FormComponent {
     },
   ];
 
-  // getQueryParams = () => {
-  //   return {};
-  // };
+  // 设置默认搜索值(注意写法)
+  setDefaultFilter() {
+    return {
+      type: '3',
+      filter: 'test',
+    };
+  }
+
+  handleToggleView = (_id?: string) => {
+    const {
+      location: { query },
+    } = this.props;
+
+    router.replace({
+      pathname: '/example/list',
+      query: {
+        ...query,
+        _id,
+      },
+    });
+  };
 
   handleSearch = e => {
     e.preventDefault();
-    const { form, onSearchData } = this.props;
+    const { form, triggerSearch } = this.props;
     form.validateFields((err, values) => {
       if (err) {
         return;
       }
-      onSearchData(values);
+      triggerSearch(values);
     });
   };
 
@@ -112,6 +158,15 @@ class Index extends FormComponent {
     router.push({
       pathname: `/example/list/${id}`,
     });
+  };
+
+  handleCloseView = result => {
+    if (result) {
+      message.success('点击了确定按钮');
+    } else {
+      message.warn('点击了取消按钮');
+    }
+    this.handleToggleView();
   };
 
   renderForm = () => {
@@ -123,14 +178,14 @@ class Index extends FormComponent {
     return (
       <Form onSubmit={this.handleSearch}>
         <Row gutter={5}>
-          <Col xxl={{span:4}} xl={{span:6}} lg={{span:12}} sm={24} xs={24}>
+          <Col xxl={{ span: 4 }} xl={{ span: 6 }} lg={{ span: 12 }} sm={24} xs={24}>
             <FormItem>
               {getFieldDecorator('filter', {
                 initialValue: filterData.filter,
               })(<Input autoComplete="off" placeholder="输入以搜索" />)}
             </FormItem>
           </Col>
-          <Col xxl={{span:4}} xl={{span:6}} lg={{span:12}} sm={24} xs={24}>
+          <Col xxl={{ span: 4 }} xl={{ span: 6 }} lg={{ span: 12 }} sm={24} xs={24}>
             <FormItem>
               {getFieldDecorator('type', {
                 initialValue: filterData.type,
@@ -138,11 +193,18 @@ class Index extends FormComponent {
                 <Select placeholder="请选择">
                   <Select.Option value="1">vip</Select.Option>
                   <Select.Option value="2">普通</Select.Option>
+                  <Select.Option value="3">皇冠</Select.Option>
                 </Select>,
               )}
             </FormItem>
           </Col>
-          <Col xxl={{span:16}} xl={{span:12}} lg={{span:24}} sm={{ span: 24 }} xs={{span:24}}>
+          <Col
+            xxl={{ span: 16 }}
+            xl={{ span: 12 }}
+            lg={{ span: 24 }}
+            sm={{ span: 24 }}
+            xs={{ span: 24 }}
+          >
             <FormItem>
               <Row type="flex" align="middle" justify="space-between">
                 <div>
@@ -177,10 +239,14 @@ class Index extends FormComponent {
       sorter,
       loading,
       pagedData,
+      location: {
+        query: { _id },
+      },
     } = this.props;
     return (
       <Card>
         {this.renderForm()}
+
         <TableList
           loading={loading}
           columns={this.columns}
@@ -192,9 +258,13 @@ class Index extends FormComponent {
             ...pagination,
           }}
         />
+        {_id ? (
+          <Suspense fallback={null}>
+            <ViewPage onClose={this.handleCloseView} id={_id} />
+          </Suspense>
+        ) : null}
       </Card>
     );
   }
 }
-
 export default Index;

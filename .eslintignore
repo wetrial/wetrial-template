@@ -2,3 +2,7 @@
 /scripts
 /config
 /**/*.ejs
+/lib
+/es
+/node_modules
+/public

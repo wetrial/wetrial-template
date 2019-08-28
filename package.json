@@ -15,14 +15,21 @@
     "build": "umi build",
     "analyze": "cross-env ANALYZE=1 umi build",
     "test": "umi-test",
-    "lint": "umi-lint --eslint.ext=.js,.jsx,.ts,.tsx --stylelint src/ config/ mock/",
-    "precommit": "umi-lint --staged --eslint.ext='.js,.jsx,.ts,.tsx' --stylelint --prettier --fix",
     "patch": "yarn version --patch && git push origin master && git push origin --tags",
     "minor": "yarn version --minor && git push origin master && git push origin --tags",
-    "major": "yarn version --major && git push origin master && git push origin --tags"
+    "major": "yarn version --major && git push origin master && git push origin --tags",
+    "new": "node scripts/template",
+    "lint": "yarn lint:js && yarn lint:style && yarn lint:prettier",
+    "lint-staged": "lint-staged",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && yarn lint:style",
+    "lint:js": "eslint --debug --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./",
+    "lint:prettier": "check-prettier lint",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "prettier": "prettier -c --write \"**/*\""
   },
   "dependencies": {
-    "antd": "^3.18.2",
+    "antd": "^3.21.4",
     "dva": "^2.4.1",
     "dva-model-extend": "^0.1.2",
     "lodash": "^4.17.11",
@@ -35,7 +42,7 @@
     "react-media": "^1.9.2",
     "react-router": "^5.0.1",
     "react-transition-group": "^4.0.0",
-    "wetrial": "^1.7.0"
+    "wetrial": "^2.0.1"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.12",
@@ -46,23 +53,49 @@
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-test-renderer": "^16.8.1",
-    "@umijs/fabric": "^1.1.10",
+    "@umijs/fabric": "^1.1.0",
     "antd-pro-merge-less": "^1.0.0",
     "antd-theme-webpack-plugin": "^1.2.0",
-    "babel-eslint": "^10.0.1",
+    "babel-plugin-import": "^1.12.0",
+    "chalk": "^2.4.2",
+    "check-prettier": "^1.0.3",
     "classnames": "^2.2.6",
     "cross-env": "^5.2.0",
+    "cross-port-killer": "^1.1.1",
+    "enzyme": "^3.9.0",
+    "eslint": "^5.16.0",
+    "express": "^4.17.1",
+    "husky": "^3.0.0",
+    "import-sort-cli": "^6.0.0",
+    "import-sort-parser-babylon": "^6.0.0",
+    "import-sort-parser-typescript": "^6.0.0",
+    "import-sort-style-module": "^6.0.0",
     "less-vars-to-js": "^1.3.0",
+    "lint-staged": "^9.0.0",
     "mockjs": "^1.0.1-beta3",
     "path": "^0.12.7",
-    "prettier": "^1.18.2",
+    "prettier": "^1.17.1",
     "react-test-renderer": "^16.8.6",
     "roadhog-api-doc": "^1.1.2",
+    "stylelint": "^10.1.0",
     "typescript": "^3.5.3",
-    "umi": "^2.8.7",
-    "umi-lint": "^2.0.2",
-    "umi-plugin-react": "^1.9.19",
+    "umi": "^2.8.18",
+    "umi-plugin-react": "^1.9.16",
     "umi-types": "^0.3.17"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.less": "stylelint --syntax less",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "**/*.{js,jsx}": "npm run lint-staged:js",
+    "**/*.{js,ts,tsx}": "npm run lint-staged:js"
   },
   "engines": {
     "node": ">=8.0.0"

@@ -59,7 +59,7 @@ export function deepGetValue(obj: { [key: string]: any }) {
  * @param {string} param.format 格式 默认为年月日
  */
 export function getDateString({ date, format = 'Y-MM-DD' }) {
-  let tempDate=date;
+  let tempDate = date;
   if (!tempDate) {
     return '';
   }
@@ -81,10 +81,6 @@ export function fixedZero(val: number): string {
  * 下载文件
  * @param file 要下载的文件
  */
-export function downloadTempFile(file: {
-  fileName: string;
-  fileType: string;
-  fileToken: string;
-}) {
+export function downloadTempFile(file: { fileName: string; fileType: string; fileToken: string }) {
   window.location.href = `${BASE_PATH}File/DownloadTempFile?${stringify(file)}`;
 }

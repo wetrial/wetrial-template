@@ -1,4 +1,4 @@
-import {fixedZero,getQuery} from './index';
+import { fixedZero, getQuery } from './index';
 
 describe('util base', () => {
   // 测试 isDefined 方法

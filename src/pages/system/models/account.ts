@@ -6,16 +6,16 @@ export default {
       list: [],
       pagination: {
         current: 1,
-        total: 0
-      }
-    }
+        total: 0,
+      },
+    },
   },
   reducers: {
     saveTableData(state, { payload }) {
       return {
         ...state,
-        tableData: payload
+        tableData: payload,
       };
-    }
-  }
+    },
+  },
 };

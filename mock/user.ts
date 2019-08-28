@@ -6,8 +6,7 @@ import responseWrapper, { errorWrapper, authorizeIntercept } from './base';
 function getCurrentUser({ response }) {
   const current = {
     name: 'XXG',
-    avatar:
-      'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+    avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
     email: 'antdesign@alipay.com',
     signature: '海纳百川，有容乃大',
     title: '码农',
@@ -30,15 +29,14 @@ function login({ request, response }) {
       permissions: deepGetValue(Permissions),
     };
     response.json(responseWrapper(loginResult));
-  }
-  else if (userName === 'user' && password === 'Abcd1234') {
-    const permissions=deepGetValue(Permissions);
+  } else if (userName === 'user' && password === 'Abcd1234') {
+    const permissions = deepGetValue(Permissions);
     const loginResult = {
       token: '0000000000000',
-      permissions: permissions.filter(m=>Permissions.example.reactDnd!==m),
+      permissions: permissions.filter(m => Permissions.example.reactDnd !== m),
     };
     response.json(responseWrapper(loginResult));
-  }else {
+  } else {
     response.status(500).send(errorWrapper({}, false, '用户名或者密码错误!'));
   }
 }
@@ -49,18 +47,20 @@ function loginout({ response }) {
 }
 
 // 获取用户权限列表
-function getCurrentPermissions({response}){
-  const permissions=deepGetValue(Permissions);
+function getCurrentPermissions({ response }) {
+  const permissions = deepGetValue(Permissions);
   response.json(responseWrapper(permissions));
 }
 
 // 调用 delay 函数，统一处理
 export default delay(
   {
-    'GET /api/user/getCurrent': (req, res) =>authorizeIntercept({ request: req, response: res }, getCurrentUser),
-    'POST /api/user/login': (req, res) =>login({ request: req, response: res }),
+    'GET /api/user/getCurrent': (req, res) =>
+      authorizeIntercept({ request: req, response: res }, getCurrentUser),
+    'POST /api/user/login': (req, res) => login({ request: req, response: res }),
     'GET /api/user/logout': (req, res) => loginout({ response: res }),
-    'GET /api/user/getCurrentPermissions': (req, res) =>authorizeIntercept({ request: req, response: res }, getCurrentPermissions),
+    'GET /api/user/getCurrentPermissions': (req, res) =>
+      authorizeIntercept({ request: req, response: res }, getCurrentPermissions),
   },
   1500,
 );

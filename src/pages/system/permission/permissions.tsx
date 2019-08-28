@@ -2,11 +2,7 @@ import React from 'react';
 
 class Permissions extends React.PureComponent {
   render() {
-    return (
-      <div>
-        Permissions
-      </div>
-    )
+    return <div>Permissions</div>;
   }
 }
 

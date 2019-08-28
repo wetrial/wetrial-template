@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import Link from 'umi/link';
-import {NormalLayout} from 'wetrial';
-import {BasicLayoutProps as NormalLayoutProps} from '@wetrial/components/NormalLayout';
-import { MenuDataItem,Dispatch } from '@wetrial/types';
-import {Settings} from '@wetrial/defaultSettings';
+import { NormalLayout } from 'wetrial';
+import { BasicLayoutProps as NormalLayoutProps } from '@wetrial/components/NormalLayout';
+import { MenuDataItem, Dispatch } from '@wetrial/types';
+import { Settings } from '@wetrial/defaultSettings';
 import { formatMessage } from 'umi-plugin-react/locale';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/b-components/GlobalHeader/RightContent';
@@ -17,7 +17,7 @@ export interface BasicLayoutProps extends NormalLayoutProps {
   };
   settings: Settings;
   dispatch: Dispatch;
-  user:object
+  user: object;
 }
 export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   breadcrumbNameMap: {
@@ -39,10 +39,9 @@ const footerRender: BasicLayoutProps['footerRender'] = (_, defaultDom) => {
   return defaultDom;
 };
 
-
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
   const { dispatch, children, settings } = props;
-  
+
   useEffect(() => {
     if (dispatch) {
       dispatch({
@@ -50,15 +49,15 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       });
     }
   }, []);
-  
-  const handleMenuCollapse = (payload: boolean): void =>{
-    if(dispatch){
+
+  const handleMenuCollapse = (payload: boolean): void => {
+    if (dispatch) {
       dispatch({
         type: 'global/changeLayoutCollapsed',
         payload,
-      })
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -96,8 +95,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   );
 };
 
-export default connect(({ global, settings,user }) => ({
+export default connect(({ global, settings, user }) => ({
   collapsed: global.collapsed,
   settings,
-  user
+  user,
 }))(BasicLayout);

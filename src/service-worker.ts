@@ -71,7 +71,8 @@ addEventListener('message', event => {
     event.waitUntil(
       // @ts-ignore
       // eslint-disable-next-line no-restricted-globals
-      self.skipWaiting()
+      self
+        .skipWaiting()
         .then(
           () => replyPort.postMessage({ error: null }),
           error => replyPort.postMessage({ error }),

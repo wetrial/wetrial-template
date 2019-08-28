@@ -1,4 +1,4 @@
-import { Badge, Icon, Spin, Tabs,Empty } from 'antd';
+import { Badge, Icon, Spin, Tabs, Empty } from 'antd';
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import NoticeList, { NoticeIconTabProps } from './NoticeList';

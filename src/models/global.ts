@@ -1,11 +1,5 @@
 import extendModel from '@wetrial/model';
-import {
-  getAll,
-  getNotifys,
-  getMessages,
-  getTodos,
-  setAllToRead,
-} from '@/services/message';
+import { getAll, getNotifys, getMessages, getTodos, setAllToRead } from '@/services/message';
 import { NoticeIconData } from '@/components/NoticeIcon';
 
 export interface INoticeItem extends NoticeIconData {
@@ -14,22 +8,22 @@ export interface INoticeItem extends NoticeIconData {
   status: string;
 }
 
-interface ITipTypeModel{
-  count:number;
-  list:INoticeItem[]
+interface ITipTypeModel {
+  count: number;
+  list: INoticeItem[];
 }
 
-export interface ITipsModel{
-  count:number;
-  todos:ITipTypeModel,
-  messages:ITipTypeModel,
-  notifys:ITipTypeModel
+export interface ITipsModel {
+  count: number;
+  todos: ITipTypeModel;
+  messages: ITipTypeModel;
+  notifys: ITipTypeModel;
 }
 
-export interface IGlobalStateModel{
-  collapsed:boolean;
-  tipsFetched:boolean;
-  tips:ITipsModel
+export interface IGlobalStateModel {
+  collapsed: boolean;
+  tipsFetched: boolean;
+  tips: ITipsModel;
 }
 
 // 计算总数

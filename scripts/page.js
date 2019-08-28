@@ -250,31 +250,35 @@ export async function create(data):Promise<any>{
 }`;
 
   // 属性模板
-  const interfaceTemplate = `import { IPagedListProps,IFormComponentProps } from '@/types'
-/**
- * ${pageName} state 参数类型
- */
-export interface I${PascalPageName}State {
+  const interfaceTemplate = `import { IConnectProps, IFormProps, IKeyValue } from '@wetrial/types';
+  import { IWithPagedQueryProps } from '@wetrial/components/withPagedQuery';
 
-}
-
+  
 /**
  * ${pageName} props 参数类型
  */
-export interface I${PascalPageName}Props extends IPagedListProps{
+export interface I${PascalPageName}Props extends IFormProps, IWithPagedQueryProps{
 
 }
+
+/**
+ * ${pageName} state 参数类型
+ */
+export interface I${PascalPageName}State extends IFormProps {
+
+}
+
 /**
  * ${pageName} edit state 参数类型
  */
-export interface I${PascalPageName}EditState {
+export interface I${PascalPageName}EditState  {
 
 }
 
 /**
  * ${pageName} edit props 参数类型
  */
-export interface I${PascalPageName}EditProps extends IFormComponentProps{
+export interface I${PascalPageName}EditProps extends IFormProps{
     submitting?:boolean;
     model:{[key:string]:any}
 }`;

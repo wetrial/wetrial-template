@@ -1,7 +1,7 @@
 module.exports = {
+  testURL: 'http://localhost:9000',
+  preset: 'jest-puppeteer',
   globals: {
-    // https://github.com/umijs/umi/issues/1386
-    'ts-jest': { babelConfig: false },
-    tsConfigFile: './tsconfig.test.json',
+    xxg: false,
   },
 };

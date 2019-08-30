@@ -12,9 +12,11 @@
   },
   "scripts": {
     "start": "cross-env DEV=1 umi dev",
+    "start:no-mock": "cross-env MOCK=none umi dev",
     "build": "umi build",
     "analyze": "cross-env ANALYZE=1 umi build",
     "test": "umi test",
+    "test:component": "umi test ./src/components",
     "patch": "yarn version --patch && git push origin master && git push origin --tags",
     "minor": "yarn version --minor && git push origin master && git push origin --tags",
     "major": "yarn version --major && git push origin master && git push origin --tags",
@@ -45,10 +47,7 @@
     "wetrial": "^2.0.2"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.3.12",
-    "@types/jest": "^24.0.15",
     "@types/lodash": "^4.14.124",
-    "@types/mocha": "^5.2.6",
     "@types/node": "^12.0.0",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
@@ -62,9 +61,7 @@
     "classnames": "^2.2.6",
     "cross-env": "^5.2.0",
     "cross-port-killer": "^1.1.1",
-    "enzyme": "^3.9.0",
     "eslint": "^5.16.0",
-    "express": "^4.17.1",
     "husky": "^3.0.0",
     "import-sort-cli": "^6.0.0",
     "import-sort-parser-babylon": "^6.0.0",
@@ -75,13 +72,23 @@
     "mockjs": "^1.0.1-beta3",
     "path": "^0.12.7",
     "prettier": "^1.17.1",
-    "react-test-renderer": "^16.8.6",
     "roadhog-api-doc": "^1.1.2",
     "stylelint": "^10.1.0",
     "typescript": "^3.5.3",
-    "umi": "^2.8.18",
+    "umi": "^2.8.20",
     "umi-plugin-react": "^1.9.16",
     "umi-types": "^0.3.17"
+  },
+  "optionalDependencies": {
+    "express": "^4.17.1",
+    "@types/mocha": "^5.2.6",
+    "@types/enzyme": "^3.10.3",
+    "@types/jasmine": "^3.3.12",
+    "@types/jest": "^24.0.15",
+    "enzyme": "^3.10.0",
+    "jest-puppeteer": "^4.3.0",
+    "puppeteer": "^1.19.0",
+    "react-test-renderer": "^16.8.6"
   },
   "husky": {
     "hooks": {

@@ -5,5 +5,7 @@ module.exports = {
   rules: {
     ...fabric.stylelint.rules,
     'order/properties-order': null,
+    'declaration-bang-space-before': null,
+    'function-name-case': null,
   },
 };

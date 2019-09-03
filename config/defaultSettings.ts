@@ -50,7 +50,7 @@ const defaultSettings: Settings = {
   menu: {
     locale: false,
   },
-  title: 'Wetrial',
+  title: 'Wetrial Template',
   pwa: false,
   collapse: false,
   iconfontUrl: '//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js', // iconfont库地址

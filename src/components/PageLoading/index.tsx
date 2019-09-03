@@ -22,11 +22,13 @@ function PageLoading(props: IPageLoadingProp) {
     'wrapperClassName',
     'indicator',
   );
-  return <Spin {...spinProps} className={classNames(className, { [styles.full]: full })} />;
+  return (
+    <Spin size="large" {...spinProps} className={classNames(className, { [styles.full]: full })} />
+  );
 }
 
 PageLoading.defaultProps = {
-  full: false,
+  full: true,
   spin: true,
 };
 

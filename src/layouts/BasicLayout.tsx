@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import Link from 'umi/link';
 import { NormalLayout } from 'wetrial';
 import { BasicLayoutProps as NormalLayoutProps } from '@wetrial/components/NormalLayout';
-import { MenuDataItem, Dispatch } from '@wetrial/types';
+import { IMenuDataItem, IDispatch } from '@wetrial/types';
 import { Settings } from '@wetrial/defaultSettings';
 import { formatMessage } from 'umi-plugin-react/locale';
 import Authorized from '@/utils/Authorized';
@@ -13,15 +13,15 @@ import smallLog from '@/assets/imgs/wetrial-logo-small.jpg';
 
 export interface BasicLayoutProps extends NormalLayoutProps {
   breadcrumbNameMap: {
-    [path: string]: MenuDataItem;
+    [path: string]: IMenuDataItem;
   };
   settings: Settings;
-  dispatch: Dispatch;
+  dispatch: IDispatch;
   user: object;
 }
 export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   breadcrumbNameMap: {
-    [path: string]: MenuDataItem;
+    [path: string]: IMenuDataItem;
   };
 };
 
@@ -29,10 +29,10 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
  * use Authorized check all menu item
  */
 
-const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
+const menuDataRender = (menuList: IMenuDataItem[]): IMenuDataItem[] =>
   menuList.map(item => {
     const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
-    return Authorized.check(item.authority, localItem, null) as MenuDataItem;
+    return Authorized.check(item.authority, localItem, null) as IMenuDataItem;
   });
 
 const footerRender: BasicLayoutProps['footerRender'] = (_, defaultDom) => {

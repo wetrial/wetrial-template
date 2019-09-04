@@ -17,6 +17,7 @@
     "analyze": "cross-env ANALYZE=1 umi build",
     "test": "umi test",
     "test:component": "umi test ./src/components",
+    "test:e2e": "umi test .e2e.js --watch",
     "patch": "yarn version --patch && git push origin master && git push origin --tags",
     "minor": "yarn version --minor && git push origin master && git push origin --tags",
     "major": "yarn version --major && git push origin master && git push origin --tags",
@@ -44,7 +45,7 @@
     "react-media": "^1.9.2",
     "react-router": "^5.0.1",
     "react-transition-group": "^4.0.0",
-    "wetrial": "^2.0.2"
+    "wetrial": "^2.0.9"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.124",
@@ -80,12 +81,12 @@
     "umi-types": "^0.3.17"
   },
   "optionalDependencies": {
-    "express": "^4.17.1",
-    "@types/mocha": "^5.2.6",
     "@types/enzyme": "^3.10.3",
     "@types/jasmine": "^3.3.12",
     "@types/jest": "^24.0.15",
+    "@types/mocha": "^5.2.6",
     "enzyme": "^3.10.0",
+    "express": "^4.17.1",
     "jest-puppeteer": "^4.3.0",
     "puppeteer": "^1.19.0",
     "react-test-renderer": "^16.8.6"

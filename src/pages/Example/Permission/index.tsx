@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'dva';
 import { Card, Button } from 'antd';
 import { PureComponent } from 'wetrial';
 
-@connect()
 class Index extends PureComponent {
   togglePermissions = (isAdmin?: boolean) => {
     const { dispatch } = this.props;

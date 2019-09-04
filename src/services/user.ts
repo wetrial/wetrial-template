@@ -16,6 +16,7 @@ export async function login(data) {
   return post({
     url: `${API_PREFIX}user/login`,
     data,
+    showTip: false,
   });
 }
 

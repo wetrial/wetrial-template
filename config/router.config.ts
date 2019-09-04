@@ -51,6 +51,12 @@ const routes: IRoute[] = [
                 component: './Example/Drag-Drop/index',
               },
               {
+                path: '/example/test',
+                name: '测试页面',
+                authority: Permissions.example.reactDnd,
+                component: './Example/Test/index',
+              },
+              {
                 path: '/example/list',
                 name: '列表',
                 exact: true,

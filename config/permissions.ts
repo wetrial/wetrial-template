@@ -4,6 +4,7 @@ const Permissions = {
     permission: 'example.permission',
     reactDnd: 'example.reactDnd',
     list: 'example.list',
+    scroll: '',
   },
 };
 

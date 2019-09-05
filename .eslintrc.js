@@ -69,6 +69,7 @@ module.exports = {
         ],
       },
     ],
+    'dot-notation': 0,
   },
   globals: {
     page: true,

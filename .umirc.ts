@@ -73,6 +73,10 @@ const config: IConfig = {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
+  block: {
+    defaultGitUrl: 'https://github.com/wetrial/wetrial-blocks/tree/master/src',
+    npmClient: 'yarn', // 优先级低于 umi block add [block] --npm-client
+  },
 };
 
 // ref: https://umijs.org/config/

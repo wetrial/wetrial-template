@@ -40,6 +40,14 @@ const example: IRoute = {
       component: './Example/List/index',
     },
     {
+      path: '/example/list/mergerowlist',
+      name: '列表(合并)',
+      hideInMenu: true,
+      exact: true,
+      authority: Permissions.example.list,
+      component: './Example/List/MergeRowList',
+    },
+    {
       path: '/example/list/:id?',
       hideInMenu: true,
       authority: Permissions.example.list,

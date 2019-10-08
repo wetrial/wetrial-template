@@ -20,12 +20,15 @@ import { FormComponent, withPagedQuery } from 'wetrial';
 import TableList from '@/components/TableList';
 import Authorized from '@/utils/Authorized';
 import Permissions from '@config/permissions';
-import { getDateString } from '@/utils';
+import memoizeOne from 'memoize-one';
+import { getDateString, mergeCells } from '@/utils';
 
 import { IListProps } from './props';
 
 const FormItem = Form.Item;
 const ViewPage = React.lazy<any>(() => import('./View'));
+
+const editionDisplayNameMergeCell = memoizeOne(mergeCells);
 
 @connect(({ example_tenant: { pagedData }, loading }) => ({
   pagedData,
@@ -36,8 +39,6 @@ const ViewPage = React.lazy<any>(() => import('./View'));
 // @ts-ignore
 @withPagedQuery({
   type: 'example_tenant/getTenants',
-  pageSize: 3,
-  // autoSearch: false,
   // // 修改发送的默认参数
   // changeParams: params => {
   //   const result = params;
@@ -63,6 +64,21 @@ class Index extends FormComponent<IListProps> {
     {
       title: '版本',
       dataIndex: 'editionDisplayName',
+      render: (name, _, index) => {
+        const {
+          pagedData: { items },
+        } = this.props;
+        const rowSpanMap = editionDisplayNameMergeCell(items, 'editionDisplayName');
+
+        const obj = {
+          children: name,
+          props: {
+            rowSpan: rowSpanMap[index],
+          },
+        };
+
+        return obj;
+      },
     },
     {
       title: '激活',
@@ -79,13 +95,8 @@ class Index extends FormComponent<IListProps> {
       },
     },
     {
-      title: '操作者',
-      width: 120,
-      dataIndex: 'operator',
-    },
-    {
       title: '操作',
-      dataIndex: 'op',
+      dataIndex: 'operator',
       fixed: 'right',
       width: 240,
       render: (_, record) => {
@@ -128,17 +139,10 @@ class Index extends FormComponent<IListProps> {
   ];
 
   // 设置默认搜索值(注意写法)
-  async setDefaultFilter() {
-    // demo 异步获取值，然后设置默认值
-    const v = await new Promise(resolve => {
-      setTimeout(() => {
-        resolve(10);
-      }, 20);
-    });
+  setDefaultFilter() {
     return {
       type: '3',
       filter: 'test',
-      v,
     };
   }
 
@@ -195,7 +199,7 @@ class Index extends FormComponent<IListProps> {
             <FormItem>
               {getFieldDecorator('filter', {
                 initialValue: filterData.filter,
-              })(<Input allowClear autoComplete="off" placeholder="输入以搜索" />)}
+              })(<Input autoComplete="off" placeholder="输入以搜索" />)}
             </FormItem>
           </Col>
           <Col xxl={{ span: 4 }} xl={{ span: 6 }} lg={{ span: 12 }} sm={24} xs={24}>
@@ -203,7 +207,7 @@ class Index extends FormComponent<IListProps> {
               {getFieldDecorator('type', {
                 initialValue: filterData.type,
               })(
-                <Select allowClear placeholder="请选择">
+                <Select placeholder="请选择">
                   <Select.Option value="1">vip</Select.Option>
                   <Select.Option value="2">普通</Select.Option>
                   <Select.Option value="3">皇冠</Select.Option>
@@ -228,25 +232,15 @@ class Index extends FormComponent<IListProps> {
                     重置
                   </Button>
                 </div>
-                <div>
-                  <Authorized authority={Permissions.example.list}>
-                    <Button
-                      type="primary"
-                      icon="plus"
-                      onClick={() => this.handleCreateOrEditTenant('')}
-                    >
-                      创建
-                    </Button>
-                  </Authorized>
-                  <Authorized authority={Permissions.example.list}>
-                    <Button
-                      className="m-l-xs"
-                      onClick={() => router.push({ pathname: '/example/list/mergerowlist' })}
-                    >
-                      合并列表
-                    </Button>
-                  </Authorized>
-                </div>
+                <Authorized authority={Permissions.example.list}>
+                  <Button
+                    type="primary"
+                    icon="plus"
+                    onClick={() => this.handleCreateOrEditTenant('')}
+                  >
+                    创建
+                  </Button>
+                </Authorized>
               </Row>
             </FormItem>
           </Col>

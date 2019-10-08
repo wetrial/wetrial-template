@@ -32,7 +32,7 @@
     "prettier": "prettier -c --write \"**/*\""
   },
   "dependencies": {
-    "antd": "^3.21.4",
+    "antd": "^3.23.2",
     "dva": "^2.4.1",
     "dva-model-extend": "^0.1.2",
     "lodash": "^4.17.11",
@@ -76,8 +76,8 @@
     "roadhog-api-doc": "^1.1.2",
     "stylelint": "^10.1.0",
     "typescript": "^3.5.3",
-    "umi": "^2.8.20",
-    "umi-plugin-react": "^1.9.16",
+    "umi": "^2.9.3",
+    "umi-plugin-react": "^1.9.19",
     "umi-types": "^0.3.17"
   },
   "optionalDependencies": {

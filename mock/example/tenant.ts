@@ -4,13 +4,14 @@ import responseWrapper, { authorizeIntercept } from '../base';
 
 function getTenants({ response }) {
   const tenants = Mock.mock({
-    totalCount: 10,
-    'items|10': [
+    totalCount: 50,
+    'items|15': [
       {
         id: '@guid',
         tenancyName: '@csentence(5,30)',
         name: '@csentence(5,30)',
-        editionDisplayName: 'Standand',
+        'operator|1': ['刘德华', '古天乐', 'XXG'],
+        'editionDisplayName|1': ['Standand', 'VIP', 'Super VIP'],
         isActive: true,
         creationTime: '@datetime("yyyy-MM-dd")',
       },

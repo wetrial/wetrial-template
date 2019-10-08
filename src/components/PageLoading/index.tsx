@@ -10,7 +10,7 @@ interface IPageLoadingProp extends SpinProps {
 }
 
 function PageLoading(props: IPageLoadingProp) {
-  const { full, className } = props;
+  const { full = true, className } = props;
   const spinProps = pick(
     props,
     'prefixCls',
@@ -23,13 +23,17 @@ function PageLoading(props: IPageLoadingProp) {
     'indicator',
   );
   return (
-    <Spin size="large" {...spinProps} className={classNames(className, { [styles.full]: full })} />
+    <Spin
+      spinning
+      size={full ? 'large' : 'default'}
+      {...spinProps}
+      className={classNames(className, { [styles.full]: full })}
+    />
   );
 }
 
 PageLoading.defaultProps = {
   full: true,
-  spin: true,
 };
 
 export default PageLoading;

@@ -16,9 +16,9 @@ export const PAGE_PROPS = {
   // showSizeChanger: true,
   hideOnSinglePage: true,
   // showQuickJumper:true,
-  // showTotal:(total)=>{
-  //     return `共 ${total} 条`;
-  // }
+  showTotal: (total, _, pageSize) => {
+    return `每页${pageSize || PAGE_SIZE}条，共${total}条`;
+  },
 };
 
 // 两列布局

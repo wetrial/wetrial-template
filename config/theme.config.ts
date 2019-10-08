@@ -1,53 +1,47 @@
 ﻿// 本文件是对 ant-design:
 // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
 export default {
-  '@font-size-sm': '12px',
-  '@font-size-base': '12px',
-  '@primary-color': '#0070cc',
-  // '@border-radius-base': '0',
-  // '@border-radius-sm': '0',
-
-  '@text-color': 'fade(#000, 65%)',
-  '@text-color-secondary': 'fade(#000, 45%)',
-  '@background-color-base': 'hsv(0, 0, 96%)',
-
   '@success-color': '#1e8e3e',
   '@error-color': '#d93026',
   '@warning-color': '#ffc440',
   '@info-color': '@primary-color',
   '@danger-color': '@error-color',
   '@processing-color': '@primary-color',
+  '@primary-color': '#0070d2',
+  '@highlight-color': '#c23934',
+  '@normal-color': '#d9d9d9',
+  '@white': '#fff',
+  '@black': '#000',
+  '@btn-danger-bg': '@error-color',
+  '@link-color': '#1589ee',
+  '@btn-primary-color': '#fff',
+  '@input-disabled-bg': '#f8f8f8',
+  '@input-placeholder-color': 'hsv(0, 0, 75%)',
+  '@disabled-color': 'fade(@black, 65%)',
 
+  '@text-color': 'fade(#000, 65%)',
+  '@text-color-secondary': 'fade(#000, 45%)',
+  '@background-color-base': 'hsv(0, 0, 96%)',
   '@border-color-base': '#dedede',
   '@border-color-split': '#dedede',
-
   '@outline-width': '0',
   '@outline-color': '#737373',
-
   '@input-height-lg': '36px',
   '@input-height-base': '32px',
   '@input-height-sm': '24px',
   '@input-hover-border-color': '#737373',
-
   '@form-item-margin-bottom': '16px',
-
   '@btn-default-bg': '#fafafa',
   '@btn-default-border': '#dedede',
   '@btn-danger-color': '#fff',
-  '@btn-danger-bg': '@error-color',
   '@btn-danger-border': '@error-color',
-
   '@switch-color': '@success-color',
-
   '@table-header-bg': '#fafafa',
   '@table-row-hover-bg': '#fafafa',
   '@table-padding-vertical': '8px',
-
   '@badge-color': '@error-color',
-
   '@breadcrumb-base-color': '@text-color',
   '@breadcrumb-last-item-color': '@text-color-secondary',
-
   '@slider-rail-background-color': '@background-color-base',
   '@slider-rail-background-color-hover': '#e1e1e1',
   '@slider-track-background-color': '@primary-color',

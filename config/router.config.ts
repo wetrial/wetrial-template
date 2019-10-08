@@ -34,7 +34,7 @@ const routes: IRoute[] = [
           example,
           exception,
           {
-            component: '404',
+            component: '403',
           },
         ],
       },

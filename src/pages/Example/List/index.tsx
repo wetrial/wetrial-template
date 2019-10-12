@@ -8,7 +8,6 @@ import {
   Row,
   Col,
   Button,
-  Card,
   Input,
   Checkbox,
   Popconfirm,
@@ -36,7 +35,7 @@ const ViewPage = React.lazy<any>(() => import('./View'));
 // @ts-ignore
 @withPagedQuery({
   type: 'example_tenant/getTenants',
-  pageSize: 3,
+  pageSize: 50,
   // autoSearch: false,
   // // 修改发送的默认参数
   // changeParams: params => {
@@ -267,7 +266,7 @@ class Index extends FormComponent<IListProps> {
       },
     } = this.props;
     return (
-      <Card>
+      <Fragment>
         {this.renderForm()}
 
         <TableList
@@ -286,7 +285,7 @@ class Index extends FormComponent<IListProps> {
             <ViewPage onClose={this.handleCloseView} id={_id} />
           </Suspense>
         ) : null}
-      </Card>
+      </Fragment>
     );
   }
 }

@@ -46,7 +46,7 @@ const FormItem = Form.Item;
 
 import { I${PascalPageName}Props, I${PascalPageName}State } from './props'
 // import styles from './index.less'
-    
+
 @connect(({ ${modelNamespace}:\{pagedData\},loading }) => ({
     pagedData,
     loading:loading.effects['${modelNamespace}/getPagedList']
@@ -95,11 +95,11 @@ class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalP
             },
         },
         ];
-    
+
         // getQueryParams = () => {
         //   return {};
         // };
-    
+
         handleSearch = e => {
         e.preventDefault();
         const { form, onSearchData } = this.props;
@@ -110,14 +110,14 @@ class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalP
             onSearchData(values);
         });
         };
-    
+
         handleCreateOrEdit = id => {
         // router.push({
         //   pathname: \`/\${id}\`,
         // });
         console.log(id);
         };
-    
+
         renderForm = () => {
         const {
             form: { getFieldDecorator },
@@ -173,7 +173,7 @@ class ${PascalPageName} extends FormComponent<I${PascalPageName}Props,I${PascalP
             </Form>
         );
         };
-    
+
         render() {
         const {
             pagination,
@@ -204,7 +204,7 @@ export default ${PascalPageName}
 `;
 
   // scss 模板
-  const lessTemplate = `@import '~themes/index.less';   
+  const lessTemplate = `@import '~themes/index.less';
 .container{
 
 }`;
@@ -232,7 +232,7 @@ effects: {
 },
 });`;
   // 接口模板
-  const serviceTemplate = `import { get,post } from '@wetrial/request';
+  const serviceTemplate = `import { get,post } from '@/utils/request';
 import { API_PREFIX } from '@/constants';
 
 export async function GetPagedList(data):Promise<any>{
@@ -253,7 +253,7 @@ export async function create(data):Promise<any>{
   const interfaceTemplate = `import { IConnectProps, IFormProps, IKeyValue } from '@wetrial/types';
   import { IWithPagedQueryProps } from '@wetrial/components/withPagedQuery';
 
-  
+
 /**
  * ${pageName} props 参数类型
  */

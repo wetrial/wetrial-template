@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Card } from 'antd';
 import { connect } from 'dva';
 import Link from 'umi/link';
 import { NormalLayout } from 'wetrial';
@@ -8,7 +9,6 @@ import { Settings } from '@wetrial/defaultSettings';
 import { formatMessage } from 'umi-plugin-react/locale';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/b-components/GlobalHeader/RightContent';
-
 import smallLog from '@/assets/imgs/wetrial-logo-small.jpg';
 
 export interface BasicLayoutProps extends NormalLayoutProps {
@@ -29,11 +29,12 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
  * use Authorized check all menu item
  */
 
-const menuDataRender = (menuList: IMenuDataItem[]): IMenuDataItem[] =>
-  menuList.map(item => {
-    const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
+const menuDataRender = (menuList: IMenuDataItem[]): IMenuDataItem[] => {
+  return menuList.map(item => {
+    const localItem = { ...item, children: item.children ? menuDataRender(item.children) : null };
     return Authorized.check(item.authority, localItem, null) as IMenuDataItem;
   });
+};
 
 const footerRender: BasicLayoutProps['footerRender'] = (_, defaultDom) => {
   return defaultDom;
@@ -89,7 +90,16 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         {...settings}
       >
         {/* <PageHeaderWrapper>{props.children}</PageHeaderWrapper> */}
-        {children}
+        {/* <ScrollBar
+          universal
+          hideTracksWhenNotNeeded
+          autoHide
+          autoHeight
+          autoHeightMin="calc(100vh - 132px)"
+          autoHeightMax="calc(100vh - 132px)"
+        > */}
+        <Card>{children}</Card>
+        {/* </ScrollBar> */}
       </NormalLayout>
     </>
   );

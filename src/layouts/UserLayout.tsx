@@ -5,12 +5,13 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
 // import SelectLang from '@/components/SelectLang';
 import { GlobalFooter } from 'wetrial';
-import { ConnectProps, MenuDataItem } from '@wetrial/types';
+import { IConnectProps, IMenuDataItem } from '@wetrial/types';
 import { getPageTitle, getMenuData } from '@wetrial/components/NormalLayout';
+import defaultSettings from '@config/defaultSettings';
 import styles from './UserLayout.less';
 
-export interface UserLayoutProps extends ConnectProps {
-  breadcrumbNameMap: { [path: string]: MenuDataItem };
+export interface UserLayoutProps extends IConnectProps {
+  breadcrumbNameMap: { [path: string]: IMenuDataItem };
 }
 
 const UserLayout: React.SFC<UserLayoutProps> = props => {
@@ -34,6 +35,7 @@ const UserLayout: React.SFC<UserLayoutProps> = props => {
         pathname: location.pathname,
         breadcrumb,
         formatMessage,
+        title: defaultSettings.title,
         ...props,
       })}
     >

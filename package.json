@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "wetrial-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "types": ".typings.d.ts",
   "typesVersions": {
     ">=3.3": {
@@ -32,7 +32,7 @@
     "prettier": "prettier -c --write \"**/*\""
   },
   "dependencies": {
-    "antd": "^3.23.2",
+    "antd": "^3.23.6",
     "dva": "^2.4.1",
     "dva-model-extend": "^0.1.2",
     "lodash": "^4.17.11",
@@ -45,7 +45,7 @@
     "react-media": "^1.9.2",
     "react-router": "^5.0.1",
     "react-transition-group": "^4.0.0",
-    "wetrial": "^2.0.16"
+    "wetrial": "^2.0.17"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.124",
@@ -75,10 +75,10 @@
     "prettier": "^1.17.1",
     "roadhog-api-doc": "^1.1.2",
     "stylelint": "^10.1.0",
-    "typescript": "^3.5.3",
-    "umi": "^2.9.3",
-    "umi-plugin-react": "^1.9.19",
-    "umi-types": "^0.3.17"
+    "typescript": "^3.6.4",
+    "umi": "^2.10.1",
+    "umi-plugin-react": "^1.12.2",
+    "umi-types": "^0.5.3"
   },
   "optionalDependencies": {
     "@types/enzyme": "^3.10.3",

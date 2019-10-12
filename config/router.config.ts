@@ -5,7 +5,7 @@ import exception from './routes/exception';
 const routes: IRoute[] = [
   {
     path: '/',
-    component: '../layouts/BlankLayout',
+    component: '../layouts/BaseLayout',
     routes: [
       {
         path: '/user',

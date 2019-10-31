@@ -236,14 +236,14 @@ effects: {
 import { API_PREFIX } from '@/constants';
 
 export async function GetPagedList(data):Promise<any>{
-    return get({
+    return await get({
         url:\`\${API_PREFIX}${PascalPageName}/GetPagedList\`,
         data
     });
 }
 
 export async function create(data):Promise<any>{
-    return post({
+    return await post({
         url:\`\${API_PREFIX}${PascalPageName}/Create\`,
         data
     });

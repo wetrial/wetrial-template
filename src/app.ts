@@ -12,6 +12,9 @@ export const dva = {
 
         // eslint-disable-next-line no-console
         console.log(unAuthorizedErr.message);
+      } else {
+        // eslint-disable-next-line no-console
+        console.error(err);
       }
       err.preventDefault();
     },

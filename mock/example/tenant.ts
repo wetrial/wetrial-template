@@ -4,8 +4,8 @@ import responseWrapper, { authorizeIntercept } from '../base';
 
 function getTenants({ response }) {
   const tenants = Mock.mock({
-    totalCount: 50,
-    'items|15': [
+    totalCount: 100,
+    'items|100': [
       {
         id: '@guid',
         tenancyName: '@csentence(5,30)',

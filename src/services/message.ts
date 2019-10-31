@@ -41,3 +41,9 @@ export async function setAllToRead(type) {
     },
   });
 }
+
+export async function triggerException() {
+  return get({
+    url: `${API_PREFIX}message/triggerException`,
+  });
+}

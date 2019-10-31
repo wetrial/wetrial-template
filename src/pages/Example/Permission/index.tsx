@@ -16,6 +16,13 @@ class Index extends PureComponent {
     });
   };
 
+  triggerException = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'global/triggerException',
+    });
+  };
+
   render() {
     return (
       <RouteContext.Consumer>
@@ -36,15 +43,18 @@ class Index extends PureComponent {
               avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
             >
               <Card title="权限测试">
-                <Button type="danger" onClick={() => this.togglePermissions(true)}>
+                <Button type="danger" onClick={this.togglePermissions.bind(this, true)}>
                   设置为管理员权限
                 </Button>
                 <Button
-                  style={{ marginLeft: '5px' }}
+                  style={{ marginLeft: '8px' }}
                   type="default"
-                  onClick={() => this.togglePermissions()}
+                  onClick={this.togglePermissions.bind(this)}
                 >
                   设置为普通用户权限
+                </Button>
+                <Button style={{ marginLeft: '8px' }} type="danger" onClick={this.triggerException}>
+                  触发异常
                 </Button>
               </Card>
             </PageHeader>

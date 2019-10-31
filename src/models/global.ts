@@ -1,5 +1,12 @@
 import extendModel from '@wetrial/model';
-import { getAll, getNotifys, getMessages, getTodos, setAllToRead } from '@/services/message';
+import {
+  getAll,
+  getNotifys,
+  getMessages,
+  getTodos,
+  setAllToRead,
+  triggerException,
+} from '@/services/message';
 import { NoticeIconData } from '@/components/NoticeIcon';
 
 export interface INoticeItem extends NoticeIconData {
@@ -116,6 +123,15 @@ export default extendModel<IGlobalStateModel>({
       yield put({
         type: 'updateWithSum',
         payload: {},
+      });
+    },
+    *triggerException(_, { call, put }) {
+      const result = yield call(triggerException);
+      yield put({
+        type: 'update',
+        payload: {
+          triggerException: result,
+        },
       });
     },
     // throttle:[

@@ -35,7 +35,7 @@ const ViewPage = React.lazy<any>(() => import('./View'));
 // @ts-ignore
 @withPagedQuery({
   type: 'example_tenant/getTenants',
-  pageSize: 50,
+  pageSize: 5,
   // autoSearch: false,
   // // 修改发送的默认参数
   // changeParams: params => {

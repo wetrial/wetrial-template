@@ -70,6 +70,7 @@ module.exports = {
       },
     ],
     'dot-notation': 0,
+    'no-return-await': 0,
   },
   globals: {
     page: true,

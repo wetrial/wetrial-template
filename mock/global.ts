@@ -1,6 +1,6 @@
 import Mock from 'mockjs';
 import { delay } from 'roadhog-api-doc';
-import responseWrapper, { authorizeIntercept } from './base';
+import responseWrapper, { authorizeIntercept, errorWrapper } from './base';
 
 function generateTodos() {
   const todos = Mock.mock({
@@ -109,6 +109,9 @@ export default delay(
       authorizeIntercept({ request: req, response: res }, getTodos),
     'GET /api/message/getNotifys': (req, res) =>
       authorizeIntercept({ request: req, response: res }, getNotifys),
+    'GET /api/message/triggerException': (req, response) => {
+      response.status(500).send(errorWrapper({}, false, '出错。。。。!'));
+    },
   },
   1000,
 );

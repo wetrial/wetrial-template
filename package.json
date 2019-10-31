@@ -76,8 +76,8 @@
     "roadhog-api-doc": "^1.1.2",
     "stylelint": "^10.1.0",
     "typescript": "^3.6.4",
-    "umi": "^2.10.1",
-    "umi-plugin-react": "^1.12.2",
+    "umi": "^2.10.7",
+    "umi-plugin-react": "^1.12.8",
     "umi-types": "^0.5.3"
   },
   "optionalDependencies": {

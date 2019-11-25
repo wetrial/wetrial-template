@@ -32,7 +32,7 @@
     "prettier": "prettier -c --write \"**/*\""
   },
   "dependencies": {
-    "antd": "^3.23.6",
+    "antd": "^3.25.2",
     "dva": "^2.4.1",
     "dva-model-extend": "^0.1.2",
     "lodash": "^4.17.11",
@@ -53,7 +53,7 @@
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-test-renderer": "^16.8.1",
-    "@umijs/fabric": "^1.1.0",
+    "@umijs/fabric": "^1.2.1",
     "antd-pro-merge-less": "^1.0.0",
     "antd-theme-webpack-plugin": "^1.2.0",
     "babel-plugin-import": "^1.12.0",
@@ -76,9 +76,9 @@
     "roadhog-api-doc": "^1.1.2",
     "stylelint": "^10.1.0",
     "typescript": "^3.6.4",
-    "umi": "^2.10.7",
-    "umi-plugin-react": "^1.12.8",
-    "umi-types": "^0.5.3"
+    "umi": "^2.12.2",
+    "umi-plugin-react": "^1.14.5",
+    "umi-types": "^0.5.7"
   },
   "optionalDependencies": {
     "@types/enzyme": "^3.10.3",

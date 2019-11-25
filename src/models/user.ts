@@ -36,7 +36,6 @@ export default extendModel<IUserModelState>({
   effects: {
     *getCurrent(_, { call, put }) {
       const currentUser = yield call(getCurrent);
-
       yield put({
         type: 'update',
         payload: {

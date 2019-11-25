@@ -5,7 +5,7 @@ import { API_PREFIX } from '@/constants';
  * 获取当前用户信息
  */
 export async function getCurrent() {
-  return await get<string>(`${API_PREFIX}user/getCurrent`);
+  return await get(`${API_PREFIX}user/getCurrent`);
 }
 
 /**

@@ -45,7 +45,7 @@
     "react-media": "^1.9.2",
     "react-router": "^5.0.1",
     "react-transition-group": "^4.0.0",
-    "wetrial": "^2.0.17"
+    "wetrial": "^3.0.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.124",

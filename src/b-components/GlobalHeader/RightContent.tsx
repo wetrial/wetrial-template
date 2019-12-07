@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 // import { formatMessage } from 'umi-plugin-react/locale';
-import { ConnectProps } from '@wetrial/types';
+import { IConnectProps } from '@wetrial/types';
 import AvatarUser from './AvatarDropdown';
 // import SelectLang from '../SelectLang';
 import NoticeIconView from './NoticeIconView';
@@ -9,7 +9,7 @@ import NoticeIconView from './NoticeIconView';
 import styles from './index.less';
 
 export type SiderTheme = 'light' | 'dark';
-export interface GlobalHeaderRightProps extends ConnectProps {
+export interface GlobalHeaderRightProps extends IConnectProps {
   theme?: SiderTheme;
   layout: 'sidemenu' | 'topmenu';
 }

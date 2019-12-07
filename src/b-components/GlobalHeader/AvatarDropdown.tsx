@@ -6,11 +6,11 @@ import { connect } from 'dva';
 import { ICurrentUser } from '@/models/user';
 // import router from 'umi/router';
 
-import { ConnectProps } from '@wetrial/types';
+import { IConnectProps } from '@wetrial/types';
 import HeaderDropdown from '@/components/HeaderDropdown';
 import styles from './index.less';
 
-export interface GlobalHeaderRightProps extends ConnectProps {
+export interface GlobalHeaderRightProps extends IConnectProps {
   currentUser?: ICurrentUser;
   menu?: boolean;
 }

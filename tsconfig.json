@@ -33,8 +33,7 @@
     // 模块名到基于 baseUrl 的路径映射的列表
     "paths": {
       "@/*": ["src/*"],
-      "@config/*": ["config/*"],
-      "@wetrial/*": ["./node_modules/wetrial/es/*"]
+      "@config/*": ["config/*"]
     },
     // "rootDirs": ["/src","/config", "/test", "/mock","../src"], // 根文件夹列表，其组合内容表示项目运行时的结构内容
     // 包含类型声明的文件列表

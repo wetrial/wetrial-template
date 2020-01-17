@@ -1,4 +1,4 @@
-import storeWithExp from '@wetrial/store';
+import storeWithExp from '@wetrial/core/es/kernel/store';
 
 export {
   getToken,
@@ -7,9 +7,7 @@ export {
   getPermissions,
   setPermissions,
   clearPermissions,
-} from '@wetrial/store';
-
-export { storeWithExp };
+} from '@wetrial/core';
 
 const Tenant = 'WETRIAL.Tenant';
 
@@ -24,3 +22,5 @@ export const setTenant = (tenantId): void => {
 export const clearTenant = (): void => {
   storeWithExp.remove(Tenant);
 };
+
+export { storeWithExp };

@@ -1,7 +1,6 @@
-import extendModel from '@wetrial/model';
-import defaultSettings, { Settings } from '@config/defaultSettings';
+import defaultSettings from '@config/defaultSettings';
 
-export default extendModel<Settings>({
+export default {
   namespace: 'settings',
   state: defaultSettings,
-});
+};

@@ -37,7 +37,7 @@ const plugins: IPlugin[] = [
       ...(!TEST && os.platform() === 'darwin'
         ? {
             dll: {
-              include: ['dva', 'dva/router', 'dva/saga', 'axios', 'lodash'],
+              include: ['dva', 'dva/router', 'dva/saga', 'lodash'],
               exclude: ['@babel/runtime', 'netlify-lambda'],
             },
             hardSource: false,

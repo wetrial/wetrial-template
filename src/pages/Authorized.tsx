@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { IMenuDataItem } from '@wetrial/types';
 import pathToRegexp from 'path-to-regexp';
 import { Redirect, router } from 'umi';
 import { connect } from 'dva';
@@ -17,10 +16,7 @@ interface IRouteLevelDto {
 }
 
 // 将menu转换成 列表
-const getAuthorizedSimpleMenus = (
-  menus: IMenuDataItem[],
-  parentPathName: string,
-): IRouteLevelDto[] => {
+const getAuthorizedSimpleMenus = (menus: any[], parentPathName: string): IRouteLevelDto[] => {
   let authorizedMenus: IRouteLevelDto[] = new Array<IRouteLevelDto>();
   const currentPermissions = getPermissions();
 
@@ -54,7 +50,7 @@ const getAuthorizedSimpleMenus = (
 
 interface DefaultRedirectProps {
   pathname: string;
-  routes: IMenuDataItem[];
+  routes: any[];
 }
 
 const DefaultRedirect: React.FC<DefaultRedirectProps> = props => {
@@ -80,7 +76,7 @@ const DefaultRedirect: React.FC<DefaultRedirectProps> = props => {
   return <PageLoading />;
 };
 
-const getRouteAuthority = (path: string, routeData: IMenuDataItem[]) => {
+const getRouteAuthority = (path: string, routeData: any[]) => {
   let authorities: string[] | string | undefined;
   routeData.forEach(route => {
     // match prefix

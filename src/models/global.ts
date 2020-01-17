@@ -1,4 +1,3 @@
-import extendModel from '@wetrial/model';
 import {
   getAll,
   getNotifys,
@@ -7,9 +6,8 @@ import {
   setAllToRead,
   triggerException,
 } from '@/services/message';
-import { NoticeIconData } from '@/components/NoticeIcon';
 
-export interface INoticeItem extends NoticeIconData {
+export interface INoticeItem {
   id: string;
   type: string;
   status: string;
@@ -49,7 +47,7 @@ const calcTotal = state => {
   return count;
 };
 
-export default extendModel<IGlobalStateModel>({
+export default {
   namespace: 'global',
   state: {
     collapsed: false, // 左侧菜单面板是否折叠
@@ -185,4 +183,4 @@ export default extendModel<IGlobalStateModel>({
   //   });
   // },
   // }
-});
+};

@@ -1,9 +1,7 @@
 // import router from "umi/router";
 import { routerRedux } from 'dva/router';
-import WetrialPermissions from '@config/permissions';
-import extendModel from '@wetrial/model';
 import { clearToken, setToken } from '@/utils/store';
-import { getCurrent, getCurrentPermissions, loginout, login } from '@/services/user';
+import { getCurrent, loginout, login } from '@/services/user';
 import { setPermissions, clearPermissions, getPermissions } from '@/utils/authority';
 import { reloadAuthorized } from '@/utils/Authorized';
 import { getRedirect } from '@/utils';
@@ -25,7 +23,7 @@ export interface IUserModelState {
   permissions?: string[];
 }
 
-export default extendModel<IUserModelState>({
+export default {
   namespace: 'user',
   state: {
     // 当前用户信息
@@ -73,18 +71,6 @@ export default extendModel<IUserModelState>({
         });
       }
     },
-    *testToggleAuthorized({ payload: { isAdmin } }, { call, put }) {
-      let permissions = yield call(getCurrentPermissions);
-      if (!isAdmin) {
-        permissions = permissions.filter(item => item !== WetrialPermissions.example.reactDnd);
-      }
-      yield put({
-        type: 'reloadAuthorized',
-        payload: {
-          permissions,
-        },
-      });
-    },
     *loginOut(_, { call, put }) {
       yield call(loginout);
       yield clearToken();
@@ -112,4 +98,4 @@ export default extendModel<IUserModelState>({
     //   )
     // }
   },
-});
+};

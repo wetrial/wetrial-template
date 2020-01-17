@@ -8,7 +8,10 @@
 /package-lock.json
 
 # production
+/npms
 /dist
+/es
+/lib
 
 # misc
 .DS_Store

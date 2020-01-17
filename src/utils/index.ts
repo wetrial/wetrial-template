@@ -2,7 +2,7 @@ import { parse, stringify } from 'qs';
 import { mapValues, isString } from 'lodash';
 import moment from 'moment';
 import { BASE_PATH } from '../constants';
-import { IKeyValue } from '@wetrial/types';
+import { IKeyValue } from '@wetrial/core/es/kernel/types';
 
 /**
  * 解析url后的查询字符串并转化成object对象

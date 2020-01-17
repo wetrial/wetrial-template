@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "wetrial-template",
+  "name": "@wetrial/template",
   "version": "1.0.1",
   "types": ".typings.d.ts",
   "typesVersions": {
@@ -14,6 +14,7 @@
     "start": "cross-env DEV=1 umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "build": "umi build",
+    "publish": "node scripts/publish",
     "analyze": "cross-env ANALYZE=1 umi build",
     "test": "umi test",
     "test:component": "umi test ./src/components",
@@ -32,20 +33,20 @@
     "prettier": "prettier -c --write \"**/*\""
   },
   "dependencies": {
-    "antd": "^3.25.2",
+    "@wetrial/core": "^0.0.6",
+    "@wetrial/hooks": "^0.10.18",
+    "antd": "^4.0.0-rc.1",
+    "axios": "^0.19.1",
     "dva": "^2.4.1",
     "dva-model-extend": "^0.1.2",
     "lodash": "^4.17.11",
     "lodash-decorators": "^6.0.1",
     "memoize-one": "^5.0.4",
     "react": "^16.8.6",
-    "react-container-query": "^0.11.0",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.8.6",
-    "react-media": "^1.9.2",
     "react-router": "^5.0.1",
-    "react-transition-group": "^4.0.0",
-    "wetrial": "^3.0.1"
+    "react-transition-group": "^4.0.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.124",
@@ -53,7 +54,7 @@
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-test-renderer": "^16.8.1",
-    "@umijs/fabric": "^1.2.1",
+    "@wetrial/fabric": "^0.0.4",
     "antd-pro-merge-less": "^1.0.0",
     "antd-theme-webpack-plugin": "^1.2.0",
     "babel-plugin-import": "^1.12.0",
@@ -76,9 +77,9 @@
     "roadhog-api-doc": "^1.1.2",
     "stylelint": "^10.1.0",
     "typescript": "^3.6.4",
-    "umi": "^2.12.2",
-    "umi-plugin-react": "^1.14.5",
-    "umi-types": "^0.5.7"
+    "umi": "^2.13.3",
+    "umi-plugin-react": "^1.15.2",
+    "umi-types": "^0.5.12"
   },
   "optionalDependencies": {
     "@types/enzyme": "^3.10.3",
@@ -107,5 +108,13 @@
   },
   "engines": {
     "node": ">=8.0.0"
-  }
+  },
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ]
 }

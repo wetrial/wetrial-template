@@ -1,5 +1,5 @@
 import { delay } from 'roadhog-api-doc';
-import Permissions from '../config/permissions';
+import Permissions from '../config/modules/template';
 import { deepGetValue } from '../src/utils';
 import responseWrapper, { errorWrapper, authorizeIntercept } from './base';
 

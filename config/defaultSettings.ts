@@ -2,7 +2,7 @@ import theme from '../config/theme.config';
 
 export type ContentWidth = 'Fluid' | 'Fixed';
 
-export interface Settings {
+export interface ISettings {
   /**
    * theme for nav menu
    */
@@ -39,7 +39,7 @@ export interface Settings {
   iconfontUrl: string;
 }
 
-const defaultSettings: Settings = {
+const defaultSettings: ISettings = {
   navTheme: 'light',
   primaryColor: theme['@primary-color'],
   layout: 'sidemenu',

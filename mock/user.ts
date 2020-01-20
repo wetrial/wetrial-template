@@ -5,6 +5,7 @@ import responseWrapper, { errorWrapper, authorizeIntercept } from './base';
 
 function getCurrentUser({ response }) {
   const current = {
+    id: '10000',
     name: 'XXG',
     avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
     email: 'antdesign@alipay.com',

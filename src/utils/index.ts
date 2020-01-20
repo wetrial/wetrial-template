@@ -1,8 +1,8 @@
 import { parse, stringify } from 'qs';
 import { mapValues, isString } from 'lodash';
 import moment from 'moment';
+import { Route } from '@/models/connect';
 import { BASE_PATH } from '../constants';
-import { IKeyValue } from '@wetrial/core/es/kernel/types';
 
 /**
  * 解析url后的查询字符串并转化成object对象
@@ -86,33 +86,39 @@ export function downloadTempFile(file: { fileName: string; fileType: string; fil
   window.location.href = `${BASE_PATH}File/DownloadTempFile?${stringify(file)}`;
 }
 
+export const getPageQuery = () => parse(window.location.href.split('?')[1]);
+
 /**
- * 对数据源按key进行相邻行合并，返回生成的跨行对象,建议使用memoizeOne进行缓存调用
- * @param list 要进行合并的数据源列表
- * @param key key
- * @example mergeCells([{name:'xxg',title:'code'},{name:'刘德华',title:'code'},{name:'古天乐',title:'other'}],'title')==>{0:2,1:0,2:1}
+ * props.route.routes
+ * @param router [{}]
+ * @param pathname string
  */
-export function mergeCells<T>(list: T[], key: string | ((item: T) => string)): IKeyValue {
-  const mergeObj = {};
-  let startIndex = 0;
-  list &&
-    list.forEach((item, index, arr) => {
-      let curValue;
-      let preValue;
-      if (typeof key === 'string') {
-        curValue = item[key];
-        preValue = arr[startIndex][key];
-      } else {
-        curValue = key(item);
-        preValue = key(arr[startIndex]);
+export const getAuthorityFromRouter = <T extends { path?: string }>(
+  router: T[] = [],
+  pathname: string,
+): T | undefined => {
+  const authority = router.find(({ path }) => path && pathRegexp(path).exec(pathname));
+  if (authority) return authority;
+  return undefined;
+};
+
+export const getRouteAuthority = (path: string, routeData: Route[]) => {
+  let authorities: string[] | string | undefined;
+  routeData.forEach(route => {
+    // match prefix
+    if (pathRegexp(`${route.path}/(.*)`).test(`${path}/`)) {
+      if (route.authority) {
+        authorities = route.authority;
       }
-      mergeObj[index] = 0;
-      if (curValue === preValue) {
-        mergeObj[startIndex] += 1;
-      } else {
-        mergeObj[index] = 1;
-        startIndex = index;
+      // exact match
+      if (route.path === path) {
+        authorities = route.authority || authorities;
       }
-    });
-  return mergeObj;
-}
+      // get children authority recursively
+      if (route.routes) {
+        authorities = getRouteAuthority(path, route.routes) || authorities;
+      }
+    }
+  });
+  return authorities;
+};

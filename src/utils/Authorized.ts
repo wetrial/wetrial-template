@@ -4,7 +4,7 @@ import { getPermissions } from './authority';
 let Authorized = RenderAuthorized(getPermissions()); // eslint-disable-line
 
 // Reload the rights component
-const reloadAuthorized = () => {
+const reloadAuthorized = (): void => {
   Authorized = RenderAuthorized(getPermissions());
 };
 

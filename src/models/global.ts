@@ -1,186 +1,139 @@
-import {
-  getAll,
-  getNotifys,
-  getMessages,
-  getTodos,
-  setAllToRead,
-  triggerException,
-} from '@/services/message';
+import { Reducer } from 'redux';
+import { Subscription, Effect } from 'dva';
 
-export interface INoticeItem {
+import { NoticeIconData } from '@/components/NoticeIcon';
+import { queryNotices } from '@/services/user';
+import { ConnectState } from './connect.d';
+
+export interface NoticeItem extends NoticeIconData {
   id: string;
   type: string;
   status: string;
 }
 
-interface ITipTypeModel {
-  count: number;
-  list: INoticeItem[];
-}
-
-export interface ITipsModel {
-  count: number;
-  todos: ITipTypeModel;
-  messages: ITipTypeModel;
-  notifys: ITipTypeModel;
-}
-
-export interface IGlobalStateModel {
+export interface GlobalModelState {
   collapsed: boolean;
-  tipsFetched: boolean;
-  tips: ITipsModel;
+  notices: NoticeItem[];
 }
 
-// 计算总数
-const calcTotal = state => {
-  let count = 0;
-  const { todos, messages, notifys } = state;
-  if (todos && todos.count) {
-    count += todos.count;
-  }
-  if (messages && messages.count) {
-    count += messages.count;
-  }
-  if (notifys && notifys.count) {
-    count += notifys.count;
-  }
-  return count;
-};
-
-export default {
-  namespace: 'global',
-  state: {
-    collapsed: false, // 左侧菜单面板是否折叠
-    tipsFetched: false,
-    tips: {
-      count: 0, // 总数量
-      // 待办列表
-      todos: {
-        list: [],
-        count: 0,
-      },
-      // 消息列表
-      messages: {
-        list: [],
-        count: 0,
-      },
-      // 通知列表
-      notifys: {
-        list: [],
-        count: 0,
-      },
-    },
-  },
+export interface GlobalModelType {
+  namespace: 'global';
+  state: GlobalModelState;
   effects: {
-    *getAll({ payload = { force: false } }, { call, put, select }) {
-      if (!payload.force) {
-        const isFetched = yield select(state => state.global.tipsFetched);
-        if (isFetched) {
-          return;
-        }
-      } else {
-        const all = yield call(getAll);
-        yield put({
-          type: 'updateWithSum',
-          payload: {
-            ...all,
-            tipsFetched: true,
-          },
-        });
-      }
-    },
-    *getNotifys(_, { call, put }) {
-      const notifys = yield call(getNotifys);
-      yield put({
-        type: 'updateWithSum',
-        payload: {
-          notifys,
-        },
-      });
-    },
-    *getTodos(_, { call, put }) {
-      const todos = yield call(getTodos);
-      yield put({
-        type: 'updateWithSum',
-        payload: {
-          todos,
-        },
-      });
-    },
-    *getMessages(_, { call, put }) {
-      const messages = yield call(getMessages);
-      yield put({
-        type: 'updateWithSum',
-        payload: {
-          messages,
-        },
-      });
-    },
-    *setAllToRead({ payload }, { call, put }) {
-      yield call(setAllToRead, payload);
-      yield put({
-        type: 'updateWithSum',
-        payload: {},
-      });
-    },
-    *triggerException(_, { call, put }) {
-      const result = yield call(triggerException);
-      yield put({
-        type: 'update',
-        payload: {
-          triggerException: result,
-        },
-      });
-    },
-    // throttle:[
-    //   function*({payload},{call,put}){
-    //     yield put({
-
-    //     })
-    //   },
-    //   {
-    //     type:'throttle',ms:100
-    //   }
-    // ],
-    // takeLatest:[
-    //   function*({payload},{call,put}){
-
-    //   },
-    //   {
-    //     type:'takeLatest'
-    //   }
-    // ]
-  },
+    fetchNotices: Effect;
+    clearNotices: Effect;
+    changeNoticeReadState: Effect;
+  };
   reducers: {
-    changeLayoutCollapsed(state, { payload }) {
+    changeLayoutCollapsed: Reducer<GlobalModelState>;
+    saveNotices: Reducer<GlobalModelState>;
+    saveClearedNotices: Reducer<GlobalModelState>;
+  };
+  subscriptions: { setup: Subscription };
+}
+
+const GlobalModel: GlobalModelType = {
+  namespace: 'global',
+
+  state: {
+    collapsed: false,
+    notices: [],
+  },
+
+  effects: {
+    *fetchNotices(_, { call, put, select }) {
+      const data = yield call(queryNotices);
+      yield put({
+        type: 'saveNotices',
+        payload: data,
+      });
+      const unreadCount: number = yield select(
+        (state: ConnectState) => state.global.notices.filter(item => !item.read).length,
+      );
+      yield put({
+        type: 'user/changeNotifyCount',
+        payload: {
+          totalCount: data.length,
+          unreadCount,
+        },
+      });
+    },
+    *clearNotices({ payload }, { put, select }) {
+      yield put({
+        type: 'saveClearedNotices',
+        payload,
+      });
+      const count: number = yield select((state: ConnectState) => state.global.notices.length);
+      const unreadCount: number = yield select(
+        (state: ConnectState) => state.global.notices.filter(item => !item.read).length,
+      );
+      yield put({
+        type: 'user/changeNotifyCount',
+        payload: {
+          totalCount: count,
+          unreadCount,
+        },
+      });
+    },
+    *changeNoticeReadState({ payload }, { put, select }) {
+      const notices: NoticeItem[] = yield select((state: ConnectState) =>
+        state.global.notices.map(item => {
+          const notice = { ...item };
+          if (notice.id === payload) {
+            notice.read = true;
+          }
+          return notice;
+        }),
+      );
+
+      yield put({
+        type: 'saveNotices',
+        payload: notices,
+      });
+
+      yield put({
+        type: 'user/changeNotifyCount',
+        payload: {
+          totalCount: notices.length,
+          unreadCount: notices.filter(item => !item.read).length,
+        },
+      });
+    },
+  },
+
+  reducers: {
+    changeLayoutCollapsed(state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
       return {
         ...state,
         collapsed: payload,
       };
     },
-    updateWithSum(state, { payload }) {
-      const tips = {
-        ...state.tips,
-        ...payload,
-      };
-      const count = calcTotal(tips);
+    saveNotices(state, { payload }): GlobalModelState {
       return {
+        collapsed: false,
         ...state,
-        tips: {
-          ...tips,
-          count,
-        },
+        notices: payload,
+      };
+    },
+    saveClearedNotices(state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
+      return {
+        collapsed: false,
+        ...state,
+        notices: state.notices.filter((item): boolean => item.type !== payload),
       };
     },
   },
-  // subscriptions: {
-  // setup({ history }) {
-  //   // Subscribe history(url) change, trigger `load` action if pathname is `/`
-  //   return history.listen(({ pathname, search }) => {
-  //     if (typeof window.ga !== 'undefined') {
-  //       window.ga('send', 'pageview', pathname + search);
-  //     }
-  //   });
-  // },
-  // }
+
+  subscriptions: {
+    setup(): void {
+      // // Subscribe history(url) change, trigger `load` action if pathname is `/`
+      // history.listen(({ pathname, search }): void => {
+      //   if (typeof window.ga !== 'undefined') {
+      //     window.ga('send', 'pageview', pathname + search);
+      //   }
+      // });
+    },
+  },
 };
+
+export default GlobalModel;

@@ -36,7 +36,7 @@
     "@ant-design/pro-layout": "^4.10.10",
     "@wetrial/core": "^0.0.6",
     "@wetrial/hooks": "^0.10.18",
-    "antd": "^4.0.0-rc.1",
+    "antd": "^4.0.0-rc.4",
     "axios": "^0.19.1",
     "dva": "^2.4.1",
     "dva-model-extend": "^0.1.2",

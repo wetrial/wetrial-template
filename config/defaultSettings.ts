@@ -1,13 +1,16 @@
-import theme from '../config/theme.config';
+import { MenuTheme } from 'antd/es/menu/MenuContext';
 
 export type ContentWidth = 'Fluid' | 'Fixed';
 
-export interface ISettings {
+export interface DefaultSettings {
   /**
    * theme for nav menu
    */
-  navTheme: 'dark' | 'light';
-  primaryColor?: string;
+  navTheme: MenuTheme;
+  /**
+   * primary color of ant design
+   */
+  primaryColor: string;
   /**
    * nav menu position: `sidemenu` or `topmenu`
    */
@@ -29,31 +32,29 @@ export interface ISettings {
    */
   fixSiderbar: boolean;
   menu: { locale: boolean };
-  pwa?: boolean;
-  collapse?: boolean;
   title: string;
+  pwa: boolean;
   // Your custom iconfont Symbol script Url
   // eg：//at.alicdn.com/t/font_1039637_btcrd5co4w.js
   // 注意：如果需要图标多色，Iconfont 图标项目里要进行批量去色处理
   // Usage: https://github.com/ant-design/ant-design-pro/pull/3517
   iconfontUrl: string;
+  colorWeak: boolean;
 }
 
-const defaultSettings: ISettings = {
+export default {
   navTheme: 'light',
-  primaryColor: theme['@primary-color'],
+  primaryColor: '#1890ff',
   layout: 'sidemenu',
   contentWidth: 'Fluid',
   fixedHeader: true,
-  autoHideHeader: true,
+  autoHideHeader: false,
   fixSiderbar: true,
+  colorWeak: true,
   menu: {
     locale: false,
   },
-  title: 'Wetrial Template',
+  title: 'Wetrial-Template',
   pwa: false,
-  collapse: false,
   iconfontUrl: '//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js', // iconfont库地址
-};
-
-export default defaultSettings;
+} as DefaultSettings;

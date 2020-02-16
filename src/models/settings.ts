@@ -1,13 +1,5 @@
-import { Reducer } from 'redux';
-import defaultSettings, { ISettings } from '@config/defaultSettings';
-
-export interface SettingModelType {
-  namespace: 'settings';
-  state: ISettings;
-  reducers: {
-    changeSetting: Reducer<ISettings>;
-  };
-}
+import extend from '@wetrial/core/model';
+import defaultSettings, { DefaultSettings } from '@config/defaultSettings';
 
 const updateColorWeak: (colorWeak: boolean) => void = colorWeak => {
   const root = document.getElementById('root');
@@ -15,10 +7,10 @@ const updateColorWeak: (colorWeak: boolean) => void = colorWeak => {
     root.className = colorWeak ? 'colorWeak' : '';
   }
 };
-
-const SettingModel: SettingModelType = {
+export default extend<DefaultSettings>({
   namespace: 'settings',
   state: defaultSettings,
+  effects: {},
   reducers: {
     changeSetting(state = defaultSettings, { payload }) {
       const { colorWeak, contentWidth } = payload;
@@ -33,5 +25,4 @@ const SettingModel: SettingModelType = {
       };
     },
   },
-};
-export default SettingModel;
+});

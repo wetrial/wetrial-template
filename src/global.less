@@ -3,17 +3,7 @@
 html,
 body,
 #root {
-  // height: 100vh;
-  // overflow: hidden;
-
   height: 100%;
-
-  .m-l-xs {
-    margin-left: 5px;
-  }
-  .w-full {
-    width: 100%;
-  }
 }
 
 .colorWeak {
@@ -34,11 +24,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.globalSpin {
-  width: 100%;
-  margin: 40px 0 !important;
-}
-
 ul,
 ol {
   list-style: none;
@@ -48,12 +33,15 @@ ol {
   .ant-table {
     width: 100%;
     overflow-x: auto;
-    &-thead > tr,
-    &-tbody > tr {
-      > th,
-      > td {
+
+    &-thead>tr,
+    &-tbody>tr {
+
+      >th,
+      >td {
         white-space: pre;
-        > span {
+
+        >span {
           display: block;
         }
       }
@@ -61,23 +49,36 @@ ol {
   }
 }
 
+// 兼容IE11
+@media screen and(-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+  body .ant-design-pro>.ant-layout {
+    min-height: 100vh;
+  }
+}
+
+
 // 进入 退出 动画
 :global {
+
   .page-slider-enter,
   .page-slider-appear {
     opacity: 0;
     transform: translateY(20px);
   }
+
   .page-slider-enter-active,
   .page-slider-appear-active {
     opacity: 1;
     transform: translateY(0);
     transition: all 350ms ease-out;
   }
+
   .page-slider-exit {
     opacity: 1;
     transition: all 250ms ease-in;
   }
+
   .page-slider-exit-active {
     opacity: 0;
   }

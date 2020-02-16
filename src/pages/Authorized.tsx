@@ -2,10 +2,14 @@ import React, { useEffect } from 'react';
 import pathToRegexp from 'path-to-regexp';
 import { Redirect, router } from 'umi';
 import { connect } from 'dva';
-import { getToken } from '@/utils/store';
 import Authorized from '@/utils/Authorized';
 import { getPermissions } from '@/utils/authority';
 import PageLoading from '@/components/PageLoading';
+import { IConnectProps, IConnectState, IAccountModelState } from '@/models/connect';
+
+interface AuthComponentProps extends IConnectProps {
+  global: IAccountModelState;
+}
 
 /**
  * 层级路由对象
@@ -94,12 +98,22 @@ const getRouteAuthority = (path: string, routeData: any[]) => {
   return authorities;
 };
 
-function AuthComponent({ children, location = { pathname: '' }, route = { routes: [] } }) {
+const AuthComponent: React.FC<AuthComponentProps> = ({
+  children,
+  route = {
+    routes: [],
+  },
+  location = {
+    pathname: '',
+  },
+  global,
+}) => {
+  const { currentUser } = global;
   const { routes = [] } = route;
-  const isLogin = !!getToken();
+  const isLogin = currentUser && currentUser.name;
   return (
     <Authorized
-      authority={getRouteAuthority(location.pathname, routes)}
+      authority={getRouteAuthority(location.pathname, routes) || ''}
       noMatch={
         isLogin ? (
           <DefaultRedirect routes={routes} pathname={location.pathname} />
@@ -111,7 +125,8 @@ function AuthComponent({ children, location = { pathname: '' }, route = { routes
       {children}
     </Authorized>
   );
-}
-export default connect(({ user }) => ({
-  user,
+};
+
+export default connect(({ global }: IConnectState) => ({
+  global,
 }))(AuthComponent);

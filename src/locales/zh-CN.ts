@@ -1,23 +1,22 @@
+import component from './zh-CN/component';
 import globalHeader from './zh-CN/globalHeader';
-import exception from './zh-CN/exception';
 import menu from './zh-CN/menu';
-import login from './zh-CN/login';
+import pwa from './zh-CN/pwa';
+import settingDrawer from './zh-CN/settingDrawer';
 import settings from './zh-CN/settings';
-import validation from './zh-CN/validation';
 
 export default {
-  'app.pwa.offline': '离线',
-  'app.pwa.serviceworker.updated.ok': '确定',
-  'app.pwa.serviceworker.updated': '温馨提示',
-  'app.pwa.serviceworker.updated.hint': '系统有更新版本。。。',
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
   'layout.user.link.privacy': '隐私',
   'layout.user.link.terms': '条款',
-  ...menu,
-  ...login,
-  ...settings,
-  ...exception,
+  'app.preview.down.block': '下载此页面到本地项目',
+  'app.welcome.link.fetch-blocks': '获取全部区块',
+  'app.welcome.link.block-list': '基于 block 开发，快速构建标准页面',
   ...globalHeader,
-  ...validation,
+  ...menu,
+  ...settingDrawer,
+  ...settings,
+  ...pwa,
+  ...component,
 };

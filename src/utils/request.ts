@@ -1,15 +1,11 @@
-/**
- * TODO 可以根据自己的情况来扩展、覆写请求
- * exp 删除通用拦截器 添加自定义拦截器。。。
- */
 import {
+  addRequestInterceptor,
+  addResponseInterceptor,
   commonRequestInterceptor,
   commonResponseInterceptor,
-  useRequestInterceptor,
-  useResponseInterceptor,
-} from '@wetrial/core';
+} from '@wetrial/core/request';
 
-useRequestInterceptor(...commonRequestInterceptor);
-useResponseInterceptor(...commonResponseInterceptor);
+addRequestInterceptor(...commonRequestInterceptor);
+addResponseInterceptor(...commonResponseInterceptor);
 
-export { request, get, post, put, patch } from '@wetrial/core';
+export { request, get, post, put, patch } from '@wetrial/core/request';

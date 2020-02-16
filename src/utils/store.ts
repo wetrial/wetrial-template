@@ -1,13 +1,4 @@
-import storeWithExp from '@wetrial/core/es/kernel/store';
-
-export {
-  getToken,
-  setToken,
-  clearToken,
-  getPermissions,
-  setPermissions,
-  clearPermissions,
-} from '@wetrial/core';
+import storeWithExp from '@wetrial/core/store';
 
 const Tenant = 'WETRIAL.Tenant';
 

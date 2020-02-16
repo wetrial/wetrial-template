@@ -1,9 +1,21 @@
-import { Icon } from 'antd';
-import defaultSettings from '@config/defaultSettings';
+import React from 'react';
+import { createFromIconfontCN } from '@ant-design/icons';
+import { IconBaseProps } from '@ant-design/icons/es/components/Icon';
 
-// 使用：
-// import IconFont from '@/components/IconFont';
-// <IconFont type='icon-demo' className='xxx-xxx' />
-export default Icon.createFromIconfontCN({
-  scriptUrl: defaultSettings.iconFontUrl,
+let scriptUrl: string = '';
+
+interface IconFontProps extends IconBaseProps {
+  type: string;
+}
+
+export function configIconUrl(url) {
+  scriptUrl = url;
+}
+
+const IconFont = createFromIconfontCN({
+  scriptUrl,
 });
+
+export default function(props: IconFontProps) {
+  return <IconFont {...props} />;
+}

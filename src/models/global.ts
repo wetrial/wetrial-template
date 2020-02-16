@@ -1,9 +1,6 @@
-import { Reducer } from 'redux';
-import { Subscription, Effect } from 'dva';
-
+import extend from '@wetrial/core/model';
 import { NoticeIconData } from '@/components/NoticeIcon';
-import { queryNotices } from '@/services/user';
-import { ConnectState } from './connect.d';
+import { getMessages } from '@/services/message';
 
 export interface NoticeItem extends NoticeIconData {
   id: string;
@@ -11,129 +8,59 @@ export interface NoticeItem extends NoticeIconData {
   status: string;
 }
 
-export interface GlobalModelState {
+export interface IGlobalModelState {
   collapsed: boolean;
   notices: NoticeItem[];
+  messageCount: number;
 }
 
-export interface GlobalModelType {
-  namespace: 'global';
-  state: GlobalModelState;
-  effects: {
-    fetchNotices: Effect;
-    clearNotices: Effect;
-    changeNoticeReadState: Effect;
-  };
-  reducers: {
-    changeLayoutCollapsed: Reducer<GlobalModelState>;
-    saveNotices: Reducer<GlobalModelState>;
-    saveClearedNotices: Reducer<GlobalModelState>;
-  };
-  subscriptions: { setup: Subscription };
-}
-
-const GlobalModel: GlobalModelType = {
+export default extend<IGlobalModelState>({
   namespace: 'global',
-
   state: {
     collapsed: false,
     notices: [],
+    messageCount: 0,
   },
-
   effects: {
-    *fetchNotices(_, { call, put, select }) {
-      const data = yield call(queryNotices);
+    *getMessages(_, { call, put }) {
+      const notices = yield call(getMessages);
       yield put({
-        type: 'saveNotices',
-        payload: data,
-      });
-      const unreadCount: number = yield select(
-        (state: ConnectState) => state.global.notices.filter(item => !item.read).length,
-      );
-      yield put({
-        type: 'user/changeNotifyCount',
+        type: 'update',
         payload: {
-          totalCount: data.length,
-          unreadCount,
+          notices,
+          messageCount: notices.length,
         },
       });
+      // const unreadCount: number = yield select(
+      //   (state: IConnectState) => state.global.notices.filter(item => !item.read).length,
+      // );
     },
-    *clearNotices({ payload }, { put, select }) {
+    *clearMessages(_, { put }) {
       yield put({
-        type: 'saveClearedNotices',
-        payload,
-      });
-      const count: number = yield select((state: ConnectState) => state.global.notices.length);
-      const unreadCount: number = yield select(
-        (state: ConnectState) => state.global.notices.filter(item => !item.read).length,
-      );
-      yield put({
-        type: 'user/changeNotifyCount',
+        type: 'update',
         payload: {
-          totalCount: count,
-          unreadCount,
-        },
-      });
-    },
-    *changeNoticeReadState({ payload }, { put, select }) {
-      const notices: NoticeItem[] = yield select((state: ConnectState) =>
-        state.global.notices.map(item => {
-          const notice = { ...item };
-          if (notice.id === payload) {
-            notice.read = true;
-          }
-          return notice;
-        }),
-      );
-
-      yield put({
-        type: 'saveNotices',
-        payload: notices,
-      });
-
-      yield put({
-        type: 'user/changeNotifyCount',
-        payload: {
-          totalCount: notices.length,
-          unreadCount: notices.filter(item => !item.read).length,
+          messageCount: 0,
+          notices: [],
         },
       });
     },
   },
-
   reducers: {
-    changeLayoutCollapsed(state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
+    changeLayoutCollapsed(state = {} as IGlobalModelState, { payload }) {
       return {
         ...state,
         collapsed: payload,
       };
     },
-    saveNotices(state, { payload }): GlobalModelState {
-      return {
-        collapsed: false,
-        ...state,
-        notices: payload,
-      };
-    },
-    saveClearedNotices(state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
-      return {
-        collapsed: false,
-        ...state,
-        notices: state.notices.filter((item): boolean => item.type !== payload),
-      };
-    },
   },
-
-  subscriptions: {
-    setup(): void {
-      // // Subscribe history(url) change, trigger `load` action if pathname is `/`
-      // history.listen(({ pathname, search }): void => {
-      //   if (typeof window.ga !== 'undefined') {
-      //     window.ga('send', 'pageview', pathname + search);
-      //   }
-      // });
-    },
-  },
-};
-
-export default GlobalModel;
+  // subscriptions: {
+  //   setup({ history }): void {
+  //     // Subscribe history(url) change, trigger `load` action if pathname is `/`
+  //     history.listen(({ pathname, search }): void => {
+  //       if (typeof window.ga !== 'undefined') {
+  //         window.ga('send', 'pageview', pathname + search);
+  //       }
+  //     });
+  //   },
+  // },
+});

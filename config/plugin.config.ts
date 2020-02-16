@@ -1,52 +1,62 @@
-import os from 'os';
-import { IPlugin } from 'umi-types';
-import defaultSettings from './defaultSettings';
+import path from 'path';
 
-const { pwa } = defaultSettings;
-const { TEST } = process.env;
+import * as IWebpackChainConfig from 'webpack-chain';
 
-// ref: https://umijs.org/plugin/umi-plugin-react.html
-const plugins: IPlugin[] = [
-  [
-    'umi-plugin-react',
-    {
-      antd: true,
-      dva: {
-        hmr: true,
-        immer: true,
-      },
-      locale: {
-        enable: false, // default false
-        default: 'zh-CN', // default zh-CN
-        baseNavigator: false, // default true, when it is true, will use `navigator.language` overwrite default
-        // antd: true, // 是否启用antd的<LocaleProvider />
-      },
-      dynamicImport: {
-        webpackChunkName: true,
-        loadingComponent: './components/PageLoading',
-        level: 3,
-      },
-      pwa: pwa
-        ? {
-            workboxPluginMode: 'InjectManifest',
-            workboxOptions: {
-              importWorkboxFrom: 'local',
-            },
-          }
-        : false,
-      ...(!TEST && os.platform() === 'darwin'
-        ? {
-            dll: {
-              include: ['dva', 'dva/router', 'dva/saga', 'lodash'],
-              exclude: ['@babel/runtime', 'netlify-lambda'],
-            },
-            hardSource: false,
-          }
-        : {}),
-      title: 'wetrial-template',
-      hardSource: process.platform === 'darwin' /* isMac */,
-    },
-  ],
-];
+function getModulePackageName(module: { context: string }) {
+  if (!module.context) return null;
 
-export default plugins;
+  const nodeModulesPath = path.join(__dirname, '../node_modules/');
+  if (module.context.substring(0, nodeModulesPath.length) !== nodeModulesPath) {
+    return null;
+  }
+
+  const moduleRelativePath = module.context.substring(nodeModulesPath.length);
+  const [moduleDirName] = moduleRelativePath.split(path.sep);
+  let packageName: string | null = moduleDirName;
+  // handle tree shaking
+  if (packageName && packageName.match('^_')) {
+    // eslint-disable-next-line prefer-destructuring
+    packageName = packageName.match(/^_(@?[^@]+)/)![1];
+  }
+  return packageName;
+}
+
+export const webpackPlugin = (config: IWebpackChainConfig) => {
+  // optimize chunks
+  config.optimization
+    // share the same chunks across different modules
+    .runtimeChunk(false)
+    .splitChunks({
+      chunks: 'async',
+      name: 'vendors',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendors: {
+          test: (module: { context: string }) => {
+            const packageName = getModulePackageName(module) || '';
+            if (packageName) {
+              return [
+                'bizcharts',
+                'gg-editor',
+                'g6',
+                '@antv',
+                'gg-editor-core',
+                'bizcharts-plugin-slider',
+              ].includes(packageName);
+            }
+            return false;
+          },
+          name(module: { context: string }) {
+            const packageName = getModulePackageName(module);
+            if (packageName) {
+              if (['bizcharts', '@antv_data-set'].indexOf(packageName) >= 0) {
+                return 'viz'; // visualization package
+              }
+            }
+            return 'misc';
+          },
+        },
+      },
+    });
+};

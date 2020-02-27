@@ -1,8 +1,10 @@
 import { DefaultFooter, MenuDataItem, getMenuData, getPageTitle } from '@ant-design/pro-layout';
 import { Helmet } from 'react-helmet';
 import React from 'react';
+import { ConfigProvider } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
+import validateMessages from '@wetrial/core/validation';
 // import SelectLang from '@/components/SelectLang';
 import { IConnectProps, IConnectState } from '@/models/connect';
 import styles from './UserLayout.less';
@@ -41,7 +43,9 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
       </Helmet>
 
       <div className={styles.container}>
-        <div className={styles.content}>{children}</div>
+        <div className={styles.content}>
+          <ConfigProvider form={{ validateMessages }}>{children}</ConfigProvider>;
+        </div>
         <DefaultFooter />
       </div>
     </>

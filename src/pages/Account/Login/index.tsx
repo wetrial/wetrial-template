@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import Link from 'umi/link';
 import { Form, Button, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { required } from '@wetrial/core/validation';
 import { getToken } from '@/utils/authority';
 import router from 'umi/router';
 import { IConnectProps, IConnectState } from '@/models/connect';
@@ -43,10 +42,10 @@ const Login: React.FC<ILoginPageProps> = ({ location, dispatch, submitting }) =>
 
       <div className={styles.main}>
         <Form onFinish={onFinish} autoComplete="off">
-          <FormItem name="identificationName" rules={[required]}>
+          <FormItem name="identificationName" rules={[{ required: true, whitespace: true }]}>
             <Input prefix={<UserOutlined />} autoComplete="off" placeholder="用户名" />
           </FormItem>
-          <FormItem name="password" rules={[required]}>
+          <FormItem name="password" rules={[{ required: true, whitespace: true }]}>
             <Input.Password prefix={<LockOutlined />} placeholder="密码" />
           </FormItem>
           <FormItem>

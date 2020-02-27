@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
+import { ConfigProvider } from 'antd';
 import { PageLoading } from '@ant-design/pro-layout';
 import { Redirect } from 'umi';
 import { stringify } from 'querystring';
+import validateMessages from '@wetrial/core/validation';
 import { IConnectState, IConnectProps } from '@/models/connect';
 import { ICurrentUser } from '@/models/account';
 import { getToken } from '@/utils/authority';
@@ -33,7 +35,7 @@ class SecurityLayout extends React.Component<SecurityLayoutProps> {
         return <PageLoading />;
       }
 
-      return children;
+      return <ConfigProvider form={{ validateMessages }}>{children}</ConfigProvider>;
     }
     return <Redirect to={`/account/login?${queryString}`} />;
   }

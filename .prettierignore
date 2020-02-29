@@ -1,7 +1,4 @@
-**/*.md
 **/*.svg
-**/*.ejs
-**/*.html
 package.json
 .umi
 .umi-production
@@ -20,6 +17,4 @@ LICENSE
 .eslintcache
 *.lock
 yarn-error.log
-./docs
-./es
-./lib
+.history

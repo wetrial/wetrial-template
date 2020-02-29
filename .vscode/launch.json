@@ -44,9 +44,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      //"program": "${workspaceFolder}\\tests\\run-tests.js",
-      "program": "${workspaceFolder}\\node_modules\\umi\\bin\\umi.js",
-      "args": ["test"],
+      "program": "${workspaceFolder}\\scripts\\publish",
       "sourceMaps": true
     }
   ]

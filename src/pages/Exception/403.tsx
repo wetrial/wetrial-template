@@ -1,15 +1,6 @@
 import React from 'react';
-import { formatMessage } from 'umi-plugin-react/locale';
-import Link from 'umi/link';
-import { Exception } from 'wetrial';
+import { Result } from 'antd';
 
-const Exception403 = () => (
-  <Exception
-    type="403"
-    desc={formatMessage({ id: 'app.exception.description.403' })}
-    linkElement={Link}
-    backText={formatMessage({ id: 'app.exception.back' })}
-  />
-);
-
-export default Exception403;
+export default () => {
+  return <Result status="403" title="403" subTitle="对不起,您没有权限访问该页面." />;
+};

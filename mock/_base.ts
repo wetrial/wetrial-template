@@ -1,14 +1,15 @@
+import { Request, Response } from 'express';
 /**
  * 构造mock数据，用于外层包装
  * @param result 响应的记过数据
  * @param success 是否成功
  * @param unAuthorizedRequest 是否未授权
  */
-export default function responseWrapper(
+export function responseWrapper(
   result: any,
-  success = true,
-  unAuthorizedRequest = false,
-  error = null,
+  success: boolean = true,
+  unAuthorizedRequest: boolean = false,
+  error: string = '',
 ) {
   return {
     error,
@@ -37,14 +38,22 @@ export function errorWrapper(result: any, unAuthorizedRequest = false, error) {
 /**
  * 验证拦截器，检测是否登录
  * @param opt {request,response}
- * @param dataFunc 数据api
+ * @param dataFunc 数据api,支持function或者直接输入数据
  */
-export function authorizeIntercept(opt, dataFunc) {
+export function authorizeIntercept(
+  opt: { request: Request; response: Response },
+  dataFunc: Function | object,
+) {
   const { request, response } = opt;
   // request.get api参考 express@4 http://expressjs.com/zh-cn/api.html#req.get
   if (request && request.get('Authorization') && request.get('Authorization') !== 'null') {
-    return dataFunc(opt);
+    if (typeof dataFunc === 'function') {
+      const result = dataFunc();
+      response.json(responseWrapper(result));
+    } else {
+      response.json(responseWrapper(dataFunc));
+    }
   } else {
-    return response.json(responseWrapper({}, false, true, '登录已过期！'));
+    response.json(responseWrapper({}, false, true, '登录已过期！'));
   }
 }

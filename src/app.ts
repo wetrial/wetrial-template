@@ -1,5 +1,9 @@
-import { UnAuthorizedException } from '@wetrial/exception';
+import { UnAuthorizedException } from '@wetrial/core/exception';
+import { configIconUrl } from '@/components/IconFont';
+import defaultSettings from '@config/defaultSettings';
 import { notification } from 'antd';
+
+configIconUrl(defaultSettings.iconfontUrl);
 
 export const dva = {
   config: {

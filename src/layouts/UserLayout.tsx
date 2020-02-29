@@ -46,7 +46,7 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
         <div className={styles.content}>
           <ConfigProvider form={{ validateMessages }}>{children}</ConfigProvider>;
         </div>
-        <DefaultFooter />
+        <DefaultFooter links={[]} copyright="Copyright 2020 湖南微试云" />
       </div>
     </>
   );

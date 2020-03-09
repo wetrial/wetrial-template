@@ -6,12 +6,12 @@ import slash from 'slash2';
 // import themePluginConfig from './themePluginConfig';
 import proxy from './proxy';
 import themeConfig from './theme.config';
-import routes from './routes';
+import routes from './route';
 import chinaWebpack from './plugin.chinaWebpack';
 
 const { pwa } = defaultSettings;
 
-const { REACT_APP_ENV = 'dev' } = process.env;
+const { REACT_APP_ENV = 'dev', Wetrial_UI } = process.env;
 const plugins: IPlugin[] = [
   ['umi-plugin-antd-icon-config', {}],
   [
@@ -61,6 +61,17 @@ const plugins: IPlugin[] = [
   // ],
   //['umi-plugin-antd-theme', themePluginConfig]
 ];
+
+if (Wetrial_UI) {
+  plugins.push([
+    'wetrial-ui-plugin',
+    {
+      url: 'http://npm.xxgtalk.cn',
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsX2dyb3VwcyI6WyJ4aWV4aW5nZW4iXSwibmFtZSI6InhpZXhpbmdlbiIsImdyb3VwcyI6WyJ4aWV4aW5nZW4iLCIkYWxsIiwiJGF1dGhlbnRpY2F0ZWQiLCJAYWxsIiwiQGF1dGhlbnRpY2F0ZWQiLCJhbGwiLCJ4aWV4aW5nZW4iXSwiaWF0IjoxNTgzMDUyOTc5LCJuYmYiOjE1ODMwNTI5NzksImV4cCI6MTU4MzY1Nzc3OX0.zPnpQjxNQyGi07579w1cVe4GwnHCwHDZ3uGJyYdOa4o',
+    },
+  ]);
+}
 
 export default {
   plugins,

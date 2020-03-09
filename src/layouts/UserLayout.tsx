@@ -1,20 +1,21 @@
-import React, { Fragment } from 'react';
-import DocumentTitle from 'react-document-title';
-import { Icon } from 'antd';
+import { DefaultFooter, MenuDataItem, getMenuData, getPageTitle } from '@ant-design/pro-layout';
+import { Helmet } from 'react-helmet';
+import React from 'react';
+import { ConfigProvider } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
+import validateMessages from '@wetrial/core/validation';
 // import SelectLang from '@/components/SelectLang';
-import { GlobalFooter } from 'wetrial';
-import { IConnectProps, IMenuDataItem } from '@wetrial/types';
-import { getPageTitle, getMenuData } from '@wetrial/components/NormalLayout';
-import defaultSettings from '@config/defaultSettings';
+import { IConnectProps, IConnectState } from '@/models/connect';
 import styles from './UserLayout.less';
 
 export interface UserLayoutProps extends IConnectProps {
-  breadcrumbNameMap: { [path: string]: IMenuDataItem };
+  breadcrumbNameMap: {
+    [path: string]: MenuDataItem;
+  };
 }
 
-const UserLayout: React.SFC<UserLayoutProps> = props => {
+const UserLayout: React.FC<UserLayoutProps> = props => {
   const {
     route = {
       routes: [],
@@ -28,35 +29,27 @@ const UserLayout: React.SFC<UserLayoutProps> = props => {
     },
   } = props;
   const { breadcrumb } = getMenuData(routes);
-
+  const title = getPageTitle({
+    pathname: location.pathname,
+    formatMessage,
+    breadcrumb,
+    ...props,
+  });
   return (
-    <DocumentTitle
-      title={getPageTitle({
-        pathname: location.pathname,
-        breadcrumb,
-        formatMessage,
-        title: defaultSettings.title,
-        ...props,
-      })}
-    >
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={title} />
+      </Helmet>
+
       <div className={styles.container}>
-        {/* <div className={styles.lang}>
-          <SelectLang />
-        </div> */}
-        <div className={styles.content}>{children}</div>
-        <GlobalFooter
-          copyright={
-            <Fragment>
-              Copyright <Icon type="copyright" />
-              2019 湖南微试云技术部出品
-            </Fragment>
-          }
-        />
+        <div className={styles.content}>
+          <ConfigProvider form={{ validateMessages }}>{children}</ConfigProvider>;
+        </div>
+        <DefaultFooter links={[]} copyright="Copyright 2020 湖南微试云" />
       </div>
-    </DocumentTitle>
+    </>
   );
 };
 
-export default connect(({ settings }) => ({
-  settings,
-}))(UserLayout);
+export default connect(({ settings }: IConnectState) => ({ ...settings }))(UserLayout);

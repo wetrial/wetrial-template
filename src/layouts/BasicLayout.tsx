@@ -1,55 +1,84 @@
-import React, { useEffect } from 'react';
-import { Card } from 'antd';
-import { connect } from 'dva';
-import Link from 'umi/link';
-import { NormalLayout } from 'wetrial';
-import { BasicLayoutProps as NormalLayoutProps } from '@wetrial/components/NormalLayout';
-import { IMenuDataItem, IDispatch } from '@wetrial/types';
-import { Settings } from '@wetrial/defaultSettings';
+/**
+ * Wetrial-Template v4 use `@ant-design/pro-layout` to handle Layout.
+ * You can view component api by:
+ * https://github.com/ant-design/ant-design-pro-layout
+ */
+import ProLayout, {
+  MenuDataItem,
+  BasicLayoutProps as ProLayoutProps,
+  Settings,
+  DefaultFooter,
+} from '@ant-design/pro-layout';
 import { formatMessage } from 'umi-plugin-react/locale';
+import React from 'react';
+import { Link } from 'umi';
+import { Dispatch } from 'redux';
+import { connect } from 'dva';
+import { Result, Button } from 'antd';
 import Authorized from '@/utils/Authorized';
-import RightContent from '@/b-components/GlobalHeader/RightContent';
-import smallLog from '@/assets/imgs/wetrial-logo-small.jpg';
+import RightContent from '@/components/GlobalHeader/RightContent';
+import { IConnectState } from '@/models/connect';
+import { getAuthorityFromRouter } from '@/utils';
+import logo from '../assets/logo.png';
 
-export interface BasicLayoutProps extends NormalLayoutProps {
+const noMatch = (
+  <Result
+    status="403"
+    title="403"
+    subTitle="Sorry, you are not authorized to access this page."
+    extra={
+      <Button type="primary">
+        <Link to="/user/login">Go Login</Link>
+      </Button>
+    }
+  />
+);
+export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: {
-    [path: string]: IMenuDataItem;
+    [path: string]: MenuDataItem;
+  };
+  route: ProLayoutProps['route'] & {
+    authority: string[];
   };
   settings: Settings;
-  dispatch: IDispatch;
-  user: object;
+  dispatch: Dispatch;
 }
 export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   breadcrumbNameMap: {
-    [path: string]: IMenuDataItem;
+    [path: string]: MenuDataItem;
   };
 };
-
 /**
  * use Authorized check all menu item
  */
 
-const menuDataRender = (menuList: IMenuDataItem[]): IMenuDataItem[] => {
-  return menuList.map(item => {
-    const localItem = { ...item, children: item.children ? menuDataRender(item.children) : null };
-    return Authorized.check(item.authority, localItem, null) as IMenuDataItem;
+const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
+  menuList.map(item => {
+    const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
+    return Authorized.check(item.authority, localItem, null) as MenuDataItem;
   });
-};
 
-const footerRender: BasicLayoutProps['footerRender'] = (_, defaultDom) => {
-  return defaultDom;
+const footerRender: BasicLayoutProps['footerRender'] = () => {
+  return <DefaultFooter links={[]} copyright="2020 湖南微试云" />;
 };
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
-  const { dispatch, children, settings } = props;
+  const {
+    dispatch,
+    children,
+    settings,
+    location = {
+      pathname: '/',
+    },
+  } = props;
 
-  useEffect(() => {
-    if (dispatch) {
-      dispatch({
-        type: 'user/getCurrent',
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (dispatch) {
+  //     dispatch({
+  //       type: 'account/getCurrentUser',
+  //     });
+  //   }
+  // }, []);
 
   const handleMenuCollapse = (payload: boolean): void => {
     if (dispatch) {
@@ -58,55 +87,58 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         payload,
       });
     }
+  }; // get children authority
+
+  const authorized = getAuthorityFromRouter(props.route.routes, location.pathname || '/') || {
+    authority: undefined,
   };
-
   return (
-    <>
-      <NormalLayout
-        logo={smallLog}
-        onCollapse={handleMenuCollapse}
-        menuItemRender={(menuItemProps, defaultDom) => {
-          if (menuItemProps.isUrl) {
-            return defaultDom;
-          }
+    <ProLayout
+      logo={logo}
+      formatMessage={formatMessage}
+      menuHeaderRender={(logoDom, titleDom) => (
+        <Link to="/">
+          {logoDom}
+          {titleDom}
+        </Link>
+      )}
+      onCollapse={handleMenuCollapse}
+      menuItemRender={(menuItemProps, defaultDom) => {
+        if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
+          return defaultDom;
+        }
 
-          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
-        }}
-        breadcrumbRender={(routers = []) => [
-          {
-            path: '/',
-            breadcrumbName: formatMessage({
-              id: 'menu.home',
-              defaultMessage: 'Home',
-            }),
-          },
-          ...routers,
-        ]}
-        footerRender={footerRender}
-        menuDataRender={menuDataRender}
-        // formatMessage={formatMessage}
-        rightContentRender={rightProps => <RightContent {...rightProps} />}
-        {...props}
-        {...settings}
-      >
-        {/* <PageHeaderWrapper>{props.children}</PageHeaderWrapper> */}
-        {/* <ScrollBar
-          universal
-          hideTracksWhenNotNeeded
-          autoHide
-          autoHeight
-          autoHeightMin="calc(100vh - 132px)"
-          autoHeightMax="calc(100vh - 132px)"
-        > */}
-        <Card>{children}</Card>
-        {/* </ScrollBar> */}
-      </NormalLayout>
-    </>
+        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+      }}
+      breadcrumbRender={(routers = []) => [
+        {
+          path: '/',
+          breadcrumbName: '首页',
+        },
+        ...routers,
+      ]}
+      itemRender={(route, params, routes, paths) => {
+        const first = routes.indexOf(route) === 0;
+        return first ? (
+          <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+        ) : (
+          <span>{route.breadcrumbName}</span>
+        );
+      }}
+      footerRender={footerRender}
+      menuDataRender={menuDataRender}
+      rightContentRender={() => <RightContent />}
+      {...props}
+      {...settings}
+    >
+      <Authorized authority={authorized!.authority} noMatch={noMatch}>
+        {children}
+      </Authorized>
+    </ProLayout>
   );
 };
 
-export default connect(({ global, settings, user }) => ({
+export default connect(({ global, settings }: IConnectState) => ({
   collapsed: global.collapsed,
   settings,
-  user,
 }))(BasicLayout);

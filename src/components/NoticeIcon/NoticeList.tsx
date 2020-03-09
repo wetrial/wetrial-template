@@ -1,4 +1,4 @@
-import { Avatar, List, Empty } from 'antd';
+import { Avatar, List } from 'antd';
 
 import React from 'react';
 import classNames from 'classnames';
@@ -22,7 +22,6 @@ export interface NoticeIconTabProps {
   list: NoticeIconData[];
   onViewMore?: (e: any) => void;
 }
-
 const NoticeList: React.SFC<NoticeIconTabProps> = ({
   data = [],
   onClick,
@@ -38,12 +37,11 @@ const NoticeList: React.SFC<NoticeIconTabProps> = ({
   if (data.length === 0) {
     return (
       <div className={styles.notFound}>
-        <Empty description={emptyText} image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        {/* <img
+        <img
           src="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
           alt="not found"
         />
-        <div>{emptyText}</div> */}
+        <div>{emptyText}</div>
       </div>
     );
   }

@@ -1,153 +1,105 @@
-import React from 'react';
-import { Input, Icon, AutoComplete } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { AutoComplete, Input } from 'antd';
+import useMergeValue from 'use-merge-value';
+import { AutoCompleteProps } from 'antd/es/auto-complete';
+import React, { useRef } from 'react';
+
 import classNames from 'classnames';
-import { Debounce, Bind } from 'lodash-decorators';
 import styles from './index.less';
 
 export interface HeaderSearchProps {
+  onSearch?: (value?: string) => void;
+  onChange?: (value?: string) => void;
+  onVisibleChange?: (b: boolean) => void;
+  className?: string;
   placeholder?: string;
-  dataSource?: string[];
+  options: AutoCompleteProps['options'];
   defaultOpen?: boolean;
   open?: boolean;
-  onSearch?: (value: string) => void;
-  onChange?: (value: string) => void;
-  onVisibleChange?: (visible: boolean) => void;
-  onPressEnter?: (value: string) => void;
-  style?: React.CSSProperties;
-  className?: string;
+  defaultValue?: string;
+  value?: string;
 }
 
-interface State {
-  readonly searchMode: boolean;
-  readonly value: string;
-}
+const HeaderSearch: React.FC<HeaderSearchProps> = props => {
+  const {
+    className,
+    defaultValue,
+    onVisibleChange,
+    placeholder,
+    open,
+    defaultOpen,
+    ...restProps
+  } = props;
 
-export default class HeaderSearch extends React.PureComponent<HeaderSearchProps, State> {
-  static defaultProps = {
-    defaultActiveFirstOption: false,
-    // tslint:disable-next-line:no-empty
-    onPressEnter: () => {},
-    // tslint:disable-next-line:no-empty
-    onSearch: () => {},
-    // tslint:disable-next-line:no-empty
-    onChange: () => {},
-    className: '',
-    placeholder: '',
-    dataSource: [],
-    defaultOpen: false,
-    // tslint:disable-next-line:no-empty
-    onVisibleChange: () => {},
-  };
-  static getDerivedStateFromProps(props) {
-    if ('open' in props) {
-      return {
-        searchMode: props.open,
-      };
-    }
-    return null;
-  }
+  const inputRef = useRef<Input | null>(null);
 
-  private timeout: NodeJS.Timer;
-  private input = React.createRef<Input>();
+  const [value, setValue] = useMergeValue<string | undefined>(defaultValue, {
+    value: props.value,
+    onChange: props.onChange,
+  });
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchMode: props.defaultOpen,
-      value: '',
-    };
-  }
+  const [searchMode, setSearchMode] = useMergeValue(defaultOpen || false, {
+    value: props.open,
+    onChange: onVisibleChange,
+  });
 
-  componentWillUnmount() {
-    clearTimeout(this.timeout);
-  }
+  const inputClass = classNames(styles.input, {
+    [styles.show]: searchMode,
+  });
 
-  onKeyDown = e => {
-    if (e.key === 'Enter') {
-      const { onPressEnter } = this.props;
-      const { value } = this.state;
-      this.timeout = setTimeout(() => {
-        onPressEnter(value); // Fix duplicate onPressEnter
-      }, 0);
-    }
-  };
-
-  onChange = value => {
-    const { onSearch, onChange } = this.props;
-    this.setState({ value });
-    if (onSearch) {
-      onSearch(value);
-    }
-    if (onChange) {
-      onChange(value);
-    }
-  };
-
-  enterSearchMode = () => {
-    const { onVisibleChange } = this.props;
-    onVisibleChange(true);
-    this.setState({ searchMode: true }, () => {
-      const { searchMode } = this.state;
-      if (searchMode) {
-        this.input.current!.focus();
-      }
-    });
-  };
-
-  leaveSearchMode = () => {
-    this.setState({
-      searchMode: false,
-      value: '',
-    });
-  };
-
-  // NOTE: 不能小于500，如果长按某键，第一次触发auto repeat的间隔是500ms，小于500会导致触发2次
-  @Bind()
-  @Debounce(500, {
-    leading: true,
-    trailing: false,
-  })
-  debouncePressEnter() {
-    const { onPressEnter } = this.props;
-    const { value } = this.state;
-    onPressEnter(value);
-  }
-
-  render() {
-    const { className, placeholder, open, ...restProps } = this.props;
-    const { searchMode, value } = this.state;
-    delete restProps.defaultOpen; // for rc-select not affected
-    const inputClass = classNames(styles.input, {
-      [styles.show]: searchMode,
-    });
-    return (
-      <span
-        className={classNames(className, styles.headerSearch)}
-        onClick={this.enterSearchMode}
-        onTransitionEnd={({ propertyName }) => {
-          if (propertyName === 'width' && !searchMode) {
-            const { onVisibleChange } = this.props;
+  return (
+    <div
+      className={classNames(className, styles.headerSearch)}
+      onClick={() => {
+        setSearchMode(true);
+        if (searchMode && inputRef.current) {
+          inputRef.current.focus();
+        }
+      }}
+      onTransitionEnd={({ propertyName }) => {
+        if (propertyName === 'width' && !searchMode) {
+          if (onVisibleChange) {
             onVisibleChange(searchMode);
           }
+        }
+      }}
+    >
+      <SearchOutlined
+        key="Icon"
+        style={{
+          cursor: 'pointer',
         }}
+      />
+      <AutoComplete
+        key="AutoComplete"
+        className={inputClass}
+        value={value}
+        style={{
+          height: 28,
+          marginTop: -6,
+        }}
+        options={restProps.options}
+        onChange={setValue}
       >
-        <Icon type="search" key="Icon" />
-        <AutoComplete
-          key="AutoComplete"
-          {...restProps}
-          className={inputClass}
-          value={value}
-          onChange={this.onChange}
-        >
-          <Input
-            ref={this.input}
-            aria-label={placeholder}
-            placeholder={placeholder}
-            onKeyDown={this.onKeyDown}
-            onBlur={this.leaveSearchMode}
-          />
-        </AutoComplete>
-      </span>
-    );
-  }
-}
+        <Input
+          ref={inputRef}
+          defaultValue={defaultValue}
+          aria-label={placeholder}
+          placeholder={placeholder}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              if (restProps.onSearch) {
+                restProps.onSearch(value);
+              }
+            }
+          }}
+          onBlur={() => {
+            setSearchMode(false);
+          }}
+        />
+      </AutoComplete>
+    </div>
+  );
+};
+
+export default HeaderSearch;

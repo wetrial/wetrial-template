@@ -1,15 +1,18 @@
+import { Button, Result } from 'antd';
 import React from 'react';
-import { formatMessage } from 'umi-plugin-react/locale';
-import Link from 'umi/link';
-import { Exception } from 'wetrial';
+import { router } from 'umi';
 
-const Exception404 = () => (
-  <Exception
-    type="404"
-    desc={formatMessage({ id: 'app.exception.description.404' })}
-    linkElement={Link}
-    backText={formatMessage({ id: 'app.exception.back' })}
+const NoFoundPage: React.FC<{}> = () => (
+  <Result
+    status="404"
+    title="404"
+    subTitle="Sorry, the page you visited does not exist."
+    extra={
+      <Button type="primary" onClick={() => router.push('/')}>
+        Back Home
+      </Button>
+    }
   />
 );
 
-export default Exception404;
+export default NoFoundPage;

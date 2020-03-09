@@ -1,10 +1,4 @@
-/functions/mock/**
+/lambda/
 /scripts
 /config
-/**/*.ejs
-/lib
-/es
-/node_modules
-/public
-/tests
-/src/e2e
+.history

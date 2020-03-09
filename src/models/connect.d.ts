@@ -3,8 +3,7 @@ import { MenuDataItem } from '@ant-design/pro-layout';
 import { RouterTypes } from 'umi';
 import { IGlobalModelState } from './global';
 import { DefaultSettings as ISettingModelState } from '../../config/defaultSettings';
-import { IAccountModelState } from './user';
-import { StateType } from './login';
+import { IAccountModelState } from './account';
 
 export { IGlobalModelState, ISettingModelState, IAccountModelState };
 

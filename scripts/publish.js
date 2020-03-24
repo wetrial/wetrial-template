@@ -30,12 +30,13 @@ fs.copyFileSync(
   path.join(esABSPath, `config/modules/${packageName}.ts`),
 );
 
+// peerDependencies为需要合并到主应用的包
+package.deps = package.dependencies;
+package.devps = package.devDependencies;
+delete package['dependencies'];
 delete package['devDependencies'];
 delete package['optionalDependencies'];
 delete package['scripts'];
-// peerDependencies为需要合并到主应用的包
-package.deps = package.dependencies;
-delete package['dependencies'];
 fs.writeFileSync(
   path.resolve(esABSPath, '../package.json'),
   prettier.format(JSON.stringify(package), {

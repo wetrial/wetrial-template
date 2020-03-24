@@ -2,11 +2,9 @@ import { DefaultFooter, MenuDataItem, getMenuData, getPageTitle } from '@ant-des
 import { Helmet } from 'react-helmet';
 import React from 'react';
 import { ConfigProvider } from 'antd';
-import { formatMessage } from 'umi-plugin-react/locale';
-import { connect } from 'dva';
 import validateMessages from '@wetrial/core/validation';
 // import SelectLang from '@/components/SelectLang';
-import { IConnectProps, IConnectState } from '@/models/connect';
+import { IConnectProps } from '@/models/connect';
 import styles from './UserLayout.less';
 
 export interface UserLayoutProps extends IConnectProps {
@@ -20,18 +18,14 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
     route = {
       routes: [],
     },
+    location,
   } = props;
   const { routes = [] } = route;
-  const {
-    children,
-    location = {
-      pathname: '',
-    },
-  } = props;
+  const { children } = props;
   const { breadcrumb } = getMenuData(routes);
   const title = getPageTitle({
     pathname: location.pathname,
-    formatMessage,
+    formatMessage: undefined,
     breadcrumb,
     ...props,
   });
@@ -52,4 +46,4 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
   );
 };
 
-export default connect(({ settings }: IConnectState) => ({ ...settings }))(UserLayout);
+export default UserLayout;

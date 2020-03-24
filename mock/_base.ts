@@ -29,6 +29,7 @@ export function errorWrapper(result: any, unAuthorizedRequest = false, error) {
   return {
     error,
     result,
+    showType: 2,
     success: false,
     targetUrl: null,
     unAuthorizedRequest,
@@ -49,9 +50,9 @@ export function authorizeIntercept(
   if (request && request.get('Authorization') && request.get('Authorization') !== 'null') {
     if (typeof dataFunc === 'function') {
       const result = dataFunc();
-      response.json(responseWrapper(result));
+      response.json(result);
     } else {
-      response.json(responseWrapper(dataFunc));
+      response.json(dataFunc);
     }
   } else {
     response.json(responseWrapper({}, false, true, '登录已过期！'));

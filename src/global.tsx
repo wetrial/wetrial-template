@@ -1,7 +1,6 @@
 import { Button, message, notification } from 'antd';
 
 import React from 'react';
-import { formatMessage } from 'umi-plugin-react/locale';
 import defaultSettings from '../config/defaultSettings';
 
 const { pwa } = defaultSettings;
@@ -9,7 +8,7 @@ const { pwa } = defaultSettings;
 if (pwa) {
   // Notify user if offline now
   window.addEventListener('sw.offline', () => {
-    message.warning(formatMessage({ id: 'app.pwa.offline' }));
+    message.warning('已经离线!');
   });
 
   // Pop up a prompt on the page asking the user if they want to use the latest version

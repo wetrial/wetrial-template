@@ -61,14 +61,14 @@ export const FORM_SINGLE_LAYOUT = {
   },
 };
 
-// export const ColItemLayout = {
-//     xs: 24, // <576px
-//     sm: 24, // ≥576px
-//     md: 24, // ≥768px
-//     lg: 12, // ≥992px
-//     xl: 12, // ≥1200px
-//     xxl: 12 // ≥1600px
-// };
+export const COL_LAYOUT = {
+  xs: 24, // <576px
+  sm: 24, // ≥576px
+  md: 24, // ≥768px
+  lg: 12, // ≥992px
+  xl: 12, // ≥1200px
+  xxl: 12, // ≥1600px
+};
 
 // table 显示滚动条的宽度界限
 export const TABLE_SCROLL_WIDTH = 1300;

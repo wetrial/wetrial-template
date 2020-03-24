@@ -23,8 +23,7 @@ function generate(option) {
   const pageTemplate = `
 import { ColumnProps } from 'antd/lib/table';
 import React, { Fragment } from 'react';
-import { connect } from 'dva';
-// import { router } from 'umi';
+import { connect } from 'umi';
 import {
     Form,
     Row,

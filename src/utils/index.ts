@@ -1,49 +1,30 @@
-import { parse } from 'querystring';
-import pathToRegexp from 'path-to-regexp';
-import { Route } from '@/models/connect';
+import { reduce } from 'lodash';
+import { IKeyValue } from '@wetrial/core/types';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
 const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
 
 export const isUrl = (path: string): boolean => reg.test(path);
 
-export const getPageQuery = () => parse(window.location.href.split('?')[1]);
-
 /**
- * props.route.routes
- * @param router [{}]
- * @param pathname string
+ * 将数组对象转换成object对象
+ * @param items 要转换的数组
+ * @param key 作为key的属性名
+ * @param value  作为值的属性名
+ * @example  convertListToFlat([{label:'label1',value:'001'},{label:'label2',value:'002'}],'value','label')==>{'001':'label1','002':'label2'}
+ * @returns IKeyValue
+ * @summary 建议配合memoize方法使用避免不必要的转换，提高性能
  */
-export const getAuthorityFromRouter = <T extends Route>(
-  router: T[] = [],
-  pathname: string,
-): T | undefined => {
-  const authority = router.find(
-    ({ routes, path = '/' }) =>
-      (path && pathToRegexp(path).exec(pathname)) ||
-      (routes && getAuthorityFromRouter(routes, pathname)),
+export function convertListToFlat<T>(items: T[], key: keyof T, text: keyof T): IKeyValue<keyof T> {
+  return reduce(
+    items,
+    (redu: IKeyValue<keyof T>, item) => {
+      const reduKey = item[key];
+      // @ts-ignore
+      // eslint-disable-next-line no-param-reassign
+      redu[reduKey] = item[text];
+      return redu;
+    },
+    {},
   );
-  if (authority) return authority;
-  return undefined;
-};
-
-export const getRouteAuthority = (path: string, routeData: Route[]) => {
-  let authorities: string[] | string | undefined;
-  routeData.forEach(route => {
-    // match prefix
-    if (pathToRegexp(`${route.path}/(.*)`).test(`${path}/`)) {
-      if (route.authority) {
-        authorities = route.authority;
-      }
-      // exact match
-      if (route.path === path) {
-        authorities = route.authority || authorities;
-      }
-      // get children authority recursively
-      if (route.routes) {
-        authorities = getRouteAuthority(path, route.routes) || authorities;
-      }
-    }
-  });
-  return authorities;
-};
+}

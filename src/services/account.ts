@@ -6,15 +6,15 @@ export async function getCurrentUser() {
 }
 
 export async function login(data) {
-  return post({
-    url: `${API_PREFIX}account/login`,
+  return post(`${API_PREFIX}account/login`, {
     data,
+    successTip: false,
   });
 }
 
 export async function register(data) {
-  return post({
-    url: `${API_PREFIX}account/register`,
+  return post(`${API_PREFIX}account/register`, {
     data,
+    successTip: false,
   });
 }

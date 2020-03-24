@@ -23,7 +23,7 @@ function generate(option) {
   const pageTemplate = `
 import React from 'react';
 import { Form, Input, Button, Checkbox, Row, Col, PageHeader } from 'antd';
-import { connect } from 'dva';
+import { connect } from 'umi';
 import { FormComponent, backRouter } from 'wetrial';
 import { required, getRegex, getRange } from '@wetrial/validation';
 import { FORM_SINGLE_LAYOUT } from '@/constants';
@@ -34,7 +34,7 @@ const FormItem = Form.Item;
 
 import { I${PascalPageName}EditProps, I${PascalPageName}EditState } from './props'
 // import styles from './edit.less'
-    
+
 @connect(({ ${modelNamespace}:\{model\},loading }) => ({
     model,
     loading:loading.effects['${modelNamespace}/get']
@@ -52,7 +52,7 @@ class ${PascalPageName}Edit extends FormComponent<I${PascalPageName}EditProps,I$
           payload: { id: params.id },
         });
       }
-    
+
       handleSave = () => {
         const { dispatch, form } = this.props;
         form.validateFieldsAndScroll((err, values) => {
@@ -66,12 +66,12 @@ class ${PascalPageName}Edit extends FormComponent<I${PascalPageName}EditProps,I$
           }
         });
       };
-    
+
       resetForm = () => {
         const { form } = this.props;
         form.resetFields();
       };
-    
+
       render() {
         const {
           submitting,
@@ -137,7 +137,7 @@ class ${PascalPageName}Edit extends FormComponent<I${PascalPageName}EditProps,I$
 export default ${PascalPageName}Edit`;
 
   // scss 模板
-  const lessTemplate = `@import '~themes/index.less';   
+  const lessTemplate = `@import '~themes/index.less';
 .container{
 
 }`;

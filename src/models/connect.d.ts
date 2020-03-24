@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux';
+import * as H from 'history';
 import { MenuDataItem } from '@ant-design/pro-layout';
 import { RouterTypes } from 'umi';
 import { IGlobalModelState } from './global';
@@ -35,4 +36,8 @@ export interface Route extends MenuDataItem {
  */
 export interface IConnectProps<T = {}> extends Partial<RouterTypes<Route, T>> {
   dispatch?: Dispatch<AnyAction>;
+  route: {
+    routes?: Route[];
+  };
+  location: H.Location;
 }

@@ -1,80 +1,51 @@
-import { IConfig, IPlugin } from 'umi-types';
+import { defineConfig, utils } from 'umi';
 import { join } from 'path';
-import defaultSettings from './defaultSettings'; // https://umijs.org/config/
-
-import slash from 'slash2';
+// import AntdDayjsWebpackPlugin from 'antd-dayjs-webpack-plugin';
+// import slash from 'slash2';
 // import themePluginConfig from './themePluginConfig';
 import proxy from './proxy';
 import themeConfig from './theme.config';
-import routes from './route';
+import routes from './modules';
 import chinaWebpack from './plugin.chinaWebpack';
 
-const { pwa } = defaultSettings;
+const { REACT_APP_ENV = 'dev' } = process.env;
 
-const { REACT_APP_ENV = 'dev', Wetrial_UI } = process.env;
-const plugins: IPlugin[] = [
-  ['umi-plugin-antd-icon-config', {}],
-  [
-    'umi-plugin-react',
-    {
-      antd: true,
-      dva: {
-        hmr: true,
-      },
-      locale: {
-        // default false
-        enable: false,
-        // default zh-CN
-        default: 'zh-CN',
-        // default true, when it is true, will use `navigator.language` overwrite default
-        baseNavigator: true,
-      },
-      dynamicImport: {
-        loadingComponent: './components/PageLoading/index',
-        webpackChunkName: true,
-        level: 3,
-      },
-      pwa: pwa
-        ? {
-            workboxPluginMode: 'InjectManifest',
-            workboxOptions: {
-              importWorkboxFrom: 'local',
-            },
-          }
-        : false,
-      // default close dll, because issue https://github.com/ant-design/ant-design-pro/issues/4665
-      // dll features https://webpack.js.org/plugins/dll-plugin/
-      // dll: {
-      //   include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
-      //   exclude: ['@babel/runtime', 'netlify-lambda'],
-      // },
-    },
-  ],
-  // [
-  //   'umi-plugin-pro-block',
-  //   {
-  //     moveMock: false,
-  //     moveService: false,
-  //     modifyRequest: true,
-  //     autoAddMenu: true,
-  //   },
-  // ],
-  //['umi-plugin-antd-theme', themePluginConfig]
-];
+const { winPath } = utils;
 
-if (Wetrial_UI) {
-  plugins.push([
-    'wetrial-ui-plugin',
-    {
-      url: 'http://npm.xxgtalk.cn',
-      token:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsX2dyb3VwcyI6WyJ4aWV4aW5nZW4iXSwibmFtZSI6InhpZXhpbmdlbiIsImdyb3VwcyI6WyJ4aWV4aW5nZW4iLCIkYWxsIiwiJGF1dGhlbnRpY2F0ZWQiLCJAYWxsIiwiQGF1dGhlbnRpY2F0ZWQiLCJhbGwiLCJ4aWV4aW5nZW4iXSwiaWF0IjoxNTgzMDUyOTc5LCJuYmYiOjE1ODMwNTI5NzksImV4cCI6MTU4MzY1Nzc3OX0.zPnpQjxNQyGi07579w1cVe4GwnHCwHDZ3uGJyYdOa4o',
-    },
-  ]);
-}
+// const plugins: IPlugin[] = [
+//   ['umi-plugin-antd-icon-config', {}],
 
-export default {
-  plugins,
+// ];
+
+export default defineConfig({
+  favicon: '/favicon.ico',
+  runtimePublicPath: true,
+  antd: {},
+  request: false,
+  layout: {
+    title: 'Wetrial',
+    theme: 'light',
+    locale: false,
+  },
+  dva: {
+    immer: true,
+    hmr: true,
+    skipModelValidate: true,
+  },
+  locale: {
+    // default zh-CN
+    default: 'zh-CN',
+    // default true, when it is true, will use `navigator.language` overwrite default
+    baseNavigator: false,
+  },
+  // dynamicImport: {
+  //   loading: '@/components/PageLoading/index',
+  // },
+  // 暂时关闭
+  pwa: false,
+  history: {
+    type: 'browser',
+  },
   hash: true,
   targets: {
     ie: 11,
@@ -89,46 +60,54 @@ export default {
     themes: join(__dirname, '../src/themes'),
     '@config': join(__dirname, '.'),
   },
-  ignoreMomentLocale: true,
-  lessLoaderOptions: {
+  lessLoader: {
     javascriptEnabled: true,
   },
-  disableRedirectHoist: true,
-  cssLoaderOptions: {
-    modules: true,
-    getLocalIdent: (
-      context: {
-        resourcePath: string;
-      },
-      _: string,
-      localName: string,
-    ) => {
-      if (
-        context.resourcePath.includes('node_modules') ||
-        context.resourcePath.includes('ant.design.pro.less') ||
-        context.resourcePath.includes('global.less')
-      ) {
+  cssLoader: {
+    // 这里的 modules 可以接受 getLocalIdent
+    modules: {
+      getLocalIdent: (
+        context: {
+          resourcePath: string;
+        },
+        _: string,
+        localName: string,
+      ) => {
+        if (
+          context.resourcePath.includes('node_modules') ||
+          context.resourcePath.includes('ant.design.pro.less') ||
+          context.resourcePath.includes('global.less')
+        ) {
+          return localName;
+        }
+        const match = context.resourcePath.match(/src(.*)/);
+        if (match && match[1]) {
+          const antdProPath = match[1].replace('.less', '');
+          const arr = winPath(antdProPath)
+            .split('/')
+            .map((a: string) => a.replace(/([A-Z])/g, '-$1'))
+            .map((a: string) => a.toLowerCase());
+          return `wt-site${arr.join('-')}-${localName}`.replace(/--/g, '-');
+        }
         return localName;
-      }
-      const match = context.resourcePath.match(/src(.*)/);
-      if (match && match[1]) {
-        const antdProPath = match[1].replace('.less', '');
-        const arr = slash(antdProPath)
-          .split('/')
-          .map((a: string) => a.replace(/([A-Z])/g, '-$1'))
-          .map((a: string) => a.toLowerCase());
-        return `wt-site${arr.join('-')}-${localName}`.replace(/--/g, '-');
-      }
-      return localName;
+      },
     },
   },
   manifest: {
     basePath: '/',
   },
   proxy: proxy[REACT_APP_ENV],
-  block: {
-    defaultGitUrl: 'https://github.com/wetrial/wetrial-blocks/tree/master/src',
-    npmClient: 'yarn', // 优先级低于 umi block add [block] --npm-client
-  },
+  // plugins: [new AntdDayjsWebpackPlugin()],
   chainWebpack: chinaWebpack,
-} as IConfig;
+  // 配置具体含义见：https://github.com/umijs/umi-webpack-bundle-analyzer#options-for-plugin
+  analyze: {
+    analyzerMode: 'server',
+    analyzerPort: 8888,
+    openAnalyzer: true,
+    // generate stats file while ANALYZE_DUMP exist
+    generateStatsFile: false,
+    statsFilename: 'stats.json',
+    logLevel: 'info',
+    defaultSizes: 'parsed', // stat  // gzip
+  },
+});

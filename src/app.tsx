@@ -3,6 +3,8 @@ import { Link, history } from 'umi';
 import { stringify } from 'qs';
 import { ILayoutRuntimeConfig } from '@umijs/plugin-layout';
 import { BasicLayoutProps, DefaultFooter } from '@ant-design/pro-layout';
+import { ConfigProvider } from 'antd';
+import validateMessages from '@wetrial/core/validation';
 // import { omit } from 'lodash';
 // import { UnAuthorizedException } from '@wetrial/core/exception';
 import { configUseFormTableFormatResult } from '@wetrial/hooks';
@@ -13,7 +15,6 @@ import { ICurrentUser } from '@/models/account';
 import { getToken, clearPermissions, clearToken } from '@/utils/authority';
 import logo from './assets/logo.png';
 // import 'dayjs/locale/zh-cn';
-// import { notification } from 'antd';
 
 configIconUrl(defaultSettings.iconfontUrl);
 
@@ -72,6 +73,16 @@ export const dva = {
     },
   },
 };
+
+export function rootContainer(container) {
+  return React.createElement(
+    ConfigProvider,
+    {
+      form: { validateMessages },
+    },
+    container,
+  );
+}
 
 export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
   logout: () => {

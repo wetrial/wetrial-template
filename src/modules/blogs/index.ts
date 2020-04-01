@@ -22,46 +22,46 @@ const Permissions = {
 /**
  * 路由定义
  */
-const TemplateRoutes: IBestAFSRoute[] = [
+const Routes: IBestAFSRoute[] = [
   {
-    path: '/template',
+    path: '/blogs',
     menu: {
-      name: '欢迎', // 兼容此写法
+      name: '博客', // 兼容此写法
       // hideChildren:false,
       flatMenu: true,
     },
     routes: [
       {
-        path: '/template',
+        path: '/blogs',
         redirect: 'dashboard',
       },
       {
         path: 'dashboard',
-        name: '看板',
-        // icon: 'dashboard',
+        name: '博客看板',
+        icon: 'dashboard',
         access: Permissions.template.dashboard.index,
-        component: '@/pages/template/dashboard/index',
+        component: '@/modules/blogs/dashboard/index',
       },
       {
         path: 'sample',
-        name: '案例',
+        name: '博客例子',
         access: Permissions.template.sample.index,
-        //icon: 'smile',
+        icon: 'smile',
         routes: [
           {
-            path: '/template/sample',
+            path: '/blogs/sample',
             redirect: 'list',
           },
           {
             path: 'list',
-            name: '列表',
+            name: '博客列表',
             access: Permissions.template.sample.list.index,
-            component: '@/pages/template/sample/list/index',
+            component: '@/modules/blogs/sample/list/index',
             exact: true,
           },
           {
             path: 'list/edit/:id?',
-            component: '@/pages/template/sample/list/edit',
+            component: '@/modules/blogs/sample/list/edit',
             access: Permissions.template.sample.list.edit,
             exact: true,
           },
@@ -71,5 +71,5 @@ const TemplateRoutes: IBestAFSRoute[] = [
   },
 ];
 
-export default Permissions;
-export { TemplateRoutes };
+export default Routes;
+export { Permissions };

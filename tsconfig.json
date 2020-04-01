@@ -21,7 +21,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@@/*": ["src/.umi/*"],
-      "@config/*": ["./config/*"]
+      "@config/*": ["./config/*"],
+      "@modules/*": ["./src/modules/*"]
     }
   },
   "exclude": [

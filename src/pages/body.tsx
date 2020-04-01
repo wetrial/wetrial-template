@@ -1,13 +1,8 @@
 import React from 'react';
-import { ConfigProvider, Card } from 'antd';
-import validateMessages from '@wetrial/core/validation';
+import { Card } from 'antd';
 
 const Layout: React.FC = ({ children }) => {
-  return (
-    <ConfigProvider form={{ validateMessages }}>
-      <Card size="small">{children}</Card>
-    </ConfigProvider>
-  );
+  return <Card size="small">{children}</Card>;
 };
 
 export default Layout;

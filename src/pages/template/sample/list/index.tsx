@@ -6,7 +6,7 @@ import { Button, Form, Input, Table, Divider, Progress, Switch, Popconfirm } fro
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { ColumnType } from 'antd/es/table';
 import { convertListToFlat } from '@/utils';
-import TemplatePermissions from '@config/modules/template';
+import { Permissions } from '@config/routes';
 import { StagedDict } from './prop.d';
 import { getList, remove } from './service';
 
@@ -68,7 +68,7 @@ export default (props: ConnectProps) => {
     {
       title: '状态',
       dataIndex: 'status',
-      width: 80,
+      width: 100,
       sorter: true,
       sortOrder: sorter.field === 'status' && sorter.order,
       render: value => (
@@ -83,7 +83,7 @@ export default (props: ConnectProps) => {
     {
       title: '阶段',
       dataIndex: 'staged',
-      width: 80,
+      width: 100,
       sorter: true,
       sortOrder: sorter.field === 'staged' && sorter.order,
       render: value => stagedDict[value],
@@ -120,20 +120,20 @@ export default (props: ConnectProps) => {
       fixed: 'right',
       render: (_, record) => (
         <>
-          <Access accessible={access[TemplatePermissions.template.sample.list.edit]}>
+          <Access accessible={access[Permissions.template.sample.list.edit]}>
             <Button size="small" type="primary" onClick={handleEdit.bind(null, record.id)}>
               编辑
             </Button>
           </Access>
           <Access
             accessible={
-              access[TemplatePermissions.template.sample.list.edit] &&
-              access[TemplatePermissions.template.sample.list.delete]
+              access[Permissions.template.sample.list.edit] &&
+              access[Permissions.template.sample.list.delete]
             }
           >
             <Divider type="vertical" />
           </Access>
-          <Access accessible={access[TemplatePermissions.template.sample.list.delete]}>
+          <Access accessible={access[Permissions.template.sample.list.delete]}>
             <Popconfirm title="确定要删除" onConfirm={handleDelete.bind(null, record.id)}>
               <Button size="small" type="danger">
                 删除

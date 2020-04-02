@@ -38,9 +38,9 @@ export default defineConfig({
     // default true, when it is true, will use `navigator.language` overwrite default
     baseNavigator: false,
   },
-  // dynamicImport: {
-  //   loading: '@/components/PageLoading/index',
-  // },
+  dynamicImport: {
+    loading: '@/components/PageLoading/index',
+  },
   // 暂时关闭
   pwa: false,
   history: {

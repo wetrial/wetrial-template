@@ -6,43 +6,16 @@ const prettier = require('prettier');
 const package = require('../package.json');
 const packageName = package.name.split('/').reverse()[0];
 
-const esABSPath = path.resolve('./npms/dist');
-if (fs.existsSync(esABSPath)) {
-  rimraf(esABSPath);
+// npm包发布目录
+const distABSPath = path.resolve('../dist');
+if (fs.existsSync(distABSPath)) {
+  rimraf(distABSPath);
 }
 
-// 模块文件夹，pages里面的模块文件夹名
-const pagesABSPath = path.join(esABSPath, `pages/${packageName}`);
-if (!fs.existsSync(pagesABSPath)) {
-  mkdirsSync(pagesABSPath);
-}
-const moduleFolder = path.join(esABSPath, `config/modules`);
-if (!fs.existsSync(moduleFolder)) {
-  mkdirsSync(moduleFolder);
-}
-copyFolderRecursiveSync(
-  path.resolve(`./src/pages/${packageName}`),
-  path.resolve(pagesABSPath, '..'),
-);
-// 配置文件,对应config/modules/[模块文件名]
-fs.copyFileSync(
-  path.resolve(`./config/modules/${packageName}.ts`),
-  path.join(esABSPath, `config/modules/${packageName}.ts`),
-);
+// 模块文件夹，modules里面的模块文件夹名
+const modulesABSPath = path.resolve(`../src/modules/${packageName}`);
 
-// peerDependencies为需要合并到主应用的包
-package.deps = package.dependencies;
-package.devps = package.devDependencies;
-delete package['dependencies'];
-delete package['devDependencies'];
-delete package['optionalDependencies'];
-delete package['scripts'];
-fs.writeFileSync(
-  path.resolve(esABSPath, '../package.json'),
-  prettier.format(JSON.stringify(package), {
-    parser: 'json',
-  }),
-);
+copyFolderRecursiveSync(path.resolve(modulesABSPath), path.resolve(modulesABSPath, '..'));
 
 function rimraf(dir_path) {
   if (fs.existsSync(dir_path)) {

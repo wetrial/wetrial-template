@@ -1,6 +1,5 @@
 import { IBestAFSRoute } from '@umijs/plugin-layout';
 import BlogRoutes from '../src/modules/blogs';
-import ProjectRoutes from '../src/modules/projects';
 
 /**
  * 权限定义
@@ -100,7 +99,6 @@ const routes: IBestAFSRoute[] = [
       },
       ...TemplateRoutes,
       ...BlogRoutes,
-      ...ProjectRoutes,
     ],
   },
 ];

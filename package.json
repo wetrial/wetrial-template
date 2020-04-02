@@ -1,14 +1,12 @@
 {
-  "name": "@wetrial/template",
+  "name": "@wetrial/blogs",
   "version": "5.0.0",
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
+    "module":"node scripts/module",
     "pub": "node scripts/publish",
-    "patch": "yarn version --patch && git push origin master && git push origin --tags",
-    "minor": "yarn version --minor && git push origin master && git push origin --tags",
-    "major": "yarn version --major && git push origin master && git push origin --tags",
     "new": "node scripts/template",
     "docker:build": "docker-compose -f ./docker/docker-compose.yml build",
     "docker:push": "npm run docker-hub:build && npm run docker:tag && docker push wetrial/template",

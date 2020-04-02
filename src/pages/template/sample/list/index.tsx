@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormTable, useResponsive, useRequest } from '@wetrial/hooks';
-import { ConnectProps, history, useAccess, Access } from 'umi';
+import { ConnectProps, useAccess, Access, Link } from 'umi';
 import { memoize } from 'lodash';
 import { Button, Form, Input, Table, Divider, Progress, Switch, Popconfirm } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
@@ -32,10 +32,6 @@ export default (props: ConnectProps) => {
   const stagedDict = stagedDictFunc(StagedDict, 'value', 'label');
 
   const { type, changeType, submit, reset } = search || {};
-
-  const handleEdit = (id: string = '') => {
-    history.push(`list/edit/${id}`);
-  };
 
   const handleDelete = id => {
     removeItem({ id }).then(() => {
@@ -121,8 +117,8 @@ export default (props: ConnectProps) => {
       render: (_, record) => (
         <>
           <Access accessible={access[Permissions.template.sample.list.edit]}>
-            <Button size="small" type="primary" onClick={handleEdit.bind(null, record.id)}>
-              编辑
+            <Button size="small" type="primary">
+              <Link to={`list/edit/${record.id}`}>编辑</Link>
             </Button>
           </Access>
           <Access
@@ -171,8 +167,8 @@ export default (props: ConnectProps) => {
         <Button type="link" onClick={changeType}>
           {type === 'simple' ? '展开' : '折叠'}
         </Button>
-        <Button type="link" onClick={() => handleEdit()} style={{ marginLeft: 8 }}>
-          添加
+        <Button type="link" style={{ marginLeft: 8 }}>
+          <Link to="list/edit/">添加</Link>
         </Button>
       </Form>
     </div>

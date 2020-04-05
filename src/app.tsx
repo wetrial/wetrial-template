@@ -12,7 +12,7 @@ import { configIconUrl } from '@/components/IconFont';
 import defaultSettings from '@config/defaultSettings';
 import { getCurrentUser } from '@/services/account';
 import { ICurrentUser } from '@/models/account';
-import { getToken, clearPermissions, clearToken } from '@/utils/authority';
+import { getToken, clearToken } from '@/utils/authority';
 import logo from './assets/logo.png';
 // import 'dayjs/locale/zh-cn';
 
@@ -87,7 +87,6 @@ export function rootContainer(container) {
 export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
   logout: () => {
     clearToken();
-    clearPermissions();
     const {
       location: { pathname },
     } = history;

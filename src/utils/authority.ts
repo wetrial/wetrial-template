@@ -1,7 +1,1 @@
-export {
-  getPermissions,
-  getToken,
-  setToken,
-  clearPermissions,
-  clearToken,
-} from '@wetrial/core/authority';
+export { getToken, setToken, clearToken } from '@wetrial/core/authority';

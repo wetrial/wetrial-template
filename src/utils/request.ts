@@ -8,4 +8,4 @@ import {
 addRequestInterceptor(...commonRequestInterceptor);
 addResponseInterceptor(...commonResponseInterceptor);
 
-export { request, get, post, put, patch, del } from '@wetrial/core/request';
+export { request, get, post, put, patch, del, head, options } from '@wetrial/core/request';

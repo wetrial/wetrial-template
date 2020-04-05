@@ -5,9 +5,6 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
-    "module":"node scripts/module",
-    "pub": "node scripts/publish",
-    "new": "node scripts/template",
     "docker:build": "docker-compose -f ./docker/docker-compose.yml build",
     "docker:push": "npm run docker-hub:build && npm run docker:tag && docker push wetrial/template",
     "docker:tag": "docker tag template wetrial/template",

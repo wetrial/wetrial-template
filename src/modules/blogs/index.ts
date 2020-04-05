@@ -1,5 +1,7 @@
 import { IBestAFSRoute } from '@umijs/plugin-layout';
 
+const ROUTE_BASE = '@/modules/blogs/';
+
 /**
  * 权限定义
  */
@@ -40,7 +42,7 @@ const Routes: IBestAFSRoute[] = [
         name: '博客看板',
         icon: 'dashboard',
         access: Permissions.template.dashboard.index,
-        component: '@/modules/blogs/dashboard/index',
+        component: `${ROUTE_BASE}dashboard/index`,
       },
       {
         path: 'sample',
@@ -56,12 +58,12 @@ const Routes: IBestAFSRoute[] = [
             path: 'list',
             name: '博客列表',
             access: Permissions.template.sample.list.index,
-            component: '@/modules/blogs/sample/list/index',
+            component: `${ROUTE_BASE}sample/list/index`,
             exact: true,
           },
           {
             path: 'list/edit/:id?',
-            component: '@/modules/blogs/sample/list/edit',
+            component: `${ROUTE_BASE}sample/list/edit`,
             access: Permissions.template.sample.list.edit,
             exact: true,
           },

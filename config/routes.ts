@@ -23,7 +23,7 @@ const Permissions = {
 /**
  * 路由定义
  */
-const TemplateRoutes: IBestAFSRoute[] = [
+const PageRoutes: IBestAFSRoute[] = [
   {
     path: '/template',
     menu: {
@@ -97,11 +97,11 @@ const routes: IBestAFSRoute[] = [
           },
         ],
       },
-      ...TemplateRoutes,
+      ...PageRoutes,
       ...BlogRoutes,
     ],
   },
 ];
 
 export default routes;
-export { Permissions, TemplateRoutes };
+export { Permissions, PageRoutes };

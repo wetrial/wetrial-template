@@ -80,8 +80,8 @@
   "devDependencies": {
     "@types/jest": "^25.2.1",
     "@umijs/fabric": "^2.0.8",
-    "@umijs/preset-react": "^1.4.10",
-    "@umijs/test": "^3.0.18",
+    "@umijs/preset-react": "^1.4.11",
+    "@umijs/test": "^3.1.0",
     "antd-dayjs-webpack-plugin": "^1.0.0",
     "chalk": "^3.0.0",
     "cross-env": "^7.0.2",
@@ -96,7 +96,7 @@
     "prettier": "^2.0.4",
     "stylelint": "^13.3.0",
     "typescript": "^3.8.3",
-    "umi": "^3.0.18"
+    "umi": "^3.1.0"
   },
   "optionalDependencies": {
     "puppeteer": "^2.1.1"

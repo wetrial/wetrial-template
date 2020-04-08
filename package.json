@@ -1,6 +1,6 @@
 {
   "name": "@wetrial/blogs",
-  "app-type": "module",
+  "app-type": "app",
   "version": "5.0.0",
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {

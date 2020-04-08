@@ -2,6 +2,10 @@
   "name": "@wetrial/blogs",
   "app-type": "app",
   "version": "5.0.0",
+  "author": {
+    "email": "1002275364@qq.com",
+    "name": "xiexingen"
+  },
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",

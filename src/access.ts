@@ -1,12 +1,10 @@
 import { IKeyValue } from '@wetrial/core/types';
 import { Permissions } from '@config/routes';
-import { Permissions as BlogPermissions } from '@/modules/blogs';
 
-export default function(initialState: { permissions: string[] } = { permissions: [] }) {
+export default function (initialState: { permissions: string[] } = { permissions: [] }) {
   const { permissions } = initialState;
   const allPermissions = {
     ...Permissions,
-    ...BlogPermissions,
   };
   const flatPermissions = dgFlatPermissions(allPermissions, permissions);
   return flatPermissions;

@@ -28,8 +28,8 @@ export default () => {
     history.push('/template/sample/list');
   };
 
-  const handleSubmit = values => {
-    run(values).then(result => {
+  const handleSubmit = (values) => {
+    run(values).then((result) => {
       !id && history.push(`/template/sample/list/edit/${result.id}`);
     });
   };
@@ -96,7 +96,7 @@ export default () => {
                 <Form.Item
                   name="progress"
                   valuePropName="value"
-                  style={{ display: 'inline-block', width: 'calc(100% - 35px)' }}
+                  style={{ display: 'inline-block', width: 'calc(100% - 45px)' }}
                 >
                   <Slider />
                 </Form.Item>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { useParams, history } from 'umi';
 import { Form, Row, Col, Input, Switch, Slider, Button, Skeleton } from 'antd';
-import { useRequest } from '@wetrial/hooks';
+import { useRequest } from '@umijs/hooks';
 import { FORM_SINGLE_LAYOUT, FORM_TWO_LAYOUT, COL_LAYOUT } from '@/constants';
 import { getItem, create, update } from './service';
 

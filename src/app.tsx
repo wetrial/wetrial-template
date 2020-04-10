@@ -18,7 +18,7 @@ import logo from './assets/logo.png';
 
 configIconUrl(defaultSettings.iconfontUrl);
 
-configUseFormTableFormatResult(data => {
+configUseFormTableFormatResult((data) => {
   return {
     total: data.totalCount,
     list: data.items,
@@ -107,7 +107,7 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
       console.error(error, info);
     },
     /** 发生错误后展示的组件，接受 error */
-    ErrorComponent: error => {
+    ErrorComponent: (error) => {
       return <div>{error}</div>;
     },
   },

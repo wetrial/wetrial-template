@@ -1,5 +1,6 @@
 import React from 'react';
-import { useFormTable, useResponsive, useRequest } from '@wetrial/hooks';
+import { useFormTable, useResponsive } from '@wetrial/hooks';
+import { useRequest } from '@umijs/hooks';
 import { ConnectProps, useAccess, Access, Link } from 'umi';
 import { memoize } from 'lodash';
 import { Button, Form, Input, Table, Divider, Progress, Switch, Popconfirm } from 'antd';
@@ -33,7 +34,7 @@ export default (props: ConnectProps) => {
 
   const { type, changeType, submit, reset } = search || {};
 
-  const handleDelete = id => {
+  const handleDelete = (id) => {
     removeItem({ id }).then(() => {
       refresh();
     });
@@ -67,7 +68,7 @@ export default (props: ConnectProps) => {
       width: 100,
       sorter: true,
       sortOrder: sorter.field === 'status' && sorter.order,
-      render: value => (
+      render: (value) => (
         <Switch
           checked={value}
           disabled
@@ -82,7 +83,7 @@ export default (props: ConnectProps) => {
       width: 100,
       sorter: true,
       sortOrder: sorter.field === 'staged' && sorter.order,
-      render: value => stagedDict[value],
+      render: (value) => stagedDict[value],
     },
     {
       title: '进度',
@@ -90,14 +91,14 @@ export default (props: ConnectProps) => {
       width: 120,
       sorter: true,
       sortOrder: sorter.field === 'progress' && sorter.order,
-      render: progress => (
+      render: (progress) => (
         <Progress
           status="active"
           strokeLinecap="butt"
           trailColor="rgb(226, 201, 201)"
           percent={progress}
           size="small"
-          format={percent => `${percent}%`}
+          format={(percent) => `${percent}%`}
         />
       ),
     },

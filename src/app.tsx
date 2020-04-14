@@ -124,7 +124,9 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
   // siderWidth: 200,
   contentStyle: {
     padding: '10px 10px 0 10px',
-    minHeight: 'calc(100vh - 84px)',
+    minHeight: 'calc(100vh)', // 'calc(100vh - 84px)',
+    background: '#fff',
+    border: '5px solid rgb(240, 242, 245)',
   },
   menuItemRender: (menuItemProps, defaultDom) => {
     if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
@@ -148,6 +150,6 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
       <span>{route.breadcrumbName}</span>
     );
   },
-  footerRender: () => <DefaultFooter links={[]} copyright="2020 湖南微试云技术团队" />,
+  // footerRender: () => <DefaultFooter links={[]} copyright="2020 湖南微试云技术团队" />,
   // rightContentRender: RightContent,
 };

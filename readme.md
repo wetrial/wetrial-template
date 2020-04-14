@@ -1,5 +1,7 @@
 ## 模块化开发
 
+- 通过[wetrial-cli](https://github.com/wetrial/create-wetrial) 可以创建基于此模板项目的应用、子模块
+
 - 模块的所有代码都在 src/modules 文件夹下，一个模块一个子文件夹
 
 比如，有 blog 和 project 模块

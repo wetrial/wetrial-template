@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, history } from 'umi';
+import { Link, history, getDvaApp } from 'umi';
 import { stringify } from 'qs';
 import { ILayoutRuntimeConfig } from '@umijs/plugin-layout';
-import { BasicLayoutProps, DefaultFooter } from '@ant-design/pro-layout';
+import { BasicLayoutProps } from '@ant-design/pro-layout';
 import { ConfigProvider } from 'antd';
 import validateMessages from '@wetrial/core/validation';
 // import { omit } from 'lodash';
@@ -53,26 +53,25 @@ export async function getInitialState() {
   }
 }
 
-export const dva = {
-  config: {
-    onError(err) {
-      console.error(err);
-      // if (err instanceof UnAuthorizedException) {
-      //   const unAuthorizedErr = err as UnAuthorizedException;
-      //   notification.info({
-      //     message: unAuthorizedErr.message,
-      //   });
+const app = getDvaApp();
+app.use({
+  onError(err) {
+    console.error(err);
+    // if (err instanceof UnAuthorizedException) {
+    //   const unAuthorizedErr = err as UnAuthorizedException;
+    //   notification.info({
+    //     message: unAuthorizedErr.message,
+    //   });
 
-      //   // eslint-disable-next-line no-console
-      //   console.log(unAuthorizedErr.message);
-      // } else {
-      //   // eslint-disable-next-line no-console
-      //   console.error(err);
-      // }
-      err.preventDefault();
-    },
+    //   // eslint-disable-next-line no-console
+    //   console.log(unAuthorizedErr.message);
+    // } else {
+    //   // eslint-disable-next-line no-console
+    //   console.error(err);
+    // }
+    err.preventDefault();
   },
-};
+});
 
 export function rootContainer(container) {
   return React.createElement(

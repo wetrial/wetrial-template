@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, history, getDvaApp } from 'umi';
+import { Link, history } from 'umi';
 import { stringify } from 'qs';
 import { ILayoutRuntimeConfig } from '@umijs/plugin-layout';
 import { BasicLayoutProps } from '@ant-design/pro-layout';
@@ -32,14 +32,12 @@ export function render(oldRender) {
 export async function getInitialState() {
   const token = getToken();
   const {
-    // @ts-ignore
     location: { pathname },
   } = history;
   const loginPathName = '/account/login';
   // 未登录的情况
   if (!token) {
     if (pathname !== loginPathName) {
-      // @ts-ignore
       history.push({
         pathname: loginPathName,
         query: {
@@ -53,25 +51,25 @@ export async function getInitialState() {
   }
 }
 
-const app = getDvaApp();
-app.use({
-  onError(err) {
-    console.error(err);
-    // if (err instanceof UnAuthorizedException) {
-    //   const unAuthorizedErr = err as UnAuthorizedException;
-    //   notification.info({
-    //     message: unAuthorizedErr.message,
-    //   });
+// const app = getDvaApp();
+// app.use({
+//   onError(err) {
+//     console.error(err);
+//     // if (err instanceof UnAuthorizedException) {
+//     //   const unAuthorizedErr = err as UnAuthorizedException;
+//     //   notification.info({
+//     //     message: unAuthorizedErr.message,
+//     //   });
 
-    //   // eslint-disable-next-line no-console
-    //   console.log(unAuthorizedErr.message);
-    // } else {
-    //   // eslint-disable-next-line no-console
-    //   console.error(err);
-    // }
-    err.preventDefault();
-  },
-});
+//     //   // eslint-disable-next-line no-console
+//     //   console.log(unAuthorizedErr.message);
+//     // } else {
+//     //   // eslint-disable-next-line no-console
+//     //   console.error(err);
+//     // }
+//     err.preventDefault();
+//   },
+// });
 
 export function rootContainer(container) {
   return React.createElement(

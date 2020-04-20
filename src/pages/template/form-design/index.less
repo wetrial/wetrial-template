@@ -1,0 +1,81 @@
+// 表单容器
+.wetrial-form-design {
+  display: flex;
+  flex: 1;
+  flex-basis: auto;
+  flex-direction: row;
+  box-sizing: border-box;
+  min-width: 0;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-preferred-size: auto;
+
+  :global {
+    // 组件列表
+    .components {
+      width: 250px;
+      overflow: auto;
+
+      // 组件分组的标题
+      .component-item-group {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      //组件项
+      .component-item {
+        position: relative;
+        left: 0;
+        display: block;
+        float: left;
+        width: 48%;
+        margin: 1%;
+        overflow: hidden;
+        color: #333;
+        font-size: 12px;
+        line-height: 26px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        background: #f4f6fc;
+        border: 1px solid #f4f6fc;
+        cursor: move;
+      }
+
+      // 组件项 鼠标移动上去的时候
+      .component-item:hover {
+        color: #409eff;
+        border: 1px dashed #409eff;
+      }
+    }
+
+    // 设计区域容器
+    .design-container {
+      flex-direction: column;
+      width: 100%;
+
+      // 设计区域头部
+      .header {
+        height: 45px;
+        font-size: 18px;
+        line-height: 45px;
+        text-align: right;
+        border-bottom: 2px solid #e4e7ed;
+      }
+
+      // 实际设计区域
+      .design {
+        position: relative;
+        padding: 0;
+        background: #fafafa;
+      }
+    }
+
+    // 属性面板
+    .prop {
+      flex-shrink: 0;
+      box-sizing: border-box;
+      width: 300px;
+      overflow: auto;
+    }
+  }
+}

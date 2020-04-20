@@ -15,7 +15,7 @@ interface ILoginPageProps extends ConnectProps {
 const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
   const { refresh } = useModel('@@initialState');
 
-  const onFinish = values => {
+  const onFinish = (values) => {
     const {
       // @ts-ignore
       location: { query },

@@ -60,6 +60,12 @@ const PageRoutes: IBestAFSRoute[] = [
             exact: true,
           },
           {
+            path: 'form-design',
+            name: '表单设计',
+            component: '@/pages/template/form-design/index',
+            exact: true,
+          },
+          {
             path: 'list/edit/:id?',
             component: '@/pages/template/sample/list/edit',
             access: Permissions.template.sample.list.edit,

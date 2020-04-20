@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link, history, getDvaApp } from 'umi';
+import { Link, history } from 'umi';
 import { stringify } from 'qs';
 import { ILayoutRuntimeConfig } from '@umijs/plugin-layout';
 import { BasicLayoutProps } from '@ant-design/pro-layout';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, message } from 'antd';
 import validateMessages from '@wetrial/core/validation';
+import { UseAPIProvider } from '@umijs/use-request';
 // import { omit } from 'lodash';
 // import { UnAuthorizedException } from '@wetrial/core/exception';
 import { configUseFormTableFormatResult } from '@wetrial/hooks';
+import { request } from '@/utils/request';
 import { configIconUrl } from '@/components/IconFont';
 import defaultSettings from '@config/defaultSettings';
 import { getCurrentUser } from '@/services/account';
@@ -53,25 +55,25 @@ export async function getInitialState() {
   }
 }
 
-const app = getDvaApp();
-app.use({
-  onError(err) {
-    console.error(err);
-    // if (err instanceof UnAuthorizedException) {
-    //   const unAuthorizedErr = err as UnAuthorizedException;
-    //   notification.info({
-    //     message: unAuthorizedErr.message,
-    //   });
+// export const dva = {
+//   config: {
+//     onError(err) {
+//       // if (err instanceof UnAuthorizedException) {
+//       //   const unAuthorizedErr = err as UnAuthorizedException;
+//       //   notification.info({
+//       //     message: unAuthorizedErr.message,
+//       //   });
 
-    //   // eslint-disable-next-line no-console
-    //   console.log(unAuthorizedErr.message);
-    // } else {
-    //   // eslint-disable-next-line no-console
-    //   console.error(err);
-    // }
-    err.preventDefault();
-  },
-});
+//       //   // eslint-disable-next-line no-console
+//       //   console.log(unAuthorizedErr.message);
+//       // } else {
+//       //   // eslint-disable-next-line no-console
+//       //   console.error(err);
+//       // }
+//       err.preventDefault();
+//     },
+//   },
+// };
 
 export function rootContainer(container) {
   return React.createElement(
@@ -79,7 +81,21 @@ export function rootContainer(container) {
     {
       form: { validateMessages },
     },
-    container,
+    // container,
+    React.createElement(
+      UseAPIProvider,
+      {
+        value: {
+          requestMethod: (param) => request(param),
+          onError: (err) => {
+            console.error(err);
+            message.error(err.message);
+            throw err;
+          },
+        },
+      },
+      container,
+    ),
   );
 }
 

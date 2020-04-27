@@ -7,24 +7,27 @@
  */
 export default {
   dev: {
+    // '/api': {
+    //   target: 'https://localhost:44362/',
+    //   //changeOrigin: true,
+    //   secure: false, // 不进行证书验证
+    //   logLevel: 'debug',
+    //   // changeOrigin: true,
+    //   // pathRewrite: { '^': '' },
+    // },
+  },
+  test: {
     // '/api/': {
-    //   target: 'https://preview.wetrial.vip/api',
+    //   target: 'https://www.wetrial.cn',
     //   changeOrigin: true,
     //   pathRewrite: { '^': '' },
     // },
   },
-  test: {
-    '/api/': {
-      target: 'https://www.wetrial.cn',
-      changeOrigin: true,
-      pathRewrite: { '^': '' },
-    },
-  },
   pre: {
-    '/api/': {
-      target: 'your pre url',
-      changeOrigin: true,
-      pathRewrite: { '^': '' },
-    },
+    // '/api/': {
+    //   target: 'your pre url',
+    //   changeOrigin: true,
+    //   pathRewrite: { '^': '' },
+    // },
   },
 };

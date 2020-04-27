@@ -1,5 +1,5 @@
 // api 前缀
-export const BASE_PATH = '/';
+export const BASE_PATH = process.env.REACT_APP_ENV === 'dev' ? `https://localhost:44321/` : '/';
 export const API_PREFIX = `${BASE_PATH}api/`;
 
 export const COMPANY_NAME = '湖南微试云';

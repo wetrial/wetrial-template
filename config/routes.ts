@@ -1,4 +1,5 @@
 import { IBestAFSRoute } from '@umijs/plugin-layout';
+import AccountRoutes from '../src/modules/account';
 
 /**
  * 权限定义
@@ -85,21 +86,7 @@ const routes: IBestAFSRoute[] = [
         path: '/',
         redirect: '/template',
       },
-      {
-        path: '/account',
-        // component: '@/layouts/UserLayout',
-        layout: {
-          hideNav: true,
-          hideMenu: true,
-        },
-        routes: [
-          {
-            name: '登录',
-            path: 'login',
-            component: '@/pages/account/login/index',
-          },
-        ],
-      },
+      ...AccountRoutes,
       ...PageRoutes,
     ],
   },

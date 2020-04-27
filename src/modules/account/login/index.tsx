@@ -1,34 +1,36 @@
 import React from 'react';
-import { Link, ConnectProps, Loading, connect, useModel, history } from 'umi';
+import { Link, useModel, history } from 'umi';
 import { Form, Button, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { IAccountModelState } from '@/models/account';
+import { useRequest } from '@umijs/hooks';
+import { setToken } from '@wetrial/core/authority';
+import { login } from '../services/account';
+
 import styles from './index.less';
 import logo from '@/assets/logo.png';
 
 const FormItem = Form.Item;
 
-interface ILoginPageProps extends ConnectProps {
-  submitting?: boolean;
-}
-
-const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
+export default () => {
   const { refresh } = useModel('@@initialState');
+  const { loading, run } = useRequest(login, {
+    manual: true,
+  });
 
-  const onFinish = values => {
+  const onFinish = (values) => {
     const {
       // @ts-ignore
       location: { query },
     } = history;
 
-    dispatch &&
-      dispatch({
-        type: 'account/login',
-        payload: values,
-      }).then(async () => {
+    run(values).then(async ({ token }) => {
+      console.log(token);
+      if (token) {
+        setToken(token);
         await refresh();
         history.push(query.redirect || '/');
-      });
+      }
+    });
   };
 
   return (
@@ -40,17 +42,16 @@ const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
       <div className={styles.desc}>&nbsp;</div>
 
       <div className={styles.main}>
-        <Form onFinish={onFinish} autoComplete="off">
-          <FormItem name="identificationName" rules={[{ required: true, whitespace: true }]}>
-            <Input
-              autoFocus
-              prefix={<UserOutlined />}
-              autoComplete="off"
-              placeholder="用户名:admin"
-            />
+        <Form
+          initialValues={{ authName: 'admin', password: 'Abcd1234)(*&' }}
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <FormItem name="authName" rules={[{ required: true, whitespace: true }]}>
+            <Input autoFocus prefix={<UserOutlined />} autoComplete="off" placeholder="admin" />
           </FormItem>
           <FormItem name="password" rules={[{ required: true, whitespace: true }]}>
-            <Input.Password prefix={<LockOutlined />} placeholder="密码:Abcd1234" />
+            <Input.Password prefix={<LockOutlined />} placeholder="Abcd1234)(*&" />
           </FormItem>
           <FormItem>
             <Link className={styles.forgot} to="/account/forget">
@@ -58,7 +59,7 @@ const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
             </Link>
           </FormItem>
           <FormItem>
-            <Button loading={submitting} type="primary" htmlType="submit" className={styles.login}>
+            <Button loading={loading} type="primary" htmlType="submit" className={styles.login}>
               登录
             </Button>
           </FormItem>
@@ -67,10 +68,3 @@ const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
     </div>
   );
 };
-
-export default connect(
-  ({ account, loading }: { account: IAccountModelState; loading: Loading }) => ({
-    account,
-    submiting: loading.effects['account/login'],
-  }),
-)(Login);

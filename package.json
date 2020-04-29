@@ -58,12 +58,12 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ant-design/pro-layout": "^5.0.9",
-    "@umijs/hooks": "^1.9.0",
+    "@ant-design/pro-layout": "^5.0.10",
+    "@umijs/hooks": "^1.9.2",
     "@wetrial/component": "^0.0.11",
-    "@wetrial/core": "^2.1.2",
-    "@wetrial/hooks": "^2.0.0",
-    "antd": "^4.1.1",
+    "@wetrial/core": "^2.1.6",
+    "@wetrial/hooks": "^2.0.5",
+    "antd": "^4.1.5",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.22",
     "lodash": "^4.17.15",
@@ -82,8 +82,8 @@
     "@types/jest": "^25.2.1",
     "@types/react-beautiful-dnd": "^12.1.2",
     "@umijs/fabric": "^2.0.8",
-    "@umijs/preset-react": "^1.4.16",
-    "@umijs/test": "^3.1.1",
+    "@umijs/preset-react": "^1.4.18",
+    "@umijs/test": "^3.1.2",
     "antd-dayjs-webpack-plugin": "^1.0.0",
     "chalk": "^3.0.0",
     "cross-env": "^7.0.2",
@@ -98,8 +98,9 @@
     "prettier": "^2.0.4",
     "stylelint": "^13.3.0",
     "typescript": "^3.8.3",
-    "umi": "^3.1.1"
+    "umi": "^3.1.2"
   },
+  "optionalDependencies": {},
   "engines": {
     "node": ">=10.0.0"
   },

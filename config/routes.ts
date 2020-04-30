@@ -26,7 +26,7 @@ const PageRoutes: IBestAFSRoute[] = [
   {
     path: '/template',
     menu: {
-      name: '欢迎', // 兼容此写法
+      name: 'Wetrial',
       // hideChildren:false,
       flatMenu: true,
     },

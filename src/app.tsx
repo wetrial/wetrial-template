@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, history } from 'umi';
 import { stringify } from 'qs';
 import { ILayoutRuntimeConfig } from '@umijs/plugin-layout';
-import { BasicLayoutProps } from '@ant-design/pro-layout';
-import { ConfigProvider, message } from 'antd';
+import BasicLayout, { BasicLayoutProps, DefaultFooter } from '@ant-design/pro-layout';
+import { ConfigProvider, Layout, Card, Menu, message } from 'antd';
 import validateMessages from '@wetrial/core/validation';
 import { UseAPIProvider } from '@umijs/use-request';
 // import { omit } from 'lodash';
@@ -16,6 +16,7 @@ import { getCurrentUser } from '@/services/account';
 import { ICurrentUser } from '@/models/account';
 import { getToken, clearToken } from '@/utils/authority';
 import logo from './assets/logo.png';
+import DrawerMenu from './components/DrawerMenu';
 // import 'dayjs/locale/zh-cn';
 
 configIconUrl(defaultSettings.iconfontUrl);
@@ -128,6 +129,8 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
   },
   logo,
   iconfontUrl: defaultSettings.iconfontUrl,
+  collapsed: true,
+  onCollapse: null,
   menuHeaderRender: (logoDom, titleDom) => {
     return (
       <Link to="/">
@@ -136,19 +139,41 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
       </Link>
     );
   },
-  // siderWidth: 200,
+  // siderWidth: 0,
+  hasSiderMenu: false,
   contentStyle: {
     padding: '10px 10px 0 10px',
     minHeight: 'calc(100vh)', // 'calc(100vh - 84px)',
     background: '#fff',
     border: '5px solid rgb(240, 242, 245)',
   },
+  menuRender: (props) => {
+    return <DrawerMenu prop={props} />;
+  },
   menuItemRender: (menuItemProps, defaultDom) => {
     if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
       return defaultDom;
     }
 
-    return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+    return (
+      <Link to={menuItemProps.path}>
+        <div className="jui-menu-icon">{menuItemProps.icon}</div>
+        <div className="jui-menu-text">{menuItemProps.name}</div>
+      </Link>
+    );
+    // return <Link to={menuItemProps.path}><div className='jui-menu-item'>{defaultDom}</div></Link>;
+  },
+  subMenuItemRender: (menuItemProps, defaultDom) => {
+    if (menuItemProps.children || !menuItemProps.path) {
+      return (
+        <Link to={menuItemProps.children[0].path}>
+          <div className="jui-menu-icon">{menuItemProps.icon}</div>
+          <div className="jui-menu-text">{menuItemProps.name}</div>
+        </Link>
+      );
+    } else {
+      return defaultDom;
+    }
   },
   breadcrumbRender: (routers = []) => [
     {
@@ -164,6 +189,11 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
     ) : (
       <span>{route.breadcrumbName}</span>
     );
+  },
+  menuProps: {
+    // triggerSubMenuAction: 'click',
+    // getPopupContainer: ((triggerNode: HTMLElement) => triggerNode.parentNode),
+    mode: 'inline',
   },
   // footerRender: () => <DefaultFooter links={[]} copyright="2020 湖南微试云技术团队" />,
   // rightContentRender: RightContent,

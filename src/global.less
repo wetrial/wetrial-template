@@ -12,12 +12,32 @@ body,
       margin-right: @padding-xs;
     }
   }
+
+  // 列表上搜索
+  .wt-search-operator {
+    margin-left: auto;
+  }
+
+  // 列表上简单搜索的搜索框
+  .wt-search-simple {
+    width: 360px;
+  }
+}
+
+:fullscreen {
+  .ant-form {
+    padding-top: 4px;
+  }
+}
+
+:not(:root):fullscreen::backdrop {
+  background: white;
 }
 
 // 滚动条 start
 ::-webkit-scrollbar {
   width: 10px;
-  height: 8px;
+  height: 10px;
   background-color: #f5f5f5;
 }
 

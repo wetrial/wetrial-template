@@ -3,7 +3,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { useParams, history } from 'umi';
 import { Form, Row, Col, Input, Switch, Slider, Button, Skeleton } from 'antd';
 import { useRequest } from '@umijs/hooks';
-import { FORM_SINGLE_LAYOUT, FORM_TWO_LAYOUT, COL_LAYOUT } from '@/constants';
+import { LAYOUT_FORM_SINGLE, LAYOUT_FORM_TWO, LAYOUT_COL_TWO } from '@/constants';
 import { getItem, create, update } from './service';
 
 export default () => {
@@ -40,17 +40,17 @@ export default () => {
         ghost={false}
         title={id ? '编辑信息' : '新增信息'}
         onBack={handleBack}
-        extra={[
-          <Button key="cancel" form="info" type="default" htmlType="reset" onClick={handleBack}>
-            取消
-          </Button>,
-          <Button key="save" form="info" loading={submitting} type="primary" htmlType="submit">
-            提交
-          </Button>,
-        ]}
+        // extra={[
+        //   <Button key="cancel" form="info" type="default" htmlType="reset" onClick={handleBack}>
+        //     取消
+        //   </Button>,
+        //   <Button key="save" form="info" loading={submitting} type="primary" htmlType="submit">
+        //     提交
+        //   </Button>,
+        // ]}
       >
         <Form
-          {...FORM_TWO_LAYOUT}
+          {...LAYOUT_FORM_TWO}
           scrollToFirstError
           form={form}
           name="info"
@@ -58,7 +58,7 @@ export default () => {
           onFinish={handleSubmit}
         >
           <Row>
-            <Col {...COL_LAYOUT}>
+            <Col {...LAYOUT_COL_TWO}>
               <Form.Item
                 label="姓名"
                 name="name"
@@ -67,7 +67,7 @@ export default () => {
                 <Input allowClear autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col {...COL_LAYOUT}>
+            <Col {...LAYOUT_COL_TWO}>
               <Form.Item
                 label="标题"
                 name="title"
@@ -78,7 +78,7 @@ export default () => {
             </Col>
             <Col span={24}>
               <Form.Item
-                {...FORM_SINGLE_LAYOUT}
+                {...LAYOUT_FORM_SINGLE}
                 label="描述"
                 name="desc"
                 rules={[{ max: 1000, type: 'string' }]}
@@ -86,12 +86,12 @@ export default () => {
                 <Input.TextArea allowClear autoSize autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col {...COL_LAYOUT}>
+            <Col {...LAYOUT_COL_TWO}>
               <Form.Item label="状态" name="status" valuePropName="checked">
                 <Switch checkedChildren="启用" unCheckedChildren="禁用" />
               </Form.Item>
             </Col>
-            <Col {...COL_LAYOUT}>
+            <Col {...LAYOUT_COL_TWO}>
               <Form.Item label="进度">
                 <Form.Item
                   name="progress"
@@ -112,12 +112,12 @@ export default () => {
                 </Form.Item>
               </Form.Item>
             </Col>
-            <Col {...COL_LAYOUT}>
+            <Col {...LAYOUT_COL_TWO}>
               <Form.Item label="国家" name={['address', 'state']} rules={[{ max: 20 }]}>
                 <Input autoComplete="off" />
               </Form.Item>
             </Col>
-            <Col {...COL_LAYOUT}>
+            <Col {...LAYOUT_COL_TWO}>
               <Form.Item label="详细地址" name={['address', 'street']} rules={[{ max: 200 }]}>
                 <Input allowClear autoComplete="off" />
               </Form.Item>

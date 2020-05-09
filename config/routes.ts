@@ -60,6 +60,12 @@ const PageRoutes: IBestAFSRoute[] = [
             exact: true,
           },
           {
+            path: 'list/simple-list',
+            access: Permissions.template.sample.list.index,
+            component: '@/pages/template/sample/list/simple-list',
+            exact: true,
+          },
+          {
             path: 'list/edit/:id?',
             component: '@/pages/template/sample/list/edit',
             access: Permissions.template.sample.list.edit,

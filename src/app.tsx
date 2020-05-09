@@ -130,7 +130,6 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
   logo,
   iconfontUrl: defaultSettings.iconfontUrl,
   collapsed: true,
-  onCollapse: null,
   menuHeaderRender: (logoDom, titleDom) => {
     return (
       <Link to="/">
@@ -148,9 +147,11 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
     border: '5px solid rgb(240, 242, 245)',
   },
   menuRender: (props) => {
+    debugger;
     return <DrawerMenu prop={props} />;
   },
   menuItemRender: (menuItemProps, defaultDom) => {
+    debugger;
     if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
       return defaultDom;
     }
@@ -164,6 +165,7 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
     // return <Link to={menuItemProps.path}><div className='jui-menu-item'>{defaultDom}</div></Link>;
   },
   subMenuItemRender: (menuItemProps, defaultDom) => {
+    debugger;
     if (menuItemProps.children || !menuItemProps.path) {
       return (
         <Link to={menuItemProps.children[0].path}>
@@ -183,6 +185,7 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
     ...routers,
   ],
   itemRender: (route, params, routes, paths) => {
+    debugger;
     const first = routes.indexOf(route) === 0;
     return first ? (
       <Link to={paths.join('/')}>{route.breadcrumbName}</Link>

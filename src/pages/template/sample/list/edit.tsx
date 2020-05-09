@@ -3,6 +3,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { useParams, history } from 'umi';
 import { Form, Row, Col, Input, Switch, Slider, Button, Skeleton } from 'antd';
 import { useRequest } from '@umijs/hooks';
+import { activeCache } from '@wetrial/hooks';
 import { LAYOUT_FORM_SINGLE, LAYOUT_FORM_TWO, LAYOUT_COL_TWO } from '@/constants';
 import { getItem, create, update } from './service';
 
@@ -25,7 +26,9 @@ export default () => {
   }, [id]);
 
   const handleBack = () => {
-    history.push('/template/sample/list');
+    const listPath = '/template/sample/list';
+    activeCache(listPath);
+    history.push(listPath);
   };
 
   const handleSubmit = (values) => {

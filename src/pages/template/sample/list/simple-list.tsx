@@ -3,14 +3,13 @@ import { useFormTable, useResponsive, formatFormTableParams } from '@wetrial/hoo
 import { useRequest } from '@umijs/hooks';
 import { ConnectProps, useAccess, Access, Link } from 'umi';
 import { memoize } from 'lodash';
-import { Button, Form, Input, Switch, Popconfirm, Row, Col, Space } from 'antd';
+import { Button, Form, Input, Table, Progress, Switch, Popconfirm, Row, Col, Space } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-import { ProTable } from '@wetrial/component';
-import { ProColumns } from '@wetrial/component/es/ProTable';
+import { ColumnType } from 'antd/es/table';
 import { listToFlat } from '@wetrial/core/utils';
+import { LAYOUT_FORM_TWO, LAYOUT_COL_SEARCH_FOUR } from '@/constants';
 import { Permissions } from '@config/routes';
 import { StagedDict } from './prop.d';
-import { LAYOUT_FORM_TWO, LAYOUT_COL_SEARCH_FOUR } from '@/constants';
 import { getList, remove } from './service';
 
 const stagedDict = memoize(listToFlat)(StagedDict);
@@ -34,7 +33,7 @@ export default (props: ConnectProps) => {
 
   const { run: removeItem } = useRequest(remove, { manual: true });
 
-  const { type, changeType, submit, reset } = search || {};
+  const { submit, reset } = search || {};
 
   const handleDelete = (id) => {
     removeItem({ id }).then(() => {
@@ -42,7 +41,7 @@ export default (props: ConnectProps) => {
     });
   };
 
-  const columns: ProColumns[] = [
+  const columns: ColumnType<any>[] = [
     {
       title: '姓名',
       dataIndex: 'name',
@@ -93,17 +92,16 @@ export default (props: ConnectProps) => {
       width: 120,
       sorter: true,
       sortOrder: sorter.field === 'progress' && sorter.order,
-      valueType: 'progress',
-      // render: (progress) => (
-      //   <Progress
-      //     status="active"
-      //     strokeLinecap="butt"
-      //     trailColor="rgb(226, 201, 201)"
-      //     percent={progress}
-      //     size="small"
-      //     format={(percent) => `${percent}%`}
-      //   />
-      // ),
+      render: (progress) => (
+        <Progress
+          status="active"
+          strokeLinecap="butt"
+          trailColor="rgb(226, 201, 201)"
+          percent={progress}
+          size="small"
+          format={(percent) => `${percent}%`}
+        />
+      ),
     },
     {
       title: '地址',
@@ -116,46 +114,28 @@ export default (props: ConnectProps) => {
     {
       title: '操作',
       dataIndex: 'operator',
-      valueType: 'option',
-      width: 120,
+      width: 150,
       fixed: 'right',
-      render: (_, record) => [
-        <Access key="edit" accessible={access[Permissions.template.sample.list.edit]}>
-          <Button size="small" type="link">
-            <Link to={`list/edit/${record.id}`}>编辑</Link>
-          </Button>
-        </Access>,
-        <Access key="del" accessible={access[Permissions.template.sample.list.delete]}>
-          <Popconfirm title="确定要删除" onConfirm={handleDelete.bind(null, record.id)}>
-            <Button size="small" type="link" danger>
-              删除
+      render: (_, record) => (
+        <Space>
+          <Access accessible={access[Permissions.template.sample.list.edit]}>
+            <Button size="small" type="primary">
+              <Link to={`list/edit/${record.id}`}>编辑</Link>
             </Button>
-          </Popconfirm>
-        </Access>,
-      ],
+          </Access>
+          <Access accessible={access[Permissions.template.sample.list.delete]}>
+            <Popconfirm title="确定要删除" onConfirm={handleDelete.bind(null, record.id)}>
+              <Button size="small" type="primary" danger>
+                删除
+              </Button>
+            </Popconfirm>
+          </Access>
+        </Space>
+      ),
     },
   ];
 
-  const simpleSearchForm = () => (
-    <Form layout="inline" form={form}>
-      <Form.Item name="search">
-        <Input.Search
-          className="wt-search-simple"
-          allowClear
-          autoComplete="off"
-          placeholder="请输入姓名或者邮箱"
-          onSearch={submit}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button type="link" onClick={changeType}>
-          复杂搜索
-        </Button>
-      </Form.Item>
-    </Form>
-  );
-
-  const advanceSearchForm = () => (
+  const searchFrom = (
     <Form {...LAYOUT_FORM_TWO} form={form}>
       <Row>
         <Col {...LAYOUT_COL_SEARCH_FOUR}>
@@ -179,8 +159,8 @@ export default (props: ConnectProps) => {
               查询
             </Button>
             <Button onClick={reset}>重置</Button>
-            <Button type="link" onClick={changeType}>
-              简单搜索
+            <Button type="link">
+              <Link to="edit/">添加</Link>
             </Button>
           </Space>
         </Form.Item>
@@ -189,21 +169,14 @@ export default (props: ConnectProps) => {
   );
 
   return (
-    <ProTable
-      scroll={{ x: 1300, y: size.height - 180 }}
-      columns={columns}
-      rowKey="id"
-      {...tableProps}
-      searchType={type}
-      renderSearch={type === 'simple' ? simpleSearchForm : advanceSearchForm}
-      toolBarRender={() => [
-        <Button key="new" type="primary">
-          添加
-        </Button>,
-        <Button key="toggle-simple" type="link">
-          <Link to="list/simple-list">切换到简单列表</Link>
-        </Button>,
-      ]}
-    />
+    <>
+      {searchFrom}
+      <Table
+        scroll={{ x: 1300, y: size.height - 80 }}
+        columns={columns}
+        rowKey="id"
+        {...tableProps}
+      />
+    </>
   );
 };

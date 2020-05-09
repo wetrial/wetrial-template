@@ -26,7 +26,7 @@ const PageRoutes: IBestAFSRoute[] = [
   {
     path: '/template',
     menu: {
-      name: '欢迎', // 兼容此写法
+      name: 'Wetrial',
       // hideChildren:false,
       flatMenu: true,
     },
@@ -57,6 +57,12 @@ const PageRoutes: IBestAFSRoute[] = [
             name: '列表',
             access: Permissions.template.sample.list.index,
             component: '@/pages/template/sample/list/index',
+            exact: true,
+          },
+          {
+            path: 'list/simple-list',
+            access: Permissions.template.sample.list.index,
+            component: '@/pages/template/sample/list/simple-list',
             exact: true,
           },
           {

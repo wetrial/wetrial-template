@@ -4,12 +4,13 @@ import { ListItemDto, Staged } from './prop.d';
 
 function generateItem(id: number): ListItemDto {
   const staged = Staged[Staged[(id % 4) + 1]];
+  const strId = id > 9 ? id : `0${id}`;
   return {
     id,
     status: Math.random() > 0.5,
-    name: `姓名-${id}`,
-    title: `标题-${id}`,
-    desc: `描述内容-${id}`,
+    name: `姓名-${strId}`,
+    title: `标题-${strId}`,
+    desc: `描述内容-${strId}`,
     staged,
     progress: Math.floor(Math.random() * 100),
     address: {
@@ -21,19 +22,18 @@ function generateItem(id: number): ListItemDto {
 
 function getList(req: Request, res: Response) {
   let items: ListItemDto[] = [];
-  const { pageSize, current, sorter } = req.query;
+  const { maxResultCount, skipCount, sorting } = req.query;
 
-  for (let i = 1; i <= pageSize; i++) {
-    const id = current * pageSize + i;
-    const item = generateItem(id);
+  for (let i = 1; i <= Number(maxResultCount); i++) {
+    const item = generateItem(Number(skipCount) + i);
     items.push(item);
   }
 
-  if (sorter) {
-    const jsonSorter = JSON.parse(sorter);
-    if (jsonSorter && jsonSorter.field) {
-      items = sortBy(items, jsonSorter.field);
-      if (jsonSorter.order === 'descend') {
+  if (sorting) {
+    const sorterParam = (sorting as string).split(' ');
+    if (sorterParam) {
+      items = sortBy(items, sorterParam[0]);
+      if (sorterParam[1] === 'desc') {
         items = reverse(items);
       }
     }
@@ -47,7 +47,7 @@ function getList(req: Request, res: Response) {
 
 function getItem(req: Request, res: Response) {
   const { id } = req.query;
-  const item = generateItem(id as number);
+  const item = generateItem(Number(id));
   return res.json(item);
 }
 

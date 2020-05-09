@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormTable, useResponsive, formatFormTableParams } from '@wetrial/hooks';
 import { useRequest } from '@umijs/hooks';
-import { ConnectProps, useAccess, Access, Link } from 'umi';
+import { useLocation, useAccess, Access, Link } from 'umi';
 import { memoize } from 'lodash';
 import { Button, Form, Input, Switch, Popconfirm, Row, Col, Space } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
@@ -15,11 +15,9 @@ import { getList, remove } from './service';
 
 const stagedDict = memoize(listToFlat)(StagedDict);
 
-export default (props: ConnectProps) => {
+export default () => {
   const [form] = Form.useForm();
-  const {
-    location: { pathname },
-  } = props;
+  const { pathname } = useLocation();
 
   const { size } = useResponsive();
   const access = useAccess();

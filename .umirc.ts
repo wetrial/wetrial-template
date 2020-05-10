@@ -112,6 +112,10 @@ export default defineConfig({
     logLevel: 'info',
     defaultSizes: 'parsed', // stat  // gzip
   },
+  nodeModulesTransform: {
+    type: 'none',
+    exclude: [],
+  },
   extraBabelPlugins: [
     [
       'import',

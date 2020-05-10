@@ -1,8 +1,7 @@
 import { Menu } from 'antd';
-import { Link } from 'umi';
+import { Link, useModel } from 'umi';
 
 import React, { useRef } from 'react';
-
 import classNames from 'classnames';
 import styles from './index.less';
 import Item from 'antd/lib/list/Item';
@@ -47,7 +46,8 @@ const DrawerMenu: React.FC<DrawerMenuProps> = (props) => {
 
   createMain(prop.route.routes);
 
-  console.log(prop);
+  const { initialState } = useModel('@@initialState');
+  console.log(initialState);
 
   return (
     <>

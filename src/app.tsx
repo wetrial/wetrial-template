@@ -17,6 +17,7 @@ import { ICurrentUser } from '@/models/account';
 import { getToken, clearToken } from '@/utils/authority';
 import logo from './assets/logo.png';
 import DrawerMenu from './components/DrawerMenu';
+import SideMenu from '@/components/SideMenu';
 // import 'dayjs/locale/zh-cn';
 
 configIconUrl(defaultSettings.iconfontUrl);
@@ -31,6 +32,8 @@ configUseFormTableFormatResult((data) => {
 export function render(oldRender) {
   oldRender();
 }
+
+// export function patchRoutes({ routes }) {}
 
 export async function getInitialState() {
   const token = getToken();
@@ -130,25 +133,27 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
   logo,
   iconfontUrl: defaultSettings.iconfontUrl,
   collapsed: true,
-  menuHeaderRender: (logoDom, titleDom) => {
-    return (
-      <Link to="/">
-        {logoDom}
-        {titleDom}
-      </Link>
-    );
-  },
-  // siderWidth: 0,
-  hasSiderMenu: false,
+  // siderWidth: 100,
+  // hasSiderMenu: false,
   contentStyle: {
     padding: '10px 10px 0 10px',
     minHeight: 'calc(100vh)', // 'calc(100vh - 84px)',
     background: '#fff',
     border: '5px solid rgb(240, 242, 245)',
   },
-  menuRender: (props) => {
+  menuRender: (props, defaultDom) => {
     debugger;
-    return <DrawerMenu prop={props} />;
+    // return <DrawerMenu prop={props} />;
+    return <SideMenu {...props} />;
+  },
+  menuHeaderRender: (logoDom, titleDom) => {
+    debugger;
+    return (
+      <Link to="/">
+        {logoDom}
+        {titleDom}
+      </Link>
+    );
   },
   menuItemRender: (menuItemProps, defaultDom) => {
     debugger;
@@ -177,15 +182,7 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
       return defaultDom;
     }
   },
-  breadcrumbRender: (routers = []) => [
-    {
-      path: '/',
-      breadcrumbName: '首页',
-    },
-    ...routers,
-  ],
   itemRender: (route, params, routes, paths) => {
-    debugger;
     const first = routes.indexOf(route) === 0;
     return first ? (
       <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
@@ -193,11 +190,18 @@ export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
       <span>{route.breadcrumbName}</span>
     );
   },
-  menuProps: {
-    // triggerSubMenuAction: 'click',
-    // getPopupContainer: ((triggerNode: HTMLElement) => triggerNode.parentNode),
-    mode: 'inline',
-  },
+  breadcrumbRender: (routers = []) => [
+    {
+      path: '/',
+      breadcrumbName: '首页',
+    },
+    ...routers,
+  ],
+  // menuProps: {
+  //   // triggerSubMenuAction: 'click',
+  //   // getPopupContainer: ((triggerNode: HTMLElement) => triggerNode.parentNode),
+  //   mode: 'vertical',
+  // },
   // footerRender: () => <DefaultFooter links={[]} copyright="2020 湖南微试云技术团队" />,
   // rightContentRender: RightContent,
 };

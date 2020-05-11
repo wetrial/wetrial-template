@@ -25,7 +25,6 @@ const SiderMenuWrapper: React.FC<SiderMenuProps> = (props) => {
   }, [menuData]);
 
   const omitProps = Omit(props, ['className', 'style']);
-
   if (hide) {
     return null;
   }

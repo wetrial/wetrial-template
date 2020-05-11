@@ -2,9 +2,6 @@ import { Menu } from 'antd';
 import { Link, useModel } from 'umi';
 
 import React, { useRef } from 'react';
-import classNames from 'classnames';
-import styles from './index.less';
-import Item from 'antd/lib/list/Item';
 import MainLogo from '../MainLogo';
 import MainFooter from '../MainFooter';
 import { createFromIconfontCN } from '@ant-design/icons';
@@ -45,9 +42,6 @@ const DrawerMenu: React.FC<DrawerMenuProps> = (props) => {
   }
 
   createMain(prop.route.routes);
-
-  const { initialState } = useModel('@@initialState');
-  console.log(initialState);
 
   return (
     <>

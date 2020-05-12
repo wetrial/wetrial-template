@@ -8,24 +8,30 @@ import validateMessages from '@wetrial/core/validation';
 import { UseAPIProvider } from '@umijs/use-request';
 // import { omit } from 'lodash';
 // import { UnAuthorizedException } from '@wetrial/core/exception';
-import { configUseFormTableFormatResult } from '@wetrial/hooks';
-import { request } from '@/utils/request';
-import { configIconUrl } from '@/components/IconFont';
+import { initHooks } from '@wetrial/hooks';
+import { initComponent } from '@wetrial/component';
 import defaultSettings from '@config/defaultSettings';
 import { getCurrentUser } from '@/services/account';
 import { ICurrentUser } from '@/models/account';
 import { getToken, clearToken } from '@/utils/authority';
 import logo from './assets/logo.png';
-// import 'dayjs/locale/zh-cn';
 
-configIconUrl(defaultSettings.iconfontUrl);
+(function init() {
+  // 初始化组件配置信息
+  initComponent({
+    iconFontUrl: defaultSettings.iconfontUrl,
+  });
 
-configUseFormTableFormatResult((data) => {
-  return {
-    total: data.totalCount,
-    list: data.items,
-  };
-});
+  // 初始化hooks配置信息，根据需要
+  initHooks({
+    formTableResultFormat: (data) => {
+      return {
+        total: data.totalCount,
+        list: data.items,
+      };
+    },
+  });
+})();
 
 export function render(oldRender) {
   oldRender();
@@ -86,7 +92,7 @@ export function rootContainer(container) {
       UseAPIProvider,
       {
         value: {
-          requestMethod: (param) => request(param),
+          // requestMethod: (param) => request(param),
           onError: (err) => {
             console.error(err);
             message.error(err.message);

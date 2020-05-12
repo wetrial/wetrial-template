@@ -15,7 +15,7 @@ export const getExtension = (fileName = '') => {
   return fileName.substring(lastDot);
 };
 
-export const getIconType = extension => {
+export const getIconType = (extension) => {
   let iconType = 'icon-file';
   switch (extension) {
     case '.zip':
@@ -72,24 +72,17 @@ export const getIconType = extension => {
 //       .submit();
 //     ReactDOM.unmountComponentAtNode(fileContainer);
 //   };
-export const downloadFile = ({
-  url,
-  data,
-  name,
-  ext = getExtension(url),
-  onDownloadProgress = null,
-}) => {
+export const downloadFile = ({ url, data, name, ext = getExtension(url), onDownloadProgress }) => {
   const downloadUrl =
     url.indexOf('?') !== -1 ? `${url}&${stringify(data)}` : `${url}?${stringify(data)}`;
 
-  return get({
-    url: downloadUrl,
-    showTip: false,
+  return get(downloadUrl, {
+    successTip: false,
     responseType: 'arraybuffer',
     onDownloadProgress,
     maxContentLength: 204800,
   })
-    .then(res => {
+    .then((res) => {
       if (res.headers['content-type'].startsWith('application/json')) {
         let responseJson;
         if ('TextDecoder' in window) {
@@ -99,6 +92,7 @@ export const downloadFile = ({
           responseJson = JSON.parse(decoder.decode(dataView));
         } else {
           // Fallback decode as ASCII
+          // @ts-ignore
           const decodedString = String.fromCharCode.apply(null, new Uint8Array(res.data));
           responseJson = JSON.parse(decodedString);
         }
@@ -110,7 +104,7 @@ export const downloadFile = ({
         return res.data;
       }
     })
-    .then(arrayBuffer => {
+    .then((arrayBuffer) => {
       if (arrayBuffer) {
         const saveName = `${name}${ext}`;
         // IE11
@@ -155,7 +149,7 @@ export const downloadWithProgress = ({
     data,
     name,
     ext,
-    onDownloadProgress: progressEvent => {
+    onDownloadProgress: (progressEvent) => {
       const maxSize = progressEvent.srcElement.getResponseHeader('size');
       const percent = Math.floor((progressEvent.loaded / maxSize) * 100 * 100) / 100;
       notification.open({

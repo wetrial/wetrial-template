@@ -18,7 +18,7 @@ const { winPath } = utils;
 // ];
 
 export default defineConfig({
-  favicon: '/favicon.ico',
+  favicon: 'favicon.ico',
   runtimePublicPath: true,
   antd: {},
   request: false,
@@ -126,4 +126,5 @@ export default defineConfig({
       },
     ],
   ],
+  esbuild: {},
 });

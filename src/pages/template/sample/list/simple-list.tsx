@@ -120,7 +120,7 @@ export default (props: ConnectProps) => {
         <Space>
           <Access accessible={access[Permissions.template.sample.list.edit]}>
             <Button size="small" type="primary">
-              <Link to={`list/edit/${record.id}`}>编辑</Link>
+              <Link to={`edit/${record.id}`}>编辑</Link>
             </Button>
           </Access>
           <Access accessible={access[Permissions.template.sample.list.delete]}>

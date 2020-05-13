@@ -12,3 +12,4 @@ declare module '*.bmp';
 declare module '*.tiff';
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
+declare const WETRIAL_ENV: 'organization' | 'platform' | 'project';

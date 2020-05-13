@@ -8,7 +8,7 @@ import themeConfig from './config/theme.config';
 import routes from './config/routes';
 import chinaWebpack from './config/plugin.chinaWebpack';
 
-const { REACT_APP_ENV = 'dev' } = process.env;
+const { REACT_APP_ENV = 'dev', WETRIAL_ENV } = process.env;
 
 const { winPath } = utils;
 
@@ -56,6 +56,7 @@ export default defineConfig({
   theme: themeConfig,
   define: {
     REACT_APP_ENV: REACT_APP_ENV,
+    'process.env.WETRIAL_ENV': WETRIAL_ENV,
   },
   alias: {
     themes: join(__dirname, './src/themes'),

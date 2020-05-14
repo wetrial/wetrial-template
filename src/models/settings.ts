@@ -1,7 +1,7 @@
-import extend from '@wetrial/core/model';
+import extend from '@wetrial/core/es/model';
 import defaultSettings, { DefaultSettings } from '@config/defaultSettings';
 
-const updateColorWeak: (colorWeak: boolean) => void = colorWeak => {
+const updateColorWeak: (colorWeak: boolean) => void = (colorWeak) => {
   const root = document.getElementById('root');
   if (root) {
     root.className = colorWeak ? 'colorWeak' : '';

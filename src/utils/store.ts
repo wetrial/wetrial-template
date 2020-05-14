@@ -1,4 +1,4 @@
-import storeWithExp from '@wetrial/core/store';
+import storeWithExp from '@wetrial/core/es/store';
 
 const Tenant = 'WETRIAL.Tenant';
 

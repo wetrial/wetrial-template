@@ -1,4 +1,4 @@
-import extend from '@wetrial/core/model';
+import extend from '@wetrial/core/es/model';
 import { NoticeIconData } from '@/components/NoticeIcon';
 import { getMessages } from '@/services/message';
 

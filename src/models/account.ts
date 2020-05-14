@@ -1,4 +1,4 @@
-import extend from '@wetrial/core/model';
+import extend from '@wetrial/core/es/model';
 import { login, getCurrentUser } from '@/services/account';
 import { setToken } from '@/utils/authority';
 

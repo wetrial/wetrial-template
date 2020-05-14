@@ -7,7 +7,7 @@ import { Button, Form, Input, Switch, Popconfirm, Row, Col, Space } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { ProTable } from '@wetrial/component';
 import { ProColumns } from '@wetrial/component/es/ProTable';
-import { listToFlat } from '@wetrial/core/utils';
+import { listToFlat } from '@wetrial/core/es/utils';
 import { Permissions } from '@config/routes';
 import { StagedDict } from './prop.d';
 import { LAYOUT_FORM_TWO, LAYOUT_COL_SEARCH_FOUR } from '@/constants';

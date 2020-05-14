@@ -1,19 +1,21 @@
 import React from 'react';
-import { Link, ConnectProps, Loading, connect, useModel, history } from 'umi';
+import { Link, useModel, history } from 'umi';
 import { Form, Button, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { IAccountModelState } from '@/models/account';
+import { useRequest } from '@umijs/hooks';
+import { setToken } from '@wetrial/core/es/authority';
+import { login } from '@/services/account';
+
 import styles from './index.less';
 import logo from '@/assets/logo.png';
 
 const FormItem = Form.Item;
 
-interface ILoginPageProps extends ConnectProps {
-  submitting?: boolean;
-}
-
-const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
+export default () => {
   const { refresh } = useModel('@@initialState');
+  const { loading, run } = useRequest(login, {
+    manual: true,
+  });
 
   const onFinish = (values) => {
     const {
@@ -21,14 +23,13 @@ const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
       location: { query },
     } = history;
 
-    dispatch &&
-      dispatch({
-        type: 'account/login',
-        payload: values,
-      }).then(async () => {
+    run(values).then(async (token) => {
+      if (token) {
+        setToken(token);
         await refresh();
         history.push(query.redirect || '/');
-      });
+      }
+    });
   };
 
   return (
@@ -40,7 +41,11 @@ const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
       <div className={styles.desc}>&nbsp;</div>
 
       <div className={styles.main}>
-        <Form onFinish={onFinish} autoComplete="off">
+        <Form
+          initialValues={{ identificationName: 'admin', password: 'Abcd1234' }}
+          onFinish={onFinish}
+          autoComplete="off"
+        >
           <FormItem name="identificationName" rules={[{ required: true, whitespace: true }]}>
             <Input
               autoFocus
@@ -58,7 +63,7 @@ const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
             </Link>
           </FormItem>
           <FormItem>
-            <Button loading={submitting} type="primary" htmlType="submit" className={styles.login}>
+            <Button loading={loading} type="primary" htmlType="submit" className={styles.login}>
               登录
             </Button>
           </FormItem>
@@ -67,10 +72,3 @@ const Login: React.FC<ILoginPageProps> = ({ submitting, dispatch }) => {
     </div>
   );
 };
-
-export default connect(
-  ({ account, loading }: { account: IAccountModelState; loading: Loading }) => ({
-    account,
-    submiting: loading.effects['account/login'],
-  }),
-)(Login);

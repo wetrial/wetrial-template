@@ -6,7 +6,7 @@ import { memoize } from 'lodash';
 import { Button, Form, Input, Table, Progress, Switch, Popconfirm, Row, Col, Space } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { ColumnType } from 'antd/es/table';
-import { listToFlat } from '@wetrial/core/utils';
+import { listToFlat } from '@wetrial/core/es/utils';
 import { LAYOUT_FORM_TWO, LAYOUT_COL_SEARCH_FOUR } from '@/constants';
 import { Permissions } from '@config/routes';
 import { StagedDict } from './prop.d';
@@ -120,7 +120,7 @@ export default (props: ConnectProps) => {
         <Space>
           <Access accessible={access[Permissions.template.sample.list.edit]}>
             <Button size="small" type="primary">
-              <Link to={`list/edit/${record.id}`}>编辑</Link>
+              <Link to={`edit/${record.id}`}>编辑</Link>
             </Button>
           </Access>
           <Access accessible={access[Permissions.template.sample.list.delete]}>

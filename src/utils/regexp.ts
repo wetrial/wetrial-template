@@ -1,13 +1,5 @@
-export const regexpMap = {
-  // eslint-disable-next-line no-useless-escape
-  urlRegexp: /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/,
-};
-
 /**
- * 检查 `value` 是否是url
- * @param value
- * @return {*}
+ * url regexp
  */
-export function isUrl(value) {
-  return regexpMap.urlRegexp.test(value);
-}
+// eslint-disable-next-line no-useless-escape
+export const urlRegexp = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;

@@ -60,8 +60,8 @@
   "dependencies": {
     "@ant-design/pro-layout": "^5.0.12",
     "@umijs/hooks": "^1.9.2",
-    "@wetrial/component": "^0.1.6",
-    "@wetrial/core": "^2.2.0",
+    "@wetrial/component": "^0.2.1",
+    "@wetrial/core": "^3.0.2",
     "@wetrial/hooks": "^2.0.9",
     "antd": "^4.2.2",
     "classnames": "^2.2.6",

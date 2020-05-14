@@ -2,7 +2,7 @@ import { DefaultFooter, MenuDataItem, getMenuData, getPageTitle } from '@ant-des
 import { Helmet } from 'react-helmet';
 import React from 'react';
 import { ConfigProvider } from 'antd';
-import validateMessages from '@wetrial/core/validation';
+import validateMessages from '@wetrial/core/es/validation';
 // import SelectLang from '@/components/SelectLang';
 import { IConnectProps } from '@/models/connect';
 import styles from './UserLayout.less';
@@ -13,7 +13,7 @@ export interface UserLayoutProps extends IConnectProps {
   };
 }
 
-const UserLayout: React.FC<UserLayoutProps> = props => {
+const UserLayout: React.FC<UserLayoutProps> = (props) => {
   const {
     route = {
       routes: [],

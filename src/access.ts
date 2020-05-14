@@ -1,4 +1,4 @@
-import { IKeyValue } from '@wetrial/core/types';
+import { IKeyValue } from '@wetrial/core';
 import { Permissions } from '@config/routes';
 
 export default function (initialState: { permissions: string[] } = { permissions: [] }) {

@@ -1,1 +1,1 @@
-export { getToken, setToken, clearToken } from '@wetrial/core/authority';
+export { getToken, setToken, clearToken } from '@wetrial/core/es/authority';

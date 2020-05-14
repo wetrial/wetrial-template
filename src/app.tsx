@@ -4,15 +4,14 @@ import { stringify } from 'qs';
 import { ILayoutRuntimeConfig } from '@umijs/plugin-layout';
 import BasicLayout, { BasicLayoutProps, DefaultFooter } from '@ant-design/pro-layout';
 import { ConfigProvider, Layout, Card, Menu, message } from 'antd';
-import validateMessages from '@wetrial/core/validation';
+import validateMessages from '@wetrial/core/es/validation';
 import { UseAPIProvider } from '@umijs/use-request';
 // import { omit } from 'lodash';
-// import { UnAuthorizedException } from '@wetrial/core/exception';
+// import { UnAuthorizedException } from '@wetrial/core/es/exception';
 import { initHooks } from '@wetrial/hooks';
 import { initComponent } from '@wetrial/component';
 import defaultSettings from '@config/defaultSettings';
 import { getCurrentUser } from '@/services/account';
-import { ICurrentUser } from '@/models/account';
 import { getToken, clearToken } from '@/utils/authority';
 import logo from './assets/logo.png';
 import DrawerMenu from './components/DrawerMenu';
@@ -61,7 +60,7 @@ export async function getInitialState() {
     }
     return {};
   } else {
-    return (await getCurrentUser()) as ICurrentUser;
+    return await getCurrentUser();
   }
 }
 

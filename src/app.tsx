@@ -12,7 +12,6 @@ import { initHooks } from '@wetrial/hooks';
 import { initComponent } from '@wetrial/component';
 import defaultSettings from '@config/defaultSettings';
 import { getCurrentUser } from '@/services/account';
-import { ICurrentUser } from '@/models/account';
 import { getToken, clearToken } from '@/utils/authority';
 import logo from './assets/logo.png';
 
@@ -57,7 +56,7 @@ export async function getInitialState() {
     }
     return {};
   } else {
-    return (await getCurrentUser()) as ICurrentUser;
+    return await getCurrentUser();
   }
 }
 

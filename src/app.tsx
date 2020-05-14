@@ -9,8 +9,6 @@ import { UseAPIProvider } from '@umijs/use-request';
 import { initHooks } from '@wetrial/hooks';
 import { initComponent } from '@wetrial/component';
 import defaultSettings from '../config/defaultSettings';
-// import { getCurrentUser } from '@/services/account';
-// import { ICurrentUser } from '@/models/account';
 // import { getToken, clearToken } from '@/utils/authority';
 
 (function initConfig() {

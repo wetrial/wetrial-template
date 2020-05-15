@@ -44,7 +44,7 @@ export interface DefaultSettings {
 
 export default {
   navTheme: 'light',
-  primaryColor: '#1890ff',
+  primaryColor: '#0070d2',
   layout: 'sidemenu',
   contentWidth: 'Fluid',
   fixedHeader: true,
@@ -54,7 +54,7 @@ export default {
   menu: {
     locale: false,
   },
-  title: 'Wetrial-Template',
+  title: 'Wetrial',
   pwa: false,
   iconfontUrl: '//at.alicdn.com/t/font_1077466_58oq1vbr6wi.js', // iconfont库地址
 } as DefaultSettings;

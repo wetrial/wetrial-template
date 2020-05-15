@@ -6,6 +6,7 @@ import { join } from 'path';
 import proxy from './config/proxy';
 import themeConfig from './config/theme.config';
 import routes from './config/routes';
+import defaultSetting from './config/defaultSettings';
 import chinaWebpack from './config/plugin.chinaWebpack';
 
 const { REACT_APP_ENV = 'dev' } = process.env;
@@ -23,9 +24,9 @@ export default defineConfig({
   antd: {},
   request: false,
   layout: {
-    title: 'Wetrial',
-    theme: 'light',
-    locale: false,
+    title: defaultSetting.title,
+    theme: defaultSetting.navTheme,
+    locale: defaultSetting.menu.locale,
   },
   dva: {
     immer: true,
@@ -42,7 +43,7 @@ export default defineConfig({
     loading: '@/components/PageLoading/index',
   },
   // 暂时关闭
-  pwa: false,
+  pwa: defaultSetting.pwa,
   history: {
     type: 'browser',
   },

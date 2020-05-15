@@ -1,5 +1,7 @@
 ﻿// 本文件是对 ant-design:
 // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
+import defaultSettings from './defaultSettings';
+
 export default {
   '@success-color': '#1e8e3e',
   '@error-color': '#d93026',
@@ -7,14 +9,14 @@ export default {
   '@info-color': '@primary-color',
   '@danger-color': '@error-color',
   '@processing-color': '@primary-color',
-  '@primary-color': '#0070d2',
+  '@primary-color': defaultSettings.primaryColor,
   '@highlight-color': '#c23934',
   '@normal-color': '#d9d9d9',
   '@white': '#fff',
   '@black': '#000',
   '@btn-danger-bg': '@error-color',
   '@link-color': '#1589ee',
-  '@btn-primary-color': '#fff',
+  '@btn-primary-color': `@primary-color`,
   '@input-disabled-bg': '#f8f8f8',
   '@input-placeholder-color': 'hsv(0, 0, 75%)',
   '@disabled-color': 'fade(@black, 65%)',

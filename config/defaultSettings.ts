@@ -47,10 +47,10 @@ export default {
   primaryColor: '#0070d2',
   layout: 'sidemenu',
   contentWidth: 'Fluid',
-  fixedHeader: true,
+  fixedHeader: false,
   autoHideHeader: false,
-  fixSiderbar: true,
-  colorWeak: true,
+  fixSiderbar: false,
+  colorWeak: false,
   menu: {
     locale: false,
   },

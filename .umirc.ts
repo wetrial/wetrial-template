@@ -13,14 +13,13 @@ const { REACT_APP_ENV = 'dev' } = process.env;
 
 const { winPath } = utils;
 
-// const plugins: IPlugin[] = [
-//   ['umi-plugin-antd-icon-config', {}],
-
-// ];
-
 export default defineConfig({
-  favicon: 'favicon.ico',
+  favicon: '/favicon.ico',
   runtimePublicPath: true,
+  history: {
+    type: 'browser',
+  },
+  hash: true,
   antd: {},
   request: false,
   layout: {
@@ -31,7 +30,6 @@ export default defineConfig({
   dva: {
     immer: true,
     hmr: true,
-    skipModelValidate: true,
   },
   locale: {
     default: 'zh-CN',
@@ -44,10 +42,6 @@ export default defineConfig({
   },
   // 暂时关闭
   pwa: defaultSetting.pwa,
-  history: {
-    type: 'browser',
-  },
-  hash: true,
   ignoreMomentLocale: true,
   targets: {
     ie: 11,

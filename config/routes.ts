@@ -94,11 +94,12 @@ const routes: IBestAFSRoute[] = [
       {
         path: '/account',
         // component: '@/layouts/UserLayout',
-        layout: {
-          hideNav: true,
-          hideMenu: true,
-        },
+        layout: false,
         routes: [
+          {
+            path: '/account',
+            redirect: 'login',
+          },
           {
             name: '登录',
             path: 'login',

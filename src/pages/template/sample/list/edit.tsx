@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { PageContainer } from '@ant-design/pro-layout';
 import { useParams, history } from 'umi';
 import { Form, Row, Col, Input, Switch, Slider, Button, Skeleton } from 'antd';
 import { useRequest } from '@umijs/hooks';
@@ -38,7 +38,7 @@ export default () => {
   };
   return (
     <Skeleton active loading={loading}>
-      <PageHeaderWrapper
+      <PageContainer
         breadcrumb={undefined}
         ghost={false}
         title={id ? '编辑信息' : '新增信息'}
@@ -136,7 +136,7 @@ export default () => {
             </Button>
           </div>
         </Form>
-      </PageHeaderWrapper>
+      </PageContainer>
     </Skeleton>
   );
 };

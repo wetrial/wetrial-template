@@ -14,7 +14,7 @@ export interface DefaultSettings {
   /**
    * nav menu position: `sidemenu` or `topmenu`
    */
-  layout: 'sidemenu' | 'topmenu';
+  layout: 'side' | 'top' | 'mix';
   /**
    * layout of content: `Fluid` or `Fixed`, only works when layout is topmenu
    */
@@ -44,12 +44,12 @@ export interface DefaultSettings {
 
 export default {
   navTheme: 'light',
-  primaryColor: '#1890ff',
-  layout: 'sidemenu',
+  primaryColor: '#0070d2',
+  layout: 'side',
   contentWidth: 'Fluid',
-  fixedHeader: false,
+  fixedHeader: true,
   autoHideHeader: false,
-  fixSiderbar: false,
+  fixSiderbar: true,
   colorWeak: false,
   menu: {
     locale: false,

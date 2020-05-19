@@ -54,7 +54,9 @@ export async function getInitialState(): Promise<IGlobalProps> {
         },
       });
     }
-    return {};
+    return {
+      settings: defaultSettings,
+    };
   } else {
     const currentUser = await getCurrentUser();
     return {

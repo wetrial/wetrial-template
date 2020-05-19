@@ -57,8 +57,11 @@
     "last 2 versions",
     "not ie <= 10"
   ],
+  "resolutions": {
+    "@ant-design/pro-layout": "6.0.0-1"
+  },
   "dependencies": {
-    "@ant-design/pro-layout": "5.0.10",
+    "@ant-design/pro-layout": "6.0.0-1",
     "@umijs/hooks": "^1.9.2",
     "@wetrial/component": "^0.2.1",
     "@wetrial/core": "^3.0.2",

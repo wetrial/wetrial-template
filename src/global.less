@@ -83,6 +83,21 @@ body,
   .page-slider-exit-active {
     opacity: 0;
   }
+
+  // 覆盖pro-layout的logo
+  .ant-layout-sider-children > .ant-pro-sider-logo {
+    padding: 8px;
+  }
+  .ant-pro-sider.ant-layout-sider-collapsed > .ant-layout-sider-children > .ant-pro-sider-logo {
+    padding: 10px;
+  }
+  .ant-layout > .ant-pro-basicLayout-content-disable-margin {
+    min-width: calc(100vh - 62px);
+    margin: 0;
+    padding: 8px 8px 0 8px;
+    background: #fff;
+    border: 5px solid rgb(240, 242, 245);
+  }
 }
 
 ul,

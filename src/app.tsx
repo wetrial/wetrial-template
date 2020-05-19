@@ -104,72 +104,42 @@ export function rootContainer(container) {
   );
 }
 
-export const layout: ILayoutRuntimeConfig & BasicLayoutProps = {
-  logout: () => {
-    clearToken();
-    const {
-      location: { pathname },
-    } = history;
+export const layout = (): BasicLayoutProps => {
+  return {
+    navTheme: 'light',
+    logo,
+    iconfontUrl: defaultSettings.iconfontUrl,
+    menuHeaderRender: (logoDom, titleDom) => {
+      return (
+        <Link to="/">
+          {logoDom}
+          {titleDom}
+        </Link>
+      );
+    },
+    // rightContentRender: RightContent,
+    menuItemRender: (menuItemProps, defaultDom) => {
+      if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
+        return defaultDom;
+      }
 
-    if (pathname !== '/account/login') {
-      history.push({
-        pathname: '/account/login',
-        search: stringify({
-          redirect: pathname,
-        }),
-      });
-    }
-  },
-  navTheme: 'light',
-  errorBoundary: {
-    /** 发生错误后的回调（可做一些错误日志上报，打点等） */
-    onError: (error, info) => {
-      console.error(error, info);
+      return <Link to={menuItemProps.path}>{defaultDom}</Link>;
     },
-    /** 发生错误后展示的组件，接受 error */
-    ErrorComponent: (error) => {
-      return <div>{error}</div>;
+    breadcrumbRender: (routers = []) => [
+      {
+        path: '/',
+        breadcrumbName: '首页',
+      },
+      ...routers,
+    ],
+    itemRender: (route, params, routes, paths) => {
+      const first = routes.indexOf(route) === 0;
+      return first ? (
+        <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+      ) : (
+        <span>{route.breadcrumbName}</span>
+      );
     },
-  },
-  logo,
-  iconfontUrl: defaultSettings.iconfontUrl,
-  menuHeaderRender: (logoDom, titleDom) => {
-    return (
-      <Link to="/">
-        {logoDom}
-        {titleDom}
-      </Link>
-    );
-  },
-  // siderWidth: 200,
-  contentStyle: {
-    padding: '10px 10px 0 10px',
-    minHeight: 'calc(100vh)', // 'calc(100vh - 84px)',
-    background: '#fff',
-    border: '5px solid rgb(240, 242, 245)',
-  },
-  menuItemRender: (menuItemProps, defaultDom) => {
-    if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
-      return defaultDom;
-    }
-
-    return <Link to={menuItemProps.path}>{defaultDom}</Link>;
-  },
-  breadcrumbRender: (routers = []) => [
-    {
-      path: '/',
-      breadcrumbName: '首页',
-    },
-    ...routers,
-  ],
-  itemRender: (route, params, routes, paths) => {
-    const first = routes.indexOf(route) === 0;
-    return first ? (
-      <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
-    ) : (
-      <span>{route.breadcrumbName}</span>
-    );
-  },
-  // footerRender: () => <DefaultFooter links={[]} copyright="2020 湖南微试云技术团队" />,
-  // rightContentRender: RightContent,
+    // footerRender: () => <DefaultFooter links={[]} copyright="2020 湖南微试云技术团队" />,
+  };
 };

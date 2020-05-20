@@ -47,7 +47,7 @@ export default {
   primaryColor: '#0070d2',
   layout: 'side',
   contentWidth: 'Fluid',
-  fixedHeader: true,
+  fixedHeader: false,
   autoHideHeader: false,
   fixSiderbar: true,
   colorWeak: false,
@@ -56,5 +56,5 @@ export default {
   },
   title: 'Wetrial',
   pwa: false,
-  iconfontUrl: '//at.alicdn.com/t/font_733142_yrrqxd7u55.js', // iconfont在线图库地址，需要图片请联系前端添加
+  iconfontUrl: '//at.alicdn.com/t/font_1830224_b7aeq3bbrs.js', // iconfont在线图库地址，需要图片请联系前端添加
 } as DefaultSettings;

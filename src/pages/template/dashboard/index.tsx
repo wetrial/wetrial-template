@@ -29,6 +29,19 @@ export default (): React.ReactNode => {
       >
         刷新权限
       </Button>
+      <Button
+        onClick={() => {
+          model.setInitialState({
+            ...model.initialState,
+            currentUser: {
+              ...model.initialState?.currentUser,
+              unreadCount: `${Math.random() * 100}`,
+            },
+          });
+        }}
+      >
+        触发menu重新渲染
+      </Button>
       <br />
       <Access accessible={access[Permissions.template.dashboard.index]} fallback="无权限">
         有权限才能看到的信息

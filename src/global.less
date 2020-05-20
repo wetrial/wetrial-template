@@ -39,6 +39,7 @@ body,
 // 滚动条 start
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
   border-radius: 5px;
 }
 
@@ -128,71 +129,72 @@ ol {
     min-height: 100vh;
   }
 }
+
 .drawer-menu {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 80px;
   z-index: 200;
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .left-bar {
   position: fixed;
-  left: 0;
   top: 80px;
   bottom: 80px;
+  left: 0;
   z-index: 201;
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
   > li {
     width: 80px;
     height: fit-content !important;
-    text-align: center;
     line-height: 1.8em !important;
+    text-align: center;
   }
 }
 
 .mainmenu-icon {
   display: block;
-  font-size: 28px !important;
-  margin-right: 0 !important;
   margin-top: 10px;
+  margin-right: 0 !important;
+  font-size: 28px !important;
 }
 
 .mainlogo {
   position: fixed;
-  background: #001529;
   top: 0;
   left: 0;
+  z-index: 201;
   width: 80px;
   height: 80px;
-  z-index: 201;
-  text-align: center;
   padding-top: 10px;
+  text-align: center;
+  background: #001529;
   .anticon {
-    color: #fff;
-    opacity: 0.8;
-    font-size: 30px;
     margin: 0;
+    color: #fff;
+    font-size: 30px;
+    opacity: 0.8;
   }
 }
 
 .mainfooter {
   position: fixed;
-  background: #001529;
   bottom: 0;
   left: 0;
+  z-index: 201;
   width: 80px;
   height: 80px;
-  z-index: 201;
-  text-align: center;
   padding-top: 20px;
+  text-align: center;
+  background: #001529;
   .anticon {
-    color: #fff;
-    opacity: 0.8;
-    font-size: 30px;
     margin: 0;
+    color: #fff;
+    font-size: 30px;
+    opacity: 0.8;
   }
 }

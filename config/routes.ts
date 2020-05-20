@@ -42,6 +42,7 @@ const PageRoutes: IBestAFSRoute[] = [
         icon: 'dashboard',
         access: Permissions.template.dashboard.index,
         component: '@/pages/template/dashboard/index',
+        key:'xxxxxx'
       },
       {
         path: 'sample',

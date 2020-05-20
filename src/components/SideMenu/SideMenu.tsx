@@ -2,11 +2,10 @@ import React, { CSSProperties } from 'react';
 import { Layout, Menu } from 'antd';
 import classNames from 'classnames';
 import { SiderProps } from 'antd/es/layout/Sider';
-
-import './index.less';
 import { WithFalse } from '@ant-design/pro-layout/es/typings';
 import BaseMenu, { BaseMenuProps } from '@ant-design/pro-layout/es/SiderMenu/BaseMenu';
 import MenuCounter from '@ant-design/pro-layout/es/SiderMenu/Counter';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
 
@@ -20,21 +19,24 @@ export const defaultRenderLogo = (logo: React.ReactNode): React.ReactNode => {
   return logo;
 };
 
-export const defaultRenderLogoAndTitle = (props: SiderMenuProps): React.ReactNode => {
+export const defaultRenderLogoAndTitle = (
+  props: SiderMenuProps,
+  renderKey: string = 'menuHeaderRender',
+): React.ReactNode => {
   const {
     logo = 'https://gw.alipayobjects.com/zos/antfincdn/PmY%24TNNDBI/logo.svg',
     title,
-    menuHeaderRender,
   } = props;
-  if (menuHeaderRender === false) {
+  const renderFunction = props[renderKey || ''];
+  if (renderFunction === false) {
     return null;
   }
   const logoDom = defaultRenderLogo(logo);
   const titleDom = <h1>{title}</h1>;
 
-  if (menuHeaderRender) {
+  if (renderFunction) {
     // when collapsed, no render title
-    return menuHeaderRender(logoDom, props.collapsed ? null : titleDom, props);
+    return renderFunction(logoDom, props.collapsed ? null : titleDom, props);
   }
   return (
     <a href="/">
@@ -51,6 +53,8 @@ export interface SiderMenuProps
   menuHeaderRender?: WithFalse<
     (logo: React.ReactNode, title: React.ReactNode, props?: SiderMenuProps) => React.ReactNode
   >;
+  menuExtraRender?: WithFalse<(props: SiderMenuProps) => React.ReactNode>;
+  collapsedButtonRender?: WithFalse<(collapsed?: boolean) => React.ReactNode>;
   breakpoint?: SiderProps['breakpoint'] | false;
   onMenuHeaderClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   hide?: boolean;
@@ -60,29 +64,36 @@ export interface SiderMenuProps
   onOpenChange?: (openKeys: WithFalse<string[]>) => void;
 }
 
+const defaultRenderCollapsedButton = (collapsed?: boolean) =>
+  collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />;
+
 const SiderMenu: React.FC<SiderMenuProps> = (props) => {
   const {
     collapsed,
     fixSiderbar,
     onCollapse,
     theme,
-    siderWidth = 256,
+    siderWidth = 70,
     isMobile,
     onMenuHeaderClick,
     breakpoint = 'lg',
     style,
+    layout,
+    menuExtraRender = false,
+    collapsedButtonRender = defaultRenderCollapsedButton,
     links,
+    prefixCls = 'ant-pro',
     onOpenChange,
   } = props;
-
-  const { flatMenus } = MenuCounter.useContainer();
-  const siderClassName = classNames('ant-pro-sider-menu-sider', {
-    'fix-sider-bar': fixSiderbar,
-    light: theme === 'light',
+  const baseClassName = `${prefixCls}-sider`;
+  const { flatMenuKeys } = MenuCounter.useContainer();
+  const siderClassName = classNames(`${baseClassName}`, {
+    [`${baseClassName}-fixed`]: fixSiderbar,
+    [`${baseClassName}-layout-${layout}`]: layout,
+    [`${baseClassName}-light`]: theme === 'light',
   });
-
   const headerDom = defaultRenderLogoAndTitle(props);
-
+  const extraDom = menuExtraRender && menuExtraRender(props);
   return (
     <Sider
       collapsible
@@ -96,40 +107,74 @@ const SiderMenu: React.FC<SiderMenuProps> = (props) => {
           }
         }
       }}
-      style={style}
+      collapsedWidth={40}
+      style={{
+        overflow: 'hidden',
+        ...style,
+      }}
       width={siderWidth}
       theme={theme}
       className={siderClassName}
     >
       {headerDom && (
-        <div className="ant-pro-sider-menu-logo" onClick={onMenuHeaderClick} id="logo">
+        <div className={`${baseClassName}-logo`} onClick={onMenuHeaderClick} id="logo">
           {headerDom}
         </div>
       )}
-      {flatMenus && (
-        <BaseMenu
-          {...props}
-          mode="inline"
-          handleOpenChange={onOpenChange}
-          style={{ padding: '16px 0', width: '100%' }}
-        />
-      )}
-      {links && links.length > 0 && (
-        <div className="ant-pro-sider-menu-links">
-          <Menu
-            theme={theme}
-            className="ant-pro-sider-menu-link-menu"
-            selectedKeys={[]}
-            openKeys={[]}
-            mode="inline"
-          >
-            {(links || []).map((node, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <Menu.Item key={index}>{node}</Menu.Item>
-            ))}
-          </Menu>
+      {extraDom && (
+        <div className={`${baseClassName}-extra ${!headerDom && `${baseClassName}-extra-no-logo`}`}>
+          {extraDom}
         </div>
       )}
+      <div
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          overflowX: 'hidden',
+        }}
+      >
+        {/* {flatMenuKeys && (
+          <BaseMenu
+            {...props}
+            mode="inline"
+            handleOpenChange={onOpenChange}
+            style={{
+              width: '100%',
+            }}
+            className={`${baseClassName}-menu`}
+          />
+        )} */}
+      </div>
+      <div className={`${baseClassName}-links`}>
+        <Menu
+          inlineIndent={16}
+          theme={theme}
+          className={`${baseClassName}-link-menu`}
+          selectedKeys={[]}
+          openKeys={[]}
+          mode="inline"
+        >
+          {(links || []).map((node, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <Menu.Item className={`${baseClassName}-link`} key={index}>
+              {node}
+            </Menu.Item>
+          ))}
+          {collapsedButtonRender && (
+            <Menu.Item
+              className={`${baseClassName}-collapsed-button`}
+              title={undefined}
+              onClick={() => {
+                if (onCollapse) {
+                  onCollapse(!collapsed);
+                }
+              }}
+            >
+              {collapsedButtonRender(collapsed)}
+            </Menu.Item>
+          )}
+        </Menu>
+      </div>
     </Sider>
   );
 };

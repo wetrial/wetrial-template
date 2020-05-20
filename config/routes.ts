@@ -1,4 +1,5 @@
 import { IBestAFSRoute } from '@umijs/plugin-layout';
+// import AccountRoutes from '../src/modules/account';
 
 /**
  * 权限定义
@@ -6,14 +7,14 @@ import { IBestAFSRoute } from '@umijs/plugin-layout';
 const Permissions = {
   template: {
     dashboard: {
-      index: 'template.dashboard',
+      index: '',
     },
     sample: {
-      index: 'template.sample',
+      index: '',
       list: {
-        index: 'template.sample.list',
-        edit: 'template.sample.list.edit',
-        delete: 'template.sample.list.delete',
+        index: '',
+        edit: '',
+        delete: '',
       },
     },
   },
@@ -91,21 +92,7 @@ const routes: IBestAFSRoute[] = [
         path: '/',
         redirect: '/template',
       },
-      {
-        path: '/account',
-        // component: '@/layouts/UserLayout',
-        layout: {
-          hideNav: true,
-          hideMenu: true,
-        },
-        routes: [
-          {
-            name: '登录',
-            path: 'login',
-            component: '@/pages/account/login/index',
-          },
-        ],
-      },
+      // ...AccountRoutes,
       ...PageRoutes,
     ],
   },

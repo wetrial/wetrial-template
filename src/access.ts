@@ -1,13 +1,18 @@
 import { IKeyValue } from '@wetrial/core';
 import { Permissions } from '@config/routes';
+import { IGlobalProps } from '@/services/global.d';
 
-export default function (initialState: { permissions: string[] } = { permissions: [] }) {
-  const { permissions } = initialState;
-  const allPermissions = {
-    ...Permissions,
-  };
-  const flatPermissions = dgFlatPermissions(allPermissions, permissions);
-  return flatPermissions;
+export default function (initialState: IGlobalProps) {
+  const { currentUser } = initialState;
+  if (currentUser) {
+    const allPermissions = {
+      ...Permissions,
+    };
+    const flatPermissions = dgFlatPermissions(allPermissions, currentUser.permissions);
+    return flatPermissions;
+  } else {
+    return [];
+  }
 }
 
 function dgFlatPermissions(

@@ -126,7 +126,7 @@ export const LAYOUT_COL_SEARCH_SIX = {
 };
 
 /**
- * 单选、复选 八列 响应式配置
+ * 单选、复选 六列 响应式配置
  */
 export const LAYOUT_CHECK_SIX = {
   xs: 1,

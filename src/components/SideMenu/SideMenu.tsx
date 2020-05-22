@@ -3,9 +3,11 @@ import { Layout, Menu } from 'antd';
 import classNames from 'classnames';
 import { SiderProps } from 'antd/es/layout/Sider';
 import { WithFalse } from '@ant-design/pro-layout/es/typings';
-import BaseMenu, { BaseMenuProps } from '@ant-design/pro-layout/es/SiderMenu/BaseMenu';
 import MenuCounter from '@ant-design/pro-layout/es/SiderMenu/Counter';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import BaseMenu, { BaseMenuProps } from './BaseMenu';
+
+import './index.less';
 
 const { Sider } = Layout;
 
@@ -110,6 +112,7 @@ const SiderMenu: React.FC<SiderMenuProps> = (props) => {
       collapsedWidth={40}
       style={{
         overflow: 'hidden',
+        position: 'absolute',
         ...style,
       }}
       width={siderWidth}
@@ -133,17 +136,17 @@ const SiderMenu: React.FC<SiderMenuProps> = (props) => {
           overflowX: 'hidden',
         }}
       >
-        {/* {flatMenuKeys && (
+        {flatMenuKeys && (
           <BaseMenu
             {...props}
-            mode="inline"
+            mode="vertical"
             handleOpenChange={onOpenChange}
             style={{
               width: '100%',
             }}
-            className={`${baseClassName}-menu`}
+            className={`${baseClassName}-menu wt-layout-menu`}
           />
-        )} */}
+        )}
       </div>
       <div className={`${baseClassName}-links`}>
         <Menu

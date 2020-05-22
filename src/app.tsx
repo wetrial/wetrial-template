@@ -1,20 +1,26 @@
 import React from 'react';
-import { history } from 'umi';
-import { BasicLayoutProps } from '@ant-design/pro-layout';
+import { history, Link } from 'umi';
+import { BasicLayoutProps, MenuDataItem } from '@ant-design/pro-layout';
+import { HeaderViewProps } from '@ant-design/pro-layout/lib/Header';
 import { ConfigProvider, Avatar, message } from 'antd';
 import validateMessages from '@wetrial/core/es/validation';
 import { UseAPIProvider } from '@umijs/use-request';
 // import { UnAuthorizedException } from '@wetrial/core/es/exception';
 import { initHooks } from '@wetrial/hooks';
-import { initComponent, IconFont } from '@wetrial/component';
+import { initComponent } from '@wetrial/component';
 import defaultSettings from '@config/defaultSettings';
 import { getCurrentUser } from '@/services/account';
 import { request } from '@/utils/request';
 import { getToken } from '@/utils/authority';
 import { IGlobalProps } from '@/services/global.d';
 import logo from './assets/logo.png';
-import { HeaderViewProps } from '@ant-design/pro-layout/lib/Header';
+
 import SideMenu from '@/components/SideMenu';
+import zhCN from 'antd/es/locale/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+moment.locale('zh-cn');
 
 (function init() {
   // 初始化组件配置信息
@@ -71,6 +77,7 @@ export function rootContainer(container) {
     ConfigProvider,
     {
       form: { validateMessages },
+      locale: zhCN,
     },
     // container,
     React.createElement(
@@ -106,19 +113,15 @@ export const layout = ({ initialState }: { initialState: IGlobalProps }): BasicL
       return headerLogo;
     },
     menuRender: (props: HeaderViewProps) => {
-      console.log(props);
       return <SideMenu {...props} />;
     },
-    // menuItemRender: () => null,
-    // subMenuItemRender: (item: MenuDataItem) => {
-    //   console.log(item);
-    //   return (
-    //     <li>
-    //       {item.icon}
-    //       {item.name}
-    //     </li>
-    //   );
-    // },
+    menuItemRender: (item: MenuDataItem, defaultDom: React.ReactNode) => {
+      if (item.parentKeys && item.parentKeys.length === 1 && item.children) {
+        const firstChildrenPath = item.children[0].path || '/';
+        return <Link to={firstChildrenPath}>{defaultDom}</Link>;
+      }
+      return defaultDom;
+    },
     // postMenuData: (menus) => {
     //   return menus as MenuDataItem[];
     // },

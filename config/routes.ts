@@ -17,6 +17,7 @@ const Permissions = {
         delete: '',
       },
     },
+    nopermission:'xxxxxxxxxxxxxxxxxxxxxxx'
   },
 };
 
@@ -41,12 +42,25 @@ const PageRoutes: IBestAFSRoute[] = [
         name: '看板',
         icon: 'dashboard',
         access: Permissions.template.dashboard.index,
-        component: '@/pages/template/dashboard/index',
-        key:'xxxxxx'
+        component: '@/pages/template/dashboard/index'
+      },
+      {
+        path: 'permission',
+        name: '无权限页面',
+        icon: 'dashboard',
+        access:Permissions.template.nopermission,
+        component: '@/pages/template/dashboard/index'
+      },
+      {
+        path: 'ae-sae',
+        name: 'AE/SAE',
+        icon: 'plus',
+        access: Permissions.template.dashboard.index,
+        component: '@/pages/template/dashboard/index'
       },
       {
         path: 'sample',
-        name: '案例',
+        name: '进度管理',
         access: Permissions.template.sample.index,
         icon: 'smile',
         routes: [
@@ -75,6 +89,37 @@ const PageRoutes: IBestAFSRoute[] = [
           },
         ],
       },
+      {
+        path: 'project',
+        name: '项目',
+        access: Permissions.template.sample.index,
+        icon: 'windows',
+        routes: [
+          {
+            path: '/project/sample',
+            redirect: 'list',
+          },
+          {
+            path: 'list',
+            name: '项目列表',
+            access: Permissions.template.sample.list.index,
+            component: '@/pages/template/sample/list/index',
+            exact: true,
+          },
+          {
+            path: 'list/simple-list',
+            access: Permissions.template.sample.list.index,
+            component: '@/pages/template/sample/list/simple-list',
+            exact: true,
+          },
+          {
+            path: 'list/edit/:id?',
+            component: '@/pages/template/sample/list/edit',
+            access: Permissions.template.sample.list.edit,
+            exact: true,
+          },
+        ],
+      }
     ],
   },
 ];

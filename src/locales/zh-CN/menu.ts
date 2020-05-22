@@ -1,7 +1,9 @@
 export default {
-  'menu.案例.列表': '列表',
-  'menu.案例': '案例',
+  'menu.进度管理.列表': '列表',
+  'menu.进度管理': '案例',
   'menu.看板': '看板',
+  'menu.AE/SAE': 'AE/SAE',
+  'menu.无权限页面': '无权限页面',
   'menu.admin': '管理页',
   'menu.admin.sub-page': '二级管理页',
   'menu.login': '登录',

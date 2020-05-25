@@ -125,5 +125,32 @@ export const LAYOUT_COL_SEARCH_SIX = {
   xxl: 4,
 };
 
+/**
+ * 单选、复选 六列 响应式配置
+ */
+export const LAYOUT_CHECK_SIX = {
+  xs: 1,
+  sm: 1,
+  md: 2,
+  lg: 4,
+  xl: 6,
+  xxl: 6,
+};
+
+/**
+ * 单选、复选 八列 响应式配置
+ */
+export const LAYOUT_CHECK_EIGHT = {
+  xs: 12,
+  sm: 12,
+  md: 8,
+  lg: 6,
+  xl: 4,
+  xxl: 3,
+};
+
 // table 显示滚动条的宽度界限
-export const TABLE_SCROLL_WIDTH = 1300;
+export const TABLE_SCROLL_WIDTH = 'max-content';
+
+// 默认日期时间格式
+export const DEFAULT_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';

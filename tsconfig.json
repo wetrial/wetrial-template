@@ -18,6 +18,7 @@
     "experimentalDecorators": true,
     "strict": true,
     "noImplicitAny": false,
+    "resolveJsonModule": true,
     "paths": {
       "@/*": ["./src/*"],
       "@@/*": ["src/.umi/*"],

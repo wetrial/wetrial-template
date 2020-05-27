@@ -15,6 +15,11 @@ import { getToken } from '@/utils/authority';
 import { IGlobalProps } from '@/services/global.d';
 import RightContent from '@/components/RightContent';
 import logo from './assets/logo.png';
+import zhCN from 'antd/es/locale/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+moment.locale('zh-cn');
 
 (function init() {
   // 初始化组件配置信息
@@ -71,6 +76,7 @@ export function rootContainer(container) {
     ConfigProvider,
     {
       form: { validateMessages },
+      locale: zhCN,
     },
     // container,
     React.createElement(

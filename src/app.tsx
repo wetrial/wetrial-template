@@ -90,10 +90,20 @@ export function rootContainer(container) {
       {
         value: {
           requestMethod: (param) => request(param),
-          onError: (err) => {
-            console.error(err);
-            message.error(err.message);
-            throw err;
+          onError: (response) => {
+            const { data, status } = response;
+            if (status === 400) {
+              message.warning(data);
+            }
+            if (status === 401) {
+              message.warning('无权访问');
+            } else if (status === 404) {
+              message.error('页面不存在');
+            } else if (status === 500) {
+              message.error('出错啦');
+            } else {
+              message.error('出错啦');
+            }
           },
         },
       },

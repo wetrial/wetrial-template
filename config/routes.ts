@@ -71,7 +71,30 @@ const PageRoutes: IBestAFSRoute[] = [
             access: Permissions.template.sample.list.edit,
             exact: true,
           },
+          
         ],
+      },
+      {
+        path: 'dragable',
+        name: '拖拽',
+        icon:'plus',
+        routes:[
+         {
+           path:'react-beautiful-dnd',
+           name:'react-beautiful-dnd',
+           component: '@/pages/template/dragable/react-beautiful-dnd/demo1/index',
+         },
+         {
+          path:'react-dnd',
+          name:'react-dnd',
+          component: '@/pages/template/dragable/react-dnd/demo1',
+          },
+          {
+           path:'react-dnd2',
+           name:'react-dnd2',
+           component: '@/pages/template/dragable/react-dnd/demo2',
+           }  
+        ]
       },
     ],
   },

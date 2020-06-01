@@ -7,5 +7,6 @@ module.exports = {
     'order/properties-order': null,
     'declaration-bang-space-before': null,
     'function-name-case': null,
+    'value-keyword-case': null,
   },
 };

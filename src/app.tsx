@@ -11,7 +11,7 @@ import { initHooks } from '@wetrial/hooks';
 import { initComponent } from '@wetrial/component';
 import defaultSettings from '@config/defaultSettings';
 import { getCurrentUser } from '@/services/account';
-import { request } from '@/utils/request';
+import { request as requestMethod } from '@/utils/request';
 import { getToken } from '@/utils/authority';
 import { IGlobalProps } from '@/services/global.d';
 import RightContent from '@/components/RightContent';
@@ -87,26 +87,16 @@ export function rootContainer(container) {
       },
       locale: zhCN,
     },
-    // container,
     React.createElement(
       UseAPIProvider,
       {
         value: {
-          requestMethod: (param) => request(param),
+          requestMethod: (param) => requestMethod(param),
           onError: (response) => {
-            const { data, status } = response;
-            if (status === 400) {
-              message.warning(data);
-            }
-            if (status === 401) {
-              message.warning('无权访问');
-            } else if (status === 404) {
-              message.error('页面不存在');
-            } else if (status === 500) {
-              message.error('出错啦');
-            } else {
-              message.error('出错啦');
-            }
+            const {
+              data: { error: { message: errorMsg } = { message: '出错啦.' } },
+            } = response;
+            message.error(errorMsg);
           },
         },
       },

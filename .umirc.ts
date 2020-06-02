@@ -48,7 +48,7 @@ export default defineConfig({
   alias: {
     themes: join(__dirname, './src/themes'),
     '@config': join(__dirname, './config'),
-    '@modules/*': join(__dirname, './src/modules/*'),
+    '@modules': join(__dirname, './src/modules'),
   },
   lessLoader: {
     javascriptEnabled: true,

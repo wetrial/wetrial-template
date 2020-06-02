@@ -71,30 +71,39 @@ const PageRoutes: IBestAFSRoute[] = [
             access: Permissions.template.sample.list.edit,
             exact: true,
           },
-          
-        ],
-      },
-      {
-        path: 'dragable',
-        name: '拖拽',
-        icon:'plus',
-        routes:[
-         {
-           path:'react-beautiful-dnd',
-           name:'react-beautiful-dnd',
-           component: '@/pages/template/dragable/react-beautiful-dnd/demo1/index',
-         },
-         {
-          path:'react-dnd',
-          name:'react-dnd',
-          component: '@/pages/template/dragable/react-dnd/demo1',
+          {
+            path: 'react-beautiful-dnd',
+            name: 'beautiful dnd',
+            routes:[
+             {
+               path:'demo1',
+               name:'demo1',
+               component: '@/pages/template/sample/react-beautiful-dnd/demo1/index',
+             }
+            ]
           },
           {
-           path:'react-dnd2',
-           name:'react-dnd2',
-           component: '@/pages/template/dragable/react-dnd/demo2',
-           }  
-        ]
+            path:'react-dnd',
+            name:'react dnd',
+            routes:[
+             {
+              path:'demo1',
+              name:'demo1',
+              component: '@/pages/template/sample/react-dnd/demo1',
+              },
+              {
+                path:'demo2',
+                name:'demo2',
+                component: '@/pages/template/sample/react-dnd/demo2',
+              },
+              {
+                path:'drop-targets',
+                name:'drop-targets',
+                component: '@/pages/template/sample/react-dnd/drop-targets/',
+                }
+            ]
+          }
+        ],
       },
     ],
   },

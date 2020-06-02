@@ -28,7 +28,7 @@ module.exports = {
     'import/no-unresolved': [
       'error',
       {
-        ignore: ['@config/', '@/', '@wetrial'],
+        ignore: ['@config/', '@/', '@modules', '@wetrial'],
       },
     ],
     'key-spacing': 0,

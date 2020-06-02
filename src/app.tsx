@@ -6,17 +6,28 @@ import validateMessages from '@wetrial/core/es/validation';
 import { UseAPIProvider } from '@umijs/use-request';
 // import { omit } from 'lodash';
 // import { UnAuthorizedException } from '@wetrial/core/es/exception';
+import { initWetrialCore } from '@wetrial/core';
 import { initHooks } from '@wetrial/hooks';
 import { initComponent } from '@wetrial/component';
 import defaultSettings from '@config/defaultSettings';
 import { getCurrentUser } from '@/services/account';
-import { request } from '@/utils/request';
+import { request as requestMethod } from '@/utils/request';
 import { getToken } from '@/utils/authority';
 import { IGlobalProps } from '@/services/global.d';
 import RightContent from '@/components/RightContent';
 import logo from './assets/logo.png';
+import zhCN from 'antd/es/locale/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+moment.locale('zh-cn');
 
 (function init() {
+  // 初始化核心库配置信息
+  initWetrialCore({
+    RSAKey:
+      'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5HI3rQq9BKcruxYfqgnkhyuI+9CGf1jYsyzWYpdw/3Cv9TX4u5w2GjcYoxzBY5s6ZcXbb4oGoLt9rn93g7sKT01tyUO/iQdYiOTvPsFiqcInMVHhaazBy5nH50owObGs+PRubc8bP+a+DT3vV8+l7TEd/H9pdwok/r7GlIIe5uQIDAQAB',
+  });
   // 初始化组件配置信息
   initComponent({
     iconFontUrl: defaultSettings.iconfontUrl,
@@ -71,17 +82,21 @@ export function rootContainer(container) {
     ConfigProvider,
     {
       form: { validateMessages },
+      input: {
+        autoComplete: 'off',
+      },
+      locale: zhCN,
     },
-    // container,
     React.createElement(
       UseAPIProvider,
       {
         value: {
-          requestMethod: (param) => request(param),
-          onError: (err) => {
-            console.error(err);
-            message.error(err.message);
-            throw err;
+          requestMethod: (param) => requestMethod(param),
+          onError: (response) => {
+            const {
+              data: { error: { message: errorMsg } = { message: '出错啦.' } },
+            } = response;
+            message.error(errorMsg);
           },
         },
       },

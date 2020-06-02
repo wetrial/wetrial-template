@@ -31,17 +31,10 @@ export default defineConfig({
     immer: true,
     hmr: true,
   },
-  locale: {
-    default: 'zh-CN',
-    antd: true,
-    // default true, when it is true, will use `navigator.language` overwrite default
-    baseNavigator: false,
-  },
+  locale: false,
   dynamicImport: {
     loading: '@/components/PageLoading/index',
   },
-  // 暂时关闭
-  pwa: defaultSetting.pwa,
   ignoreMomentLocale: true,
   targets: {
     ie: 11,
@@ -55,7 +48,7 @@ export default defineConfig({
   alias: {
     themes: join(__dirname, './src/themes'),
     '@config': join(__dirname, './config'),
-    '@modules/*': join(__dirname, './src/modules/*'),
+    '@modules': join(__dirname, './src/modules'),
   },
   lessLoader: {
     javascriptEnabled: true,
@@ -117,5 +110,4 @@ export default defineConfig({
       },
     ],
   ],
-  esbuild: {},
 });

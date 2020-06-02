@@ -82,6 +82,9 @@ export function rootContainer(container) {
     ConfigProvider,
     {
       form: { validateMessages },
+      input: {
+        autoComplete: 'off',
+      },
       locale: zhCN,
     },
     // container,

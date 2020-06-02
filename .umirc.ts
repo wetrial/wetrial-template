@@ -110,5 +110,4 @@ export default defineConfig({
       },
     ],
   ],
-  esbuild: {},
 });

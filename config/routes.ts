@@ -92,9 +92,9 @@ const PageRoutes: IBestAFSRoute[] = [
               component: '@/pages/template/sample/react-dnd/demo1',
               },
               {
-                path:'demo2',
-                name:'demo2',
-                component: '@/pages/template/sample/react-dnd/demo2',
+                path:'nested',
+                name:'嵌套',
+                component: '@/pages/template/sample/react-dnd/nested',
               },
               {
                 path:'drop-targets',

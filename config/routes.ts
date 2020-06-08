@@ -105,6 +105,11 @@ const PageRoutes: IBestAFSRoute[] = [
                 path:'drop-targets',
                 name:'drop-targets',
                 component: '@/pages/template/sample/react-dnd/drop-targets/index',
+              },
+              {
+                path:'nestes',
+                name:'nestes',
+                component: '@/pages/template/sample/react-dnd/nestes/index',
               }
             ]
           }

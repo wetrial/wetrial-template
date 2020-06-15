@@ -97,10 +97,20 @@ const PageRoutes: IBestAFSRoute[] = [
                 component: '@/pages/template/sample/react-dnd/nested',
               },
               {
+                path:'drop-sources',
+                name:'drop-sources',
+                component: '@/pages/template/sample/react-dnd/drag-sources/index',
+              },
+              {
                 path:'drop-targets',
                 name:'drop-targets',
-                component: '@/pages/template/sample/react-dnd/drop-targets/',
-                }
+                component: '@/pages/template/sample/react-dnd/drop-targets/index',
+              },
+              {
+                path:'nestes',
+                name:'nestes',
+                component: '@/pages/template/sample/react-dnd/nestes/index',
+              }
             ]
           }
         ],

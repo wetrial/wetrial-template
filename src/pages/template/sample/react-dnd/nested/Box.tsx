@@ -27,11 +27,11 @@ const Box: React.FC<IListData & IListProps> = ({ bg, category, cardList, changeC
   };
   const [, drag] = useDrag({
     item: box,
-    begin(monitor: DragSourceMonitor) {
+    begin() {
       const useless = cardList.find((item: IListData) => item.id === -1);
       // 拖拽开始时，向 cardList 数据源中插入一个占位的元素，如果占位元素已经存在，不再重复插入
       if (!useless) {
-        changeCardList([{ bg: 'aqua', category: '放这里', id: -1 }, ...cardList]);
+        changeCardList([...cardList, { bg: 'aqua', category: '放这里', id: -1 }]);
       }
       return box;
     },

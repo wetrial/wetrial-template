@@ -1,32 +1,42 @@
-/**
- * filename: Card
- * overview: 根据放入 Box 生成的 Card 组件
- */
+import React, { useState, useCallback, useRef } from 'react';
+import { useDrag, useDrop, DragSourceMonitor, DropTargetMonitor, XYCoord } from 'react-dnd';
+import { Colors } from './Colors';
 
-import React, { useRef } from 'react';
-import { XYCoord } from 'dnd-core';
-import { DragSourceMonitor, DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
-import { ItemTypes } from './ItemTypes';
-import { IListData } from './IListData';
+const style: React.CSSProperties = {
+  border: '1px dashed gray',
+  padding: '0.5rem',
+  margin: '0.5rem',
+};
 
-interface IProps {
+export interface StatefulSourceBoxProps {
+  color: string;
+  children?: any;
   index: number;
-  moveCard: (dragIndex: number, hoverIndex: number) => void;
+  moveBox: (dragIndex: number, hoverIndex: number) => void;
 }
 
-const Card: React.FC<IListData & IProps> = ({ bg, category, index, moveCard, id }) => {
+export default ({ color, children, index, moveBox }: StatefulSourceBoxProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [forbidDrag, setForbidDrag] = useState(false);
+  const handleToggleForbidDrag = useCallback(() => {
+    setForbidDrag(!forbidDrag);
+  }, [forbidDrag]);
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag<any, any, any>({
+    item: {
+      type: color,
+      index,
+    },
     collect: (monitor: DragSourceMonitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    // item 中包含 index 属性，则在 drop 组件 hover 和 drop 是可以根据第一个参数获取到 index 值
-    item: { type: ItemTypes.Card, index },
+    canDrag: () => {
+      return !forbidDrag;
+    },
   });
 
   const [, drop] = useDrop({
-    accept: ItemTypes.Card,
+    accept: [Colors.BLUE, Colors.YELLOW],
     hover(item: { type: string; index: number }, monitor: DropTargetMonitor) {
       if (!ref.current) {
         return;
@@ -71,7 +81,7 @@ const Card: React.FC<IListData & IProps> = ({ bg, category, index, moveCard, id 
       }
 
       // 执行 move 回调函数
-      moveCard(dragIndex, hoverIndex);
+      moveBox(dragIndex, hoverIndex);
 
       /**
        * 如果拖拽的组件为 Box，则 dragIndex 为 undefined，此时不对 item 的 index 进行修改
@@ -84,25 +94,35 @@ const Card: React.FC<IListData & IProps> = ({ bg, category, index, moveCard, id 
     },
   });
 
-  const style: React.CSSProperties = {
-    background: bg,
-    margin: '16px 6px',
-    // Card 为占位元素是，透明度 0.4，拖拽状态时透明度 0.2，正常情况透明度为 1
-    // eslint-disable-next-line no-nested-ternary
-    opacity: id === -1 ? 0.4 : isDragging ? 0.2 : 1,
-    padding: '20px 0px',
-    verticalAlign: 40,
-    width: 288,
-  };
+  const opacity = isDragging ? 0.4 : 1;
 
-  // 使用 drag 和 drop 对 ref 进行包裹，则组件既可以进行拖拽也可以接收拖拽组件
+  let backgroundColor;
+  switch (color) {
+    case Colors.YELLOW:
+      backgroundColor = 'lightgoldenrodyellow';
+      break;
+    case Colors.BLUE:
+      backgroundColor = 'lightblue';
+      break;
+    default:
+      break;
+  }
+
   drop(drag(ref));
 
   return (
-    <div ref={ref} style={style}>
-      {category}
+    <div
+      ref={ref}
+      style={{
+        ...style,
+        backgroundColor,
+        opacity,
+        cursor: forbidDrag ? 'default' : 'move',
+      }}
+    >
+      <input type="checkbox" checked={forbidDrag} onChange={handleToggleForbidDrag} />
+      <small>Forbid drag</small>
+      {children}
     </div>
   );
 };
-
-export default Card;

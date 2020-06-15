@@ -71,6 +71,48 @@ const PageRoutes: IBestAFSRoute[] = [
             access: Permissions.template.sample.list.edit,
             exact: true,
           },
+          {
+            path: 'react-beautiful-dnd',
+            name: 'beautiful dnd',
+            routes:[
+             {
+               path:'demo1',
+               name:'demo1',
+               component: '@/pages/template/sample/react-beautiful-dnd/demo1/index',
+             }
+            ]
+          },
+          {
+            path:'react-dnd',
+            name:'react dnd',
+            routes:[
+             {
+              path:'demo1',
+              name:'demo1',
+              component: '@/pages/template/sample/react-dnd/demo1',
+              },
+              {
+                path:'nested',
+                name:'嵌套',
+                component: '@/pages/template/sample/react-dnd/nested',
+              },
+              {
+                path:'drop-sources',
+                name:'drop-sources',
+                component: '@/pages/template/sample/react-dnd/drag-sources/index',
+              },
+              {
+                path:'drop-targets',
+                name:'drop-targets',
+                component: '@/pages/template/sample/react-dnd/drop-targets/index',
+              },
+              {
+                path:'nestes',
+                name:'nestes',
+                component: '@/pages/template/sample/react-dnd/nestes/index',
+              }
+            ]
+          }
         ],
       },
     ],

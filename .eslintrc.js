@@ -27,7 +27,7 @@ module.exports = {
     'import/no-unresolved': [
       'error',
       {
-        ignore: ['@config/', '@/', '@modules', '@wetrial', '@ahooksjs/umi-request'],
+        ignore: ['@config/', '@/', '@modules', '@wetrial'],
       },
     ],
     'key-spacing': 0,

@@ -14,7 +14,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     'space-infix-ops': 0,
     'eslint-comments/no-unlimited-disable': 0,
-    'space-infix-ops': 0,
     'no-useless-return': 0,
     'comma-spacing': 0,
     'import/no-extraneous-dependencies': 0,
@@ -28,7 +27,7 @@ module.exports = {
     'import/no-unresolved': [
       'error',
       {
-        ignore: ['@config/', '@/', '@modules', '@wetrial'],
+        ignore: ['@config/', '@/', '@modules', '@wetrial', '@ahooksjs/umi-request'],
       },
     ],
     'key-spacing': 0,

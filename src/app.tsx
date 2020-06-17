@@ -3,7 +3,8 @@ import { history } from 'umi';
 import { BasicLayoutProps } from '@ant-design/pro-layout';
 import { ConfigProvider, message } from 'antd';
 import validateMessages from '@wetrial/core/es/validation';
-import { UseAPIProvider } from '@umijs/use-request';
+// @ts-ignore
+import { UseRequestProvider } from '@ahooksjs/umi-request';
 // import { omit } from 'lodash';
 // import { UnAuthorizedException } from '@wetrial/core/es/exception';
 import { initWetrialCore } from '@wetrial/core';
@@ -88,7 +89,7 @@ export function rootContainer(container) {
       locale: zhCN,
     },
     React.createElement(
-      UseAPIProvider,
+      UseRequestProvider,
       {
         value: {
           requestMethod: (param) => requestMethod(param),

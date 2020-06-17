@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useModel, history } from 'umi';
 import { Form, Button, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import { setToken } from '@wetrial/core/es/authority';
 import { login } from '@/services/account';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormTable, useResponsive, formatFormTableParams } from '@wetrial/hooks';
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import { useLocation, useAccess, Access, Link } from 'umi';
 import { memoize } from 'lodash';
 import { Button, Form, Input, Switch, Popconfirm, Row, Col, Space } from 'antd';

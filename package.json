@@ -58,7 +58,6 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ahooksjs/use-request": "^2.0.0",
     "@ant-design/pro-layout": "^6.0.0-8",
     "@wetrial/component": "^0.2.5",
     "@wetrial/core": "^3.1.8",

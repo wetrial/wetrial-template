@@ -51,7 +51,6 @@ export function render(oldRender) {
 export async function getInitialState(): Promise<IGlobalProps> {
   const token = getToken();
   const {
-    // @ts-ignore
     location: { pathname },
   } = history;
   const loginPathName = '/account/login';

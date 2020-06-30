@@ -71,6 +71,8 @@ module.exports = {
     'dot-notation': 0,
     'no-return-await': 0,
     'unicode-bom': 0,
+    'arrow-parens': 0,
+    'wrap-iife': 0,
   },
   globals: {
     page: true,

@@ -55,8 +55,8 @@
 
   var version = getIEVersion();
   var isTipPage = isGradePage();
-  // 不支持低于IE11的浏览器
-  if (version === -1 || version === 'edge' || version === 11) {
+  // 不支持IE浏览器
+  if (version === -1 || version === 'edge') { // || version === 11
     if (isTipPage) {
       window.location.href = '/';
     }

@@ -58,12 +58,12 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ant-design/pro-layout": "^6.0.1",
+    "@ant-design/pro-layout": "^6.2.0",
     "@wetrial/component": "^0.2.5",
-    "@wetrial/core": "^3.2.1",
-    "@wetrial/hooks": "^3.0.0",
+    "@wetrial/core": "^3.2.3",
+    "@wetrial/hooks": "^3.0.1",
     "ahooks": "^2.1.0",
-    "antd": "^4.4.0",
+    "antd": "^4.4.1",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
     "moment": "^2.27.0",

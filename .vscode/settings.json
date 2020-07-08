@@ -1,22 +1,17 @@
 {
-  "eslint.validate": [
-    "javascript",
-    // jsx
-    "javascriptreact",
-    // ts
-    {
-      "language": "typescript",
-      "autoFix": true
-    },
-    // tsx
-    {
-      "language": "typescriptreact",
-      "autoFix": true
-    },
-    "html"
-  ],
-  // "typescript.validate.enable": false,
-  "eslint.autoFixOnSave": true,
+  "eslint.validate": ["typescript", "typescriptreact"],
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.autoClosingBrackets": "always"
+  },
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "editor.renderWhitespace": "all",
+    "editor.acceptSuggestionOnEnter": "off"
+  },
+  "typescript.validate.enable": true,
   "eslint.alwaysShowStatus": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {

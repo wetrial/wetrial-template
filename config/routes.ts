@@ -19,15 +19,31 @@ const Permissions = {
   },
 };
 
-/**
- * 路由定义
- */
-const PageRoutes: IBestAFSRoute[] = [
+// umi routes: https://umijs.org/zh/guide/router.html
+const routes: IBestAFSRoute[] = [
+  {
+    path: '/',
+    redirect: '/template',
+  },
+  {
+    path: '/account',
+    layout: false,
+    routes: [
+      {
+        path: '/account',
+        redirect: 'login',
+      },
+      {
+        name: '登录',
+        path: 'login',
+        component: '@/pages/account/login/index',
+      },
+    ],
+  },
   {
     path: '/template',
     menu: {
       name: 'Wetrial',
-      // hideChildren:false,
       flatMenu: true,
     },
     routes: [
@@ -74,43 +90,8 @@ const PageRoutes: IBestAFSRoute[] = [
         ],
       },
     ],
-  },
-];
-
-// umi routes: https://umijs.org/zh/guide/router.html
-const routes: IBestAFSRoute[] = [
-  {
-    path: '/',
-    menu: {
-      name: '欢迎',
-      flatMenu: true,
-    },
-    // component: '@/pages/body',
-    routes: [
-      {
-        path: '/',
-        redirect: '/template',
-      },
-      {
-        path: '/account',
-        // component: '@/layouts/UserLayout',
-        layout: false,
-        routes: [
-          {
-            path: '/account',
-            redirect: 'login',
-          },
-          {
-            name: '登录',
-            path: 'login',
-            component: '@/pages/account/login/index',
-          },
-        ],
-      },
-      ...PageRoutes,
-    ],
-  },
+  }
 ];
 
 export default routes;
-export { Permissions, PageRoutes };
+export { Permissions };

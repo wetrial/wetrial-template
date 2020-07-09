@@ -25,13 +25,18 @@ export default defineConfig({
   layout: {
     title: defaultSetting.title,
     theme: defaultSetting.navTheme,
-    locale: defaultSetting.menu.locale,
+    locale: false,
   },
   dva: {
     immer: true,
     hmr: true,
   },
-  locale: false,
+  locale: {
+    default: 'zh-CN',
+    // default true, when it is true, will use `navigator.language` overwrite default
+    antd: true,
+    baseNavigator: false,
+  },
   dynamicImport: {
     loading: '@/components/PageLoading/index',
   },

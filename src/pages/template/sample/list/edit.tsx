@@ -51,6 +51,14 @@ export default () => {
         //     提交
         //   </Button>,
         // ]}
+        footer={[
+          <Button key="cancel" form="info" type="default" htmlType="reset" onClick={handleBack}>
+            取消
+          </Button>,
+          <Button key="submit" form="info" loading={submitting} type="primary" htmlType="submit">
+            提交
+          </Button>,
+        ]}
       >
         <Form
           {...LAYOUT_FORM_TWO}
@@ -127,14 +135,6 @@ export default () => {
             </Col>
           </Row>
           <Row />
-          <div className="wt-form-operator">
-            <Button form="info" type="default" htmlType="reset" onClick={handleBack}>
-              取消
-            </Button>
-            <Button form="info" loading={submitting} type="primary" htmlType="submit">
-              提交
-            </Button>
-          </div>
         </Form>
       </PageContainer>
     </Skeleton>

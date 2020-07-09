@@ -2,7 +2,6 @@
   "eslint.validate": ["typescript", "typescriptreact"],
   "[typescript]": {
     "editor.formatOnSave": true,
-    "editor.formatOnPaste": true,
     "editor.autoClosingBrackets": "always"
   },
   "[markdown]": {

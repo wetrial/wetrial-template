@@ -16,14 +16,14 @@
     "functions:build": "netlify-lambda build ./lambda",
     "functions:run": "cross-env NODE_ENV=dev netlify-lambda serve ./lambda",
     "i18n-remove": "pro i18n-remove --locale=zh-CN --write",
-    "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
+    "lint": "umi g tmp && npm run lint:js && npm run lint:style && npm run lint:prettier",
+    "lint:prettier": "prettier --check \"src/**/*\" --end-of-line auto",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
-    "lint:prettier": "prettier --check \"**/*\" --end-of-line auto",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
-    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "prettier": "prettier -c --write \"src/**/*\"",
     "start": "cross-env REACT_APP_ENV=dev umi dev",
     "dev": "npm run start:dev",
     "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none umi dev",
@@ -43,13 +43,10 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write",
-      "git add"
+    "**/*.less": "stylelint --syntax less",
+    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write"
     ]
   },
   "browserslist": [
@@ -79,7 +76,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "@umijs/fabric": "^1.2.14",
-    "@umijs/preset-react": "^1.5.17",
+    "@umijs/preset-react": "1.5.15",
     "@umijs/test": "^3.2.9",
     "chalk": "^4.1.0",
     "cross-env": "^7.0.2",

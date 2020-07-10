@@ -42,7 +42,7 @@ export interface NoticeIconProps {
 
 const NoticeIcon: React.FC<NoticeIconProps> & {
   Tab: typeof NoticeList;
-} = props => {
+} = (props) => {
   const getNotificationBox = (): React.ReactNode => {
     const {
       children,
@@ -77,7 +77,6 @@ const NoticeIcon: React.FC<NoticeIconProps> & {
             onViewMore={(event): void => onViewMore && onViewMore(child.props, event)}
             showClear={showClear}
             showViewMore={showViewMore}
-            title={title}
             {...child.props}
           />
         </TabPane>,

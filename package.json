@@ -58,14 +58,14 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ant-design/pro-layout": "^6.2.0",
+    "@ant-design/pro-layout": "^6.2.2",
     "@wetrial/component": "^0.2.5",
     "@wetrial/core": "^3.2.3",
     "@wetrial/hooks": "^3.0.1",
     "ahooks": "^2.1.0",
     "antd": "^4.4.1",
     "classnames": "^2.2.6",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "path-to-regexp": "^6.1.0",
     "qs": "^6.9.4",
@@ -77,10 +77,10 @@
     "use-merge-value": "^1.0.2"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.3",
+    "@types/jest": "^26.0.4",
     "@umijs/fabric": "^1.2.14",
-    "@umijs/preset-react": "^1.5.11",
-    "@umijs/test": "^3.2.6",
+    "@umijs/preset-react": "^1.5.17",
+    "@umijs/test": "^3.2.9",
     "chalk": "^4.1.0",
     "cross-env": "^7.0.2",
     "cross-port-killer": "^1.2.1",
@@ -89,13 +89,12 @@
     "husky": "^4.2.5",
     "jest-puppeteer": "^4.4.0",
     "jsdom-global": "^3.0.2",
-    "lint-staged": "^10.2.7",
+    "lint-staged": "^10.2.11",
     "mockjs": "^1.1.0",
     "prettier": "^2.0.5",
-    "stylelint": "^13.5.0",
-    "stylelint-config-standard": "^20.0.0",
+    "stylelint": "^13.6.1",
     "typescript": "^3.9.3",
-    "umi": "^3.2.6"
+    "umi": "^3.2.9"
   },
   "optionalDependencies": {},
   "engines": {

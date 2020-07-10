@@ -116,6 +116,7 @@ export function rootContainer(container) {
               const errorText = codeMessage[status] || statusText;
 
               notification.error({
+                key: '__global_error',
                 message: `请求错误 ${status}`,
                 description: errorText,
               });
@@ -123,6 +124,7 @@ export function rootContainer(container) {
 
             if (!response) {
               notification.error({
+                key: '__global_error',
                 description: '您的网络发生异常，无法连接服务器',
                 message: '网络异常',
               });

@@ -1,9 +1,10 @@
-const { strictEslint } = require('@umijs/fabric');
-
 module.exports = {
-  ...strictEslint,
+  extends: [require.resolve('@umijs/fabric/dist/eslint')],
+  globals: {
+    page: true,
+    REACT_APP_ENV: true,
+  },
   rules: {
-    ...strictEslint.rules,
     '@typescript-eslint/camelcase': 0,
     '@typescript-eslint/class-name-casing': 0,
     '@typescript-eslint/prefer-interface': 0,
@@ -73,9 +74,12 @@ module.exports = {
     'unicode-bom': 0,
     'arrow-parens': 0,
     'wrap-iife': 0,
-  },
-  globals: {
-    page: true,
-    REACT_APP_ENV: true,
+    '@typescript-eslint/naming-convention': 0,
+    '@typescript-eslint/dot-notation': 0,
+    '@typescript-eslint/lines-between-class-members': 0,
+    '@typescript-eslint/no-dupe-class-members': 0,
+    '@typescript-eslint/no-implied-eval': 0,
+    '@typescript-eslint/no-throw-literal': 0,
+    '@typescript-eslint/no-unused-expressions': 0,
   },
 };

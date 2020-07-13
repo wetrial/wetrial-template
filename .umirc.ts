@@ -31,12 +31,7 @@ export default defineConfig({
     immer: true,
     hmr: true,
   },
-  locale: {
-    default: 'zh-CN',
-    // default true, when it is true, will use `navigator.language` overwrite default
-    antd: true,
-    baseNavigator: false,
-  },
+  locale: false,
   dynamicImport: {
     loading: '@/components/PageLoading/index',
   },

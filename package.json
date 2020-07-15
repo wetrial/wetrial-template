@@ -56,7 +56,7 @@
   ],
   "dependencies": {
     "@ant-design/pro-layout": "^6.2.2",
-    "@wetrial/component": "^0.2.5",
+    "@wetrial/component": "^0.2.8",
     "@wetrial/core": "^3.2.3",
     "@wetrial/hooks": "^3.0.1",
     "ahooks": "^2.1.0",

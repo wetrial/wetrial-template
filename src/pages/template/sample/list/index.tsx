@@ -1,16 +1,17 @@
 import React from 'react';
-import { useFormTable, useResponsive, formatFormTableParams } from '@wetrial/hooks';
+import { useFormTable, formatFormTableParams } from '@wetrial/hooks';
 import { useRequest } from 'ahooks';
 import { useLocation, useAccess, Access, Link } from 'umi';
 import { memoize } from 'lodash';
-import { Button, Form, Input, Switch, Popconfirm, Row, Col, Space } from 'antd';
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Switch, Popconfirm, Row, Col, Space, Tooltip } from 'antd';
+import { CloseOutlined, CheckOutlined, MoreOutlined } from '@ant-design/icons';
 import { ProTable } from '@wetrial/component';
+import { PageContainer } from '@ant-design/pro-layout';
 import { ProColumns } from '@wetrial/component/es/ProTable';
 import { listToFlat } from '@wetrial/core/es/utils';
 import { Permissions } from '@config/routes';
 import { StagedDict } from './prop.d';
-import { LAYOUT_FORM_TWO, LAYOUT_COL_SEARCH_FOUR } from '@/constants';
+import { LAYOUT_FORM_TWO, LAYOUT_COL_SEARCH_SIX } from '@/constants';
 import { getList, remove } from './service';
 
 const stagedDict = memoize(listToFlat)(StagedDict);
@@ -19,7 +20,6 @@ export default () => {
   const [form] = Form.useForm();
   const { pathname } = useLocation();
 
-  const { size } = useResponsive();
   const access = useAccess();
 
   const { tableProps, search, sorter, refresh } = useFormTable(
@@ -135,20 +135,19 @@ export default () => {
   ];
 
   const simpleSearchForm = () => (
-    <Form layout="inline" form={form}>
+    <Form className="wt-simple-search-form" layout="inline" form={form}>
       <Form.Item name="search">
         <Input.Search
-          className="wt-search-simple"
           allowClear
-          autoComplete="off"
           placeholder="请输入姓名或者邮箱"
+          enterButton
+          suffix={
+            <Tooltip title="更多搜索条件">
+              <Button onClick={changeType} size="small" type="link" icon={<MoreOutlined />} />
+            </Tooltip>
+          }
           onSearch={submit}
         />
-      </Form.Item>
-      <Form.Item>
-        <Button type="link" onClick={changeType}>
-          复杂搜索
-        </Button>
       </Form.Item>
     </Form>
   );
@@ -156,17 +155,17 @@ export default () => {
   const advanceSearchForm = () => (
     <Form {...LAYOUT_FORM_TWO} form={form}>
       <Row>
-        <Col {...LAYOUT_COL_SEARCH_FOUR}>
+        <Col {...LAYOUT_COL_SEARCH_SIX}>
           <Form.Item label="姓名" name="name">
             <Input autoComplete="off" placeholder="姓名" />
           </Form.Item>
         </Col>
-        <Col {...LAYOUT_COL_SEARCH_FOUR}>
+        <Col {...LAYOUT_COL_SEARCH_SIX}>
           <Form.Item label="邮箱" name="title">
             <Input autoComplete="off" placeholder="邮箱" />
           </Form.Item>
         </Col>
-        <Col {...LAYOUT_COL_SEARCH_FOUR}>
+        <Col {...LAYOUT_COL_SEARCH_SIX}>
           <Form.Item label="描述" name="desc">
             <Input autoComplete="off" placeholder="描述" />
           </Form.Item>
@@ -178,7 +177,7 @@ export default () => {
             </Button>
             <Button onClick={reset}>重置</Button>
             <Button type="link" onClick={changeType}>
-              简单搜索
+              折叠
             </Button>
           </Space>
         </Form.Item>
@@ -187,21 +186,18 @@ export default () => {
   );
 
   return (
-    <ProTable
-      scroll={{ x: 1300, y: size.height - 180 }}
-      columns={columns}
-      rowKey="id"
-      {...tableProps}
-      searchType={type}
-      renderSearch={type === 'simple' ? simpleSearchForm : advanceSearchForm}
-      toolBarRender={() => [
-        <Button key="new" type="primary">
-          添加
-        </Button>,
-        <Button key="toggle-simple" type="link">
-          <Link to="list/simple-list">切换到简单列表</Link>
-        </Button>,
-      ]}
-    />
+    <PageContainer
+      breadcrumb={undefined}
+      title="显示提示块"
+      extra={[type === 'simple' ? simpleSearchForm() : undefined, <Button key="1">新增</Button>]}
+    >
+      <ProTable
+        columns={columns}
+        rowKey="id"
+        searchType={type}
+        renderSearch={advanceSearchForm}
+        {...tableProps}
+      />
+    </PageContainer>
   );
 };

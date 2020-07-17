@@ -135,7 +135,7 @@ export default () => {
   ];
 
   const simpleSearchForm = () => (
-    <Form className="wt-simple-search-form" layout="inline" form={form}>
+    <Form key="search-form" className="wt-simple-search-form" layout="inline" form={form}>
       <Form.Item name="search">
         <Input.Search
           allowClear

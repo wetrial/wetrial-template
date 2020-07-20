@@ -189,7 +189,12 @@ export default () => {
     <PageContainer
       breadcrumb={undefined}
       title="显示提示块"
-      extra={[type === 'simple' ? simpleSearchForm() : undefined, <Button key="1">新增</Button>]}
+      extra={[
+        type === 'simple' ? simpleSearchForm() : undefined,
+        <Button key="1">
+          <Link to="list/edit/">新增</Link>
+        </Button>,
+      ]}
     >
       <ProTable
         columns={columns}

@@ -112,8 +112,11 @@ export function rootContainer(container) {
           requestMethod: (param) => requestMethod(param),
           onError: (response) => {
             if (response && response.status) {
-              const { status, statusText, data: { error } = { error: {} } } = response;
-              const { message } = error;
+              const { status, statusText, data } = response;
+              let message;
+              if (data && typeof data === 'object' && 'error' in data) {
+                message = data.error?.message;
+              }
               const errorText = message || codeMessage[status] || statusText;
 
               notification.error({

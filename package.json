@@ -60,7 +60,7 @@
     "@wetrial/core": "^3.2.3",
     "@wetrial/hooks": "^3.0.1",
     "ahooks": "^2.2.0",
-    "antd": "^4.4.2",
+    "antd": "^4.4.3",
     "classnames": "^2.2.6",
     "lodash": "^4.17.19",
     "moment": "^2.27.0",

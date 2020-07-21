@@ -170,7 +170,7 @@ export default () => {
             <Input autoComplete="off" placeholder="描述" />
           </Form.Item>
         </Col>
-        <Form.Item className="wt-search-operator">
+        <Form.Item className="wt-advance-search-form-operator">
           <Space>
             <Button type="primary" onClick={submit}>
               查询

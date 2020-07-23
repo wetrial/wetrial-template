@@ -50,30 +50,36 @@ export function render(oldRender) {
 
 export async function getInitialState(): Promise<IGlobalProps> {
   const token = getToken();
-  const {
-    location: { pathname },
-  } = history;
-  const loginPathName = '/account/login';
-  // 未登录的情况
-  if (!token) {
-    if (pathname !== loginPathName) {
-      history.push({
-        pathname: loginPathName,
-        query: {
-          redirect: pathname,
-        },
-      });
+  try {
+    // 未登录的情况
+    if (!token) {
+      throw new Error('UNLOGIN');
     }
-    return {
-      settings: defaultSettings,
-    };
-  } else {
     const currentUser = await getCurrentUser();
     return {
       currentUser,
       settings: defaultSettings,
     };
+  } catch (error) {
+    const { message: errorMessage } = error;
+    const {
+      location: { pathname },
+    } = history;
+    // 未登录，处理跳转到登录页面
+    if (errorMessage === 'UNLOGIN') {
+      const loginPathName = '/account/login';
+      pathname !== loginPathName &&
+        history({
+          pathname: loginPathName,
+          query: {
+            redirect: pathname,
+          },
+        });
+    }
   }
+  return {
+    settings: defaultSettings,
+  };
 }
 
 const codeMessage = {

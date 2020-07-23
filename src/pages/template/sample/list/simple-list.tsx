@@ -140,17 +140,17 @@ export default (props: ConnectProps) => {
       <Row>
         <Col {...LAYOUT_COL_SEARCH_FOUR}>
           <Form.Item label="姓名" name="name">
-            <Input autoComplete="off" placeholder="姓名" />
+            <Input placeholder="姓名" />
           </Form.Item>
         </Col>
         <Col {...LAYOUT_COL_SEARCH_FOUR}>
           <Form.Item label="邮箱" name="title">
-            <Input autoComplete="off" placeholder="邮箱" />
+            <Input placeholder="邮箱" />
           </Form.Item>
         </Col>
         <Col {...LAYOUT_COL_SEARCH_FOUR}>
           <Form.Item label="描述" name="desc">
-            <Input autoComplete="off" placeholder="描述" />
+            <Input placeholder="描述" />
           </Form.Item>
         </Col>
         <Form.Item className="wt-search-operator">

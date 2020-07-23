@@ -44,15 +44,9 @@ export default () => {
         <Form
           initialValues={{ identificationName: 'admin', password: 'Abcd1234' }}
           onFinish={onFinish}
-          autoComplete="off"
         >
           <FormItem name="identificationName" rules={[{ required: true, whitespace: true }]}>
-            <Input
-              autoFocus
-              prefix={<UserOutlined />}
-              autoComplete="off"
-              placeholder="用户名:admin"
-            />
+            <Input autoFocus prefix={<UserOutlined />} placeholder="用户名:admin" />
           </FormItem>
           <FormItem name="password" rules={[{ required: true, whitespace: true }]}>
             <Input.Password prefix={<LockOutlined />} placeholder="密码:Abcd1234" />

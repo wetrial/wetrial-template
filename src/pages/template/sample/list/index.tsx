@@ -157,17 +157,17 @@ export default () => {
       <Row>
         <Col {...LAYOUT_COL_SEARCH_SIX}>
           <Form.Item label="姓名" name="name">
-            <Input autoComplete="off" placeholder="姓名" />
+            <Input placeholder="姓名" />
           </Form.Item>
         </Col>
         <Col {...LAYOUT_COL_SEARCH_SIX}>
           <Form.Item label="邮箱" name="title">
-            <Input autoComplete="off" placeholder="邮箱" />
+            <Input placeholder="邮箱" />
           </Form.Item>
         </Col>
         <Col {...LAYOUT_COL_SEARCH_SIX}>
           <Form.Item label="描述" name="desc">
-            <Input autoComplete="off" placeholder="描述" />
+            <Input placeholder="描述" />
           </Form.Item>
         </Col>
         <Form.Item className="wt-advance-search-form-operator">
@@ -195,14 +195,15 @@ export default () => {
           <Link to="list/edit/">新增</Link>
         </Button>,
       ]}
-    >
-      <ProTable
-        columns={columns}
-        rowKey="id"
-        searchType={type}
-        renderSearch={advanceSearchForm}
-        {...tableProps}
-      />
-    </PageContainer>
+      content={
+        <ProTable
+          columns={columns}
+          rowKey="id"
+          searchType={type}
+          renderSearch={advanceSearchForm}
+          {...tableProps}
+        />
+      }
+    />
   );
 };

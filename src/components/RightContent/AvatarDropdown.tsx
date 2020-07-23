@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
-import { ClickParam } from 'antd/es/menu';
 import { useModel, useHistory } from 'umi';
 import { stringify } from 'querystring';
 import HeaderDropdown from './HeaderDropdown';
@@ -29,7 +28,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     }
   };
 
-  const onMenuClick = useCallback((event: ClickParam) => {
+  const onMenuClick = useCallback((event) => {
     const { key } = event;
     if (key === 'logout') {
       setInitialState({ ...initialState, currentUser: undefined });
@@ -86,7 +85,12 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
+        <Avatar
+          className={styles.avatar}
+          src={currentUser.avatar}
+          icon={currentUser.avatar ? null : <UserOutlined />}
+          alt="avatar"
+        />
         <span className={`${styles.name} anticon`}>{currentUser.name}</span>
       </span>
     </HeaderDropdown>

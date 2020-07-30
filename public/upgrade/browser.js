@@ -55,7 +55,7 @@
 
   var version = getIEVersion();
   var isTipPage = isGradePage();
-  // 不支持IE浏览器
+  // 不支持IE低版本浏览器
   if (version === -1 || version === 'edge') { // || version === 11
     if (isTipPage) {
       window.location.href = '/';
@@ -65,7 +65,7 @@
     document.onkeydown = forbidBackSpace;
 
     if (!isTipPage) {
-      window.location.href = window.routerBase + '/upgrade/upgrade.html';
+      window.location.href = window.routerBase + 'upgrade/upgrade.html';
     }
   }
 })(window);

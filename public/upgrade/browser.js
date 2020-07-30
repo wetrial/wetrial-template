@@ -65,7 +65,7 @@
     document.onkeydown = forbidBackSpace;
 
     if (!isTipPage) {
-      window.location.href = window.routerBase + 'upgrade/upgrade.html';
+      window.location.href = window.publicPath + 'upgrade/upgrade.html';
     }
   }
 })(window);

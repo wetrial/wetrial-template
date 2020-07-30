@@ -195,15 +195,14 @@ export default () => {
           <Link to="list/edit/">新增</Link>
         </Button>,
       ]}
-      content={
-        <ProTable
-          columns={columns}
-          rowKey="id"
-          searchType={type}
-          renderSearch={advanceSearchForm}
-          {...tableProps}
-        />
-      }
-    />
+    >
+      <ProTable
+        columns={columns}
+        rowKey="id"
+        searchType={type}
+        renderSearch={advanceSearchForm}
+        {...tableProps}
+      />
+    </PageContainer>
   );
 };

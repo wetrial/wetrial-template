@@ -13,6 +13,9 @@ body,
       margin-right: @padding-xs;
     }
   }
+  .ant-page-header-heading-extra {
+    display: flex;
+  }
 
   // 列表上搜索
   .wt-advance-search-form-operator {
@@ -21,7 +24,7 @@ body,
 
   // 列表上简单搜索的搜索框
   .wt-simple-search-form {
-    display: inline-block;
+    display: flex;
 
     .ant-input-search.ant-input-group-wrapper {
       display: block;
@@ -38,6 +41,16 @@ body,
 
   .ant-pro-global-header-layout-mix .anticon {
     color: @black;
+  }
+  // 覆盖pro-layout的内容区域样式
+  .ant-pro-page-container-children-content {
+    margin: 8px 8px 0;
+    background: #fff;
+    .page-body {
+      .ant-card-body {
+        padding: 8px;
+      }
+    }
   }
 }
 

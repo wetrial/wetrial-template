@@ -19,23 +19,20 @@ export default (): React.ReactNode => {
           Primary
         </Button>,
       ]}
-      content={
-        <>
-          <DatePicker />
-          <br />
-          <Button
-            onClick={() => {
-              model.refresh();
-            }}
-          >
-            刷新权限
-          </Button>
-          <br />
-          <Access accessible={access[Permissions.template.dashboard.index]} fallback="无权限">
-            有权限才能看到的信息
-          </Access>
-        </>
-      }
-    />
+    >
+      <DatePicker />
+      <br />
+      <Button
+        onClick={() => {
+          model.refresh();
+        }}
+      >
+        刷新权限
+      </Button>
+      <br />
+      <Access accessible={access[Permissions.template.dashboard.index]} fallback="无权限">
+        有权限才能看到的信息
+      </Access>
+    </PageContainer>
   );
 };

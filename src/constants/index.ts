@@ -7,7 +7,7 @@ export const API_PREFIX = `${BASE_PATH}api/`;
 export const COMPANY_NAME = '湖南微试云';
 
 // 默认页码
-export const PAGE_SIZE = 15;
+export const PAGE_SIZE = 10;
 
 // 分页属性
 export const PAGE_PROPS = {
@@ -18,7 +18,5 @@ export const PAGE_PROPS = {
   // showSizeChanger: true,
   hideOnSinglePage: true,
   // showQuickJumper:true,
-  showTotal: (total, _, pageSize) => {
-    return `每页${pageSize || PAGE_SIZE}条，共${total}条`;
-  },
+  showTotal: (total, [start, end]) => `${start}-${end}，共${total}条`,
 };

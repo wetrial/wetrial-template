@@ -11,7 +11,7 @@ import { ProColumns } from '@wetrial/component/es/ProTable';
 import { listToFlat } from '@wetrial/core/es/utils';
 import { Permissions } from '@config/routes';
 import { StagedDict } from './prop.d';
-import { LAYOUT_FORM_TWO, LAYOUT_COL_SEARCH_SIX } from '@/constants';
+import { LAYOUT_FORM_TWO, LAYOUT_COL_SEARCH_SIX, PAGE_PROPS } from '@/constants';
 import { getList, remove } from './service';
 
 const stagedDict = memoize(listToFlat)(StagedDict);
@@ -202,6 +202,10 @@ export default () => {
         searchType={type}
         renderSearch={advanceSearchForm}
         {...tableProps}
+        pagination={{
+          ...PAGE_PROPS,
+          ...tableProps.pagination,
+        }}
       />
     </PageContainer>
   );

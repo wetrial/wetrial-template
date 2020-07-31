@@ -1,12 +1,14 @@
 ﻿/* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable */
-(function() {
+(function () {
   // 获取浏览器版本
   function getIEVersion() {
     var userAgent = navigator.userAgent; // 取得浏览器的userAgent字符串
     var isIE = userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1; // 判断是否IE<11浏览器
     var isEdge = userAgent.indexOf('Edge') > -1 && !isIE; // 判断是否IE的Edge浏览器
     var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf('rv:11.0') > -1;
+
+
     if (isIE) {
       var reIE = new RegExp('MSIE (\\d+\\.\\d+);');
       reIE.test(userAgent);
@@ -55,6 +57,13 @@
 
   var version = getIEVersion();
   var isTipPage = isGradePage();
+  var isXP = navigator.userAgent.indexOf('Windows NT 5') > -1; //判断是否xp系统
+
+  //xp系统隐藏edge浏览器链接
+  if (isXP && isTipPage) {
+    document.getElementById('xplink').setAttribute('style', 'display:none')
+  }
+
   // 不支持IE低版本浏览器
   if (version === -1 || version === 'edge') { // || version === 11
     if (isTipPage) {

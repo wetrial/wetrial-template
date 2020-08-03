@@ -49,10 +49,10 @@ export function render(oldRender) {
 }
 
 export async function getInitialState(): Promise<IGlobalProps> {
-  const token = getToken();
+  const tokenStore = getToken();
   try {
     // 未登录的情况
-    if (!token) {
+    if (!tokenStore) {
       throw new Error('UNLOGIN');
     }
     const currentUser = await getCurrentUser();

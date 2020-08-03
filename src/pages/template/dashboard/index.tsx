@@ -1,11 +1,10 @@
 import React from 'react';
-import { useAccess, Access, useModel } from 'umi';
+import { useAccess, Access } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
 import { DatePicker, Button } from 'antd';
 import { Permissions } from '@config/routes';
 
 export default (): React.ReactNode => {
-  const model = useModel('@@initialState');
   const access = useAccess();
 
   return (
@@ -22,13 +21,6 @@ export default (): React.ReactNode => {
     >
       <DatePicker />
       <br />
-      <Button
-        onClick={() => {
-          model.refresh();
-        }}
-      >
-        刷新权限
-      </Button>
       <br />
       <Access accessible={access[Permissions.template.dashboard.index]} fallback="无权限">
         有权限才能看到的信息

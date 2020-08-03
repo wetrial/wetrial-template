@@ -4,15 +4,12 @@ import { IGlobalProps } from '@/services/global.d';
 
 export default function (initialState: IGlobalProps) {
   const { currentUser } = initialState;
-  if (currentUser) {
-    const allPermissions = {
-      ...Permissions,
-    };
-    const flatPermissions = dgFlatPermissions(allPermissions, currentUser.permissions);
-    return flatPermissions;
-  } else {
-    return [];
-  }
+  const allPermissions = {
+    ...Permissions,
+  };
+  const flatPermissions = dgFlatPermissions(allPermissions, currentUser?.permissions);
+  console.log(flatPermissions);
+  return flatPermissions;
 }
 
 function dgFlatPermissions(

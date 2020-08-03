@@ -19,13 +19,14 @@ export default () => {
 
   const onFinish = (values) => {
     const {
-      // @ts-ignore
       location: { query },
     } = history;
 
     run(values).then(async (token) => {
       if (token) {
-        setToken(token);
+        setToken({
+          token,
+        });
         await refresh();
         history.push(query.redirect || '/');
       }

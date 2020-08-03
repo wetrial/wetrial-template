@@ -91,7 +91,7 @@
     "prettier": "^2.0.5",
     "stylelint": "^13.6.1",
     "typescript": "^3.9.3",
-    "umi": "^3.2.9"
+    "umi": "^3.2.14"
   },
   "optionalDependencies": {},
   "engines": {

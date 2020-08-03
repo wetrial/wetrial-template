@@ -126,7 +126,7 @@ export function rootContainer(container) {
               const errorText = message || codeMessage[status] || statusText;
 
               notification.error({
-                message: `请求错误 ${status}`,
+                message: `请求出错啦`,
                 description: errorText,
               });
             }

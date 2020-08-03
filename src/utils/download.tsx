@@ -1,6 +1,5 @@
-import { stringify } from 'qs';
 import { notification, Progress } from 'antd';
-import { get } from './request';
+import { get, post } from './request';
 import React from 'react';
 
 /**
@@ -72,15 +71,21 @@ export const getIconType = (extension) => {
 //       .submit();
 //     ReactDOM.unmountComponentAtNode(fileContainer);
 //   };
-export const downloadFile = ({ url, data, name, ext = getExtension(url), onDownloadProgress }) => {
-  const downloadUrl =
-    url.indexOf('?') !== -1 ? `${url}&${stringify(data)}` : `${url}?${stringify(data)}`;
-
-  return get(downloadUrl, {
+export const downloadFile = ({
+  url,
+  data,
+  name,
+  method = 'get',
+  ext = getExtension(url),
+  onDownloadProgress,
+}) => {
+  const req = method === 'get' ? get : post;
+  return req(url, {
     successTip: false,
     responseType: 'arraybuffer',
     onDownloadProgress,
-    maxContentLength: 204800,
+    maxContentLength: 2048000,
+    data,
   })
     .then((res) => {
       if (res.headers['content-type'].startsWith('application/json')) {
@@ -135,6 +140,7 @@ export const downloadWithProgress = ({
   data,
   name,
   ext = getExtension(url),
+  method = 'get',
   downloadTipKey = 'downloadTipKey',
 }) => {
   notification.open({
@@ -149,6 +155,7 @@ export const downloadWithProgress = ({
     data,
     name,
     ext,
+    method,
     onDownloadProgress: (progressEvent) => {
       const maxSize = progressEvent.srcElement.getResponseHeader('size');
       const percent = Math.floor((progressEvent.loaded / maxSize) * 100 * 100) / 100;

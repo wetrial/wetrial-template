@@ -46,8 +46,10 @@ export default {
     response.status(500);
     response.json({
       code: 'login-error',
-      showType: 2,
-      message: '用户名或者密码错误',
+      error: {
+        showType: 2,
+        message: '用户名或者密码错误',
+      },
       details: {},
     });
   },

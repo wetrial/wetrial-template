@@ -55,7 +55,7 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ant-design/pro-layout": "^6.2.5",
+    "@ant-design/pro-layout": "^6.3.0",
     "@wetrial/component": "^0.4.6",
     "@wetrial/core": "^3.3.0",
     "@wetrial/hooks": "^3.0.2",

@@ -47,7 +47,7 @@ export default () => {
           onFinish={onFinish}
         >
           <FormItem name="identificationName" rules={[{ required: true, whitespace: true }]}>
-            <Input autoFocus prefix={<UserOutlined />} placeholder="用户名:admin" />
+            <Input autoFocus prefix={<UserOutlined />} placeholder="用户名:admin/user" />
           </FormItem>
           <FormItem name="password" rules={[{ required: true, whitespace: true }]}>
             <Input.Password prefix={<LockOutlined />} placeholder="密码:Abcd1234" />

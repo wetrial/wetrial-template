@@ -188,7 +188,6 @@ export default () => {
   return (
     <PageContainer
       breadcrumb={undefined}
-      title="列表页"
       extra={[
         type === 'simple' ? simpleSearchForm() : undefined,
         <Button key="1">

@@ -18,5 +18,5 @@ export const PAGE_PROPS = {
   // showSizeChanger: true,
   hideOnSinglePage: true,
   // showQuickJumper:true,
-  showTotal: (total, [start, end]) => `${start}-${end}，共${total}条`,
+  showTotal: (total, [start, end]) => `第${start}-${end}条，共${total}条`,
 };

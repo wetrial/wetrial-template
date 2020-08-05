@@ -58,7 +58,7 @@
     "@ant-design/pro-layout": "^6.3.0",
     "@wetrial/component": "^0.4.7",
     "@wetrial/core": "^3.3.1",
-    "@wetrial/hooks": "^3.0.2",
+    "@wetrial/hooks": "^3.0.4",
     "ahooks": "^2.4.0",
     "antd": "^4.5.2",
     "classnames": "^2.2.6",

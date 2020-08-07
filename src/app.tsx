@@ -119,22 +119,23 @@ export function rootContainer(container) {
           onError: (response) => {
             if (response && response.status) {
               const { status, statusText, data } = response;
+              const notifyFunc = status >= 500 ? notification.error : notification.info;
               let message;
               if (data && typeof data === 'object' && 'error' in data) {
                 message = data.error?.message;
               }
               const errorText = message || codeMessage[status] || statusText;
-
-              notification.error({
-                message: `请求出错啦`,
+              notifyFunc({
+                key: '__global_message',
+                message: '温馨提示',
                 description: errorText,
               });
             }
-
             if (!response) {
               notification.error({
-                description: '您的网络发生异常，无法连接服务器',
-                message: '网络异常',
+                key: '__global_message',
+                message: '网络开小差啦',
+                description: '您的网络发生异常，请重试或者联系客服',
               });
             }
             throw response;

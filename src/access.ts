@@ -7,8 +7,7 @@ export default (initialState: IGlobalProps = {}) => {
   const allPermissions = {
     ...Permissions,
   };
-  const flatPermissions = dgFlatPermissions(allPermissions, currentUser?.permissions);
-  return flatPermissions;
+  return dgFlatPermissions(allPermissions, currentUser?.permissions);
 };
 
 function dgFlatPermissions(

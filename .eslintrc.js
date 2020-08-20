@@ -5,6 +5,7 @@ module.exports = {
     REACT_APP_ENV: true,
   },
   rules: {
+    'react/jsx-key': ['error'],
     '@typescript-eslint/camelcase': 0,
     '@typescript-eslint/class-name-casing': 0,
     '@typescript-eslint/prefer-interface': 0,

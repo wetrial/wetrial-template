@@ -52,14 +52,14 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ant-design/pro-layout": "^6.3.0",
-    "@wetrial/component": "^0.4.7",
+    "@ant-design/pro-layout": "^6.4.9",
+    "@wetrial/component": "^0.4.10",
     "@wetrial/core": "^3.3.1",
     "@wetrial/hooks": "^3.0.4",
-    "ahooks": "^2.4.0",
-    "antd": "^4.5.2",
+    "ahooks": "^2.5.0",
+    "antd": "^4.5.4",
     "classnames": "^2.2.6",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "moment": "^2.27.0",
     "path-to-regexp": "^6.1.0",
     "qs": "^6.9.4",
@@ -71,10 +71,10 @@
     "use-merge-value": "^1.0.2"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.4",
+    "@types/jest": "^26.0.10",
     "@umijs/fabric": "^2.2.2",
-    "@umijs/preset-react": "1.5.15",
-    "@umijs/test": "^3.2.14",
+    "@umijs/preset-react": "1.5.22",
+    "@umijs/test": "3.2.16",
     "chalk": "^4.1.0",
     "cross-env": "^7.0.2",
     "cross-port-killer": "^1.2.1",
@@ -86,8 +86,8 @@
     "mockjs": "^1.1.0",
     "prettier": "^2.0.5",
     "stylelint": "^13.6.1",
-    "typescript": "^3.9.3",
-    "umi": "^3.2.14"
+    "typescript": "^3.9.7",
+    "umi": "3.2.16"
   },
   "optionalDependencies": {},
   "engines": {

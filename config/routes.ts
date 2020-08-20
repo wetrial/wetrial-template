@@ -65,28 +65,34 @@ const routes: IBestAFSRoute[] = [
         icon: 'smile',
         routes: [
           {
-            path: '/template/sample',
-            redirect: 'list',
-          },
-          {
             path: 'list',
             name: '列表',
             access: Permissions.template.sample.list.index,
-            component: '@/pages/template/sample/list/index',
-            exact: true,
-          },
-          {
-            path: 'list/simple-list',
-            access: Permissions.template.sample.list.index,
-            component: '@/pages/template/sample/list/simple-list',
-            exact: true,
-          },
-          {
-            path: 'list/edit/:id?',
-            component: '@/pages/template/sample/list/edit',
-            access: Permissions.template.sample.list.edit,
-            exact: true,
-          },
+            menu: {
+              hideChildren: true,
+            },
+            routes:[
+              {
+                path: '/template/sample/list',
+                redirect: 'index',
+              },
+              {
+                path: 'index',
+                access: Permissions.template.sample.list.index,
+                component: '@/pages/template/sample/list/index',
+              },
+              {
+                path: 'simple-list',
+                access: Permissions.template.sample.list.index,
+                component: '@/pages/template/sample/list/simple-list',
+              },
+              {
+                path: 'edit/:id?',
+                component: '@/pages/template/sample/list/edit',
+                access: Permissions.template.sample.list.edit,
+              },
+            ]
+          }
         ],
       },
     ],

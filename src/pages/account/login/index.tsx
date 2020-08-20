@@ -1,20 +1,20 @@
-import React from 'react';
-import { Link, useModel, history } from 'umi';
-import { Form, Button, Input } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useRequest } from 'ahooks';
-import { setToken } from '@wetrial/core/es/authority';
-import { login } from '@/services/account';
-
-import styles from './index.less';
 import logo from '@/assets/logo.png';
+import { login } from '@/services/account';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { setToken } from '@wetrial/core/es/authority';
+import { useRequest } from 'ahooks';
+import { Alert, Button, Form, Input } from 'antd';
+import React from 'react';
+import { history, Link, useModel } from 'umi';
+import styles from './index.less';
 
 const FormItem = Form.Item;
 
 export default () => {
   const { refresh } = useModel('@@initialState');
-  const { loading, run } = useRequest(login, {
+  const { loading, run, error } = useRequest(login, {
     manual: true,
+    onError: () => {},
   });
 
   const onFinish = (values) => {
@@ -46,6 +46,11 @@ export default () => {
           initialValues={{ identificationName: 'admin', password: 'Abcd1234' }}
           onFinish={onFinish}
         >
+          {error && error['data'] && error['data']['error'] ? (
+            <FormItem>
+              <Alert message={error['data']['error']['message']} type="error" showIcon />
+            </FormItem>
+          ) : null}
           <FormItem name="identificationName" rules={[{ required: true, whitespace: true }]}>
             <Input autoFocus prefix={<UserOutlined />} placeholder="用户名:admin/user" />
           </FormItem>

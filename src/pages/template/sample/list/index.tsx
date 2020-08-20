@@ -1,17 +1,17 @@
-import React from 'react';
-import { useFormTable, formatFormTableParams } from '@wetrial/hooks';
-import { useRequest } from 'ahooks';
-import { useLocation, useAccess, Access, Link } from 'umi';
-import { memoize } from 'lodash';
-import { Button, Form, Input, Switch, Popconfirm, Row, Col, Space, Tooltip } from 'antd';
-import { CloseOutlined, CheckOutlined, MoreOutlined } from '@ant-design/icons';
-import { ProTable } from '@wetrial/component';
+import { LAYOUT_COL_SEARCH_SIX, LAYOUT_FORM_TWO, PAGE_PROPS } from '@/constants';
+import { CheckOutlined, CloseOutlined, MoreOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
+import { Permissions } from '@config/routes';
+import { ProTable } from '@wetrial/component';
 import { ProColumns } from '@wetrial/component/es/ProTable';
 import { listToFlat } from '@wetrial/core/es/utils';
-import { Permissions } from '@config/routes';
+import { formatFormTableParams, useFormTable } from '@wetrial/hooks';
+import { useRequest } from 'ahooks';
+import { Button, Col, Form, Input, Popconfirm, Row, Space, Switch, Tooltip } from 'antd';
+import { memoize } from 'lodash';
+import React from 'react';
+import { Access, Link, useAccess, useLocation } from 'umi';
 import { StagedDict } from './prop.d';
-import { LAYOUT_FORM_TWO, LAYOUT_COL_SEARCH_SIX, PAGE_PROPS } from '@/constants';
 import { getList, remove } from './service';
 
 const stagedDict = memoize(listToFlat)(StagedDict);
@@ -120,7 +120,7 @@ export default () => {
       render: (_, record) => [
         <Access key="edit" accessible={access[Permissions.template.sample.list.edit]}>
           <Button size="small" type="link">
-            <Link to={`list/edit/${record.id}`}>编辑</Link>
+            <Link to={`edit/${record.id}`}>编辑</Link>
           </Button>
         </Access>,
         <Access key="del" accessible={access[Permissions.template.sample.list.delete]}>
@@ -191,7 +191,7 @@ export default () => {
       extra={[
         type === 'simple' ? simpleSearchForm() : undefined,
         <Button key="1">
-          <Link to="list/edit/">新增</Link>
+          <Link to="edit/">新增</Link>
         </Button>,
       ]}
     >

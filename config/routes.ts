@@ -92,6 +92,17 @@ const routes: IBestAFSRoute[] = [
                 access: Permissions.template.sample.list.edit,
               },
             ]
+          },
+          {
+            path: 'tabs-share',
+            name: '共享Tab',
+            access: Permissions.template.sample.list.index,
+            component:'@/pages/template/sample/tabs-share/index'
+          },
+          {
+            path:'tree-form',
+            name:'tree-form',
+            component:'@/pages/template/sample/tree-form/index'
           }
         ],
       },

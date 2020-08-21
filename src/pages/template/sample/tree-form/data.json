@@ -1,0 +1,43 @@
+{
+  "roles": [
+    {
+      "title": "角色",
+      "value": "role",
+      "key": "role",
+      "children": [
+        {
+          "title": "角色-编辑",
+          "value": "role.edit",
+          "key": "role.edit"
+        },
+        {
+          "title": "角色-删除",
+          "value": "role.del",
+          "key": "role.del"
+        }
+      ]
+    },
+    {
+      "title": "用户",
+      "value": "user",
+      "key": "user",
+      "children": [
+        {
+          "title": "用户-新增",
+          "value": "user.add",
+          "key": "user.add"
+        },
+        {
+          "title": "用户-编辑",
+          "value": "user.edit",
+          "key": "user.edit"
+        },
+        {
+          "title": "用户-删除",
+          "value": "user.del",
+          "key": "user.del"
+        }
+      ]
+    }
+  ]
+}

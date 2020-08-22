@@ -106,6 +106,9 @@ const routes: IBestAFSRoute[] = [
           }
         ],
       },
+      {
+        component: '@/pages/exception/404',
+      },
     ],
   }
 ];

@@ -1,6 +1,6 @@
-import { IKeyValue } from '@wetrial/core';
-import { Permissions } from '@config/routes';
 import { IGlobalProps } from '@/services/global.d';
+import { Permissions } from '@config/routes';
+import { IKeyValue } from '@wetrial/core';
 
 export default (initialState: IGlobalProps = {}) => {
   const { currentUser } = initialState;

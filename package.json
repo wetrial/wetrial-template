@@ -43,8 +43,8 @@
     }
   },
   "lint-staged": {
-    "**/*.less": "stylelint --syntax less",
-    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
+    "./**/*.less": "stylelint --syntax less",
+    "./**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
   "browserslist": [
     "> 1%",

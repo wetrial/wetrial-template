@@ -205,7 +205,6 @@ export default () => {
           ...PAGE_PROPS,
           ...tableProps.pagination,
         }}
-        sticky
       />
     </PageContainer>
   );

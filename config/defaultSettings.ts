@@ -1,11 +1,11 @@
-import {Settings} from '@ant-design/pro-layout'
+import { Settings } from '@ant-design/pro-layout';
 
 const defaultSetting:Settings={
   navTheme: 'light',
   primaryColor: '#0070d2',
   layout: 'side',
   contentWidth: 'Fluid',
-  fixedHeader: true,
+  fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
   menu: {

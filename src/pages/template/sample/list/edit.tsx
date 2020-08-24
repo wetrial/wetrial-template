@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import { LAYOUT_COL_TWO, LAYOUT_FORM_SINGLE, LAYOUT_FORM_TWO } from '@/constants';
 import { PageContainer } from '@ant-design/pro-layout';
-import { useParams, history } from 'umi';
-import { Form, Row, Col, Input, Switch, Slider, Button, Card } from 'antd';
-import { useRequest } from 'ahooks';
 import { activeCache } from '@wetrial/hooks';
-import { LAYOUT_FORM_SINGLE, LAYOUT_FORM_TWO, LAYOUT_COL_TWO } from '@/constants';
-import { getItem, create, update } from './service';
+import { useRequest } from 'ahooks';
+import { Button, Card, Col, Form, Input, Row, Slider, Switch } from 'antd';
+import React, { useEffect } from 'react';
+import { history, useParams } from 'umi';
+import { create, getItem, update } from './service';
 
 export default () => {
   const { id } = useParams();
@@ -26,7 +26,7 @@ export default () => {
   }, [id]);
 
   const handleBack = () => {
-    const listPath = '/template/sample/list';
+    const listPath = '/template/sample/list/index';
     activeCache(listPath);
     history.push(listPath);
   };

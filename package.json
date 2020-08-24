@@ -43,8 +43,8 @@
     }
   },
   "lint-staged": {
-    "**/*.less": "stylelint --syntax less",
-    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
+    "./**/*.less": "stylelint --syntax less",
+    "./**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
   "browserslist": [
     "> 1%",
@@ -73,8 +73,8 @@
   "devDependencies": {
     "@types/jest": "^26.0.10",
     "@umijs/fabric": "^2.2.2",
-    "@umijs/preset-react": "1.5.22",
-    "@umijs/test": "3.2.16",
+    "@umijs/preset-react": "^1.5.22",
+    "@umijs/test": "^3.2.16",
     "chalk": "^4.1.0",
     "cross-env": "^7.0.2",
     "cross-port-killer": "^1.2.1",
@@ -86,8 +86,8 @@
     "mockjs": "^1.1.0",
     "prettier": "^2.0.5",
     "stylelint": "^13.6.1",
-    "typescript": "^3.9.7",
-    "umi": "3.2.16"
+    "typescript": "^4.0.2",
+    "umi": "^3.2.16"
   },
   "optionalDependencies": {},
   "engines": {

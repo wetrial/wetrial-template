@@ -1,13 +1,13 @@
-import { defineConfig, utils } from 'umi';
 import { join } from 'path';
+import { defineConfig, utils } from 'umi';
+import defaultSetting from './config/defaultSettings';
+import chinaWebpack from './config/plugin.chinaWebpack';
 // import AntdDayjsWebpackPlugin from 'antd-dayjs-webpack-plugin';
 // import slash from 'slash2';
 // import themePluginConfig from './themePluginConfig';
 import proxy from './config/proxy';
-import themeConfig from './config/theme.config';
 import routes from './config/routes';
-import defaultSetting from './config/defaultSettings';
-import chinaWebpack from './config/plugin.chinaWebpack';
+import themeConfig from './config/theme.config';
 
 const { REACT_APP_ENV = 'dev' } = process.env;
 
@@ -100,14 +100,4 @@ export default defineConfig({
     logLevel: 'info',
     defaultSizes: 'parsed', // stat  // gzip
   },
-  extraBabelPlugins: [
-    [
-      'import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: 'css',
-      },
-    ],
-  ],
 });

@@ -1,24 +1,24 @@
-import React from 'react';
-import { history } from 'umi';
-import { BasicLayoutProps } from '@ant-design/pro-layout';
-import { ConfigProvider, notification } from 'antd';
-import validateMessages from '@wetrial/core/es/validation';
+import RightContent from '@/components/RightContent';
+import { getCurrentUser } from '@/services/account';
+import { IGlobalProps } from '@/services/global.d';
+import { getToken } from '@/utils/authority';
+import { request as requestMethod } from '@/utils/request';
 import { UseRequestProvider } from '@ahooksjs/use-request';
+import { BasicLayoutProps } from '@ant-design/pro-layout';
+import defaultSettings from '@config/defaultSettings';
+import { initComponent } from '@wetrial/component';
 // import { omit } from 'lodash';
 // import { UnAuthorizedException } from '@wetrial/core/es/exception';
 import { initWetrialCore } from '@wetrial/core';
+import validateMessages from '@wetrial/core/es/validation';
 import { initHooks } from '@wetrial/hooks';
-import { initComponent } from '@wetrial/component';
-import defaultSettings from '@config/defaultSettings';
-import { getCurrentUser } from '@/services/account';
-import { request as requestMethod } from '@/utils/request';
-import { getToken } from '@/utils/authority';
-import { IGlobalProps } from '@/services/global.d';
-import RightContent from '@/components/RightContent';
-import logo from './assets/logo.png';
+import { ConfigProvider, notification } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+import React from 'react';
+import { history } from 'umi';
+import logo from './assets/logo.png';
 
 moment.locale('zh-cn');
 

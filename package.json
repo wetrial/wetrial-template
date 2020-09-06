@@ -53,9 +53,9 @@
   ],
   "dependencies": {
     "@ant-design/pro-layout": "^6.4.9",
-    "@wetrial/component": "^0.5.0",
-    "@wetrial/core": "^3.4.0",
-    "@wetrial/hooks": "^3.1.0",
+    "@wetrial/component": "^0.5.4",
+    "@wetrial/core": "^3.4.4",
+    "@wetrial/hooks": "^3.1.4",
     "ahooks": "^2.5.0",
     "antd": "^4.6.1",
     "classnames": "^2.2.6",

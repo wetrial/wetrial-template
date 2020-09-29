@@ -107,6 +107,27 @@ const routes: IBestAFSRoute[] = [
         ],
       },
       {
+        path: 'formily',
+        name: '表单案例',
+        icon: 'edit',
+        routes: [
+          {
+            path: '/template/formily',
+            redirect: 'index',
+          },
+          {
+            path: 'index',
+            name: '简单案例',
+            component:'@/pages/template/formily/index'
+          },
+          {
+            path: 'antd-statistics-count',
+            name: '布局案例',
+            component:'@/pages/template/formily/layout-sample'
+          }
+        ],
+      },
+      {
         component: '@/pages/exception/404',
       },
     ],

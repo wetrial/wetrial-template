@@ -316,7 +316,7 @@ export default () => {
           }}
         >
           <FormButtonGroup sticky>
-            <Submit>提交</Submit>​
+            <Submit>提交</Submit>
             <Button type="primary" onClick={() => setState({ editable: !state.editable })}>
               {state.editable ? '详情' : '编辑'}
             </Button>
@@ -352,7 +352,7 @@ export default () => {
 //     <FormCard title="详细信息" name="detailCard">
 //       <FormLayout labelCol={{ span: 8 }} wrapperCol={{ span: 12 }}>
 //         <FormItemGrid title="字段3" gutter={10} cols={[6, 11]}>
-//           ​<Field name="ddd" type="number" x-component="NumberPicker" />
+//           <Field name="ddd" type="number" x-component="NumberPicker" />
 //           <Field name="eee" type="date" x-component="DatePicker" />
 //         </FormItemGrid>
 //         <Field type="object" name="mmm" title="对象字段">

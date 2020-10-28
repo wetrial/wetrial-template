@@ -3,15 +3,11 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { Permissions } from '@config/routes';
 import { Button, DatePicker, Divider } from 'antd';
 import React from 'react';
-import { Access, Link, useAccess, useModel } from 'umi';
+import { Access, useAccess, useModel } from 'umi';
 
 export default (): React.ReactNode => {
   const access = useAccess();
   const { refresh } = useModel('@@initialState');
-
-  const { fetchCountrys } = useModel('dict', (model) => ({
-    fetchCountrys: model.getCountrys,
-  }));
 
   // 模拟切换用户角色
   const handleToggleRole = (token: '00000' | '10000') => {
@@ -42,17 +38,6 @@ export default (): React.ReactNode => {
       <Divider />
       <Button onClick={handleToggleRole.bind(null, '10000')}>管理员权限</Button>
       <Button onClick={handleToggleRole.bind(null, '00000')}>普通权限</Button>
-      <Divider />
-      <Button
-        onClick={() => {
-          fetchCountrys();
-        }}
-      >
-        获取字典数据
-      </Button>
-      <Button>
-        <Link to="/template/sample/dict">去字典数据页面</Link>
-      </Button>
     </PageContainer>
   );
 };

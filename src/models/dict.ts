@@ -1,24 +1,19 @@
 import * as dictService from '@/services/dict';
 import { useRequest } from 'ahooks';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 export default function useAuthModel() {
-  const [countrys, setCountrys] = useState(null);
-
-  const { run } = useRequest(dictService.getCountrys, {
-    manual: true,
+  const { data, loading, run } = useRequest(dictService.getCountrys, {
+    refreshDeps: [],
   });
 
   const getCountrys = useCallback(() => {
-    // signin implementation
-    // setCountrys(user from signin API)
-    run().then((result) => {
-      setCountrys(result);
-    });
+    run();
   }, []);
 
   return {
-    countrys,
+    countrys: data,
+    loading,
     getCountrys,
   };
 }

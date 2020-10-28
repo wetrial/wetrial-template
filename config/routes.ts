@@ -103,7 +103,12 @@ const routes: IBestAFSRoute[] = [
             path:'tree-form',
             name:'tree-form',
             component:'@/pages/template/sample/tree-form/index'
-          }
+          },
+          {
+            path: 'dict',
+            name:'数据字典',
+            component: '@/pages/template/sample/dict/index',
+          },
         ],
       },
       {

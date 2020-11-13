@@ -59,6 +59,18 @@ const routes: IBestAFSRoute[] = [
         component: '@/pages/template/dashboard/index',
       },
       {
+        path: 'slate',
+        name: 'Slate',
+        icon: 'edit',
+        routes: [
+          {
+            path: 'index',
+            name: 'demo',
+            component: '@/pages/template/slate/index',
+          }
+        ]
+      },
+      {
         path: 'sample',
         name: '案例',
         access: Permissions.template.sample.index,

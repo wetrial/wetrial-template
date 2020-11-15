@@ -30,7 +30,7 @@ moment.locale('zh-cn');
   });
   // 初始化组件配置信息
   initComponent({
-    iconFontUrl: defaultSettings.iconfontUrl,
+    iconFontUrl: defaultSettings.iconfontUrl as string,
   });
 
   // 初始化hooks配置信息，根据需要

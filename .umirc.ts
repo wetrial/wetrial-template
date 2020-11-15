@@ -25,13 +25,13 @@ export default defineConfig({
   layout: {
     title: defaultSetting.title,
     theme: defaultSetting.navTheme,
-    locale: false,
+    //locale: false,
   },
   dva: {
     immer: true,
     hmr: true,
   },
-  locale: false,
+  // locale: false,
   dynamicImport: {
     loading: '@/components/PageLoading/index',
   },

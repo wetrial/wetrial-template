@@ -55,19 +55,19 @@ const routes: IBestAFSRoute[] = [
         path: 'dashboard',
         name: '看板',
         icon: 'dashboard',
-        access: Permissions.template.dashboard.index,
+        authority: Permissions.template.dashboard.index,
         component: '@/pages/template/dashboard/index',
       },
       {
         path: 'sample',
         name: '案例',
-        access: Permissions.template.sample.index,
+        authority: Permissions.template.sample.index,
         icon: 'smile',
         routes: [
           {
             path: 'list',
             name: '列表',
-            access: Permissions.template.sample.list.index,
+            authority: Permissions.template.sample.list.index,
             menu: {
               hideChildren: true,
             },
@@ -78,25 +78,31 @@ const routes: IBestAFSRoute[] = [
               },
               {
                 path: 'index',
-                access: Permissions.template.sample.list.index,
+                authority: Permissions.template.sample.list.index,
                 component: '@/pages/template/sample/list/index',
               },
               {
                 path: 'simple-list',
-                access: Permissions.template.sample.list.index,
+                authority: Permissions.template.sample.list.index,
                 component: '@/pages/template/sample/list/simple-list',
               },
               {
                 path: 'edit/:id?',
                 component: '@/pages/template/sample/list/edit',
-                access: Permissions.template.sample.list.edit,
+                authority: Permissions.template.sample.list.edit,
               },
             ]
           },
           {
+            path: 'pro-table',
+            name: 'ProTable',
+            authority: Permissions.template.sample.list.index,
+            component:'@/pages/template/sample/pro-table/index'
+          },
+          {
             path: 'tabs-share',
             name: '共享Tab',
-            access: Permissions.template.sample.list.index,
+            authority: Permissions.template.sample.list.index,
             component:'@/pages/template/sample/tabs-share/index'
           },
           {

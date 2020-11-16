@@ -52,7 +52,9 @@
     "not ie <= 10"
   ],
   "dependencies": {
+    "@ant-design/pro-form": "^1.4.1",
     "@ant-design/pro-layout": "^6.5.14",
+    "@ant-design/pro-table": "^2.10.1",
     "@wetrial/component": "^0.6.1",
     "@wetrial/core": "^3.4.6",
     "@wetrial/hooks": "^3.1.6",
@@ -73,7 +75,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "@umijs/fabric": "^2.3.1",
-    "@umijs/preset-react": "^1.6.10",
+    "@umijs/preset-react": "1.6.10",
     "@umijs/test": "^3.2.27",
     "chalk": "^4.1.0",
     "cross-env": "^7.0.2",

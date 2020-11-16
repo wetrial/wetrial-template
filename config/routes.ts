@@ -102,11 +102,13 @@ const routes: IBestAFSRoute[] = [
           {
             path:'tree-form',
             name:'tree-form',
+            access: Permissions.template.sample.list.index,
             component:'@/pages/template/sample/tree-form/index'
           },
           {
             path: 'dict',
             name:'数据字典',
+            access: Permissions.template.sample.list.index,
             component: '@/pages/template/sample/dict/index',
           },
         ],

@@ -94,12 +94,6 @@ const routes: IBestAFSRoute[] = [
             ]
           },
           {
-            path: 'pro-table',
-            name: 'ProTable',
-            authority: Permissions.template.sample.list.index,
-            component:'@/pages/template/sample/pro-table/index'
-          },
-          {
             path: 'tabs-share',
             name: '共享Tab',
             authority: Permissions.template.sample.list.index,

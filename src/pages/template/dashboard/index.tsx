@@ -10,11 +10,11 @@ export default (): React.ReactNode => {
   const { refresh } = useModel('@@initialState');
 
   // 模拟切换用户角色
-  const handleToggleRole = (token: '00000' | '10000') => {
+  const handleToggleRole = async (token: '00000' | '10000') => {
     setToken({
       token,
     });
-    refresh();
+    await refresh();
   };
 
   return (

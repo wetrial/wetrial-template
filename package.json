@@ -63,7 +63,7 @@
     "classnames": "^2.2.6",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
-    "path-to-regexp": "^6.1.0",
+    "path-to-regexp": "^6.2.0",
     "qs": "^6.9.4",
     "react": "^17.0.1",
     "react-copy-to-clipboard": "^5.0.2",
@@ -75,7 +75,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "@umijs/fabric": "^2.3.1",
-    "@umijs/preset-react": "^1.6.19",
+    "@umijs/preset-react": "1.6.10",
     "@umijs/test": "^3.2.27",
     "chalk": "^4.1.0",
     "cross-env": "^7.0.2",

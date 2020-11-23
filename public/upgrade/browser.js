@@ -49,7 +49,7 @@
     vDisabled = vDisabled === undefined ? true : vDisabled;
     var flag1 =
       ev.keyCode === 8 &&
-      (t === 'password' || t === 'text' || t === 'textarea') &&
+      (t === 'password' || t === 'text' || t === 'textarea'|| t === 'search') &&
       (vReadOnly === true || vDisabled === true);
     var flag2 = ev.keyCode === 8 && t !== 'password' && t !== 'text' && t !== 'textarea';
     if (flag2 || flag1) return false;

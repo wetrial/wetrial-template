@@ -82,11 +82,6 @@ const routes: IBestAFSRoute[] = [
                 component: '@/pages/template/sample/list/index',
               },
               {
-                path: 'simple-list',
-                authority: Permissions.template.sample.list.index,
-                component: '@/pages/template/sample/list/simple-list',
-              },
-              {
                 path: 'edit/:id?',
                 component: '@/pages/template/sample/list/edit',
                 authority: Permissions.template.sample.list.edit,

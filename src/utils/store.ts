@@ -1,17 +1,17 @@
-import storeWithExp from '@wetrial/core/es/store';
+import { store } from '@wetrial/core';
 
 const Tenant = 'WETRIAL.Tenant';
 
 export const getTenant = (): string | number => {
-  return storeWithExp.get(Tenant);
+  return store.get(Tenant);
 };
 
 export const setTenant = (tenantId): void => {
-  storeWithExp.set(Tenant, tenantId);
+  store.set(Tenant, tenantId);
 };
 
 export const clearTenant = (): void => {
-  storeWithExp.remove(Tenant);
+  store.remove(Tenant);
 };
 
-export { storeWithExp };
+export { store };

@@ -1,17 +1,37 @@
-import { LAYOUT_COL_TWO, LAYOUT_FORM_SINGLE, LAYOUT_FORM_TWO } from '@/constants';
+import { LAYOUT_COL_TWO, LAYOUT_FIXED_LABEL } from '@/constants';
 import { PageContainer } from '@ant-design/pro-layout';
 import { activeCache } from '@wetrial/hooks';
 import { useRequest } from 'ahooks';
-import { Button, Card, Col, Form, Input, Row, Slider, Switch } from 'antd';
+import { Button, Card, Col, Form, Input, InputNumber, Row, Select, Slider } from 'antd';
 import React, { useEffect } from 'react';
 import { history, useParams } from 'umi';
+import { LABELS } from './objects';
+import type { IGitHubIssue } from './prop.d';
 import { create, getItem, update } from './service';
 
+const defaultModal: Partial<IGitHubIssue> = {
+  progress: 0,
+};
+
+const SAMPLE_USERS = [
+  '百里玄策',
+  '孙悟空',
+  '娜可露露',
+  '安其拉',
+  '后裔',
+  '蔡文姬',
+  '猪八戒',
+  '赵云',
+].map((item) => ({
+  label: item,
+  value: item,
+}));
+
 export default () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id }>();
   const [form] = Form.useForm();
 
-  const { run: getModel, data, loading } = useRequest(getItem, {
+  const { run: getModel, data = defaultModal, loading } = useRequest(getItem, {
     refreshDeps: [id],
     manual: true,
   });
@@ -23,7 +43,7 @@ export default () => {
 
   useEffect(() => {
     id && getModel({ id });
-  }, [id]);
+  }, [id, getModel]);
 
   const handleBack = () => {
     const listPath = '/template/sample/list/index';
@@ -36,20 +56,14 @@ export default () => {
       !id && history.push(`/template/sample/list/edit/${result.id}`);
     });
   };
+
   return (
     <PageContainer
       breadcrumb={undefined}
       ghost={false}
       title={id ? '编辑信息' : '新增信息'}
+      fixedHeader
       onBack={handleBack}
-      // extra={[
-      //   <Button key="cancel" form="info" type="default" htmlType="reset" onClick={handleBack}>
-      //     取消
-      //   </Button>,
-      //   <Button key="save" form="info" loading={submitting} type="primary" htmlType="submit">
-      //     提交
-      //   </Button>,
-      // ]}
       footer={[
         <Button key="cancel" form="info" type="default" htmlType="reset" onClick={handleBack}>
           取消
@@ -61,7 +75,7 @@ export default () => {
     >
       <Card className="page-body" loading={loading}>
         <Form
-          {...LAYOUT_FORM_TWO}
+          {...LAYOUT_FIXED_LABEL}
           scrollToFirstError
           form={form}
           name="info"
@@ -69,37 +83,27 @@ export default () => {
           onFinish={handleSubmit}
         >
           <Row>
-            <Col {...LAYOUT_COL_TWO}>
+            <Col span={24}>
               <Form.Item
-                label="姓名"
-                name="name"
-                rules={[{ required: true, whitespace: true, max: 20 }]}
+                label="标题"
+                name="title"
+                rules={[{ required: true, whitespace: true, max: 128 }]}
               >
                 <Input allowClear />
               </Form.Item>
             </Col>
             <Col {...LAYOUT_COL_TWO}>
-              <Form.Item
-                label="标题"
-                name="title"
-                rules={[{ required: true, whitespace: true, max: 64 }]}
-              >
-                <Input allowClear />
+              <Form.Item label="标签" name="labels" rules={[{ required: true }]}>
+                <Select mode="multiple" options={LABELS} />
               </Form.Item>
             </Col>
             <Col span={24}>
               <Form.Item
-                {...LAYOUT_FORM_SINGLE}
-                label="描述"
-                name="desc"
-                rules={[{ max: 1000, type: 'string' }]}
+                label="内容"
+                name="content"
+                rules={[{ required: true, whitespace: true, max: 1024 }]}
               >
-                <Input.TextArea allowClear autoSize />
-              </Form.Item>
-            </Col>
-            <Col {...LAYOUT_COL_TWO}>
-              <Form.Item label="状态" name="status" valuePropName="checked">
-                <Switch checkedChildren="启用" unCheckedChildren="禁用" />
+                <Input.TextArea autoSize={{ minRows: 4, maxRows: 10 }} allowClear />
               </Form.Item>
             </Col>
             <Col {...LAYOUT_COL_TWO}>
@@ -124,13 +128,18 @@ export default () => {
               </Form.Item>
             </Col>
             <Col {...LAYOUT_COL_TWO}>
-              <Form.Item label="国家" name={['address', 'state']} rules={[{ max: 20 }]}>
-                <Input allowClear />
+              <Form.Item label="责任人" name="assigner">
+                <Select options={SAMPLE_USERS} />
               </Form.Item>
             </Col>
             <Col {...LAYOUT_COL_TWO}>
-              <Form.Item label="详细地址" name={['address', 'street']} rules={[{ max: 200 }]}>
-                <Input allowClear />
+              <Form.Item label="奖金" name="money">
+                <InputNumber
+                  className="w-full"
+                  formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  parser={(value) => (value || '').replace(/\$\s?|(,*)/g, '')}
+                  precision={2}
+                />
               </Form.Item>
             </Col>
           </Row>

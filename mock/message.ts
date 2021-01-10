@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { authorizeIntercept } from './_base';
 
 const getNotices = (request: Request, response: Response) => {

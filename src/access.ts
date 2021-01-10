@@ -1,6 +1,6 @@
-import { IGlobalProps } from '@/services/global.d';
+import type { IGlobalProps } from '@/services/global.d';
 import { Permissions } from '@config/routes';
-import { IKeyValue } from '@wetrial/core';
+import type { TKeyValue } from '@wetrial/core';
 
 export default (initialState: IGlobalProps = {}) => {
   const { currentUser } = initialState;
@@ -11,10 +11,10 @@ export default (initialState: IGlobalProps = {}) => {
 };
 
 function dgFlatPermissions(
-  allPermissions: IKeyValue,
+  allPermissions: TKeyValue,
   curPermissions: string[] = [],
-): IKeyValue<boolean> {
-  let result: IKeyValue<boolean> = {};
+): TKeyValue<boolean> {
+  let result: TKeyValue<boolean> = {};
   // eslint-disable-next-line no-restricted-syntax
   for (const key in allPermissions) {
     if (allPermissions.hasOwnProperty(key)) {

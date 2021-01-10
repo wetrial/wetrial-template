@@ -1,7 +1,7 @@
 import logo from '@/assets/logo.png';
 import { login } from '@/services/account';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { setToken } from '@wetrial/core/es/authority';
+import { tokener } from '@wetrial/core';
 import { useRequest } from 'ahooks';
 import { Alert, Button, Form, Input } from 'antd';
 import React from 'react';
@@ -24,11 +24,12 @@ export default () => {
 
     run(values).then(async (token) => {
       if (token) {
-        setToken({
+        tokener.setToken({
           token,
         });
         await refresh();
-        history.push(query.redirect || '/');
+        const strQuery = (query && (query['redirect'] as string)) || '/';
+        history.push(strQuery);
       }
     });
   };

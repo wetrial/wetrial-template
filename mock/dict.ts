@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { authorizeIntercept } from './_base';
 
 const getCountrys = (request: Request, response: Response) => {

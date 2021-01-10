@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { authorizeIntercept, responseWrapper } from './_base';
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据

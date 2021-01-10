@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 /**
  * 构造mock数据，用于外层包装
  * @param result 响应的记过数据

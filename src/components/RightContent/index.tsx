@@ -1,13 +1,13 @@
-import React from 'react';
+import type { Settings as ProSettings } from '@ant-design/pro-layout';
 import { Space } from 'antd';
+import React from 'react';
 import { useModel } from 'umi';
 import Avatar from './AvatarDropdown';
-import { Settings as ProSettings } from '@ant-design/pro-layout';
 import styles from './index.less';
 
 export type SiderTheme = 'light' | 'dark';
 
-const GlobalHeaderRight: React.FC<{}> = () => {
+const GlobalHeaderRight = () => {
   const { initialState } = useModel('@@initialState');
 
   if (!initialState) {

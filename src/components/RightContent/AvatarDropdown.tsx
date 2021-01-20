@@ -1,16 +1,15 @@
-import React, { useCallback } from 'react';
+import { clearToken } from '@/utils/authority';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
-import { useModel, useHistory } from 'umi';
 import { stringify } from 'querystring';
+import React, { useCallback } from 'react';
+import { useHistory, useModel } from 'umi';
 import HeaderDropdown from './HeaderDropdown';
-import { clearToken } from '@/utils/authority';
-
 import styles from './index.less';
 
-export interface GlobalHeaderRightProps {
+export type GlobalHeaderRightProps = {
   menu?: boolean;
-}
+};
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');

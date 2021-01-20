@@ -22,22 +22,31 @@ export default defineConfig({
   antd: {},
   request: false,
   layout: {
+    logo: defaultSetting.logo,
     title: defaultSetting.title,
     theme: defaultSetting.navTheme,
-    //locale: false,
+    iconfontUrl: defaultSetting.iconfontUrl,
+    locale: false, // 不启用菜单的多语言
+    siderWidth: 208,
   },
   dva: {
     immer: true,
     hmr: true,
   },
-  // locale: false,
+  locale: {
+    default: 'zh-CN',
+    antd: true,
+    // default true, when it is true, will use `navigator.language` overwrite default
+    baseNavigator: true,
+  },
   dynamicImport: {
-    loading: '@/components/PageLoading/index',
+    loading: '@ant-design/pro-layout/es/PageLoading',
   },
   ignoreMomentLocale: true,
   targets: {
     ie: 11,
   },
+  esbuild: {},
   routes,
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: themeConfig,

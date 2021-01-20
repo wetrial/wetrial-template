@@ -1,11 +1,10 @@
 import { Avatar, List } from 'antd';
-
-import React from 'react';
 import classNames from 'classnames';
-import { NoticeIconData } from './index';
+import React from 'react';
+import type { NoticeIconData } from './index';
 import styles from './NoticeList.less';
 
-export interface NoticeIconTabProps {
+export type NoticeIconTabProps = {
   count?: number;
   name?: string;
   showClear?: boolean;
@@ -21,7 +20,7 @@ export interface NoticeIconTabProps {
   viewMoreText?: string;
   list: NoticeIconData[];
   onViewMore?: (e: any) => void;
-}
+};
 const NoticeList: React.SFC<NoticeIconTabProps> = ({
   data = [],
   onClick,

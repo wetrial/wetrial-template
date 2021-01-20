@@ -4,21 +4,21 @@ import type { IGlobalProps } from '@/services/global.d';
 import { getToken } from '@/utils/authority';
 import { request as requestMethod } from '@/utils/request';
 import { UseRequestProvider } from '@ahooksjs/use-request';
-import type { BasicLayoutProps } from '@ant-design/pro-layout';
+import { PageLoading } from '@ant-design/pro-layout';
 import defaultSettings from '@config/defaultSettings';
 // import { omit } from 'lodash';
 // import { initWetrialCore } from '@wetrial/core';
 import { constants } from '@wetrial/core';
 import { ConfigProvider as WetrialConfigProvider } from '@wetrial/provider';
 import { ConfigProvider, notification } from 'antd';
-import zhCN from 'antd/es/locale/zh_CN';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
+// import zhCN from 'antd/es/locale/zh_CN';
+// import moment from 'moment';
+// import 'moment/locale/zh-cn';
 import React from 'react';
+import type { RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
-import logo from './assets/logo.png';
 
-moment.locale('zh-cn');
+// moment.locale('zh-cn');
 
 // (function init() {
 //   // // 初始化核心库配置信息
@@ -31,6 +31,13 @@ moment.locale('zh-cn');
 export function render(oldRender) {
   oldRender();
 }
+
+/**
+ * getInitialState的时候展示的loading
+ */
+export const initialStateConfig = {
+  loading: <PageLoading />,
+};
 
 export async function getInitialState(): Promise<IGlobalProps> {
   const tokenStore = getToken();
@@ -52,13 +59,14 @@ export async function getInitialState(): Promise<IGlobalProps> {
     // 未登录，处理跳转到登录页面
     if (errorMessage === 'UNLOGIN') {
       const loginPathName = '/account/login';
-      pathname !== loginPathName &&
+      if (pathname !== loginPathName) {
         history.push({
           pathname: loginPathName,
           query: {
             redirect: pathname,
           },
         });
+      }
     }
   }
   return {
@@ -93,7 +101,6 @@ export function rootContainer(container) {
       input: {
         autoComplete: 'off',
       },
-      locale: zhCN,
     },
     React.createElement(
       WetrialConfigProvider,
@@ -168,13 +175,20 @@ export function rootContainer(container) {
   );
 }
 
-export const layout = ({ initialState }: { initialState }): BasicLayoutProps => {
+export const layout: RunTimeLayoutConfig = ({ initialState }: { initialState }) => {
   return {
-    navTheme: 'light',
-    logo,
-    iconfontUrl: defaultSettings.iconfontUrl,
+    disableContentMargin: false,
     rightContentRender: () => <RightContent />,
+    onPageChange: () => {
+      const { location } = history;
+      // 如果没有登录，重定向到 login
+      if (!initialState?.currentUser && location.pathname !== '/account/login') {
+        history.push('/account/login');
+      }
+    },
+    // menuHeaderRender:undefined,
     // footerRender: () => <DefaultFooter links={[]} copyright="2020 湖南微试云技术团队" />,
+    // unAccessible: <div>无权限访问该页面</div>, // 自定义 403 页面
     ...initialState?.settings,
   };
 };

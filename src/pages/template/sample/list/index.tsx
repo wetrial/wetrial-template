@@ -19,6 +19,7 @@ export default () => {
 
   const { tableProps, search, sorter, refresh } = useFormTable(getList, {
     form,
+    defaultPageSize: 50,
     cacheKey: pathname,
   });
 
@@ -147,7 +148,7 @@ export default () => {
     {
       title: '操作',
       dataIndex: 'option',
-      width: 120,
+      width: 130,
       valueType: 'option',
       render: (_, record) => [
         <Access key="edit" accessible={access[Permissions.template.sample.list.edit]}>
@@ -182,6 +183,7 @@ export default () => {
             onReset: reset,
           }}
           form={form}
+          preserve={false}
           onCollapse={changeType}
           collapsed={type === 'simple'}
         >

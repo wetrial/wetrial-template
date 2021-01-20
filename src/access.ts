@@ -2,13 +2,15 @@ import type { IGlobalProps } from '@/services/global.d';
 import { Permissions } from '@config/routes';
 import type { TKeyValue } from '@wetrial/core';
 
-export default (initialState: IGlobalProps = {}) => {
+export default function access(initialState: IGlobalProps = {}) {
   const { currentUser } = initialState;
   const allPermissions = {
     ...Permissions,
   };
-  return dgFlatPermissions(allPermissions, currentUser?.permissions);
-};
+  const result = dgFlatPermissions(allPermissions, currentUser?.permissions);
+  result.isAdmin = false;
+  return result;
+}
 
 function dgFlatPermissions(
   allPermissions: TKeyValue,

@@ -1,6 +1,6 @@
-import { Settings as ProSettings } from '@ant-design/pro-layout';
+import type { Settings as ProSettings } from '@ant-design/pro-layout';
 
-export interface IUser {
+export type IUser = {
   name: string;
   avatar: string;
   id: string;
@@ -8,9 +8,9 @@ export interface IUser {
   unreadCount: number;
   phone: string;
   permissions: string[];
-}
+};
 
-export interface IGlobalProps {
+export type IGlobalProps = {
   currentUser?: IUser;
   settings?: ProSettings;
-}
+};

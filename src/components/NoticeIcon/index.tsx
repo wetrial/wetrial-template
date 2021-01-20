@@ -1,16 +1,16 @@
 import { BellOutlined } from '@ant-design/icons';
 import { Badge, Spin, Tabs } from 'antd';
-import useMergeValue from 'use-merge-value';
-import React from 'react';
 import classNames from 'classnames';
-import NoticeList, { NoticeIconTabProps } from './NoticeList';
-
+import React from 'react';
+import useMergeValue from 'use-merge-value';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
+import type { NoticeIconTabProps } from './NoticeList';
+import NoticeList from './NoticeList';
 
 const { TabPane } = Tabs;
 
-export interface NoticeIconData {
+export type NoticeIconData = {
   avatar?: string | React.ReactNode;
   title?: React.ReactNode;
   description?: React.ReactNode;
@@ -19,9 +19,9 @@ export interface NoticeIconData {
   style?: React.CSSProperties;
   key?: string | number;
   read?: boolean;
-}
+};
 
-export interface NoticeIconProps {
+export type NoticeIconProps = {
   count?: number;
   bell?: React.ReactNode;
   className?: string;
@@ -38,7 +38,7 @@ export interface NoticeIconProps {
   clearClose?: boolean;
   emptyImage?: string;
   children: React.ReactElement<NoticeIconTabProps>[];
-}
+};
 
 const NoticeIcon: React.FC<NoticeIconProps> & {
   Tab: typeof NoticeList;

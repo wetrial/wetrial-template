@@ -45,7 +45,7 @@
       "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}\\scripts\\module",
-      "args": ["add", "@wetrial/blogs", "@wetrial/project"],
+      "args": ["add", "@wetrial/templates", "@wetrial/project"],
       "sourceMaps": true
     }
   ]

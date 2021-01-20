@@ -8,10 +8,12 @@ export default () => {
   const [form] = Form.useForm();
 
   const handleSubmit = (values) => {
+    // eslint-disable-next-line no-console
     console.log(values);
   };
 
   const onCheck = (checkedKeys) => {
+    // eslint-disable-next-line no-console
     console.log('onCheck', checkedKeys);
     form.setFieldsValue({
       roles: checkedKeys,

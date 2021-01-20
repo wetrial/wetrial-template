@@ -42,10 +42,11 @@ const routes: IBestAFSRoute[] = [
   },
   {
     path: '/template',
-    menu: {
-      name: 'Wetrial',
-      flatMenu: true,
-    },
+    // menu: {
+    //   name: 'Wetrial',
+    //   icon:''
+    // },
+    flatMenu: true,
     routes: [
       {
         path: '/template',
@@ -55,19 +56,20 @@ const routes: IBestAFSRoute[] = [
         path: 'dashboard',
         name: '看板',
         icon: 'dashboard',
-        authority: Permissions.template.dashboard.index,
+        access: Permissions.template.dashboard.index,
         component: '@/pages/template/dashboard/index',
       },
       {
         path: 'sample',
         name: '案例',
-        authority: Permissions.template.sample.index,
+        access: 'isAdmin',
+        authority:'isAdmin',
         icon: 'smile',
         routes: [
           {
             path: 'list',
             name: '列表',
-            authority: Permissions.template.sample.list.index,
+            access: Permissions.template.sample.list.index,
             menu: {
               hideChildren: true,
             },
@@ -78,20 +80,20 @@ const routes: IBestAFSRoute[] = [
               },
               {
                 path: 'index',
-                authority: Permissions.template.sample.list.index,
+                access: Permissions.template.sample.list.index,
                 component: '@/pages/template/sample/list/index',
               },
               {
                 path: 'edit/:id?',
                 component: '@/pages/template/sample/list/edit',
-                authority: Permissions.template.sample.list.edit,
+                access: Permissions.template.sample.list.edit,
               },
             ]
           },
           {
             path: 'tabs-share',
             name: '共享Tab',
-            authority: Permissions.template.sample.list.index,
+            access: Permissions.template.sample.list.index,
             component:'@/pages/template/sample/tabs-share/index'
           },
           {

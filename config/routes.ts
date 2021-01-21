@@ -63,7 +63,6 @@ const routes: IBestAFSRoute[] = [
         path: 'sample',
         name: '案例',
         access: 'isAdmin',
-        authority:'isAdmin',
         icon: 'smile',
         routes: [
           {

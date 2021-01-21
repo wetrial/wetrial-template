@@ -22,8 +22,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@@/*": ["src/.umi/*"],
-      "@config/*": ["./config/*"],
-      "@modules/*": ["./src/modules/*"]
+      "@config/*": ["./config/*"]
     }
   },
   "exclude": [
@@ -31,10 +30,9 @@
     "build",
     "dist",
     "scripts",
-    "acceptance-tests",
+    "src/.umi/*",
     "webpack",
     "jest",
-    "src/setupTests.ts",
     "tslint:latest",
     "tslint-config-prettier"
   ]

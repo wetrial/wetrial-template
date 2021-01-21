@@ -1,3 +1,4 @@
+
 package.json
 .umi
 .umi-production
@@ -5,6 +6,7 @@ package.json
 .dockerignore
 .DS_Store
 .eslintignore
+
 *.toml
 docker
 .editorconfig
@@ -29,3 +31,5 @@ public/upgrade
 tests
 __test__
 /config
+/public
+CNAME

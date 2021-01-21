@@ -27,7 +27,7 @@ const SAMPLE_USERS = [
   value: item,
 }));
 
-export default () => {
+const EditPage = () => {
   const { id } = useParams<{ id }>();
   const [form] = Form.useForm();
 
@@ -149,3 +149,5 @@ export default () => {
     </PageContainer>
   );
 };
+
+export default EditPage;

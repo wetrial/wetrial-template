@@ -2,4 +2,7 @@
 /scripts
 /config
 .history
-.eslintrc.js
+public
+dist
+.umi
+mock

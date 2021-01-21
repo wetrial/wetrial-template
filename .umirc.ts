@@ -8,7 +8,7 @@ import proxy from './config/proxy';
 import routes from './config/routes';
 import themeConfig from './config/theme.config';
 
-const { REACT_APP_ENV = 'dev' } = process.env;
+const { UMI_ENV = 'dev' } = process.env;
 
 const { winPath } = utils;
 
@@ -47,12 +47,10 @@ export default defineConfig({
     ie: 11,
   },
   esbuild: {},
+  fastRefresh: {},
   routes,
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: themeConfig,
-  define: {
-    REACT_APP_ENV: REACT_APP_ENV,
-  },
   alias: {
     themes: join(__dirname, './src/themes'),
     '@config': join(__dirname, './config'),
@@ -94,7 +92,7 @@ export default defineConfig({
   manifest: {
     basePath: '/',
   },
-  proxy: proxy[REACT_APP_ENV],
+  proxy: proxy[UMI_ENV],
   // plugins: [new AntdDayjsWebpackPlugin()],
   chunks: ['react', 'antd', 'umi'],
   chainWebpack(config, { webpack }) {

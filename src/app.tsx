@@ -74,6 +74,15 @@ export async function getInitialState(): Promise<IGlobalProps> {
   };
 }
 
+export function patchRoutes({ routes }) {
+  console.log(routes);
+  // routes.unshift({
+  //   path: '/foo',
+  //   exact: true,
+  //   component: require('@/extraRoutes/foo').default,
+  // });
+}
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',

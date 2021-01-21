@@ -1,22 +1,10 @@
-import 'jsdom-global/register';
+﻿// do some test init
 
-// browserMocks.js
-const localStorageMock = (() => {
-  let store = {};
+const localStorageMock = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  removeItem: jest.fn(),
+  clear: jest.fn(),
+};
 
-  return {
-    getItem(key) {
-      return store[key] || null;
-    },
-    setItem(key, value) {
-      store[key] = value.toString();
-    },
-    clear() {
-      store = {};
-    },
-  };
-})();
-
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-});
+global.localStorage = localStorageMock;

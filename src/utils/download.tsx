@@ -1,6 +1,6 @@
 import { notification, Progress } from 'antd';
-import { get, post } from './request';
 import React from 'react';
+import { get, post } from './request';
 
 /**
  * 根据文件名获取后缀名称
@@ -71,19 +71,49 @@ export const getIconType = (extension) => {
 //       .submit();
 //     ReactDOM.unmountComponentAtNode(fileContainer);
 //   };
-export const downloadFile = ({
+
+export interface IDownLoad {
+  url: string;
+  data?: any;
+  name: string;
+  method?: 'GET' | 'POST';
+  ext?: string;
+  key?: string | false;
+}
+
+function downloadTip(key, message, description?) {
+  if (key) {
+    notification.open({
+      duration: null,
+      key,
+      message,
+      description,
+    });
+  }
+}
+
+/**
+ * 下载
+ */
+const download = ({
   url,
   data,
   name,
-  method = 'get',
+  method = 'GET',
   ext = getExtension(url),
-  onDownloadProgress,
-}) => {
-  const req = method === 'get' ? get : post;
+  key = '__downloadTipKey',
+}: IDownLoad) => {
+  downloadTip(key, '正在处理...');
+
+  const req = method === 'POST' ? post : get;
   return req(url, {
     successTip: false,
     responseType: 'arraybuffer',
-    onDownloadProgress,
+    onDownloadProgress: (progressEvent) => {
+      const maxSize = progressEvent.total;
+      const percent = Math.floor((progressEvent.loaded / maxSize) * 100 * 100) / 100;
+      downloadTip(key, '下载进度', <Progress width={40} type="line" percent={percent} />);
+    },
     maxContentLength: 2048000,
     data,
   })
@@ -129,44 +159,4 @@ export const downloadFile = ({
     });
 };
 
-/**
- * 下载报告
- * @param {object} report 报告信息
- * @param {string} report.Id 报告Id
- * @param {string} report.SerialNo 报告编号
- */
-export const downloadWithProgress = ({
-  url,
-  data,
-  name,
-  ext = getExtension(url),
-  method = 'get',
-  downloadTipKey = 'downloadTipKey',
-}) => {
-  notification.open({
-    duration: null,
-    key: downloadTipKey,
-    message: '下载进度',
-    description: <Progress width={40} type="line" percent={0} />,
-  });
-
-  downloadFile({
-    url,
-    data,
-    name,
-    ext,
-    method,
-    onDownloadProgress: (progressEvent) => {
-      const maxSize = progressEvent.srcElement.getResponseHeader('size');
-      const percent = Math.floor((progressEvent.loaded / maxSize) * 100 * 100) / 100;
-      notification.open({
-        duration: null,
-        key: downloadTipKey,
-        message: '下载进度',
-        description: <Progress width={40} type="line" percent={percent} />,
-      });
-    },
-  }).then(() => {
-    notification.close(downloadTipKey);
-  });
-};
+export default download;

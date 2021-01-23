@@ -7,9 +7,7 @@ export default function access(initialState: IGlobalProps = {}) {
   const allPermissions = {
     ...Permissions,
   };
-  const result = dgFlatPermissions(allPermissions, currentUser?.permissions);
-  result.isAdmin = false;
-  return result;
+  return dgFlatPermissions(allPermissions, currentUser?.permissions);
 }
 
 function dgFlatPermissions(

@@ -22,10 +22,6 @@ const Permissions = {
 // umi routes: https://umijs.org/zh/guide/router.html
 const routes: IBestAFSRoute[] = [
   {
-    path: '/',
-    redirect: '/template',
-  },
-  {
     path: '/account',
     layout: false,
     routes: [
@@ -113,7 +109,14 @@ const routes: IBestAFSRoute[] = [
         component: '@/pages/exception/404',
       },
     ],
-  }
+  },
+  {
+    path: '/',
+    redirect: '/template',
+  },
+  {
+    component: '@/pages/exception/404',
+  },
 ];
 
 export default routes;

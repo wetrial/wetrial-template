@@ -8,7 +8,7 @@
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
-    "build": "umi build",
+    "build": "cross-env UMI_ENV=prod umi build",
     "docker:build": "docker-compose -f ./docker/docker-compose.yml build",
     "docker:push": "npm run docker-hub:build && npm run docker:tag && docker push wetrial/template",
     "docker:tag": "docker tag template wetrial/template",

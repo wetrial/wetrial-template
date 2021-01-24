@@ -13,6 +13,7 @@ const defaultSetting:LayoutSettings& {
   colorWeak: false,
   title: 'Wetrial',
   logo:'/logo.png',
+  pwa:false,
   iconfontUrl: '//at.alicdn.com/t/font_733142_yrrqxd7u55.js', // iconfont在线图库地址，需要图片请联系前端添加
 }
 

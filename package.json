@@ -58,6 +58,7 @@
     "@wetrial/component": "^4.0.0-beta.4",
     "@wetrial/core": "^4.0.0-beta.4",
     "@wetrial/hooks": "^4.0.0-beta.4",
+    "@wetrial/provider": "^4.0.0-beta.4",
     "ahooks": "^2.9.4",
     "antd": "^4.10.3",
     "classnames": "^2.2.6",

@@ -183,7 +183,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: { initialState }) 
       }
     },
     // menuHeaderRender:undefined,
-    // footerRender: () => <DefaultFooter links={[]} copyright="2020 湖南微试云技术团队" />,
+    // footerRender: () => <Footer />,
     // unAccessible: <div>无权限访问该页面</div>, // 自定义 403 页面
     ...initialState?.settings,
   };

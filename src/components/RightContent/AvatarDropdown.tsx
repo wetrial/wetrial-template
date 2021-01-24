@@ -4,7 +4,7 @@ import { Avatar, Menu, Spin } from 'antd';
 import { stringify } from 'querystring';
 import React, { useCallback } from 'react';
 import { useHistory, useModel } from 'umi';
-import HeaderDropdown from './HeaderDropdown';
+import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
 export type GlobalHeaderRightProps = {

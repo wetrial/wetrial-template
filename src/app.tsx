@@ -8,9 +8,8 @@ import { PageLoading } from '@ant-design/pro-layout';
 import defaultSettings from '@config/defaultSettings';
 // import { omit } from 'lodash';
 // import { initWetrialCore } from '@wetrial/core';
-import { constants } from '@wetrial/core';
 import { ConfigProvider as WetrialConfigProvider } from '@wetrial/provider';
-import { ConfigProvider, notification } from 'antd';
+import { notification } from 'antd';
 // import zhCN from 'antd/es/locale/zh_CN';
 // import moment from 'moment';
 // import 'moment/locale/zh-cn';
@@ -102,86 +101,83 @@ const codeMessage = {
   504: '网关超时。',
 };
 
-export function rootContainer(container) {
-  return React.createElement(
-    ConfigProvider,
-    {
-      form: { validateMessages: constants.VALIDATE_MESSAGES },
-      input: {
-        autoComplete: 'off',
+// 解决umi下 rootContainer导致菜单权限失效的bug
+const MyRootContainer = React.createElement(
+  WetrialConfigProvider,
+  {
+    value: {
+      iconFontUrl: defaultSettings.iconfontUrl, // 修改为项目中使用的icon地址
+      // 全局配置useFormTable的响应结构，来符合前端组件的格式要求
+      formatFormTableResult: (data) => {
+        return {
+          total: data.totalCount,
+          list: data.items,
+        };
+      },
+      // 全局配置useFormTable的请求参数，符合后端的格式要求
+      formatFormTableRequest: ({ current, pageSize, sorter }, formData: any) => {
+        let sortParam: any = {};
+        if (sorter && sorter.order) {
+          let sortName: string;
+          // 对象的情况下 列为数组
+          if (Array.isArray(sorter.field)) {
+            sortName = sorter.field[sorter.field.length - 1];
+          } else {
+            sortName = sorter.field;
+          }
+          sortParam = {
+            sorting: `${sortName} ${sorter.order === 'ascend' ? 'asc' : 'desc'}`,
+          };
+        }
+        return {
+          ...sortParam,
+          skipCount: (current - 1) * pageSize,
+          maxResultCount: pageSize,
+          ...formData,
+        };
       },
     },
-    React.createElement(
-      WetrialConfigProvider,
-      {
-        value: {
-          iconFontUrl: defaultSettings.iconfontUrl, // 修改为项目中使用的icon地址
-          // 全局配置useFormTable的响应结构，来符合前端组件的格式要求
-          formatFormTableResult: (data) => {
-            return {
-              total: data.totalCount,
-              list: data.items,
-            };
-          },
-          // 全局配置useFormTable的请求参数，符合后端的格式要求
-          formatFormTableRequest: ({ current, pageSize, sorter }, formData: any) => {
-            let sortParam: any = {};
-            if (sorter && sorter.order) {
-              let sortName: string;
-              // 对象的情况下 列为数组
-              if (Array.isArray(sorter.field)) {
-                sortName = sorter.field[sorter.field.length - 1];
-              } else {
-                sortName = sorter.field;
-              }
-              sortParam = {
-                sorting: `${sortName} ${sorter.order === 'ascend' ? 'asc' : 'desc'}`,
-              };
-            }
-            return {
-              ...sortParam,
-              skipCount: (current - 1) * pageSize,
-              maxResultCount: pageSize,
-              ...formData,
-            };
-          },
-        },
+  },
+  React.createElement(UseRequestProvider, {
+    value: {
+      requestMethod: (param) => requestMethod(param),
+      onError: (response) => {
+        if (response && response.status) {
+          const { status, statusText, data } = response;
+          const notifyFunc = status >= 500 ? notification.error : notification.info;
+          let message;
+          if (data && typeof data === 'object' && 'error' in data) {
+            message = data.error?.message;
+          }
+          const errorText = message || codeMessage[status] || statusText;
+          notifyFunc({
+            key: '__global_message',
+            message: '温馨提示',
+            description: errorText,
+          });
+        }
+        if (!response) {
+          notification.error({
+            key: '__global_message',
+            message: '网络开小差啦',
+            description: '您的网络发生异常，请重试或者联系客服',
+          });
+        }
+        throw response;
       },
-      React.createElement(
-        UseRequestProvider,
-        {
-          value: {
-            requestMethod: (param) => requestMethod(param),
-            onError: (response) => {
-              if (response && response.status) {
-                const { status, statusText, data } = response;
-                const notifyFunc = status >= 500 ? notification.error : notification.info;
-                let message;
-                if (data && typeof data === 'object' && 'error' in data) {
-                  message = data.error?.message;
-                }
-                const errorText = message || codeMessage[status] || statusText;
-                notifyFunc({
-                  key: '__global_message',
-                  message: '温馨提示',
-                  description: errorText,
-                });
-              }
-              if (!response) {
-                notification.error({
-                  key: '__global_message',
-                  message: '网络开小差啦',
-                  description: '您的网络发生异常，请重试或者联系客服',
-                });
-              }
-              throw response;
-            },
-          },
-        },
-        container,
-      ),
-    ),
-  );
+    },
+  }),
+);
+const Wrapper = ({ children, routes }) => {
+  return React.cloneElement(children, {
+    ...children.props,
+    routes,
+    MyRootContainer,
+  });
+};
+
+export function rootContainer(container) {
+  return React.createElement(Wrapper, null, container);
 }
 
 export const layout: RunTimeLayoutConfig = ({ initialState }: { initialState }) => {
@@ -190,6 +186,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: { initialState }) 
     rightContentRender: () => <RightContent />,
     onPageChange: () => {
       const { location } = history;
+      console.log(location.pathname);
       // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== '/account/login') {
         history.push('/account/login');

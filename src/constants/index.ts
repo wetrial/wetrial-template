@@ -1,4 +1,4 @@
-export * from '@wetrial/core/es/constants';
+export * from '@wetrial/core/lib/constants';
 
 // api 前缀
 export const BASE_PATH = '/';

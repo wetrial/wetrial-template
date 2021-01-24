@@ -17,14 +17,16 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
   const loginOut = async () => {
     clearToken();
-    if (history.location.pathname !== '/account/login') {
-      history.replace({
-        pathname: '/account/login',
-        search: stringify({
-          redirect: history.location.pathname,
-        }),
-      });
-    }
+    setTimeout(() => {
+      if (history.location.pathname !== '/account/login') {
+        history.replace({
+          pathname: '/account/login',
+          search: stringify({
+            redirect: history.location.pathname,
+          }),
+        });
+      }
+    }, 1);
   };
 
   const onMenuClick = useCallback((event) => {

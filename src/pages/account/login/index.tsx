@@ -4,18 +4,28 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { tokener } from '@wetrial/core';
 import { useRequest } from 'ahooks';
 import { Alert, Button, Form, Input } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { history, Link, useModel } from 'umi';
 import styles from './index.less';
 
 const FormItem = Form.Item;
 
 export default () => {
-  const { refresh } = useModel('@@initialState');
+  const { initialState, refresh } = useModel('@@initialState');
   const { loading, run, error } = useRequest(login, {
     manual: true,
     onError: () => {},
   });
+
+  useEffect(() => {
+    const {
+      location: { query },
+    } = history;
+    if (initialState?.currentUser) {
+      const strQuery = (query && (query['redirect'] as string)) || '/';
+      history.push(strQuery);
+    }
+  }, []);
 
   const onFinish = (values) => {
     const {
@@ -28,8 +38,10 @@ export default () => {
           token,
         });
         await refresh();
-        const strQuery = (query && (query['redirect'] as string)) || '/';
-        history.push(strQuery);
+        setTimeout(() => {
+          const strQuery = (query && (query['redirect'] as string)) || '/';
+          history.push(strQuery);
+        }, 1);
       }
     });
   };

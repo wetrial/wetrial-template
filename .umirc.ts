@@ -7,6 +7,7 @@ import defaultSetting from './config/defaultSettings';
 import proxy from './config/proxy';
 import routes from './config/routes';
 import themeConfig from './config/theme.config';
+import { VALIDATE_MESSAGES } from './src/constants';
 
 const { UMI_ENV = 'dev' } = process.env;
 
@@ -19,7 +20,16 @@ export default defineConfig({
     type: 'browser',
   },
   hash: true,
-  antd: {},
+  antd: {
+    // dark: true,
+    // compact: true,
+    config: {
+      form: { validateMessages: VALIDATE_MESSAGES },
+      input: {
+        autoComplete: 'off',
+      },
+    },
+  },
   request: false,
   layout: {
     logo: defaultSetting.logo,

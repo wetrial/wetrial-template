@@ -73,15 +73,6 @@ export async function getInitialState(): Promise<IGlobalProps> {
   };
 }
 
-export function patchRoutes({ routes }) {
-  console.log(routes);
-  // routes.unshift({
-  //   path: '/foo',
-  //   exact: true,
-  //   component: require('@/extraRoutes/foo').default,
-  // });
-}
-
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -186,7 +177,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: { initialState }) 
     rightContentRender: () => <RightContent />,
     onPageChange: () => {
       const { location } = history;
-      console.log(location.pathname);
       // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== '/account/login') {
         history.push('/account/login');

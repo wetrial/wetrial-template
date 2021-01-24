@@ -10,6 +10,11 @@ import styles from './index.less';
 
 const FormItem = Form.Item;
 
+const go = (query) => {
+  const strQuery = (query && (query['redirect'] as string)) || '/';
+  history.push(strQuery);
+};
+
 export default () => {
   const { initialState, refresh } = useModel('@@initialState');
   const { loading, run, error } = useRequest(login, {
@@ -17,15 +22,15 @@ export default () => {
     onError: () => {},
   });
 
+  // 如果已经登录了，自动跳转
   useEffect(() => {
     const {
       location: { query },
     } = history;
     if (initialState?.currentUser) {
-      const strQuery = (query && (query['redirect'] as string)) || '/';
-      history.push(strQuery);
+      go(query);
     }
-  }, []);
+  }, [initialState]);
 
   const onFinish = (values) => {
     const {
@@ -39,8 +44,7 @@ export default () => {
         });
         await refresh();
         setTimeout(() => {
-          const strQuery = (query && (query['redirect'] as string)) || '/';
-          history.push(strQuery);
+          go(query);
         }, 1);
       }
     });

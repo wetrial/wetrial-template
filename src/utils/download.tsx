@@ -1,4 +1,5 @@
-import { notification, Progress } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { notification, Progress, Spin } from 'antd';
 import React from 'react';
 import { get, post } from './request';
 
@@ -73,22 +74,72 @@ export const getIconType = (extension) => {
 //   };
 
 export interface IDownLoad {
+  /**
+   * 下载的url地址
+   */
   url: string;
+  /**
+   * 发送的数据
+   */
   data?: any;
+  /**
+   * 客户端提示保存的文件名(不需要后缀)
+   */
   name: string;
+  /**
+   * 请求方式
+   */
   method?: 'GET' | 'POST';
+  /**
+   * 文件扩展名,如:.exe
+   */
   ext?: string;
+  /**
+   * 提示窗口的key
+   */
   key?: string | false;
+  /**
+   * 启用后端处理过程中的温馨提示窗口
+   */
+  enableProcessTipe?: boolean;
 }
 
-function downloadTip(key, message, description?) {
-  if (key) {
-    notification.open({
-      duration: null,
-      key,
-      message,
-      description,
-    });
+interface IDownLoadTip {
+  /**
+   * 提示窗口唯一标识key
+   */
+  key?: boolean | string;
+  /**
+   * 下载进度
+   */
+  percent?: number;
+  /**
+   * 启用后端处理过程中的温馨提示窗口
+   */
+  enableProcessTipe?: boolean;
+}
+
+function downloadTip({ key, percent, enableProcessTipe }: IDownLoadTip) {
+  if (key && typeof key === 'string') {
+    if (percent === undefined && enableProcessTipe === true) {
+      notification.open({
+        duration: null,
+        key,
+        message: '正在处理...',
+        icon: <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />,
+        description: '正在拼了命的处理，请耐心等待(请勿关闭页面或者重复刷新页面)',
+      });
+    } else {
+      notification.open({
+        duration: null,
+        key,
+        message: '正在下载...',
+        description: <Progress width={40} type="line" percent={percent} />,
+      });
+    }
+    if (percent === 100) {
+      notification.close(key);
+    }
   }
 }
 
@@ -102,9 +153,9 @@ const download = ({
   method = 'GET',
   ext = getExtension(url),
   key = '__downloadTipKey',
+  enableProcessTipe,
 }: IDownLoad) => {
-  downloadTip(key, '正在处理...');
-
+  downloadTip({ key, enableProcessTipe });
   const req = method === 'POST' ? post : get;
   return req(url, {
     successTip: false,
@@ -112,13 +163,17 @@ const download = ({
     onDownloadProgress: (progressEvent) => {
       const maxSize = progressEvent.total;
       const percent = Math.floor((progressEvent.loaded / maxSize) * 100 * 100) / 100;
-      downloadTip(key, '下载进度', <Progress width={40} type="line" percent={percent} />);
+      downloadTip({
+        key,
+        percent,
+        enableProcessTipe,
+      });
     },
-    maxContentLength: 2048000,
+    maxContentLength: Number.MAX_SAFE_INTEGER,
     data,
   })
     .then((res) => {
-      if (res.headers['content-type'].startsWith('application/json')) {
+      if (res.headers && res.headers['content-type'].startsWith('application/json')) {
         let responseJson;
         if ('TextDecoder' in window) {
           // Decode as UTF-8
@@ -136,7 +191,7 @@ const download = ({
           description: responseJson.Message,
         });
       } else {
-        return res.data;
+        return res;
       }
     })
     .then((arrayBuffer) => {

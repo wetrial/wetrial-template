@@ -176,25 +176,25 @@ export default () => {
           <Link to="edit/">新增</Link>
         </Button>,
       ]}
-      content={
-        <QueryFilter
-          submitter={{
-            onSubmit: submit,
-            onReset: reset,
-          }}
-          form={form}
-          preserve={false}
-          onCollapse={changeType}
-          collapsed={type === 'simple'}
-        >
-          <ProFormText name="name" label="标题" />
-          <ProFormDatePicker name="createdTime" label="创建时间" />
-          <ProFormText name="status" label="状态" />
-          <ProFormDatePicker name="updatedTime" label="更新日期" />
-          <ProFormDatePicker name="enddate" label="结束时间" />
-        </QueryFilter>
-      }
     >
+      <QueryFilter
+        submitter={{
+          onSubmit: submit,
+          onReset: reset,
+        }}
+        form={form}
+        preserve={false}
+        onCollapse={changeType}
+        collapsed={type === 'simple'}
+        className="wt-qf"
+      >
+        <ProFormText name="name" label="标题" />
+        <ProFormDatePicker name="createdTime" label="创建时间" />
+        <ProFormText name="status" label="状态" />
+        <ProFormDatePicker name="updatedTime" label="更新日期" />
+        <ProFormDatePicker name="enddate" label="结束时间" />
+      </QueryFilter>
+
       <ProTable
         rowKey="id"
         {...tableProps}

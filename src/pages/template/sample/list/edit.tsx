@@ -64,7 +64,7 @@ const EditPage = () => {
       title={id ? '编辑信息' : '新增信息'}
       fixedHeader
       onBack={handleBack}
-      footer={[
+      extra={[
         <Button key="cancel" form="info" type="default" htmlType="reset" onClick={handleBack}>
           取消
         </Button>,

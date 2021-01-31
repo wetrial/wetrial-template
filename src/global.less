@@ -18,25 +18,25 @@ body,
   }
   // 覆盖pro-layout的内容区域样式
   .ant-pro-page-container-children-content {
-    margin: 8px;
-    background: #fff;
-    .page-body {
-      .ant-card-body {
-        padding: 8px;
-      }
-    }
+    margin: @margin-sm @margin-sm 0 @margin-sm;
+  }
+
+  .wt-qf{
+    margin-bottom: @margin-sm;
+    padding: @padding-sm @padding-sm 0;
+    background: @white;
   }
 }
 
-:fullscreen {
-  .ant-form {
-    padding-top: 4px;
-  }
-}
+// :fullscreen {
+//   .ant-form {
+//     padding-top: @padding-xs;
+//   }
+// }
 
-:not(:root):fullscreen::backdrop {
-  background: white;
-}
+// :not(:root):fullscreen::backdrop {
+//   background: @white;
+// }
 
 /******************************************************** scroll bar 样式 start ********************************************************/
 
@@ -113,33 +113,33 @@ body,
   // }
 }
 
-ul,
-ol {
-  list-style: none;
-}
+// ul,
+// ol {
+//   list-style: none;
+// }
 
-@media (max-width: @screen-xs) {
-  .ant-table {
-    width: 100%;
-    overflow-x: auto;
+// @media (max-width: @screen-xs) {
+//   .ant-table {
+//     width: 100%;
+//     overflow-x: auto;
 
-    &-thead > tr,
-    &-tbody > tr {
-      > th,
-      > td {
-        white-space: pre;
+//     &-thead > tr,
+//     &-tbody > tr {
+//       > th,
+//       > td {
+//         white-space: pre;
 
-        > span {
-          display: block;
-        }
-      }
-    }
-  }
-}
+//         > span {
+//           display: block;
+//         }
+//       }
+//     }
+//   }
+// }
 
-// 兼容IE11
-@media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
-  body .ant-design-pro > .ant-layout {
-    min-height: 100vh;
-  }
-}
+// // 兼容IE11
+// @media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
+//   body .ant-design-pro > .ant-layout {
+//     min-height: 100vh;
+//   }
+// }
